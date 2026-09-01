@@ -1,0 +1,4 @@
+# Raspberry Pi HIL output; source and profiles remain tracked.
+generated/
+diagnostics*.txt
+status.json

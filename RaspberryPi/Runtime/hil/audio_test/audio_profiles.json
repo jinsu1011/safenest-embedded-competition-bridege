@@ -1,0 +1,82 @@
+{
+  "normal": {
+    "label_ko": "정상",
+    "risk_level": "NORMAL",
+    "is_emergency": false,
+    "alarm_segments": [],
+    "amplitude": 0.0,
+    "tts_text": "",
+    "tts_speed": 145,
+    "tts_pitch": 50,
+    "tts_volume": 40,
+    "cooldown_seconds": 0,
+    "repeat_after_cooldown": false
+  },
+  "warning": {
+    "label_ko": "주의",
+    "risk_level": "WARNING",
+    "is_emergency": false,
+    "alarm_segments": [
+      {"frequency_hz": 880, "duration_ms": 200},
+      {"frequency_hz": 0, "duration_ms": 200},
+      {"frequency_hz": 880, "duration_ms": 200}
+    ],
+    "amplitude": 0.12,
+    "tts_text": "주의가 필요합니다. 작업자의 상태를 확인해 주세요.",
+    "tts_speed": 140,
+    "tts_pitch": 45,
+    "tts_volume": 45,
+    "cooldown_seconds": 60,
+    "repeat_after_cooldown": false
+  },
+  "danger": {
+    "label_ko": "위험",
+    "risk_level": "DANGER",
+    "is_emergency": false,
+    "alarm_segments": [
+      {"frequency_hz": 900, "duration_ms": 250},
+      {"frequency_hz": 1400, "duration_ms": 250},
+      {"frequency_hz": 900, "duration_ms": 250},
+      {"frequency_hz": 1400, "duration_ms": 250},
+      {"frequency_hz": 900, "duration_ms": 250},
+      {"frequency_hz": 1400, "duration_ms": 250},
+      {"frequency_hz": 900, "duration_ms": 250},
+      {"frequency_hz": 1400, "duration_ms": 250}
+    ],
+    "amplitude": 0.15,
+    "tts_text": "위험 상황이 감지되었습니다. 즉시 작업자를 확인하고 안전 조치를 실시해 주세요.",
+    "tts_speed": 155,
+    "tts_pitch": 55,
+    "tts_volume": 55,
+    "cooldown_seconds": 30,
+    "repeat_after_cooldown": true
+  },
+  "emergency": {
+    "label_ko": "긴급",
+    "risk_level": "DANGER",
+    "is_emergency": true,
+    "alarm_segments": [
+      {"frequency_hz": 1000, "duration_ms": 180},
+      {"frequency_hz": 1500, "duration_ms": 180},
+      {"frequency_hz": 1000, "duration_ms": 180},
+      {"frequency_hz": 1500, "duration_ms": 180},
+      {"frequency_hz": 1000, "duration_ms": 180},
+      {"frequency_hz": 1500, "duration_ms": 180},
+      {"frequency_hz": 1000, "duration_ms": 180},
+      {"frequency_hz": 1500, "duration_ms": 180},
+      {"frequency_hz": 1000, "duration_ms": 180},
+      {"frequency_hz": 1500, "duration_ms": 180},
+      {"frequency_hz": 1000, "duration_ms": 180},
+      {"frequency_hz": 1500, "duration_ms": 180},
+      {"frequency_hz": 1000, "duration_ms": 180},
+      {"frequency_hz": 1500, "duration_ms": 180}
+    ],
+    "amplitude": 0.18,
+    "tts_text": "긴급 상황입니다. 작업자의 낙상 또는 호흡 이상이 감지되었습니다. 즉시 작업자를 확인하고 구조 절차를 실시해 주세요.",
+    "tts_speed": 170,
+    "tts_pitch": 65,
+    "tts_volume": 60,
+    "cooldown_seconds": 15,
+    "repeat_after_cooldown": true
+  }
+}

@@ -1,0 +1,363 @@
+{
+  "dataset_id": "entry_exit_20",
+  "scenario": "entry_still_exit_20_trials",
+  "classification": "REAL_REPLAY_READY",
+  "real_hardware": true,
+  "source_file": "devices/mmwave/firmware/logs/kpi/2026-07-28_entry_exit_20_v2.jsonl",
+  "source_sha256": "f28c41166a0da3104c74b207014aae4ff7be508876175f4881eb72bdb94d5164",
+  "source_git_commit": "38274c084544af6f26b1377e593b012628a7eb05",
+  "source_total_lines": 11394,
+  "valid_json_lines": 11394,
+  "invalid_json_lines": 0,
+  "strict_provenance": false,
+  "analysis_start_s": 0.0,
+  "analysis_duration_requested_s": null,
+  "raw_quality": {
+    "sensor_records": 11354,
+    "schema_versions": {
+      "1.0": 11354
+    },
+    "duration_s": 1135.7059999999992,
+    "effective_sample_rate_hz": 9.996425131151907,
+    "sample_interval_s": {
+      "count": 11353,
+      "mean": 0.10003576147273842,
+      "p50": 0.1000000000003638,
+      "p95": 0.1000000000003638,
+      "max": 0.10200000000077125
+    },
+    "sequence_drops": 0,
+    "nonmonotonic_sequences": 0,
+    "uart_bad_records": 0,
+    "checksum_bad_records": 0,
+    "checksum_error_increase": 0,
+    "parser_error_increase": 0,
+    "presence_true": 6032,
+    "presence_false": 5322,
+    "presence_unknown": 0,
+    "distance_valid": 5318,
+    "breath_phase_finite": 11354,
+    "breath_phase_usable": 4566,
+    "invalid_or_nonfinite_phase": 0,
+    "stale_phase_records": 4050,
+    "stream_gap_count": 0,
+    "maximum_gap_s": 0.10200000000077125
+  },
+  "analysis_quality": {
+    "sensor_records": 11354,
+    "schema_versions": {
+      "1.0": 11354
+    },
+    "duration_s": 1135.7059999999992,
+    "effective_sample_rate_hz": 9.996425131151907,
+    "sample_interval_s": {
+      "count": 11353,
+      "mean": 0.10003576147273842,
+      "p50": 0.1000000000003638,
+      "p95": 0.1000000000003638,
+      "max": 0.10200000000077125
+    },
+    "sequence_drops": 0,
+    "nonmonotonic_sequences": 0,
+    "uart_bad_records": 0,
+    "checksum_bad_records": 0,
+    "checksum_error_increase": 0,
+    "parser_error_increase": 0,
+    "presence_true": 6032,
+    "presence_false": 5322,
+    "presence_unknown": 0,
+    "distance_valid": 5318,
+    "breath_phase_finite": 11354,
+    "breath_phase_usable": 4566,
+    "invalid_or_nonfinite_phase": 0,
+    "stale_phase_records": 4050,
+    "stream_gap_count": 0,
+    "maximum_gap_s": 0.10200000000077125
+  },
+  "presence": {
+    "ground_truth": "ENTRY_EXIT",
+    "detection_rate": null,
+    "false_presence_rate": null
+  },
+  "entry_exit": {
+    "trials": [
+      {
+        "trial": 1,
+        "event": "enter",
+        "latency_s": 1.017972208
+      },
+      {
+        "trial": 1,
+        "event": "exit",
+        "latency_s": 17.712785709
+      },
+      {
+        "trial": 2,
+        "event": "enter",
+        "latency_s": 2.060639416
+      },
+      {
+        "trial": 2,
+        "event": "exit",
+        "latency_s": 14.757940584
+      },
+      {
+        "trial": 3,
+        "event": "enter",
+        "latency_s": 1.128464667
+      },
+      {
+        "trial": 3,
+        "event": "exit",
+        "latency_s": 15.813585375
+      },
+      {
+        "trial": 4,
+        "event": "enter",
+        "latency_s": 0.197508708
+      },
+      {
+        "trial": 4,
+        "event": "exit",
+        "latency_s": 15.514249333
+      },
+      {
+        "trial": 5,
+        "event": "enter",
+        "latency_s": 0.745972125
+      },
+      {
+        "trial": 5,
+        "event": "exit",
+        "latency_s": 16.050359334
+      },
+      {
+        "trial": 6,
+        "event": "enter",
+        "latency_s": 0.680939625
+      },
+      {
+        "trial": 6,
+        "event": "exit",
+        "latency_s": 12.455821875
+      },
+      {
+        "trial": 7,
+        "event": "enter",
+        "latency_s": 1.351616
+      },
+      {
+        "trial": 7,
+        "event": "exit",
+        "latency_s": 15.084688708
+      },
+      {
+        "trial": 8,
+        "event": "enter",
+        "latency_s": 2.055759833
+      },
+      {
+        "trial": 8,
+        "event": "exit",
+        "latency_s": null
+      },
+      {
+        "trial": 9,
+        "event": "enter",
+        "latency_s": 0.052113875
+      },
+      {
+        "trial": 9,
+        "event": "exit",
+        "latency_s": 16.501654625
+      },
+      {
+        "trial": 10,
+        "event": "enter",
+        "latency_s": 1.676984458
+      },
+      {
+        "trial": 10,
+        "event": "exit",
+        "latency_s": 14.710347459
+      },
+      {
+        "trial": 11,
+        "event": "enter",
+        "latency_s": 0.697922875
+      },
+      {
+        "trial": 11,
+        "event": "exit",
+        "latency_s": 15.627616958
+      },
+      {
+        "trial": 12,
+        "event": "enter",
+        "latency_s": 1.951850041
+      },
+      {
+        "trial": 12,
+        "event": "exit",
+        "latency_s": 10.514633042
+      },
+      {
+        "trial": 13,
+        "event": "enter",
+        "latency_s": 0.712118959
+      },
+      {
+        "trial": 13,
+        "event": "exit",
+        "latency_s": 16.456168834
+      },
+      {
+        "trial": 14,
+        "event": "enter",
+        "latency_s": 0.044788708
+      },
+      {
+        "trial": 14,
+        "event": "exit",
+        "latency_s": 16.367557
+      },
+      {
+        "trial": 15,
+        "event": "enter",
+        "latency_s": 1.191934167
+      },
+      {
+        "trial": 15,
+        "event": "exit",
+        "latency_s": 16.427055209
+      },
+      {
+        "trial": 16,
+        "event": "enter",
+        "latency_s": 2.215874583
+      },
+      {
+        "trial": 16,
+        "event": "exit",
+        "latency_s": 17.050072125
+      },
+      {
+        "trial": 17,
+        "event": "enter",
+        "latency_s": 2.448678291
+      },
+      {
+        "trial": 17,
+        "event": "exit",
+        "latency_s": 16.314181584
+      },
+      {
+        "trial": 18,
+        "event": "enter",
+        "latency_s": 0.086625209
+      },
+      {
+        "trial": 18,
+        "event": "exit",
+        "latency_s": 16.472426583
+      },
+      {
+        "trial": 19,
+        "event": "enter",
+        "latency_s": 1.463823666
+      },
+      {
+        "trial": 19,
+        "event": "exit",
+        "latency_s": 15.42070775
+      },
+      {
+        "trial": 20,
+        "event": "enter",
+        "latency_s": 0.8967925
+      },
+      {
+        "trial": 20,
+        "event": "exit",
+        "latency_s": 15.076181834
+      }
+    ],
+    "entry_total": 20,
+    "entry_success": 20,
+    "entry_missed": 0,
+    "entry_latency_s": {
+      "count": 20,
+      "mean": 1.1339189957,
+      "p50": 1.0732184375,
+      "p95": 2.2275147684000003,
+      "max": 2.448678291
+    },
+    "entry_kpi_le_2s": 16,
+    "exit_total": 20,
+    "exit_release_success": 19,
+    "exit_release_missed": 1,
+    "exit_latency_s": {
+      "count": 19,
+      "mean": 15.49094915373684,
+      "p50": 15.813585375,
+      "p95": 17.116343483399998,
+      "max": 17.712785709
+    },
+    "exit_kpi_le_2s": 0,
+    "vendor_hysteresis_dominates": true
+  },
+  "attempted_windows": 22,
+  "completed_windows": 1,
+  "rejected_windows": 21,
+  "window_success_rate": 0.045454545454545456,
+  "reset_reasons": {
+    "MMWAVE_PRESENCE_NOT_DETECTED": 8,
+    "MMWAVE_DISTANCE_INVALID": 5,
+    "MMWAVE_PHASE_STALE": 8
+  },
+  "adapter_event_reasons": {
+    "MMWAVE_PRESENCE_NOT_DETECTED": 5322,
+    "MMWAVE_WARMUP": 4412,
+    "MMWAVE_DISTANCE_INVALID": 714,
+    "MMWAVE_PHASE_STALE": 752,
+    "VALID": 1,
+    "MMWAVE_WINDOW_NOT_READY": 153
+  },
+  "longest_continuous_valid_inference_windows": 1,
+  "longest_continuous_valid_inference_s": 30.0,
+  "tflite_runs": 1,
+  "fallback_count": 0,
+  "prediction_distribution": {
+    "NORMAL": 1
+  },
+  "model_latency_ms": {
+    "count": 1,
+    "mean": 0.1480410574004054,
+    "p50": 0.1480410574004054,
+    "p95": 0.1480410574004054,
+    "max": 0.1480410574004054
+  },
+  "respiration_rate": {
+    "ground_truth_rpm": null,
+    "window_estimates_rpm": [
+      25.16568751711584
+    ],
+    "estimated_rpm_mean": 25.16568751711584,
+    "absolute_errors_rpm": [],
+    "mae_rpm": null,
+    "max_absolute_error_rpm": null,
+    "within_2rpm_count": null,
+    "within_2rpm_rate": null
+  },
+  "ai_class_ground_truth": null,
+  "classification_accuracy": null,
+  "classification_accuracy_note": "해당 데이터에는 신뢰 가능한 NORMAL/ABNORMAL/APNEA ground truth가 없으므로 분류 정확도를 계산하지 않았습니다.",
+  "model_id": "mmwave_resp_int8",
+  "model_version": "0.1.0",
+  "model_sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158",
+  "model_sha256_matches": true,
+  "benchmark_tool_version": "0.1.0",
+  "benchmark_tool_git_commit": "6da2a7141af758ed4eebba61a7f09950022deb7b",
+  "result": "PARTIAL",
+  "benchmark_elapsed_s": 0.26295545895118266
+}

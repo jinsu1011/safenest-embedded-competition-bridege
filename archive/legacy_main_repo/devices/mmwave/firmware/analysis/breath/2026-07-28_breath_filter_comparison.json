@@ -1,0 +1,267 @@
+{
+  "sources": [
+    "firmware/esp_wroom32_mr60_monitor/logs/breath/2026-07-28_breath_paced_12rpm_explicit_v2_attempt03.jsonl",
+    "firmware/esp_wroom32_mr60_monitor/logs/breath/2026-07-28_breath_paced_15rpm_explicit_full_v3.jsonl",
+    "firmware/esp_wroom32_mr60_monitor/logs/breath/2026-07-28_breath_paced_20rpm_explicit_full_v2.jsonl"
+  ],
+  "validity": {
+    "presence_required": true,
+    "zero_nan_missing_are_unknown": true,
+    "distance_min_cm": 40.0,
+    "distance_max_cm": 150.0,
+    "invalid_samples_reset_filter_and_are_not_filled": true
+  },
+  "delay_note": "Causal-filter group-delay estimate at 10 Hz; not a measured physiological response delay.",
+  "candidates": [
+    {
+      "filter": "raw",
+      "estimated_additional_delay_s": 0.0,
+      "valid_ratio": 0.9948119325551232,
+      "pooled_output_std_rpm": 4.396322166284608,
+      "pooled_mae_rpm": 3.803874092009685,
+      "raw_outlier_recovery_ratio": 0.0,
+      "introduced_outliers": 0,
+      "per_trial": [
+        {
+          "target_rpm": 12.0,
+          "samples": 1799,
+          "valid_ratio": 1.0,
+          "mean_rpm": 14.519733185102835,
+          "median_rpm": 14.0,
+          "std_rpm": 1.3330888521309625,
+          "mae_rpm": 2.6086714841578655,
+          "within_2rpm_ratio_all": 0.7003891050583657,
+          "raw_outliers": 539,
+          "recovered_outliers": 0,
+          "introduced_outliers": 0
+        },
+        {
+          "target_rpm": 15.0,
+          "samples": 1799,
+          "valid_ratio": 1.0,
+          "mean_rpm": 18.801556420233464,
+          "median_rpm": 19.0,
+          "std_rpm": 1.2696823170492455,
+          "mae_rpm": 3.8026681489716507,
+          "within_2rpm_ratio_all": 0.1122846025569761,
+          "raw_outliers": 1597,
+          "recovered_outliers": 0,
+          "introduced_outliers": 0
+        },
+        {
+          "target_rpm": 20.0,
+          "samples": 1799,
+          "valid_ratio": 0.9844357976653697,
+          "mean_rpm": 19.399774138904572,
+          "median_rpm": 22.0,
+          "std_rpm": 6.388378773068817,
+          "mae_rpm": 5.019198193111237,
+          "within_2rpm_ratio_all": 0.20900500277932185,
+          "raw_outliers": 1395,
+          "recovered_outliers": 0,
+          "introduced_outliers": 0
+        }
+      ]
+    },
+    {
+      "filter": "moving_average_5_min3",
+      "estimated_additional_delay_s": 0.2,
+      "valid_ratio": 0.9929590513248101,
+      "pooled_output_std_rpm": 4.377074411323721,
+      "pooled_mae_rpm": 3.7978789575169496,
+      "raw_outlier_recovery_ratio": 0.0005664117813650524,
+      "introduced_outliers": 96,
+      "per_trial": [
+        {
+          "target_rpm": 12.0,
+          "samples": 1799,
+          "valid_ratio": 0.9988882712618121,
+          "mean_rpm": 14.519198664440735,
+          "median_rpm": 14.0,
+          "std_rpm": 1.323833921867101,
+          "mae_rpm": 2.6075681691708406,
+          "within_2rpm_ratio_all": 0.67982212340189,
+          "raw_outliers": 539,
+          "recovered_outliers": 1,
+          "introduced_outliers": 36
+        },
+        {
+          "target_rpm": 15.0,
+          "samples": 1799,
+          "valid_ratio": 0.9988882712618121,
+          "mean_rpm": 18.801335559265443,
+          "median_rpm": 19.0,
+          "std_rpm": 1.2606269020734744,
+          "mae_rpm": 3.802448525319978,
+          "within_2rpm_ratio_all": 0.10116731517509728,
+          "raw_outliers": 1597,
+          "recovered_outliers": 0,
+          "introduced_outliers": 20
+        },
+        {
+          "target_rpm": 20.0,
+          "samples": 1799,
+          "valid_ratio": 0.981100611450806,
+          "mean_rpm": 19.413012275731823,
+          "median_rpm": 22.2,
+          "std_rpm": 6.352343817639374,
+          "mae_rpm": 5.005118035882908,
+          "within_2rpm_ratio_all": 0.18621456364647027,
+          "raw_outliers": 1395,
+          "recovered_outliers": 1,
+          "introduced_outliers": 40
+        }
+      ]
+    },
+    {
+      "filter": "median_5_min3",
+      "estimated_additional_delay_s": 0.2,
+      "valid_ratio": 0.9929590513248101,
+      "pooled_output_std_rpm": 4.379888887033426,
+      "pooled_mae_rpm": 3.7953909311438703,
+      "raw_outlier_recovery_ratio": 0.01416029453412631,
+      "introduced_outliers": 47,
+      "per_trial": [
+        {
+          "target_rpm": 12.0,
+          "samples": 1799,
+          "valid_ratio": 0.9988882712618121,
+          "mean_rpm": 14.5180856983862,
+          "median_rpm": 14.0,
+          "std_rpm": 1.3308258729314248,
+          "mae_rpm": 2.6060100166944906,
+          "within_2rpm_ratio_all": 0.7020566981656475,
+          "raw_outliers": 539,
+          "recovered_outliers": 19,
+          "introduced_outliers": 14
+        },
+        {
+          "target_rpm": 15.0,
+          "samples": 1799,
+          "valid_ratio": 0.9988882712618121,
+          "mean_rpm": 18.801335559265443,
+          "median_rpm": 19.0,
+          "std_rpm": 1.2681792790166504,
+          "mae_rpm": 3.8013355592654423,
+          "within_2rpm_ratio_all": 0.1122846025569761,
+          "raw_outliers": 1597,
+          "recovered_outliers": 10,
+          "introduced_outliers": 10
+        },
+        {
+          "target_rpm": 20.0,
+          "samples": 1799,
+          "valid_ratio": 0.981100611450806,
+          "mean_rpm": 19.412181303116146,
+          "median_rpm": 22.0,
+          "std_rpm": 6.3549132517591564,
+          "mae_rpm": 5.0002832861189805,
+          "within_2rpm_ratio_all": 0.20678154530294607,
+          "raw_outliers": 1395,
+          "recovered_outliers": 21,
+          "introduced_outliers": 23
+        }
+      ]
+    },
+    {
+      "filter": "ema_alpha_0_3",
+      "estimated_additional_delay_s": 0.233,
+      "valid_ratio": 0.9948119325551232,
+      "pooled_output_std_rpm": 4.3747924767548465,
+      "pooled_mae_rpm": 3.799090120280058,
+      "raw_outlier_recovery_ratio": 0.0005664117813650524,
+      "introduced_outliers": 813,
+      "per_trial": [
+        {
+          "target_rpm": 12.0,
+          "samples": 1799,
+          "valid_ratio": 1.0,
+          "mean_rpm": 14.518454120623918,
+          "median_rpm": 14.00000000000028,
+          "std_rpm": 1.3142256157934822,
+          "mae_rpm": 2.604592006350361,
+          "within_2rpm_ratio_all": 0.31628682601445246,
+          "raw_outliers": 539,
+          "recovered_outliers": 1,
+          "introduced_outliers": 692
+        },
+        {
+          "target_rpm": 15.0,
+          "samples": 1799,
+          "valid_ratio": 1.0,
+          "mean_rpm": 18.800258895849055,
+          "median_rpm": 19.000000000000004,
+          "std_rpm": 1.2528142400122968,
+          "mae_rpm": 3.801278991507986,
+          "within_2rpm_ratio_all": 0.08782657031684268,
+          "raw_outliers": 1597,
+          "recovered_outliers": 0,
+          "introduced_outliers": 44
+        },
+        {
+          "target_rpm": 20.0,
+          "samples": 1799,
+          "valid_ratio": 0.9844357976653697,
+          "mean_rpm": 19.384678044241525,
+          "median_rpm": 22.279429737745165,
+          "std_rpm": 6.354800297727626,
+          "mae_rpm": 5.010250101996875,
+          "within_2rpm_ratio_all": 0.16675931072818231,
+          "raw_outliers": 1395,
+          "recovered_outliers": 1,
+          "introduced_outliers": 77
+        }
+      ]
+    },
+    {
+      "filter": "median_5_min3_plus_ema_0_3",
+      "estimated_additional_delay_s": 0.433,
+      "valid_ratio": 0.9929590513248101,
+      "pooled_output_std_rpm": 4.358907665796265,
+      "pooled_mae_rpm": 3.7913843515780608,
+      "raw_outlier_recovery_ratio": 0.009912206173888417,
+      "introduced_outliers": 835,
+      "per_trial": [
+        {
+          "target_rpm": 12.0,
+          "samples": 1799,
+          "valid_ratio": 0.9988882712618121,
+          "mean_rpm": 14.516823916281634,
+          "median_rpm": 14.000000000000004,
+          "std_rpm": 1.3131286998122105,
+          "mae_rpm": 2.6019510654263347,
+          "within_2rpm_ratio_all": 0.31628682601445246,
+          "raw_outliers": 539,
+          "recovered_outliers": 7,
+          "introduced_outliers": 696
+        },
+        {
+          "target_rpm": 15.0,
+          "samples": 1799,
+          "valid_ratio": 0.9988882712618121,
+          "mean_rpm": 18.800036061954106,
+          "median_rpm": 18.999999999999993,
+          "std_rpm": 1.2516916990258005,
+          "mae_rpm": 3.800036061954105,
+          "within_2rpm_ratio_all": 0.08782657031684268,
+          "raw_outliers": 1597,
+          "recovered_outliers": 8,
+          "introduced_outliers": 52
+        },
+        {
+          "target_rpm": 20.0,
+          "samples": 1799,
+          "valid_ratio": 0.981100611450806,
+          "mean_rpm": 19.39357632495278,
+          "median_rpm": 22.27942973743413,
+          "std_rpm": 6.323138723550983,
+          "mae_rpm": 4.993573865271489,
+          "within_2rpm_ratio_all": 0.17065036131183992,
+          "raw_outliers": 1395,
+          "recovered_outliers": 20,
+          "introduced_outliers": 87
+        }
+      ]
+    }
+  ]
+}

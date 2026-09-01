@@ -1,0 +1,8 @@
+[thermal] no valid frame for 3 s; restarting camera
+[thermal] ready: addr=0x40 type=1 fw=3.2.13
+[health] wifi=down rpi=192.168.1.44 resp=16.0 heart=79.0 co2=1184 pir=0 thermal_frames=288 crc_errors=6 range_errors=0 free_heap=132940
+[thermal] no valid frame for 3 s; restarting camera
+[thermal] ready: addr=0x40 type=1 fw=3.2.13
+[thermal] no valid frame for 3 s; restarting camera
+[thermal] ready: addr=0x40 type=1 fw=3.2.13
+[health] wifi=down rpi=192.168.1.44 resp=20.0 heart=85.0 co2=1182 pir=0 thermal_frames=330 crc_errors=6 range_errors=0 free_heap=132648

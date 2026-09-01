@@ -1,0 +1,19 @@
+{
+  "phase": "C-C1R",
+  "protocol_id": "CO2_C_C1R_REDUCED_MEASUREMENT_PROTOCOL_001",
+  "protocol_version": "1.0.0",
+  "validation_agent": "Codex (CO2 C-C1R Protocol and Operator Handoff Agent)",
+  "validation_execution_base": "81358008f44ff7b92e1c0997d862777c97497440",
+  "status": "PASS",
+  "phase_result": "C_C1R_BLOCKED",
+  "protocol_frozen": true,
+  "operator_guide_status": "HOLD_PENDING_ACQUISITION_TOOLING_CORRECTION",
+  "physical_acquisition_authorized": false,
+  "c_c2_started": false,
+  "candidate_id": "C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001",
+  "c_b6_candidate_status": "C_B6_PASS_WITH_LIMITATIONS",
+  "tooling_readiness": "HOLD",
+  "block_reason": "OPERATOR_HANDOFF_BLOCKED_BY_ACQUISITION_TOOLING",
+  "errors": [],
+  "warnings": []
+}

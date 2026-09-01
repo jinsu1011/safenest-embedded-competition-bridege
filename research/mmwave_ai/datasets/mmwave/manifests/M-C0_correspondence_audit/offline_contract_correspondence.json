@@ -1,0 +1,3640 @@
+{
+  "audit_scope": {
+    "all_evidence_files_opened_read_only": true,
+    "evidence_root": "devices/mmwave/firmware",
+    "output_paths_outside_evidence_root_asserted": true,
+    "pilot_evidence_root": "devices/mmwave/device_measurements",
+    "raw_files_copied": false,
+    "repository_root": "."
+  },
+  "authorization_evaluation": {
+    "authorized_for_exploratory_inference": false,
+    "decision_stands": true,
+    "exact_preprocessing_correspondence_gate": "BLOCKED_NOT_ESTABLISHED",
+    "reason": "PR18 pilot temporal correspondence now holds, but semantic correspondence and exact frozen preprocessing correspondence remain unestablished; temporal sufficiency alone does not authorize model invocation.",
+    "semantic_gate": "BLOCKED_UNDETERMINED",
+    "temporal_gate_for_pr18_pilots": "PASS"
+  },
+  "blocking_reason": "SIGNAL_CORRESPONDENCE_NOT_ESTABLISHED",
+  "correspondence_disproven": false,
+  "correspondence_evaluated": true,
+  "decision": "BLOCKED_PENDING_SIGNAL_CORRESPONDENCE",
+  "frozen_contract": {
+    "artifact_bytes": 22080,
+    "artifact_sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5",
+    "bpf_order": 4,
+    "bpf_phase_mode": "ZERO_PHASE_FILTFILT",
+    "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+    "highcut_hz": 0.5,
+    "input_dtype": "int8",
+    "input_scale": 0.041720833629369736,
+    "input_shape": [
+      1,
+      300,
+      1
+    ],
+    "input_zero_point": -3,
+    "lowcut_hz": 0.1,
+    "profile_id": "M-B1_D0_B1_Z1",
+    "profile_name": "BPF_ZSCORE",
+    "runtime_model_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8",
+    "sample_rate_hz": 10.0,
+    "window_samples": 300,
+    "window_seconds": 30.0,
+    "zscore_mean": 0.0031162832173884064,
+    "zscore_std": 2.955399434649939
+  },
+  "pr18_retrieval": {
+    "attempts": [
+      {
+        "command": "git fetch origin pull/18/head:pr18-head",
+        "result": "SUCCESS: refs/pull/18/head -> pr18-head"
+      },
+      {
+        "command": "git fetch origin 62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "SUCCESS: 62eb0d867cfa02295c9a1d023b813134c434b8eb -> FETCH_HEAD"
+      },
+      {
+        "command": "git fetch origin refs/pull/18/head",
+        "result": "SUCCESS: refs/pull/18/head -> FETCH_HEAD"
+      }
+    ],
+    "head": "62eb0d867cfa02295c9a1d023b813134c434b8eb",
+    "paths_checked": [
+      {
+        "path": "devices/mmwave/device_measurements/",
+        "ref": "HEAD",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "FOUND"
+      },
+      {
+        "path": "devices/mmwave/firmware/device_measurements/M-C0-PILOT-DESKWORK-001.jsonl",
+        "ref": "HEAD",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/firmware/device_measurements/M-C0-PILOT-STATIONARY-001.jsonl",
+        "ref": "HEAD",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/firmware/device_measurements/M-C0-PILOT-DESKWORK-001/records.jsonl",
+        "ref": "HEAD",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/firmware/device_measurements/M-C0-PILOT-STATIONARY-001/records.jsonl",
+        "ref": "HEAD",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/M-C0-PILOT-DESKWORK-001.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/M-C0-PILOT-STATIONARY-001.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/M-C0-PILOT-DESKWORK-001/records.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/M-C0-PILOT-STATIONARY-001/records.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/pilot/M-C0-PILOT-DESKWORK-001.raw.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/pilot/M-C0-PILOT-STATIONARY-001.raw.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "FOUND"
+      }
+    ],
+    "pilot_fresh_cadence_finding": {
+      "basis": "Both corrected pilot cadences approach their telemetry row cadences, and pilot phase_age_ms p95 is 15 ms versus 195627 ms in the legacy long log. The earlier (a) verdict was based on a faulty phase-age-decrease estimator that undercounted always-low pilot age values.",
+      "comparison": {
+        "computation": "for each pilot, compare corrected cadence with its telemetry row cadence and superseded age-decrease cadence; explicitly require pilot phase-age p95 below legacy p95",
+        "legacy_corrected_fresh_cadence_hz": 8.419003785,
+        "legacy_phase_age_p95_ms": 195627.0,
+        "legacy_superseded_fresh_cadence_hz": 4.30467137,
+        "legacy_superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+        "pilot_phase_age_p95_ms": [
+          15.0,
+          15.0
+        ]
+      },
+      "pilot_measurements": [
+        {
+          "fresh_0x0A13_cadence_hz": 9.988438535,
+          "phase_age_ms": {
+            "fraction_over_30000_ms": 0.0,
+            "max": 111.0,
+            "median": 12.0,
+            "min": 0.0,
+            "p95": 15.0
+          },
+          "session_id": "M-C0-PILOT-DESKWORK-001",
+          "superseded_fresh_0x0A13_cadence_hz": 3.679658492,
+          "superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+          "telemetry_row_cadence_hz": 9.993996932
+        },
+        {
+          "fresh_0x0A13_cadence_hz": 9.993330369,
+          "phase_age_ms": {
+            "fraction_over_30000_ms": 0.0,
+            "max": 17.0,
+            "median": 12.0,
+            "min": 0.0,
+            "p95": 15.0
+          },
+          "session_id": "M-C0-PILOT-STATIONARY-001",
+          "superseded_fresh_0x0A13_cadence_hz": 3.518230325,
+          "superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+          "telemetry_row_cadence_hz": 9.993330369
+        }
+      ],
+      "previous_verdict": "A_STRUCTURAL_MR60_ESP_TELEMETRY_PATH_LIMITATION_SUPPORTED",
+      "previous_verdict_status": "RETRACTED_FAULTY_ESTIMATOR",
+      "verdict": "B_2026_07_26_LEGACY_CAPTURE_METHOD_LIMITATION_SUPPORTED"
+    }
+  },
+  "questions": {
+    "10_620_of_620_apnea_collapse_stage": {
+      "forensics_artifact": "datasets/mmwave/manifests/M-C0_correspondence_audit/620_window_input_forensics.json",
+      "per_window_fractions": "recorded in the derived forensics artifact; fresh_fraction remains UNKNOWN because CSV freshness fields are absent",
+      "reason": "The 620 windows are reproducibly generated from legacy resp_phase rows and nominal interpolation, but the generator has no phase_age_ms/0x0A13 freshness gate. Therefore correspondence to the Phase-B genuinely-fresh-sample contract is lost or unproven before BPF_ZSCORE.",
+      "reconstructed_historical_window_count": 620,
+      "stage": "LEGACY_CSV_WINDOW_GENERATION_FRESHNESS_PROVENANCE",
+      "status": "MEASURED_INPUT_CONTRACT_DIVERGENCE"
+    },
+    "1_signal_semantic_correspondence": {
+      "assessment": "UNDETERMINED",
+      "correspondence_disproven": false,
+      "per_session": [
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": null,
+            "documented_vendor_median_rpm": null,
+            "dominant_period_s_from_median_positive_crossing_interval": 2.993312542,
+            "dominant_phase_rpm": 20.04468266,
+            "field": "resp_phase",
+            "finite_sample_count": 2998,
+            "paced_cue_rpm": null,
+            "phase_minus_vendor_median_rpm": null,
+            "positive_crossing_count": 93,
+            "stats": {
+              "count": 2998,
+              "freeze_intervals": {
+                "interval_count": 218,
+                "longest_interval_run": 6
+              },
+              "max": 1.08,
+              "mean": 0.001187458,
+              "median": 0.01,
+              "min": -1.02,
+              "p05": -0.55,
+              "p95": 0.55,
+              "std": 0.331442142,
+              "unique_value_count": 186
+            }
+          }
+        },
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": null,
+            "documented_vendor_median_rpm": null,
+            "dominant_period_s_from_median_positive_crossing_interval": 3.045806728,
+            "dominant_phase_rpm": 19.699214478,
+            "field": "resp_phase",
+            "finite_sample_count": 2998,
+            "paced_cue_rpm": null,
+            "phase_minus_vendor_median_rpm": null,
+            "positive_crossing_count": 86,
+            "stats": {
+              "count": 2998,
+              "freeze_intervals": {
+                "interval_count": 818,
+                "longest_interval_run": 27
+              },
+              "max": 0.42,
+              "mean": -0.000580387,
+              "median": 0.0,
+              "min": -0.48,
+              "p05": -0.23,
+              "p95": 0.2,
+              "std": 0.123947457,
+              "unique_value_count": 90
+            }
+          }
+        },
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": null,
+            "documented_vendor_median_rpm": null,
+            "dominant_period_s_from_median_positive_crossing_interval": 2.960521903,
+            "dominant_phase_rpm": 20.266696872,
+            "field": "resp_phase",
+            "finite_sample_count": 2998,
+            "paced_cue_rpm": null,
+            "phase_minus_vendor_median_rpm": null,
+            "positive_crossing_count": 74,
+            "stats": {
+              "count": 2998,
+              "freeze_intervals": {
+                "interval_count": 814,
+                "longest_interval_run": 557
+              },
+              "max": 0.95,
+              "mean": 0.00143429,
+              "median": 0.0,
+              "min": -0.82,
+              "p05": -0.4,
+              "p95": 0.36,
+              "std": 0.23101354,
+              "unique_value_count": 150
+            }
+          }
+        },
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": null,
+            "documented_vendor_median_rpm": null,
+            "dominant_period_s_from_median_positive_crossing_interval": null,
+            "dominant_phase_rpm": null,
+            "field": "resp_phase",
+            "finite_sample_count": 2999,
+            "paced_cue_rpm": null,
+            "phase_minus_vendor_median_rpm": null,
+            "positive_crossing_count": 0,
+            "stats": {
+              "count": 2999,
+              "freeze_intervals": {
+                "interval_count": 2998,
+                "longest_interval_run": 2998
+              },
+              "max": -0.01,
+              "mean": -0.01,
+              "median": -0.01,
+              "min": -0.01,
+              "p05": -0.01,
+              "p95": -0.01,
+              "std": 0.0,
+              "unique_value_count": 1
+            }
+          }
+        },
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": 6.06,
+            "documented_vendor_median_rpm": null,
+            "dominant_period_s_from_median_positive_crossing_interval": 5.661269171,
+            "dominant_phase_rpm": 10.598330195,
+            "field": "resp_phase",
+            "finite_sample_count": 2087,
+            "paced_cue_rpm": 12.0,
+            "phase_minus_vendor_median_rpm": null,
+            "positive_crossing_count": 35,
+            "stats": {
+              "count": 2087,
+              "freeze_intervals": {
+                "interval_count": 250,
+                "longest_interval_run": 9
+              },
+              "max": 1.17,
+              "mean": -0.000129372,
+              "median": -0.03,
+              "min": -0.86,
+              "p05": -0.51,
+              "p95": 0.62,
+              "std": 0.358820851,
+              "unique_value_count": 179
+            }
+          }
+        },
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": null,
+            "documented_vendor_median_rpm": 14.0,
+            "dominant_period_s_from_median_positive_crossing_interval": 4.923658882,
+            "dominant_phase_rpm": 12.18605948,
+            "field": "resp_phase",
+            "finite_sample_count": 1774,
+            "paced_cue_rpm": 12.0,
+            "phase_minus_vendor_median_rpm": -1.81394052,
+            "positive_crossing_count": 37,
+            "stats": {
+              "count": 1774,
+              "freeze_intervals": {
+                "interval_count": 135,
+                "longest_interval_run": 9
+              },
+              "max": 0.78,
+              "mean": 0.000191657,
+              "median": 0.02,
+              "min": -1.0,
+              "p05": -0.61,
+              "p95": 0.55,
+              "std": 0.37828824,
+              "unique_value_count": 167
+            }
+          }
+        },
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": null,
+            "documented_vendor_median_rpm": 19.0,
+            "dominant_period_s_from_median_positive_crossing_interval": 4.019052174,
+            "dominant_phase_rpm": 14.928893032,
+            "field": "resp_phase",
+            "finite_sample_count": 1779,
+            "paced_cue_rpm": 15.0,
+            "phase_minus_vendor_median_rpm": -4.071106968,
+            "positive_crossing_count": 44,
+            "stats": {
+              "count": 1779,
+              "freeze_intervals": {
+                "interval_count": 109,
+                "longest_interval_run": 5
+              },
+              "max": 0.84,
+              "mean": 8.9938e-05,
+              "median": 0.04,
+              "min": -0.91,
+              "p05": -0.58,
+              "p95": 0.49,
+              "std": 0.345378047,
+              "unique_value_count": 155
+            }
+          }
+        },
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": null,
+            "documented_vendor_median_rpm": 23.0,
+            "dominant_period_s_from_median_positive_crossing_interval": 2.974673767,
+            "dominant_phase_rpm": 20.170279064,
+            "field": "resp_phase",
+            "finite_sample_count": 1784,
+            "paced_cue_rpm": 20.0,
+            "phase_minus_vendor_median_rpm": -2.829720936,
+            "positive_crossing_count": 56,
+            "stats": {
+              "count": 1784,
+              "freeze_intervals": {
+                "interval_count": 640,
+                "longest_interval_run": 49
+              },
+              "max": 0.41,
+              "mean": 0.0019787,
+              "median": -0.0,
+              "min": -0.4,
+              "p05": -0.2,
+              "p95": 0.21,
+              "std": 0.113381364,
+              "unique_value_count": 81
+            }
+          }
+        },
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": null,
+            "documented_vendor_median_rpm": 23.0,
+            "dominant_period_s_from_median_positive_crossing_interval": 2.995411588,
+            "dominant_phase_rpm": 20.030636268,
+            "field": "resp_phase",
+            "finite_sample_count": 1784,
+            "paced_cue_rpm": 20.0,
+            "phase_minus_vendor_median_rpm": -2.969363732,
+            "positive_crossing_count": 59,
+            "stats": {
+              "count": 1784,
+              "freeze_intervals": {
+                "interval_count": 46,
+                "longest_interval_run": 2
+              },
+              "max": 0.98,
+              "mean": -0.004248879,
+              "median": -0.02,
+              "min": -1.0,
+              "p05": -0.76,
+              "p95": 0.79,
+              "std": 0.500698723,
+              "unique_value_count": 198
+            }
+          }
+        },
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": null,
+            "documented_vendor_median_rpm": 23.0,
+            "dominant_period_s_from_median_positive_crossing_interval": 3.114602132,
+            "dominant_phase_rpm": 19.264097775,
+            "field": "breath_phase",
+            "finite_sample_count": 18574,
+            "paced_cue_rpm": null,
+            "phase_minus_vendor_median_rpm": -3.735902225,
+            "positive_crossing_count": 470,
+            "stats": {
+              "count": 18574,
+              "freeze_intervals": {
+                "interval_count": 5350,
+                "longest_interval_run": 2884
+              },
+              "max": 0.94,
+              "mean": 0.001548401,
+              "median": 0.01,
+              "min": -0.88,
+              "p05": -0.26,
+              "p95": 0.26,
+              "std": 0.16153066,
+              "unique_value_count": 162
+            }
+          }
+        },
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": null,
+            "documented_vendor_median_rpm": null,
+            "dominant_period_s_from_median_positive_crossing_interval": 2.948714842,
+            "dominant_phase_rpm": 20.347847528,
+            "field": "breath_phase",
+            "finite_sample_count": 1799,
+            "paced_cue_rpm": null,
+            "phase_minus_vendor_median_rpm": null,
+            "positive_crossing_count": 56,
+            "stats": {
+              "count": 1799,
+              "freeze_intervals": {
+                "interval_count": 230,
+                "longest_interval_run": 9
+              },
+              "max": 0.75,
+              "mean": -0.00233463,
+              "median": -0.0,
+              "min": -0.7,
+              "p05": -0.42,
+              "p95": 0.37,
+              "std": 0.227049121,
+              "unique_value_count": 131
+            }
+          }
+        },
+        {
+          "assessment": "PHASE_LIKE_SIGNAL_OBSERVED_BUT_PHASE_B_EQUIVALENCE_NOT_ESTABLISHED",
+          "basis": "finite phase values and, where detectable, a periodic phase-like component were observed; no independent Phase-B semantic/reference signal exists in this evidence set",
+          "correspondence_disproven": false,
+          "numeric": {
+            "computation": "center signal by its session mean; estimate period from median interval between positive mean crossings; rpm=60/period_s",
+            "documented_actual_trial_rpm": null,
+            "documented_vendor_median_rpm": null,
+            "dominant_period_s_from_median_positive_crossing_interval": 2.687064835,
+            "dominant_phase_rpm": 22.329196977,
+            "field": "breath_phase",
+            "finite_sample_count": 1799,
+            "paced_cue_rpm": null,
+            "phase_minus_vendor_median_rpm": null,
+            "positive_crossing_count": 61,
+            "stats": {
+              "count": 1799,
+              "freeze_intervals": {
+                "interval_count": 208,
+                "longest_interval_run": 5
+              },
+              "max": 0.58,
+              "mean": 0.00053363,
+              "median": -0.0,
+              "min": -0.73,
+              "p05": -0.28,
+              "p95": 0.26,
+              "std": 0.170085627,
+              "unique_value_count": 112
+            }
+          }
+        }
+      ]
+    },
+    "2_breath_rate_raw_waveform_use": {
+      "breath_rate_raw_matches": [
+        {
+          "line": 163,
+          "path": "devices/mmwave/src/mr60_esp_adapter.py",
+          "text": "\"breath_rpm_raw\": record.get(\"breath_rate_raw\"),"
+        },
+        {
+          "line": 288,
+          "path": "devices/mmwave/src/mr60_esp_adapter.py",
+          "text": "\"breath_rpm_raw\": record.get(\"breath_rate_raw\"),"
+        },
+        {
+          "line": 143,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "breath = r.get(\"breath_rate_raw\")"
+        },
+        {
+          "line": 301,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "\"MR60 breath_rate_raw는 신뢰 불가; resp_phase 원값 기반 모델을 사용할 것.\","
+        },
+        {
+          "line": 357,
+          "path": "devices/mmwave/firmware/src/main.cpp",
+          "text": "Serial.print(\",\\\"breath_rate_raw\\\":\");"
+        },
+        {
+          "line": 367,
+          "path": "devices/mmwave/firmware/src/main.cpp",
+          "text": "Serial.print(\",\\\"breath_rate_raw_trusted\\\":false,\\\"breath_raw_valid\\\":\");"
+        }
+      ],
+      "breath_rate_raw_used_as_waveform_input": false,
+      "computation": "static scan of the CSV adapter/interpreter and MR60 adapter/exporter; waveform assignment is phase, while breath_rate_raw matches are telemetry/export/diagnostic references",
+      "waveform_input_field": "resp_phase/breath_phase",
+      "waveform_input_files": [
+        "devices/mmwave/firmware/export_mmwave_csv.py",
+        "devices/mmwave/firmware/src/main.cpp",
+        "devices/mmwave/src/mr60_esp_adapter.py",
+        "ondevice_ai/adapters/mmwave_csv_adapter.py",
+        "ondevice_ai/inference/mmwave_interpreter.py"
+      ],
+      "waveform_matches": [
+        {
+          "line": 25,
+          "path": "ondevice_ai/adapters/mmwave_csv_adapter.py",
+          "text": "values: np.ndarray             # (300,) float32 resp_phase (정확히 10Hz 재샘플링)"
+        },
+        {
+          "line": 59,
+          "path": "ondevice_ai/adapters/mmwave_csv_adapter.py",
+          "text": "required_cols = {\"timestamp_s\", \"resp_phase\"}"
+        },
+        {
+          "line": 71,
+          "path": "ondevice_ai/adapters/mmwave_csv_adapter.py",
+          "text": "phases = group[\"resp_phase\"].values.astype(np.float32)"
+        },
+        {
+          "line": 163,
+          "path": "ondevice_ai/inference/mmwave_interpreter.py",
+          "text": "\"\"\"300샘플 10Hz resp_phase 파형 검증 및 Z-Score 정규화 및 INT8/FLOAT32 양자화\"\"\""
+        },
+        {
+          "line": 172,
+          "path": "devices/mmwave/src/mr60_esp_adapter.py",
+          "text": "\"resp_phase\": record.get(\"breath_phase\"),"
+        },
+        {
+          "line": 263,
+          "path": "devices/mmwave/src/mr60_esp_adapter.py",
+          "text": "if not self.estimator.push(record.get(\"breath_phase\"), timestamp_s):"
+        },
+        {
+          "line": 292,
+          "path": "devices/mmwave/src/mr60_esp_adapter.py",
+          "text": "\"breath_phase_std\": estimate.phase_std,"
+        },
+        {
+          "line": 300,
+          "path": "devices/mmwave/src/mr60_esp_adapter.py",
+          "text": "\"resp_phase\": record.get(\"breath_phase\"),"
+        },
+        {
+          "line": 5,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "- resp_phase 필드에는 ESP breath_phase 원값을 그대로 저장 (×100, Z-Score 등 금지)"
+        },
+        {
+          "line": 9,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "- presence=0 구간에 resp_phase=0을 임의 생성하지 않음"
+        },
+        {
+          "line": 13,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "CSV 열: timestamp_s, resp_phase, subject_id, session_id, presence, label,"
+        },
+        {
+          "line": 31,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "\"timestamp_s\", \"resp_phase\", \"subject_id\", \"session_id\","
+        },
+        {
+          "line": 35,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "SIGNAL_SOURCE = \"MR60BHA2_breath_phase\""
+        },
+        {
+          "line": 83,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "phase_values = [float(r[\"breath_phase\"]) for r in session.records"
+        },
+        {
+          "line": 84,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "if r.get(\"breath_phase\") is not None"
+        },
+        {
+          "line": 85,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "and not is_bad_float(r.get(\"breath_phase\"))]"
+        },
+        {
+          "line": 99,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "phase = r.get(\"breath_phase\")"
+        },
+        {
+          "line": 119,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "\"breath_phase_std\": phase_std,"
+        },
+        {
+          "line": 135,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "resp = r.get(\"breath_phase\")"
+        },
+        {
+          "line": 291,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "\"resp_phase\": \"ESP breath_phase 원값. ×100, Z-Score, offset 제거 없음.\","
+        },
+        {
+          "line": 293,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "\"presence_zero_policy\": \"presence=0 구간에 resp_phase 임의 생성 없음.\","
+        },
+        {
+          "line": 301,
+          "path": "devices/mmwave/firmware/export_mmwave_csv.py",
+          "text": "\"MR60 breath_rate_raw는 신뢰 불가; resp_phase 원값 기반 모델을 사용할 것.\","
+        },
+        {
+          "line": 363,
+          "path": "devices/mmwave/firmware/src/main.cpp",
+          "text": "Serial.print(\",\\\"breath_phase_std\\\":\");"
+        },
+        {
+          "line": 381,
+          "path": "devices/mmwave/firmware/src/main.cpp",
+          "text": "Serial.print(\",\\\"breath_phase\\\":\");"
+        }
+      ]
+    },
+    "3_row_cadence_and_fresh_0x0A13_cadence": [
+      {
+        "computation": {
+          "fresh": "not measurable because phase_age_ms is absent",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": null,
+        "fresh_0x0A13_cadence_hz": null,
+        "fresh_cadence_status": "FIELD_NOT_PRESENT",
+        "regression_guards": null,
+        "selected_fresh_update_count": null,
+        "selected_method": null,
+        "superseded_estimator": null,
+        "superseded_fresh_0x0A13_cadence_hz": null,
+        "superseded_fresh_cadence_status": null,
+        "telemetry_row_cadence_hz": 9.994964166
+      },
+      {
+        "computation": {
+          "fresh": "not measurable because phase_age_ms is absent",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": null,
+        "fresh_0x0A13_cadence_hz": null,
+        "fresh_cadence_status": "FIELD_NOT_PRESENT",
+        "regression_guards": null,
+        "selected_fresh_update_count": null,
+        "selected_method": null,
+        "superseded_estimator": null,
+        "superseded_fresh_0x0A13_cadence_hz": null,
+        "superseded_fresh_cadence_status": null,
+        "telemetry_row_cadence_hz": 9.99613096
+      },
+      {
+        "computation": {
+          "fresh": "not measurable because phase_age_ms is absent",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": null,
+        "fresh_0x0A13_cadence_hz": null,
+        "fresh_cadence_status": "FIELD_NOT_PRESENT",
+        "regression_guards": null,
+        "selected_fresh_update_count": null,
+        "selected_method": null,
+        "superseded_estimator": null,
+        "superseded_fresh_0x0A13_cadence_hz": null,
+        "superseded_fresh_cadence_status": null,
+        "telemetry_row_cadence_hz": 9.995797563
+      },
+      {
+        "computation": {
+          "fresh": "not measurable because phase_age_ms is absent",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": null,
+        "fresh_0x0A13_cadence_hz": null,
+        "fresh_cadence_status": "FIELD_NOT_PRESENT",
+        "regression_guards": null,
+        "selected_fresh_update_count": null,
+        "selected_method": null,
+        "superseded_estimator": null,
+        "superseded_fresh_0x0A13_cadence_hz": null,
+        "superseded_fresh_cadence_status": null,
+        "telemetry_row_cadence_hz": 9.998365844
+      },
+      {
+        "computation": {
+          "fresh": "not measurable because phase_age_ms is absent",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": null,
+        "fresh_0x0A13_cadence_hz": null,
+        "fresh_cadence_status": "FIELD_NOT_PRESENT",
+        "regression_guards": null,
+        "selected_fresh_update_count": null,
+        "selected_method": null,
+        "superseded_estimator": null,
+        "superseded_fresh_0x0A13_cadence_hz": null,
+        "superseded_fresh_cadence_status": null,
+        "telemetry_row_cadence_hz": 9.995304219
+      },
+      {
+        "computation": {
+          "fresh": "not measurable because phase_age_ms is absent",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": null,
+        "fresh_0x0A13_cadence_hz": null,
+        "fresh_cadence_status": "FIELD_NOT_PRESENT",
+        "regression_guards": null,
+        "selected_fresh_update_count": null,
+        "selected_method": null,
+        "superseded_estimator": null,
+        "superseded_fresh_0x0A13_cadence_hz": null,
+        "superseded_fresh_cadence_status": null,
+        "telemetry_row_cadence_hz": 9.995433558
+      },
+      {
+        "computation": {
+          "fresh": "not measurable because phase_age_ms is absent",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": null,
+        "fresh_0x0A13_cadence_hz": null,
+        "fresh_cadence_status": "FIELD_NOT_PRESENT",
+        "regression_guards": null,
+        "selected_fresh_update_count": null,
+        "selected_method": null,
+        "superseded_estimator": null,
+        "superseded_fresh_0x0A13_cadence_hz": null,
+        "superseded_fresh_cadence_status": null,
+        "telemetry_row_cadence_hz": 9.994097974
+      },
+      {
+        "computation": {
+          "fresh": "not measurable because phase_age_ms is absent",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": null,
+        "fresh_0x0A13_cadence_hz": null,
+        "fresh_cadence_status": "FIELD_NOT_PRESENT",
+        "regression_guards": null,
+        "selected_fresh_update_count": null,
+        "selected_method": null,
+        "superseded_estimator": null,
+        "superseded_fresh_0x0A13_cadence_hz": null,
+        "superseded_fresh_cadence_status": null,
+        "telemetry_row_cadence_hz": 9.994226554
+      },
+      {
+        "computation": {
+          "fresh": "not measurable because phase_age_ms is absent",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": null,
+        "fresh_0x0A13_cadence_hz": null,
+        "fresh_cadence_status": "FIELD_NOT_PRESENT",
+        "regression_guards": null,
+        "selected_fresh_update_count": null,
+        "selected_method": null,
+        "superseded_estimator": null,
+        "superseded_fresh_0x0A13_cadence_hz": null,
+        "superseded_fresh_cadence_status": null,
+        "telemetry_row_cadence_hz": 9.992994255
+      },
+      {
+        "computation": {
+          "fresh": "fresh update instant = round(timestamp_s*1000)-phase_age_ms; cadence = advancing update-instant count / timestamp span",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": {
+          "old_phase_age_decrease_proxy": {
+            "cadence_hz": 4.30467137,
+            "computation": "count phase_age_ms[i] < phase_age_ms[i-1]; divide by timestamp span",
+            "role": "systematically undercounts always-low pilot age values",
+            "status": "RETRACTED_FAULTY_ESTIMATOR",
+            "transition_count": 8006
+          },
+          "phase_age_less_than_previous_row_interval": {
+            "cadence_hz": 8.419003785,
+            "computation": "count phase_age_ms[i] < telemetry interval[i]; divide by timestamp span",
+            "role": "independent confirmation that an update is newer than the previous emission",
+            "status": "CURRENT_DIAGNOSTIC",
+            "transition_count": 15658
+          },
+          "phase_value_change_or_age_decrease": {
+            "cadence_hz": 7.661949415,
+            "computation": "count breath_phase changes or phase_age_ms decreases; divide by timestamp span",
+            "role": "independent lower bound because quantized phase values can repeat",
+            "status": "CURRENT_DIAGNOSTIC",
+            "transition_count": 14250
+          },
+          "reconstructed_update_instant_advances": {
+            "cadence_hz": 8.419003785,
+            "computation": "update_ms=round(timestamp_s*1000)-phase_age_ms; count update_ms[i] > update_ms[i-1]; divide by timestamp span",
+            "role": "selected because it directly tests whether the recorded source-update instant advances",
+            "status": "CURRENT_DIAGNOSTIC",
+            "transition_count": 15658
+          }
+        },
+        "fresh_0x0A13_cadence_hz": 8.419003785,
+        "fresh_cadence_status": "RECONSTRUCTED_UPDATE_INSTANT_ADVANCES",
+        "regression_guards": {
+          "age_interval_transition_count": 15658,
+          "cross_check": "EXACT_MATCH",
+          "low_age_definition": "max(phase_age_ms) < 2 * median telemetry interval; regression diagnostic only",
+          "low_age_regime": false,
+          "materially_below_row_cadence_definition": "fresh cadence < 0.95 * row cadence; regression diagnostic only",
+          "status": "PASS",
+          "timestamp_age_transition_count": 15658
+        },
+        "selected_fresh_update_count": 15658,
+        "selected_method": "reconstructed_update_instant_advances",
+        "superseded_estimator": "phase_age_ms decrease count / timestamp span",
+        "superseded_fresh_0x0A13_cadence_hz": 4.30467137,
+        "superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+        "telemetry_row_cadence_hz": 9.986342911
+      },
+      {
+        "computation": {
+          "fresh": "fresh update instant = round(timestamp_s*1000)-phase_age_ms; cadence = advancing update-instant count / timestamp span",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": {
+          "old_phase_age_decrease_proxy": {
+            "cadence_hz": 3.679658492,
+            "computation": "count phase_age_ms[i] < phase_age_ms[i-1]; divide by timestamp span",
+            "role": "systematically undercounts always-low pilot age values",
+            "status": "RETRACTED_FAULTY_ESTIMATOR",
+            "transition_count": 662
+          },
+          "phase_age_less_than_previous_row_interval": {
+            "cadence_hz": 9.988438535,
+            "computation": "count phase_age_ms[i] < telemetry interval[i]; divide by timestamp span",
+            "role": "independent confirmation that an update is newer than the previous emission",
+            "status": "CURRENT_DIAGNOSTIC",
+            "transition_count": 1797
+          },
+          "phase_value_change_or_age_decrease": {
+            "cadence_hz": 9.126887076,
+            "computation": "count breath_phase changes or phase_age_ms decreases; divide by timestamp span",
+            "role": "independent lower bound because quantized phase values can repeat",
+            "status": "CURRENT_DIAGNOSTIC",
+            "transition_count": 1642
+          },
+          "reconstructed_update_instant_advances": {
+            "cadence_hz": 9.988438535,
+            "computation": "update_ms=round(timestamp_s*1000)-phase_age_ms; count update_ms[i] > update_ms[i-1]; divide by timestamp span",
+            "role": "selected because it directly tests whether the recorded source-update instant advances",
+            "status": "CURRENT_DIAGNOSTIC",
+            "transition_count": 1797
+          }
+        },
+        "fresh_0x0A13_cadence_hz": 9.988438535,
+        "fresh_cadence_status": "RECONSTRUCTED_UPDATE_INSTANT_ADVANCES",
+        "regression_guards": {
+          "age_interval_transition_count": 1797,
+          "cross_check": "EXACT_MATCH",
+          "low_age_definition": "max(phase_age_ms) < 2 * median telemetry interval; regression diagnostic only",
+          "low_age_regime": true,
+          "materially_below_row_cadence_definition": "fresh cadence < 0.95 * row cadence; regression diagnostic only",
+          "status": "PASS",
+          "timestamp_age_transition_count": 1797
+        },
+        "selected_fresh_update_count": 1797,
+        "selected_method": "reconstructed_update_instant_advances",
+        "superseded_estimator": "phase_age_ms decrease count / timestamp span",
+        "superseded_fresh_0x0A13_cadence_hz": 3.679658492,
+        "superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+        "telemetry_row_cadence_hz": 9.993996932
+      },
+      {
+        "computation": {
+          "fresh": "fresh update instant = round(timestamp_s*1000)-phase_age_ms; cadence = advancing update-instant count / timestamp span",
+          "row": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+        },
+        "estimator_methods": {
+          "old_phase_age_decrease_proxy": {
+            "cadence_hz": 3.518230325,
+            "computation": "count phase_age_ms[i] < phase_age_ms[i-1]; divide by timestamp span",
+            "role": "systematically undercounts always-low pilot age values",
+            "status": "RETRACTED_FAULTY_ESTIMATOR",
+            "transition_count": 633
+          },
+          "phase_age_less_than_previous_row_interval": {
+            "cadence_hz": 9.993330369,
+            "computation": "count phase_age_ms[i] < telemetry interval[i]; divide by timestamp span",
+            "role": "independent confirmation that an update is newer than the previous emission",
+            "status": "CURRENT_DIAGNOSTIC",
+            "transition_count": 1798
+          },
+          "phase_value_change_or_age_decrease": {
+            "cadence_hz": 9.131836372,
+            "computation": "count breath_phase changes or phase_age_ms decreases; divide by timestamp span",
+            "role": "independent lower bound because quantized phase values can repeat",
+            "status": "CURRENT_DIAGNOSTIC",
+            "transition_count": 1643
+          },
+          "reconstructed_update_instant_advances": {
+            "cadence_hz": 9.993330369,
+            "computation": "update_ms=round(timestamp_s*1000)-phase_age_ms; count update_ms[i] > update_ms[i-1]; divide by timestamp span",
+            "role": "selected because it directly tests whether the recorded source-update instant advances",
+            "status": "CURRENT_DIAGNOSTIC",
+            "transition_count": 1798
+          }
+        },
+        "fresh_0x0A13_cadence_hz": 9.993330369,
+        "fresh_cadence_status": "RECONSTRUCTED_UPDATE_INSTANT_ADVANCES",
+        "regression_guards": {
+          "age_interval_transition_count": 1798,
+          "cross_check": "EXACT_MATCH",
+          "low_age_definition": "max(phase_age_ms) < 2 * median telemetry interval; regression diagnostic only",
+          "low_age_regime": true,
+          "materially_below_row_cadence_definition": "fresh cadence < 0.95 * row cadence; regression diagnostic only",
+          "status": "PASS",
+          "timestamp_age_transition_count": 1798
+        },
+        "selected_fresh_update_count": 1798,
+        "selected_method": "reconstructed_update_instant_advances",
+        "superseded_estimator": "phase_age_ms decrease count / timestamp span",
+        "superseded_fresh_0x0A13_cadence_hz": 3.518230325,
+        "superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+        "telemetry_row_cadence_hz": 9.993330369
+      }
+    ],
+    "4_timestamp_integrity": [
+      {
+        "session_id": "S001_NORMAL_D06",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 299.851,
+          "freeze_flag_count": 0,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.0,
+          "max_interval_ms": 102.0,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 100.0,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 2998,
+          "row_cadence_hz": 9.994964166,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": null,
+            "first": null,
+            "last": null,
+            "missing_sequence_count": null,
+            "nonmonotonic_sequence_count": null,
+            "record_count": 0,
+            "status": "FIELD_NOT_PRESENT"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      },
+      {
+        "session_id": "S001_NORMAL_D09",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 299.816,
+          "freeze_flag_count": 0,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.0,
+          "max_interval_ms": 101.0,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 100.0,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 2998,
+          "row_cadence_hz": 9.99613096,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": null,
+            "first": null,
+            "last": null,
+            "missing_sequence_count": null,
+            "nonmonotonic_sequence_count": null,
+            "record_count": 0,
+            "status": "FIELD_NOT_PRESENT"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      },
+      {
+        "session_id": "S001_NORMAL_D12",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 299.826,
+          "freeze_flag_count": 0,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.0,
+          "max_interval_ms": 102.0,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 100.0,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 2998,
+          "row_cadence_hz": 9.995797563,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": null,
+            "first": null,
+            "last": null,
+            "missing_sequence_count": null,
+            "nonmonotonic_sequence_count": null,
+            "record_count": 0,
+            "status": "FIELD_NOT_PRESENT"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      },
+      {
+        "session_id": "S001_NORMAL_D15",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 299.849,
+          "freeze_flag_count": 0,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.0,
+          "max_interval_ms": 102.0,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 100.0,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 2999,
+          "row_cadence_hz": 9.998365844,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": null,
+            "first": null,
+            "last": null,
+            "missing_sequence_count": null,
+            "nonmonotonic_sequence_count": null,
+            "record_count": 0,
+            "status": "FIELD_NOT_PRESENT"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      },
+      {
+        "session_id": "S001_BREATH_PACED_12_01",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 208.698,
+          "freeze_flag_count": 0,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.0,
+          "max_interval_ms": 102.0,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 100.0,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 2087,
+          "row_cadence_hz": 9.995304219,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": null,
+            "first": null,
+            "last": null,
+            "missing_sequence_count": null,
+            "nonmonotonic_sequence_count": null,
+            "record_count": 0,
+            "status": "FIELD_NOT_PRESENT"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      },
+      {
+        "session_id": "S001_BREATH_PACED_12_02",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 177.381,
+          "freeze_flag_count": 0,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.0,
+          "max_interval_ms": 101.0,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 100.0,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 1774,
+          "row_cadence_hz": 9.995433558,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": null,
+            "first": null,
+            "last": null,
+            "missing_sequence_count": null,
+            "nonmonotonic_sequence_count": null,
+            "record_count": 0,
+            "status": "FIELD_NOT_PRESENT"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      },
+      {
+        "session_id": "S001_BREATH_PACED_15_03",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 177.905,
+          "freeze_flag_count": 0,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.0,
+          "max_interval_ms": 103.0,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 100.0,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 1779,
+          "row_cadence_hz": 9.994097974,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": null,
+            "first": null,
+            "last": null,
+            "missing_sequence_count": null,
+            "nonmonotonic_sequence_count": null,
+            "record_count": 0,
+            "status": "FIELD_NOT_PRESENT"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      },
+      {
+        "session_id": "S001_BREATH_PACED_20_04",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 178.403,
+          "freeze_flag_count": 0,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.0,
+          "max_interval_ms": 103.0,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 100.0,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 1784,
+          "row_cadence_hz": 9.994226554,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": null,
+            "first": null,
+            "last": null,
+            "missing_sequence_count": null,
+            "nonmonotonic_sequence_count": null,
+            "record_count": 0,
+            "status": "FIELD_NOT_PRESENT"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      },
+      {
+        "session_id": "S001_BREATH_PACED_20_05",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 178.425,
+          "freeze_flag_count": 0,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.0,
+          "max_interval_ms": 103.0,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 100.0,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 1784,
+          "row_cadence_hz": 9.992994255,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": null,
+            "first": null,
+            "last": null,
+            "missing_sequence_count": null,
+            "nonmonotonic_sequence_count": null,
+            "record_count": 0,
+            "status": "FIELD_NOT_PRESENT"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      },
+      {
+        "session_id": "2026-08-01_occupied_d09_v120_31min_attempt02",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 1859.84,
+          "freeze_flag_count": 2566,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.000000001,
+          "max_interval_ms": 103.000000001,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 99.999999999,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 18574,
+          "row_cadence_hz": 9.986342911,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": 0,
+            "first": 86788,
+            "last": 105361,
+            "missing_sequence_count": 0,
+            "nonmonotonic_sequence_count": 0,
+            "record_count": 18574,
+            "status": "MEASURED"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      },
+      {
+        "session_id": "M-C0-PILOT-DESKWORK-001",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 179.908,
+          "freeze_flag_count": 0,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.0,
+          "max_interval_ms": 103.0,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 100.0,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 1799,
+          "row_cadence_hz": 9.993996932,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": 0,
+            "first": 11146,
+            "last": 12944,
+            "missing_sequence_count": 0,
+            "nonmonotonic_sequence_count": 0,
+            "record_count": 1799,
+            "status": "MEASURED"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      },
+      {
+        "session_id": "M-C0-PILOT-STATIONARY-001",
+        "timestamp_integrity": {
+          "computation": {
+            "gap_count": "interval_ms > max(150 ms, 1.5 * median_positive_interval_ms); diagnostic only, not an official failure threshold",
+            "row_cadence_hz": "(timestamp_count - 1) / (last_timestamp - first_timestamp)"
+          },
+          "duplicate_timestamp_count": 0,
+          "duration_s": 179.92,
+          "freeze_flag_count": 0,
+          "gap_count": 0,
+          "gap_threshold_ms_diagnostic": 150.0,
+          "max_interval_ms": 102.0,
+          "median_interval_ms": 100.0,
+          "min_interval_ms": 100.0,
+          "nonmonotonic_timestamp_count": 0,
+          "record_count_with_timestamp": 1799,
+          "row_cadence_hz": 9.993330369,
+          "sequence": {
+            "computation": "sum(max(seq[i+1]-seq[i]-1, 0) for positive sequence gaps)",
+            "duplicate_sequence_count": 0,
+            "first": 19088,
+            "last": 20886,
+            "missing_sequence_count": 0,
+            "nonmonotonic_sequence_count": 0,
+            "record_count": 1799,
+            "status": "MEASURED"
+          },
+          "timestamp_freeze_intervals": {
+            "interval_count": 0,
+            "longest_interval_run": 0
+          }
+        }
+      }
+    ],
+    "5_phase_age_ms_distribution": [
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": null,
+          "max": null,
+          "median": null,
+          "min": null,
+          "p95": null
+        },
+        "session_id": "S001_NORMAL_D06"
+      },
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": null,
+          "max": null,
+          "median": null,
+          "min": null,
+          "p95": null
+        },
+        "session_id": "S001_NORMAL_D09"
+      },
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": null,
+          "max": null,
+          "median": null,
+          "min": null,
+          "p95": null
+        },
+        "session_id": "S001_NORMAL_D12"
+      },
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": null,
+          "max": null,
+          "median": null,
+          "min": null,
+          "p95": null
+        },
+        "session_id": "S001_NORMAL_D15"
+      },
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": null,
+          "max": null,
+          "median": null,
+          "min": null,
+          "p95": null
+        },
+        "session_id": "S001_BREATH_PACED_12_01"
+      },
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": null,
+          "max": null,
+          "median": null,
+          "min": null,
+          "p95": null
+        },
+        "session_id": "S001_BREATH_PACED_12_02"
+      },
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": null,
+          "max": null,
+          "median": null,
+          "min": null,
+          "p95": null
+        },
+        "session_id": "S001_BREATH_PACED_15_03"
+      },
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": null,
+          "max": null,
+          "median": null,
+          "min": null,
+          "p95": null
+        },
+        "session_id": "S001_BREATH_PACED_20_04"
+      },
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": null,
+          "max": null,
+          "median": null,
+          "min": null,
+          "p95": null
+        },
+        "session_id": "S001_BREATH_PACED_20_05"
+      },
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": 0.139173038,
+          "max": 288530.0,
+          "median": 12.0,
+          "min": 0.0,
+          "p95": 195627.0
+        },
+        "session_id": "2026-08-01_occupied_d09_v120_31min_attempt02"
+      },
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": 0.0,
+          "max": 111.0,
+          "median": 12.0,
+          "min": 0.0,
+          "p95": 15.0
+        },
+        "session_id": "M-C0-PILOT-DESKWORK-001"
+      },
+      {
+        "phase_age_ms": {
+          "fraction_over_30000_ms": 0.0,
+          "max": 17.0,
+          "median": 12.0,
+          "min": 0.0,
+          "p95": 15.0
+        },
+        "session_id": "M-C0-PILOT-STATIONARY-001"
+      }
+    ],
+    "6_300_fresh_sample_windows": {
+      "by_evidence_group": {
+        "PR18_PILOT_CAPTURE": {
+          "sessions": [
+            {
+              "computation": "anchor fixed non-overlapping 30 s bins at the first telemetry timestamp; include the first identifiable timestamp-age update, then each advancing reconstructed update instant; count bins with >=300 fresh samples",
+              "fresh_sample_counts_by_window": [
+                300,
+                300,
+                300,
+                300,
+                299,
+                299
+              ],
+              "maximum_fresh_samples_in_window": 300,
+              "session_id": "M-C0-PILOT-DESKWORK-001",
+              "status": "MEASURED_FROM_RECONSTRUCTED_UPDATE_INSTANTS",
+              "valid_300_fresh_windows": 4,
+              "window_count_evaluated": 6
+            },
+            {
+              "computation": "anchor fixed non-overlapping 30 s bins at the first telemetry timestamp; include the first identifiable timestamp-age update, then each advancing reconstructed update instant; count bins with >=300 fresh samples",
+              "fresh_sample_counts_by_window": [
+                300,
+                300,
+                300,
+                300,
+                299,
+                300
+              ],
+              "maximum_fresh_samples_in_window": 300,
+              "session_id": "M-C0-PILOT-STATIONARY-001",
+              "status": "MEASURED_FROM_RECONSTRUCTED_UPDATE_INSTANTS",
+              "valid_300_fresh_windows": 5,
+              "window_count_evaluated": 6
+            }
+          ],
+          "valid_300_fresh_windows": 9
+        },
+        "PRE_PR18_LEGACY_LOGS": {
+          "sessions": [
+            {
+              "computation": "no window count because phase_age_ms/update instant is absent",
+              "fresh_sample_counts_by_window": [],
+              "maximum_fresh_samples_in_window": 0,
+              "session_id": "S001_NORMAL_D06",
+              "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+              "valid_300_fresh_windows": 0,
+              "window_count_evaluated": 0
+            },
+            {
+              "computation": "no window count because phase_age_ms/update instant is absent",
+              "fresh_sample_counts_by_window": [],
+              "maximum_fresh_samples_in_window": 0,
+              "session_id": "S001_NORMAL_D09",
+              "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+              "valid_300_fresh_windows": 0,
+              "window_count_evaluated": 0
+            },
+            {
+              "computation": "no window count because phase_age_ms/update instant is absent",
+              "fresh_sample_counts_by_window": [],
+              "maximum_fresh_samples_in_window": 0,
+              "session_id": "S001_NORMAL_D12",
+              "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+              "valid_300_fresh_windows": 0,
+              "window_count_evaluated": 0
+            },
+            {
+              "computation": "no window count because phase_age_ms/update instant is absent",
+              "fresh_sample_counts_by_window": [],
+              "maximum_fresh_samples_in_window": 0,
+              "session_id": "S001_NORMAL_D15",
+              "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+              "valid_300_fresh_windows": 0,
+              "window_count_evaluated": 0
+            },
+            {
+              "computation": "no window count because phase_age_ms/update instant is absent",
+              "fresh_sample_counts_by_window": [],
+              "maximum_fresh_samples_in_window": 0,
+              "session_id": "S001_BREATH_PACED_12_01",
+              "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+              "valid_300_fresh_windows": 0,
+              "window_count_evaluated": 0
+            },
+            {
+              "computation": "no window count because phase_age_ms/update instant is absent",
+              "fresh_sample_counts_by_window": [],
+              "maximum_fresh_samples_in_window": 0,
+              "session_id": "S001_BREATH_PACED_12_02",
+              "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+              "valid_300_fresh_windows": 0,
+              "window_count_evaluated": 0
+            },
+            {
+              "computation": "no window count because phase_age_ms/update instant is absent",
+              "fresh_sample_counts_by_window": [],
+              "maximum_fresh_samples_in_window": 0,
+              "session_id": "S001_BREATH_PACED_15_03",
+              "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+              "valid_300_fresh_windows": 0,
+              "window_count_evaluated": 0
+            },
+            {
+              "computation": "no window count because phase_age_ms/update instant is absent",
+              "fresh_sample_counts_by_window": [],
+              "maximum_fresh_samples_in_window": 0,
+              "session_id": "S001_BREATH_PACED_20_04",
+              "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+              "valid_300_fresh_windows": 0,
+              "window_count_evaluated": 0
+            },
+            {
+              "computation": "no window count because phase_age_ms/update instant is absent",
+              "fresh_sample_counts_by_window": [],
+              "maximum_fresh_samples_in_window": 0,
+              "session_id": "S001_BREATH_PACED_20_05",
+              "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+              "valid_300_fresh_windows": 0,
+              "window_count_evaluated": 0
+            },
+            {
+              "computation": "anchor fixed non-overlapping 30 s bins at the first telemetry timestamp; include the first identifiable timestamp-age update, then each advancing reconstructed update instant; count bins with >=300 fresh samples",
+              "fresh_sample_counts_by_window": [
+                300,
+                300,
+                299,
+                300,
+                299,
+                300,
+                299,
+                300,
+                300,
+                269,
+                300,
+                299,
+                300,
+                299,
+                299,
+                300,
+                299,
+                300,
+                299,
+                299,
+                300,
+                300,
+                299,
+                300,
+                299,
+                299,
+                300,
+                299,
+                300,
+                299,
+                300,
+                300,
+                299,
+                300,
+                299,
+                300,
+                299,
+                300,
+                299,
+                299,
+                300,
+                299,
+                300,
+                300,
+                299,
+                300,
+                299,
+                300,
+                299,
+                300,
+                300,
+                299,
+                114,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "maximum_fresh_samples_in_window": 300,
+              "session_id": "2026-08-01_occupied_d09_v120_31min_attempt02",
+              "status": "MEASURED_FROM_RECONSTRUCTED_UPDATE_INSTANTS",
+              "valid_300_fresh_windows": 27,
+              "window_count_evaluated": 62
+            }
+          ],
+          "valid_300_fresh_windows": 27
+        }
+      },
+      "cross_group_aggregate_reported": false,
+      "per_session": [
+        {
+          "evidence_group": "PRE_PR18_LEGACY_LOGS",
+          "fresh_windows": {
+            "computation": "no window count because phase_age_ms/update instant is absent",
+            "fresh_sample_counts_by_window": [],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 0,
+            "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+            "window_count_evaluated": 0,
+            "windows_with_300_genuinely_fresh_samples": 0
+          },
+          "session_id": "S001_NORMAL_D06"
+        },
+        {
+          "evidence_group": "PRE_PR18_LEGACY_LOGS",
+          "fresh_windows": {
+            "computation": "no window count because phase_age_ms/update instant is absent",
+            "fresh_sample_counts_by_window": [],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 0,
+            "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+            "window_count_evaluated": 0,
+            "windows_with_300_genuinely_fresh_samples": 0
+          },
+          "session_id": "S001_NORMAL_D09"
+        },
+        {
+          "evidence_group": "PRE_PR18_LEGACY_LOGS",
+          "fresh_windows": {
+            "computation": "no window count because phase_age_ms/update instant is absent",
+            "fresh_sample_counts_by_window": [],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 0,
+            "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+            "window_count_evaluated": 0,
+            "windows_with_300_genuinely_fresh_samples": 0
+          },
+          "session_id": "S001_NORMAL_D12"
+        },
+        {
+          "evidence_group": "PRE_PR18_LEGACY_LOGS",
+          "fresh_windows": {
+            "computation": "no window count because phase_age_ms/update instant is absent",
+            "fresh_sample_counts_by_window": [],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 0,
+            "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+            "window_count_evaluated": 0,
+            "windows_with_300_genuinely_fresh_samples": 0
+          },
+          "session_id": "S001_NORMAL_D15"
+        },
+        {
+          "evidence_group": "PRE_PR18_LEGACY_LOGS",
+          "fresh_windows": {
+            "computation": "no window count because phase_age_ms/update instant is absent",
+            "fresh_sample_counts_by_window": [],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 0,
+            "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+            "window_count_evaluated": 0,
+            "windows_with_300_genuinely_fresh_samples": 0
+          },
+          "session_id": "S001_BREATH_PACED_12_01"
+        },
+        {
+          "evidence_group": "PRE_PR18_LEGACY_LOGS",
+          "fresh_windows": {
+            "computation": "no window count because phase_age_ms/update instant is absent",
+            "fresh_sample_counts_by_window": [],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 0,
+            "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+            "window_count_evaluated": 0,
+            "windows_with_300_genuinely_fresh_samples": 0
+          },
+          "session_id": "S001_BREATH_PACED_12_02"
+        },
+        {
+          "evidence_group": "PRE_PR18_LEGACY_LOGS",
+          "fresh_windows": {
+            "computation": "no window count because phase_age_ms/update instant is absent",
+            "fresh_sample_counts_by_window": [],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 0,
+            "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+            "window_count_evaluated": 0,
+            "windows_with_300_genuinely_fresh_samples": 0
+          },
+          "session_id": "S001_BREATH_PACED_15_03"
+        },
+        {
+          "evidence_group": "PRE_PR18_LEGACY_LOGS",
+          "fresh_windows": {
+            "computation": "no window count because phase_age_ms/update instant is absent",
+            "fresh_sample_counts_by_window": [],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 0,
+            "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+            "window_count_evaluated": 0,
+            "windows_with_300_genuinely_fresh_samples": 0
+          },
+          "session_id": "S001_BREATH_PACED_20_04"
+        },
+        {
+          "evidence_group": "PRE_PR18_LEGACY_LOGS",
+          "fresh_windows": {
+            "computation": "no window count because phase_age_ms/update instant is absent",
+            "fresh_sample_counts_by_window": [],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 0,
+            "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+            "window_count_evaluated": 0,
+            "windows_with_300_genuinely_fresh_samples": 0
+          },
+          "session_id": "S001_BREATH_PACED_20_05"
+        },
+        {
+          "evidence_group": "PRE_PR18_LEGACY_LOGS",
+          "fresh_windows": {
+            "computation": "anchor fixed non-overlapping 30 s bins at the first telemetry timestamp; include the first identifiable timestamp-age update, then each advancing reconstructed update instant; count bins with >=300 fresh samples",
+            "first_identifiable_sample_included": true,
+            "fresh_sample_counts_by_window": [
+              300,
+              300,
+              299,
+              300,
+              299,
+              300,
+              299,
+              300,
+              300,
+              269,
+              300,
+              299,
+              300,
+              299,
+              299,
+              300,
+              299,
+              300,
+              299,
+              299,
+              300,
+              300,
+              299,
+              300,
+              299,
+              299,
+              300,
+              299,
+              300,
+              299,
+              300,
+              300,
+              299,
+              300,
+              299,
+              300,
+              299,
+              300,
+              299,
+              299,
+              300,
+              299,
+              300,
+              300,
+              299,
+              300,
+              299,
+              300,
+              299,
+              300,
+              300,
+              299,
+              114,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 300,
+            "status": "MEASURED_FROM_RECONSTRUCTED_UPDATE_INSTANTS",
+            "window_count_evaluated": 62,
+            "windows_with_300_genuinely_fresh_samples": 27
+          },
+          "session_id": "2026-08-01_occupied_d09_v120_31min_attempt02"
+        },
+        {
+          "evidence_group": "PR18_PILOT_CAPTURE",
+          "fresh_windows": {
+            "computation": "anchor fixed non-overlapping 30 s bins at the first telemetry timestamp; include the first identifiable timestamp-age update, then each advancing reconstructed update instant; count bins with >=300 fresh samples",
+            "first_identifiable_sample_included": true,
+            "fresh_sample_counts_by_window": [
+              300,
+              300,
+              300,
+              300,
+              299,
+              299
+            ],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 300,
+            "status": "MEASURED_FROM_RECONSTRUCTED_UPDATE_INSTANTS",
+            "window_count_evaluated": 6,
+            "windows_with_300_genuinely_fresh_samples": 4
+          },
+          "session_id": "M-C0-PILOT-DESKWORK-001"
+        },
+        {
+          "evidence_group": "PR18_PILOT_CAPTURE",
+          "fresh_windows": {
+            "computation": "anchor fixed non-overlapping 30 s bins at the first telemetry timestamp; include the first identifiable timestamp-age update, then each advancing reconstructed update instant; count bins with >=300 fresh samples",
+            "first_identifiable_sample_included": true,
+            "fresh_sample_counts_by_window": [
+              300,
+              300,
+              300,
+              300,
+              299,
+              300
+            ],
+            "max_fresh_samples_in_nonoverlapping_30s_window": 300,
+            "status": "MEASURED_FROM_RECONSTRUCTED_UPDATE_INSTANTS",
+            "window_count_evaluated": 6,
+            "windows_with_300_genuinely_fresh_samples": 5
+          },
+          "session_id": "M-C0-PILOT-STATIONARY-001"
+        }
+      ]
+    },
+    "7_interpolation_requirement_and_simulated_distortion": [
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "distortion": null,
+          "required_status": "UNRESOLVED",
+          "simulation_status": "NOT_QUANTIFIABLE"
+        },
+        "session_id": "S001_NORMAL_D06"
+      },
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "distortion": null,
+          "required_status": "UNRESOLVED",
+          "simulation_status": "NOT_QUANTIFIABLE"
+        },
+        "session_id": "S001_NORMAL_D09"
+      },
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "distortion": null,
+          "required_status": "UNRESOLVED",
+          "simulation_status": "NOT_QUANTIFIABLE"
+        },
+        "session_id": "S001_NORMAL_D12"
+      },
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "distortion": null,
+          "required_status": "UNRESOLVED",
+          "simulation_status": "NOT_QUANTIFIABLE"
+        },
+        "session_id": "S001_NORMAL_D15"
+      },
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "distortion": null,
+          "required_status": "UNRESOLVED",
+          "simulation_status": "NOT_QUANTIFIABLE"
+        },
+        "session_id": "S001_BREATH_PACED_12_01"
+      },
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "distortion": null,
+          "required_status": "UNRESOLVED",
+          "simulation_status": "NOT_QUANTIFIABLE"
+        },
+        "session_id": "S001_BREATH_PACED_12_02"
+      },
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "distortion": null,
+          "required_status": "UNRESOLVED",
+          "simulation_status": "NOT_QUANTIFIABLE"
+        },
+        "session_id": "S001_BREATH_PACED_15_03"
+      },
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "distortion": null,
+          "required_status": "UNRESOLVED",
+          "simulation_status": "NOT_QUANTIFIABLE"
+        },
+        "session_id": "S001_BREATH_PACED_20_04"
+      },
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "distortion": null,
+          "required_status": "UNRESOLVED",
+          "simulation_status": "NOT_QUANTIFIABLE"
+        },
+        "session_id": "S001_BREATH_PACED_20_05"
+      },
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "computation": "linear interpolation between phase_age reset-proxy samples; compared with observed held/repeated telemetry at the original timestamps",
+          "distortion": {
+            "interpolated_std": 0.172725491,
+            "mae": 0.004631681,
+            "max_abs": 0.084,
+            "observed_std": 0.175712071,
+            "rmse": 0.008928878,
+            "sample_count": 15688
+          },
+          "required_status": "UNRESOLVED",
+          "simulation_status": "SIMULATED_LINEAR_INTERPOLATION_FROM_PHASE_AGE_RESET_PROXY"
+        },
+        "session_id": "2026-08-01_occupied_d09_v120_31min_attempt02"
+      },
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "computation": "linear interpolation between phase_age reset-proxy samples; compared with observed held/repeated telemetry at the original timestamps",
+          "distortion": {
+            "interpolated_std": 0.217906037,
+            "mae": 0.010100385,
+            "max_abs": 0.09,
+            "observed_std": 0.226751812,
+            "rmse": 0.017641003,
+            "sample_count": 1797
+          },
+          "required_status": "UNRESOLVED",
+          "simulation_status": "SIMULATED_LINEAR_INTERPOLATION_FROM_PHASE_AGE_RESET_PROXY"
+        },
+        "session_id": "M-C0-PILOT-DESKWORK-001"
+      },
+      {
+        "interpolation": {
+          "applied_to_audit": false,
+          "computation": "linear interpolation between phase_age reset-proxy samples; compared with observed held/repeated telemetry at the original timestamps",
+          "distortion": {
+            "interpolated_std": 0.162939168,
+            "mae": 0.00829552,
+            "max_abs": 0.06,
+            "observed_std": 0.169863102,
+            "rmse": 0.013461468,
+            "sample_count": 1793
+          },
+          "required_status": "UNRESOLVED",
+          "simulation_status": "SIMULATED_LINEAR_INTERPOLATION_FROM_PHASE_AGE_RESET_PROXY"
+        },
+        "session_id": "M-C0-PILOT-STATIONARY-001"
+      }
+    ],
+    "8_bpf_zscore_equivalence": [
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 2998,
+              "max": 0.375487503,
+              "mean": -0.000264408,
+              "median": 0.0,
+              "min": -0.333766669,
+              "p05": -0.166883335,
+              "p95": 0.166883335,
+              "std": 0.112938267
+            },
+            "before_int8": {
+              "count": 2998,
+              "max": 0.3643784,
+              "mean": -0.000652644,
+              "median": 0.0023292,
+              "min": -0.34618545,
+              "p05": -0.187154493,
+              "p95": 0.185045619,
+              "std": 0.112148002
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 2998,
+              "max": 0.020303241,
+              "mean": 0.000388236,
+              "median": 0.000990273,
+              "min": -0.020460819,
+              "p05": -0.019215305,
+              "p95": 0.019089809,
+              "std": 0.012093631
+            },
+            "quantized_integer_stats": {
+              "count": 2998,
+              "max": 6.0,
+              "mean": -3.006337558,
+              "median": -3.0,
+              "min": -11.0,
+              "p05": -7.0,
+              "p95": 1.0,
+              "std": 2.706999278
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 2998,
+            "max": 1.08,
+            "mean": 0.001187458,
+            "median": 0.01,
+            "min": -1.02,
+            "p05": -0.55,
+            "p95": 0.55,
+            "std": 0.331442142
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "S001_NORMAL_D06"
+      },
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 2998,
+              "max": 0.125162501,
+              "mean": -0.001447287,
+              "median": 0.0,
+              "min": -0.166883335,
+              "p05": -0.083441667,
+              "p95": 0.083441667,
+              "std": 0.043454887
+            },
+            "before_int8": {
+              "count": 2998,
+              "max": 0.141058333,
+              "mean": -0.001250819,
+              "median": -0.001054437,
+              "min": -0.163469031,
+              "p05": -0.078878097,
+              "p95": 0.06661831,
+              "std": 0.041939325
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 2998,
+              "max": 0.020239076,
+              "mean": -0.000196468,
+              "median": 0.001054437,
+              "min": -0.020396654,
+              "p05": -0.019247387,
+              "p95": 0.017972624,
+              "std": 0.011731224
+            },
+            "quantized_integer_stats": {
+              "count": 2998,
+              "max": 0.0,
+              "mean": -3.034689793,
+              "median": -3.0,
+              "min": -7.0,
+              "p05": -5.0,
+              "p95": -1.0,
+              "std": 1.041563243
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 2998,
+            "max": 0.42,
+            "mean": -0.000580387,
+            "median": 0.0,
+            "min": -0.48,
+            "p05": -0.23,
+            "p95": 0.2,
+            "std": 0.123947457
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "S001_NORMAL_D09"
+      },
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 2998,
+              "max": 0.333766669,
+              "mean": -0.000779308,
+              "median": 0.0,
+              "min": -0.292045835,
+              "p05": -0.125162501,
+              "p95": 0.125162501,
+              "std": 0.078910516
+            },
+            "before_int8": {
+              "count": 2998,
+              "max": 0.320391114,
+              "mean": -0.000569126,
+              "median": -0.001054437,
+              "min": -0.278512702,
+              "p05": -0.136399932,
+              "p95": 0.120756508,
+              "std": 0.078166605
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 2998,
+              "max": 0.020271159,
+              "mean": -0.000210183,
+              "median": 0.001054437,
+              "min": -0.020396654,
+              "p05": -0.018130202,
+              "p95": 0.017972624,
+              "std": 0.010960845
+            },
+            "quantized_integer_stats": {
+              "count": 2998,
+              "max": 5.0,
+              "mean": -3.018679119,
+              "median": -3.0,
+              "min": -10.0,
+              "p05": -6.0,
+              "p95": 0.0,
+              "std": 1.891393552
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 2998,
+            "max": 0.95,
+            "mean": 0.00143429,
+            "median": 0.0,
+            "min": -0.82,
+            "p05": -0.4,
+            "p95": 0.36,
+            "std": 0.23101354
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "S001_NORMAL_D12"
+      },
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 2999,
+              "max": 0.0,
+              "mean": 0.0,
+              "median": 0.0,
+              "min": 0.0,
+              "p05": 0.0,
+              "p95": 0.0,
+              "std": 0.0
+            },
+            "before_int8": {
+              "count": 2999,
+              "max": -0.004438075,
+              "mean": -0.004438075,
+              "median": -0.004438075,
+              "min": -0.004438075,
+              "p05": -0.004438075,
+              "p95": -0.004438075,
+              "std": 0.0
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 2999,
+              "max": 0.004438075,
+              "mean": 0.004438075,
+              "median": 0.004438075,
+              "min": 0.004438075,
+              "p05": 0.004438075,
+              "p95": 0.004438075,
+              "std": 0.0
+            },
+            "quantized_integer_stats": {
+              "count": 2999,
+              "max": -3.0,
+              "mean": -3.0,
+              "median": -3.0,
+              "min": -3.0,
+              "p05": -3.0,
+              "p95": -3.0,
+              "std": 0.0
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 2999,
+            "max": -0.01,
+            "mean": -0.01,
+            "median": -0.01,
+            "min": -0.01,
+            "p05": -0.01,
+            "p95": -0.01,
+            "std": 0.0
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "S001_NORMAL_D15"
+      },
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 2087,
+              "max": 0.375487503,
+              "mean": -0.001159467,
+              "median": 0.0,
+              "min": -0.292045835,
+              "p05": -0.166883335,
+              "p95": 0.208604168,
+              "std": 0.121728235
+            },
+            "before_int8": {
+              "count": 2087,
+              "max": 0.394831136,
+              "mean": -0.001098212,
+              "median": -0.011205349,
+              "min": -0.292047252,
+              "p05": -0.173619944,
+              "p95": 0.20873108,
+              "std": 0.121411964
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 2087,
+              "max": 0.020271159,
+              "mean": -6.1255e-05,
+              "median": -6.2748e-05,
+              "min": -0.020428736,
+              "p05": -0.019215305,
+              "p95": 0.019057727,
+              "std": 0.011844149
+            },
+            "quantized_integer_stats": {
+              "count": 2087,
+              "max": 6.0,
+              "mean": -3.027791088,
+              "median": -3.0,
+              "min": -10.0,
+              "p05": -7.0,
+              "p95": 2.0,
+              "std": 2.917684634
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 2087,
+            "max": 1.17,
+            "mean": -0.000129372,
+            "median": -0.03,
+            "min": -0.86,
+            "p05": -0.51,
+            "p95": 0.62,
+            "std": 0.358820851
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "S001_BREATH_PACED_12_01"
+      },
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 1774,
+              "max": 0.250325002,
+              "mean": -0.001175897,
+              "median": 0.0,
+              "min": -0.333766669,
+              "p05": -0.208604168,
+              "p95": 0.166883335,
+              "std": 0.128430347
+            },
+            "before_int8": {
+              "count": 1774,
+              "max": 0.262869278,
+              "mean": -0.000989587,
+              "median": 0.005712838,
+              "min": -0.339418175,
+              "p05": -0.207456317,
+              "p95": 0.185045619,
+              "std": 0.127999023
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 1774,
+              "max": 0.020271159,
+              "mean": -0.00018631,
+              "median": -6.2748e-05,
+              "min": -0.020428736,
+              "p05": -0.019183223,
+              "p95": 0.019057727,
+              "std": 0.011818112
+            },
+            "quantized_integer_stats": {
+              "count": 1774,
+              "max": 3.0,
+              "mean": -3.028184893,
+              "median": -3.0,
+              "min": -11.0,
+              "p05": -8.0,
+              "p95": 1.0,
+              "std": 3.078326493
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 1774,
+            "max": 0.78,
+            "mean": 0.000191657,
+            "median": 0.02,
+            "min": -1.0,
+            "p05": -0.61,
+            "p95": 0.55,
+            "std": 0.37828824
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "S001_BREATH_PACED_12_02"
+      },
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 1779,
+              "max": 0.292045835,
+              "mean": -0.001500918,
+              "median": 0.0,
+              "min": -0.292045835,
+              "p05": -0.208604168,
+              "p95": 0.166883335,
+              "std": 0.117321205
+            },
+            "before_int8": {
+              "count": 1779,
+              "max": 0.283171103,
+              "mean": -0.001024005,
+              "median": 0.012480112,
+              "min": -0.308965439,
+              "p05": -0.197305405,
+              "p95": 0.164743794,
+              "std": 0.116863407
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 1779,
+              "max": 0.020271159,
+              "mean": -0.000476913,
+              "median": -9.483e-05,
+              "min": -0.020396654,
+              "p05": -0.019247387,
+              "p95": 0.019057727,
+              "std": 0.012031028
+            },
+            "quantized_integer_stats": {
+              "count": 1779,
+              "max": 4.0,
+              "mean": -3.035975267,
+              "median": -3.0,
+              "min": -10.0,
+              "p05": -8.0,
+              "p95": 1.0,
+              "std": 2.812053233
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 1779,
+            "max": 0.84,
+            "mean": 8.9938e-05,
+            "median": 0.04,
+            "min": -0.91,
+            "p05": -0.58,
+            "p95": 0.49,
+            "std": 0.345378047
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "S001_BREATH_PACED_15_03"
+      },
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 1784,
+              "max": 0.125162501,
+              "mean": -9.3544e-05,
+              "median": 0.0,
+              "min": -0.125162501,
+              "p05": -0.083441667,
+              "p95": 0.083441667,
+              "std": 0.039485962
+            },
+            "before_int8": {
+              "count": 1784,
+              "max": 0.137674695,
+              "mean": -0.000384917,
+              "median": -0.001054437,
+              "min": -0.136399932,
+              "p05": -0.068727185,
+              "p95": 0.070001948,
+              "std": 0.038364142
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 1784,
+              "max": 0.020239076,
+              "mean": 0.000291373,
+              "median": 0.001054437,
+              "min": -0.020396654,
+              "p05": -0.019247387,
+              "p95": 0.017972624,
+              "std": 0.010908363
+            },
+            "quantized_integer_stats": {
+              "count": 1784,
+              "max": 0.0,
+              "mean": -3.002242152,
+              "median": -3.0,
+              "min": -6.0,
+              "p05": -5.0,
+              "p95": -1.0,
+              "std": 0.946432714
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 1784,
+            "max": 0.41,
+            "mean": 0.0019787,
+            "median": -0.0,
+            "min": -0.4,
+            "p05": -0.2,
+            "p95": 0.21,
+            "std": 0.113381364
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "S001_BREATH_PACED_20_04"
+      },
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 1784,
+              "max": 0.333766669,
+              "mean": -0.002993423,
+              "median": 0.0,
+              "min": -0.333766669,
+              "p05": -0.250325002,
+              "p95": 0.250325002,
+              "std": 0.169553758
+            },
+            "before_int8": {
+              "count": 1784,
+              "max": 0.330542026,
+              "mean": -0.002492104,
+              "median": -0.007821712,
+              "min": -0.339418175,
+              "p05": -0.258210878,
+              "p95": 0.266252916,
+              "std": 0.169418292
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 1784,
+              "max": 0.020303241,
+              "mean": -0.000501319,
+              "median": -0.000126912,
+              "min": -0.020428736,
+              "p05": -0.019247387,
+              "p95": 0.019057727,
+              "std": 0.012193731
+            },
+            "quantized_integer_stats": {
+              "count": 1784,
+              "max": 5.0,
+              "mean": -3.071748879,
+              "median": -3.0,
+              "min": -11.0,
+              "p05": -9.0,
+              "p95": 3.0,
+              "std": 4.064006957
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 1784,
+            "max": 0.98,
+            "mean": -0.004248879,
+            "median": -0.02,
+            "min": -1.0,
+            "p05": -0.76,
+            "p95": 0.79,
+            "std": 0.500698723
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "S001_BREATH_PACED_20_05"
+      },
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 18574,
+              "max": 0.333766669,
+              "mean": -0.000914202,
+              "median": 0.0,
+              "min": -0.292045835,
+              "p05": -0.083441667,
+              "p95": 0.083441667,
+              "std": 0.055741911
+            },
+            "before_int8": {
+              "count": 18574,
+              "max": 0.317007476,
+              "mean": -0.000530514,
+              "median": 0.0023292,
+              "min": -0.298814527,
+              "p05": -0.089029009,
+              "p95": 0.086920135,
+              "std": 0.054656118
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 18574,
+              "max": 0.020271159,
+              "mean": -0.000383687,
+              "median": -0.0023292,
+              "min": -0.020428736,
+              "p05": -0.018130202,
+              "p95": 0.017972624,
+              "std": 0.011073113
+            },
+            "quantized_integer_stats": {
+              "count": 18574,
+              "max": 5.0,
+              "mean": -3.021912351,
+              "median": -3.0,
+              "min": -10.0,
+              "p05": -5.0,
+              "p95": -1.0,
+              "std": 1.336068976
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 18574,
+            "max": 0.94,
+            "mean": 0.001548401,
+            "median": 0.01,
+            "min": -0.88,
+            "p05": -0.26,
+            "p95": 0.26,
+            "std": 0.16153066
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "2026-08-01_occupied_d09_v120_31min_attempt02"
+      },
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 1799,
+              "max": 0.250325002,
+              "mean": -0.002504641,
+              "median": 0.0,
+              "min": -0.250325002,
+              "p05": -0.125162501,
+              "p95": 0.125162501,
+              "std": 0.077984426
+            },
+            "before_int8": {
+              "count": 1799,
+              "max": 0.252718366,
+              "mean": -0.001844391,
+              "median": -0.001054437,
+              "min": -0.237909054,
+              "p05": -0.143167207,
+              "p95": 0.124140146,
+              "std": 0.076825189
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 1799,
+              "max": 0.020271159,
+              "mean": -0.00066025,
+              "median": -0.001212015,
+              "min": -0.020396654,
+              "p05": -0.019247387,
+              "p95": 0.018004706,
+              "std": 0.012108572
+            },
+            "quantized_integer_stats": {
+              "count": 1799,
+              "max": 3.0,
+              "mean": -3.060033352,
+              "median": -3.0,
+              "min": -9.0,
+              "p05": -6.0,
+              "p95": 0.0,
+              "std": 1.869196246
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 1799,
+            "max": 0.75,
+            "mean": -0.00233463,
+            "median": -0.0,
+            "min": -0.7,
+            "p05": -0.42,
+            "p95": 0.37,
+            "std": 0.227049121
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "M-C0-PILOT-DESKWORK-001"
+      },
+      {
+        "bpf_zscore_equivalence": {
+          "assessment": "NOT_ESTABLISHED",
+          "diagnostic_affine_proxy": {
+            "after_int8_dequantized": {
+              "count": 1799,
+              "max": 0.208604168,
+              "mean": -0.000602969,
+              "median": 0.0,
+              "min": -0.250325002,
+              "p05": -0.083441667,
+              "p95": 0.083441667,
+              "std": 0.059113772
+            },
+            "before_int8": {
+              "count": 1799,
+              "max": 0.195196531,
+              "mean": -0.000873876,
+              "median": -0.001054437,
+              "min": -0.248059966,
+              "p05": -0.095796284,
+              "p95": 0.086920135,
+              "std": 0.057550808
+            },
+            "bpf_applied": false,
+            "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+            "quantization_error": {
+              "count": 1799,
+              "max": 0.020239076,
+              "mean": 0.000270907,
+              "median": 0.001022355,
+              "min": -0.020396654,
+              "p05": -0.019247387,
+              "p95": 0.019089809,
+              "std": 0.012227779
+            },
+            "quantized_integer_stats": {
+              "count": 1799,
+              "max": 2.0,
+              "mean": -3.014452474,
+              "median": -3.0,
+              "min": -9.0,
+              "p05": -5.0,
+              "p95": -1.0,
+              "std": 1.416888573
+            },
+            "quantized_saturation_fraction": 0.0,
+            "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+          },
+          "frozen_contract": {
+            "band_hz": [
+              0.1,
+              0.5
+            ],
+            "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+            "sample_rate_hz": 10.0,
+            "zscore_mean": 0.0031162832173884064,
+            "zscore_std": 2.955399434649939
+          },
+          "meaning_equivalent_to_frozen_contract": false,
+          "raw_phase_stats_before_any_bpf": {
+            "count": 1799,
+            "max": 0.58,
+            "mean": 0.00053363,
+            "median": -0.0,
+            "min": -0.73,
+            "p05": -0.28,
+            "p95": 0.26,
+            "std": 0.170085627
+          },
+          "reason": "Raw MR60 phase-like values were measured, but the exact frozen zero-phase Butterworth BPF semantic cannot be established from telemetry alone; the diagnostic affine is not silently treated as the contract.",
+          "scale_equivalent_to_frozen_contract": false
+        },
+        "session_id": "M-C0-PILOT-STATIONARY-001"
+      }
+    ],
+    "9_pre_post_int8_distribution": [
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 2998,
+            "max": 0.375487503,
+            "mean": -0.000264408,
+            "median": 0.0,
+            "min": -0.333766669,
+            "p05": -0.166883335,
+            "p95": 0.166883335,
+            "std": 0.112938267
+          },
+          "before_int8": {
+            "count": 2998,
+            "max": 0.3643784,
+            "mean": -0.000652644,
+            "median": 0.0023292,
+            "min": -0.34618545,
+            "p05": -0.187154493,
+            "p95": 0.185045619,
+            "std": 0.112148002
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 2998,
+            "max": 0.020303241,
+            "mean": 0.000388236,
+            "median": 0.000990273,
+            "min": -0.020460819,
+            "p05": -0.019215305,
+            "p95": 0.019089809,
+            "std": 0.012093631
+          },
+          "quantized_integer_stats": {
+            "count": 2998,
+            "max": 6.0,
+            "mean": -3.006337558,
+            "median": -3.0,
+            "min": -11.0,
+            "p05": -7.0,
+            "p95": 1.0,
+            "std": 2.706999278
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "S001_NORMAL_D06"
+      },
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 2998,
+            "max": 0.125162501,
+            "mean": -0.001447287,
+            "median": 0.0,
+            "min": -0.166883335,
+            "p05": -0.083441667,
+            "p95": 0.083441667,
+            "std": 0.043454887
+          },
+          "before_int8": {
+            "count": 2998,
+            "max": 0.141058333,
+            "mean": -0.001250819,
+            "median": -0.001054437,
+            "min": -0.163469031,
+            "p05": -0.078878097,
+            "p95": 0.06661831,
+            "std": 0.041939325
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 2998,
+            "max": 0.020239076,
+            "mean": -0.000196468,
+            "median": 0.001054437,
+            "min": -0.020396654,
+            "p05": -0.019247387,
+            "p95": 0.017972624,
+            "std": 0.011731224
+          },
+          "quantized_integer_stats": {
+            "count": 2998,
+            "max": 0.0,
+            "mean": -3.034689793,
+            "median": -3.0,
+            "min": -7.0,
+            "p05": -5.0,
+            "p95": -1.0,
+            "std": 1.041563243
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "S001_NORMAL_D09"
+      },
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 2998,
+            "max": 0.333766669,
+            "mean": -0.000779308,
+            "median": 0.0,
+            "min": -0.292045835,
+            "p05": -0.125162501,
+            "p95": 0.125162501,
+            "std": 0.078910516
+          },
+          "before_int8": {
+            "count": 2998,
+            "max": 0.320391114,
+            "mean": -0.000569126,
+            "median": -0.001054437,
+            "min": -0.278512702,
+            "p05": -0.136399932,
+            "p95": 0.120756508,
+            "std": 0.078166605
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 2998,
+            "max": 0.020271159,
+            "mean": -0.000210183,
+            "median": 0.001054437,
+            "min": -0.020396654,
+            "p05": -0.018130202,
+            "p95": 0.017972624,
+            "std": 0.010960845
+          },
+          "quantized_integer_stats": {
+            "count": 2998,
+            "max": 5.0,
+            "mean": -3.018679119,
+            "median": -3.0,
+            "min": -10.0,
+            "p05": -6.0,
+            "p95": 0.0,
+            "std": 1.891393552
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "S001_NORMAL_D12"
+      },
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 2999,
+            "max": 0.0,
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "p05": 0.0,
+            "p95": 0.0,
+            "std": 0.0
+          },
+          "before_int8": {
+            "count": 2999,
+            "max": -0.004438075,
+            "mean": -0.004438075,
+            "median": -0.004438075,
+            "min": -0.004438075,
+            "p05": -0.004438075,
+            "p95": -0.004438075,
+            "std": 0.0
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 2999,
+            "max": 0.004438075,
+            "mean": 0.004438075,
+            "median": 0.004438075,
+            "min": 0.004438075,
+            "p05": 0.004438075,
+            "p95": 0.004438075,
+            "std": 0.0
+          },
+          "quantized_integer_stats": {
+            "count": 2999,
+            "max": -3.0,
+            "mean": -3.0,
+            "median": -3.0,
+            "min": -3.0,
+            "p05": -3.0,
+            "p95": -3.0,
+            "std": 0.0
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "S001_NORMAL_D15"
+      },
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 2087,
+            "max": 0.375487503,
+            "mean": -0.001159467,
+            "median": 0.0,
+            "min": -0.292045835,
+            "p05": -0.166883335,
+            "p95": 0.208604168,
+            "std": 0.121728235
+          },
+          "before_int8": {
+            "count": 2087,
+            "max": 0.394831136,
+            "mean": -0.001098212,
+            "median": -0.011205349,
+            "min": -0.292047252,
+            "p05": -0.173619944,
+            "p95": 0.20873108,
+            "std": 0.121411964
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 2087,
+            "max": 0.020271159,
+            "mean": -6.1255e-05,
+            "median": -6.2748e-05,
+            "min": -0.020428736,
+            "p05": -0.019215305,
+            "p95": 0.019057727,
+            "std": 0.011844149
+          },
+          "quantized_integer_stats": {
+            "count": 2087,
+            "max": 6.0,
+            "mean": -3.027791088,
+            "median": -3.0,
+            "min": -10.0,
+            "p05": -7.0,
+            "p95": 2.0,
+            "std": 2.917684634
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "S001_BREATH_PACED_12_01"
+      },
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 1774,
+            "max": 0.250325002,
+            "mean": -0.001175897,
+            "median": 0.0,
+            "min": -0.333766669,
+            "p05": -0.208604168,
+            "p95": 0.166883335,
+            "std": 0.128430347
+          },
+          "before_int8": {
+            "count": 1774,
+            "max": 0.262869278,
+            "mean": -0.000989587,
+            "median": 0.005712838,
+            "min": -0.339418175,
+            "p05": -0.207456317,
+            "p95": 0.185045619,
+            "std": 0.127999023
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 1774,
+            "max": 0.020271159,
+            "mean": -0.00018631,
+            "median": -6.2748e-05,
+            "min": -0.020428736,
+            "p05": -0.019183223,
+            "p95": 0.019057727,
+            "std": 0.011818112
+          },
+          "quantized_integer_stats": {
+            "count": 1774,
+            "max": 3.0,
+            "mean": -3.028184893,
+            "median": -3.0,
+            "min": -11.0,
+            "p05": -8.0,
+            "p95": 1.0,
+            "std": 3.078326493
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "S001_BREATH_PACED_12_02"
+      },
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 1779,
+            "max": 0.292045835,
+            "mean": -0.001500918,
+            "median": 0.0,
+            "min": -0.292045835,
+            "p05": -0.208604168,
+            "p95": 0.166883335,
+            "std": 0.117321205
+          },
+          "before_int8": {
+            "count": 1779,
+            "max": 0.283171103,
+            "mean": -0.001024005,
+            "median": 0.012480112,
+            "min": -0.308965439,
+            "p05": -0.197305405,
+            "p95": 0.164743794,
+            "std": 0.116863407
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 1779,
+            "max": 0.020271159,
+            "mean": -0.000476913,
+            "median": -9.483e-05,
+            "min": -0.020396654,
+            "p05": -0.019247387,
+            "p95": 0.019057727,
+            "std": 0.012031028
+          },
+          "quantized_integer_stats": {
+            "count": 1779,
+            "max": 4.0,
+            "mean": -3.035975267,
+            "median": -3.0,
+            "min": -10.0,
+            "p05": -8.0,
+            "p95": 1.0,
+            "std": 2.812053233
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "S001_BREATH_PACED_15_03"
+      },
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 1784,
+            "max": 0.125162501,
+            "mean": -9.3544e-05,
+            "median": 0.0,
+            "min": -0.125162501,
+            "p05": -0.083441667,
+            "p95": 0.083441667,
+            "std": 0.039485962
+          },
+          "before_int8": {
+            "count": 1784,
+            "max": 0.137674695,
+            "mean": -0.000384917,
+            "median": -0.001054437,
+            "min": -0.136399932,
+            "p05": -0.068727185,
+            "p95": 0.070001948,
+            "std": 0.038364142
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 1784,
+            "max": 0.020239076,
+            "mean": 0.000291373,
+            "median": 0.001054437,
+            "min": -0.020396654,
+            "p05": -0.019247387,
+            "p95": 0.017972624,
+            "std": 0.010908363
+          },
+          "quantized_integer_stats": {
+            "count": 1784,
+            "max": 0.0,
+            "mean": -3.002242152,
+            "median": -3.0,
+            "min": -6.0,
+            "p05": -5.0,
+            "p95": -1.0,
+            "std": 0.946432714
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "S001_BREATH_PACED_20_04"
+      },
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 1784,
+            "max": 0.333766669,
+            "mean": -0.002993423,
+            "median": 0.0,
+            "min": -0.333766669,
+            "p05": -0.250325002,
+            "p95": 0.250325002,
+            "std": 0.169553758
+          },
+          "before_int8": {
+            "count": 1784,
+            "max": 0.330542026,
+            "mean": -0.002492104,
+            "median": -0.007821712,
+            "min": -0.339418175,
+            "p05": -0.258210878,
+            "p95": 0.266252916,
+            "std": 0.169418292
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 1784,
+            "max": 0.020303241,
+            "mean": -0.000501319,
+            "median": -0.000126912,
+            "min": -0.020428736,
+            "p05": -0.019247387,
+            "p95": 0.019057727,
+            "std": 0.012193731
+          },
+          "quantized_integer_stats": {
+            "count": 1784,
+            "max": 5.0,
+            "mean": -3.071748879,
+            "median": -3.0,
+            "min": -11.0,
+            "p05": -9.0,
+            "p95": 3.0,
+            "std": 4.064006957
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "S001_BREATH_PACED_20_05"
+      },
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 18574,
+            "max": 0.333766669,
+            "mean": -0.000914202,
+            "median": 0.0,
+            "min": -0.292045835,
+            "p05": -0.083441667,
+            "p95": 0.083441667,
+            "std": 0.055741911
+          },
+          "before_int8": {
+            "count": 18574,
+            "max": 0.317007476,
+            "mean": -0.000530514,
+            "median": 0.0023292,
+            "min": -0.298814527,
+            "p05": -0.089029009,
+            "p95": 0.086920135,
+            "std": 0.054656118
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 18574,
+            "max": 0.020271159,
+            "mean": -0.000383687,
+            "median": -0.0023292,
+            "min": -0.020428736,
+            "p05": -0.018130202,
+            "p95": 0.017972624,
+            "std": 0.011073113
+          },
+          "quantized_integer_stats": {
+            "count": 18574,
+            "max": 5.0,
+            "mean": -3.021912351,
+            "median": -3.0,
+            "min": -10.0,
+            "p05": -5.0,
+            "p95": -1.0,
+            "std": 1.336068976
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "2026-08-01_occupied_d09_v120_31min_attempt02"
+      },
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 1799,
+            "max": 0.250325002,
+            "mean": -0.002504641,
+            "median": 0.0,
+            "min": -0.250325002,
+            "p05": -0.125162501,
+            "p95": 0.125162501,
+            "std": 0.077984426
+          },
+          "before_int8": {
+            "count": 1799,
+            "max": 0.252718366,
+            "mean": -0.001844391,
+            "median": -0.001054437,
+            "min": -0.237909054,
+            "p05": -0.143167207,
+            "p95": 0.124140146,
+            "std": 0.076825189
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 1799,
+            "max": 0.020271159,
+            "mean": -0.00066025,
+            "median": -0.001212015,
+            "min": -0.020396654,
+            "p05": -0.019247387,
+            "p95": 0.018004706,
+            "std": 0.012108572
+          },
+          "quantized_integer_stats": {
+            "count": 1799,
+            "max": 3.0,
+            "mean": -3.060033352,
+            "median": -3.0,
+            "min": -9.0,
+            "p05": -6.0,
+            "p95": 0.0,
+            "std": 1.869196246
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "M-C0-PILOT-DESKWORK-001"
+      },
+      {
+        "int8_distribution": {
+          "after_int8_dequantized": {
+            "count": 1799,
+            "max": 0.208604168,
+            "mean": -0.000602969,
+            "median": 0.0,
+            "min": -0.250325002,
+            "p05": -0.083441667,
+            "p95": 0.083441667,
+            "std": 0.059113772
+          },
+          "before_int8": {
+            "count": 1799,
+            "max": 0.195196531,
+            "mean": -0.000873876,
+            "median": -0.001054437,
+            "min": -0.248059966,
+            "p05": -0.095796284,
+            "p95": 0.086920135,
+            "std": 0.057550808
+          },
+          "bpf_applied": false,
+          "computation": "normalized_proxy=(raw_phase - frozen_mean)/frozen_std; q=round_half_away_from_zero(normalized/scale)+zero_point; clamp int8; dequantize=(q-zero_point)*scale",
+          "quantization_error": {
+            "count": 1799,
+            "max": 0.020239076,
+            "mean": 0.000270907,
+            "median": 0.001022355,
+            "min": -0.020396654,
+            "p05": -0.019247387,
+            "p95": 0.019089809,
+            "std": 0.012227779
+          },
+          "quantized_integer_stats": {
+            "count": 1799,
+            "max": 2.0,
+            "mean": -3.014452474,
+            "median": -3.0,
+            "min": -9.0,
+            "p05": -5.0,
+            "p95": -1.0,
+            "std": 1.416888573
+          },
+          "quantized_saturation_fraction": 0.0,
+          "status": "DIAGNOSTIC_AFFINE_AND_INT8_ONLY"
+        },
+        "session_id": "M-C0-PILOT-STATIONARY-001"
+      }
+    ]
+  },
+  "schema_version": "M-C0_OFFLINE_CONTRACT_CORRESPONDENCE_V2",
+  "semantic_correspondence": "UNDETERMINED",
+  "temporal_correspondence": "MEASURED_SUFFICIENT_FOR_PR18_PILOT_CAPTURE_ONLY",
+  "temporal_correspondence_by_evidence_group": {
+    "PR18_PILOT_CAPTURE": "MEASURED_SUFFICIENT",
+    "PRE_PR18_LEGACY_LOGS": "MIXED_LONG_JSONL_SUFFICIENT_LEGACY_CSV_UNPROVABLE"
+  },
+  "training_reference": null,
+  "valid_300_fresh_windows": {
+    "PR18_PILOT_CAPTURE": 9,
+    "PRE_PR18_LEGACY_LOGS": 27
+  }
+}

@@ -1,0 +1,32 @@
+---
+description: Pi/field work must use git worktree + PR; never edit main directly
+alwaysApply: true
+---
+
+# Pi / field Git workflow
+
+## Hard rules
+
+1. **Never edit `main` in place** (local checkout or Pi `/home/sandi/safenest-team-main` hot-patch for lasting changes).
+2. **Always use a git worktree** on a feature/fix/docs branch so teammates can keep using `main`.
+3. **Ship via PR**: local branch → push → GitHub PR → merge → then `git pull` on Pi.
+4. Pi emergency hotfix is allowed only to restore the prototype; **same change must land in a PR the same day**.
+
+## Where to work
+
+| Purpose | Repo | Local pattern |
+|---|---|---|
+| Pi deploy authority | `jinsu1011/safenest-embedded-competition` | main clone + worktree sibling (e.g. `safenest-team-pi-field`) |
+| Integration / diagnostics | `yuname121/integration` | main clone + worktree sibling (e.g. `safenest-pi-field-ops`) |
+
+Current preferred worktrees (2026-08-21):
+
+- Team Pi field: `…/2026/safenest-team-pi-field` → branch `feature/pi-lcd-display-and-field-monitor`
+- Integration field docs/tools: `…/2026/safenest-pi-field-ops` → branch `feature/pi-field-ops-runbook-monitor`
+
+## Agent behavior
+
+- Before coding Pi-related files: `git fetch`, create/use a **worktree**, `move_agent_to_root` into that worktree.
+- Do not commit on `main`. Do not `git pull` into a dirty main worktree to “just fix it”.
+- After merge, Pi update is `cd /home/sandi/safenest-team-main && git pull --ff-only` (preserve `data/` and `.env`).
+- Keep `PI_RUNBOOK.md` and field monitor scripts on the PR branch, not only on the Pi disk.

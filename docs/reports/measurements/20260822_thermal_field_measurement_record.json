@@ -1,0 +1,132 @@
+{
+  "record_id": "20260822_thermal_field_measurement",
+  "session": "SafeNest Pi field / thermal NOT_HUMAN investigation",
+  "timezone_hint": "Asia/Seoul",
+  "network": {
+    "pi_ip": "192.168.137.249",
+    "esp_peer": "192.168.137.107",
+    "note": "User may refer to 192.168.137.249 as ESP; API :8000 host is the Pi."
+  },
+  "live_api": {
+    "captured_at_local_hint": "KST field session 2026-08-22",
+    "api_base": "http://192.168.137.249:8000",
+    "pi_ip_observed": "192.168.137.249",
+    "esp_peer_observed": "192.168.137.107",
+    "system": "ONLINE",
+    "system_health": "DEGRADED",
+    "link": {
+      "tcp_connections": 4,
+      "telemetry_packets": 15987,
+      "thermal_completed_frames": 10074,
+      "thermal_incomplete_frames": 424,
+      "thermal_effective_fps": 5.188422108765246
+    },
+    "storage": {
+      "written": {
+        "mmwave": 15987,
+        "co2": 347,
+        "thermal": 10068
+      },
+      "accepted": {
+        "mmwave": 15987,
+        "co2": 347,
+        "thermal": 10074
+      },
+      "root": "/home/sandi/safenest-team-main/RaspberryPi/Runtime/data",
+      "db_counts": {
+        "snapshots": 2416,
+        "events": 1218
+      }
+    },
+    "thermal_live": {
+      "status": "LIVE",
+      "age_seconds": 0.16705949199990755,
+      "values": {
+        "width": 80,
+        "height": 62,
+        "frame_sequence": 10169,
+        "minimum_raw": 2722,
+        "maximum_raw": 3172,
+        "frame_available": true
+      },
+      "ai_state": "NOT_HUMAN",
+      "confidence": 0.9921875,
+      "probabilities": [
+        0.9921875,
+        0.0078125,
+        0.0
+      ],
+      "temperature_calibrated": false,
+      "preprocessing": "per_frame_minmax",
+      "raw_min": 2722,
+      "raw_max": 3172,
+      "model_id": "thermal_fall_int8",
+      "model_version": "0.1.0"
+    },
+    "mmwave_presence": {
+      "presence": true,
+      "human_detected_raw": true
+    },
+    "risk": {
+      "formula_id": "SAFENEST_RISK_V1",
+      "score": 10.3065,
+      "level": "NORMAL",
+      "reasons": [
+        "PRESENCE_FROM_MMWAVE",
+        "MMWAVE_THERMAL_MISMATCH",
+        "HIGH_CO2_WARNING",
+        "NO_MOTION_DETECTED"
+      ],
+      "component_status": {
+        "mmwave": "RULE_FALLBACK",
+        "co2": "RULE",
+        "pir": "RULE",
+        "thermal": "AI"
+      }
+    }
+  },
+  "npz_tally_recent500": {
+    "generated_at_kst_hint": "2026-08-22T01:33:25",
+    "thermal_npz_readable_total": 3484,
+    "thermal_npz_on_disk": 3516,
+    "recent_window_files": 500,
+    "recent_analysis_frames": 6163,
+    "recent_ai_state_counts": {
+      "NOT_HUMAN": 5879,
+      "HUMAN_NORMAL": 189,
+      "HUMAN_FALL": 95
+    },
+    "recent_human_star_frames": 284,
+    "recent_raw_span": {
+      "mean": 465.54,
+      "min": 280.0,
+      "max": 1017.0
+    },
+    "recent_hot75_pixel_count": {
+      "mean": 433.88,
+      "min": 17,
+      "max": 4067
+    },
+    "frame_shape": [
+      62,
+      80
+    ],
+    "dtype": "uint16",
+    "sample_newest_files": [
+      "20260821_163305_045966_0000010128-0000010140.npz",
+      "20260821_163307_089642_0000010141-0000010158.npz",
+      "20260821_163309_983774_0000010159-0000010171.npz",
+      "20260821_163312_008879_0000010172-0000010184.npz",
+      "20260821_163314_077573_0000010185-0000010197.npz"
+    ]
+  },
+  "earlier_probe_note": {
+    "when": "same night, earlier sample window (~01:15 KST)",
+    "recent500_ai_states": {
+      "NOT_HUMAN": 6072,
+      "INPUT_UNAVAILABLE": 121,
+      "HUMAN_*": 0
+    },
+    "interpretation": "Earlier window showed zero HUMAN_* labels; later window shows sparse HUMAN_NORMAL/FALL but still ~95% NOT_HUMAN."
+  }
+}

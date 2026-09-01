@@ -1,0 +1,17 @@
+{
+  "rule_id": "MMWAVE_M_N10_SUBJECT_PARTITION_V1",
+  "protocol_id": "MMWAVE_M_N10_CAPTURE_PROTOCOL_V1",
+  "status": "RULE_LOCKED_NO_SUBJECTS_ASSIGNED",
+  "split_unit": "SUBJECT",
+  "namespace": "MMWAVE_M_N10_SUBJECT_PARTITION_V1",
+  "seed": 20260818,
+  "physical_subject_overlap_allowed": false,
+  "assignment_after_predictions_forbidden": true,
+  "subjects_assigned": [],
+  "M_N10_DEVELOPMENT_REFERENCE": [],
+  "M_N11_FORMAL_VALIDATION_RESERVED": [],
+  "overlap": [],
+  "n_dev": 0,
+  "n_reserved": 0,
+  "note": "Subject IDs are assigned only after recruited de-identified MN10-S### identities exist. Do not assign from model predictions."
+}

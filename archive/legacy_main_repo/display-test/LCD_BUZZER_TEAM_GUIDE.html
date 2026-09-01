@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SafeNest Raspberry Pi LCD 화면 출력, 원격 상태 제어, 피에조 부저 실행 및 Git 업로드 가이드">
+  <title>SafeNest LCD·피에조 부저 팀원 가이드</title>
+  <style>
+    :root {
+      --navy: #11243a;
+      --navy-2: #1b3653;
+      --blue: #1769aa;
+      --teal: #0e7c72;
+      --green: #14804a;
+      --amber: #b76e00;
+      --orange: #d35400;
+      --red: #c62828;
+      --gray: #586474;
+      --ink: #17202a;
+      --muted: #5e6b78;
+      --line: #dce4eb;
+      --paper: #ffffff;
+      --page: #f2f5f7;
+      --code: #0e1b2a;
+      --shadow: 0 14px 34px rgba(17, 36, 58, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: Pretendard, "Noto Sans KR", "Segoe UI", system-ui, sans-serif;
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+    a { color: var(--blue); }
+    code, pre { font-family: "Cascadia Code", Consolas, monospace; }
+    code {
+      padding: .12rem .36rem;
+      background: #edf2f6;
+      border-radius: 5px;
+      font-size: .92em;
+      word-break: break-word;
+    }
+    h1, h2, h3 { color: var(--navy); line-height: 1.25; letter-spacing: -.035em; }
+    h2 { margin: 0 0 1rem; font-size: clamp(1.55rem, 3vw, 2.1rem); }
+    h3 { margin: 1.4rem 0 .55rem; font-size: 1.08rem; }
+    p { margin: .55rem 0 1rem; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      background: linear-gradient(125deg, #0d1d30 0%, #163a5c 58%, #0f6f69 100%);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: -130px;
+      top: -190px;
+      border: 70px solid rgba(255,255,255,.07);
+      border-radius: 50%;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, calc(100% - 32px));
+      margin: auto;
+      padding: 62px 0 52px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 15px;
+      color: #c8f1eb;
+      font-size: .82rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      background: #38c7b8;
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(56,199,184,.16);
+    }
+    .hero h1 {
+      max-width: 820px;
+      margin: 0;
+      color: #fff;
+      font-size: clamp(2.25rem, 6vw, 4.35rem);
+      line-height: 1.05;
+    }
+    .hero-lead {
+      max-width: 760px;
+      margin: 20px 0 24px;
+      color: #dbe7f0;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+    }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 9px; }
+    .meta {
+      padding: 7px 11px;
+      color: #ecf7f5;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.17);
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 750;
+    }
+
+    .toc-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      overflow-x: auto;
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .toc {
+      width: min(1120px, calc(100% - 28px));
+      margin: auto;
+      display: flex;
+      gap: 4px;
+      padding: 9px 0;
+      white-space: nowrap;
+    }
+    .toc a {
+      padding: 7px 10px;
+      color: #45576a;
+      border-radius: 8px;
+      font-size: .84rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .toc a:hover, .toc a:focus-visible { color: var(--blue); background: #edf4fa; }
+
+    main { width: min(1120px, calc(100% - 32px)); margin: 28px auto 70px; }
+    section { scroll-margin-top: 75px; }
+    .section { margin-top: 26px; padding: clamp(22px, 4vw, 38px); background: var(--paper); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+    .section-intro { max-width: 800px; color: var(--muted); }
+    .grid { display: grid; gap: 15px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { padding: 18px; background: #f9fbfc; border: 1px solid var(--line); border-radius: 14px; }
+    .card h3 { margin-top: 0; }
+    .card p:last-child { margin-bottom: 0; }
+    .label { margin-bottom: 6px; color: var(--muted); font-size: .76rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+    .number { color: var(--blue); font-size: 1.8rem; font-weight: 950; line-height: 1; }
+
+    .notice {
+      margin: 18px 0;
+      padding: 15px 17px;
+      background: #fff8e7;
+      border: 1px solid #efd391;
+      border-left: 5px solid var(--amber);
+      border-radius: 11px;
+    }
+    .notice strong { color: #805000; }
+    .notice.danger { background: #fff1f0; border-color: #efbeb9; border-left-color: var(--red); }
+    .notice.danger strong { color: #982018; }
+    .notice.info { background: #edf6fb; border-color: #bcd7e8; border-left-color: var(--blue); }
+    .notice.info strong { color: #114f7e; }
+
+    .checks { display: grid; gap: 9px; margin: 16px 0 0; padding: 0; list-style: none; }
+    .checks li { position: relative; padding-left: 28px; }
+    .checks li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: .12rem;
+      width: 19px;
+      height: 19px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      border-radius: 50%;
+      font-size: .72rem;
+      font-weight: 950;
+    }
+    .checks li.todo::before { content: "!"; background: var(--amber); }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .flow-item { position: relative; padding: 18px 15px; background: #f7fafc; border: 1px solid var(--line); border-radius: 13px; text-align: center; }
+    .flow-item:not(:last-child)::after { content: "→"; position: absolute; right: -20px; top: 50%; color: var(--teal); font-size: 1.35rem; font-weight: 900; transform: translateY(-50%); }
+    .flow-item strong { display: block; margin-bottom: 3px; color: var(--navy); }
+    .flow-item span { color: var(--muted); font-size: .83rem; }
+
+    .table-wrap { overflow-x: auto; margin-top: 16px; border: 1px solid var(--line); border-radius: 13px; }
+    table { width: 100%; border-collapse: collapse; font-size: .91rem; }
+    th, td { padding: 12px 13px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--navy); background: #f1f5f8; font-size: .8rem; }
+    tr:last-child td { border-bottom: 0; }
+    .state { display: inline-flex; align-items: center; gap: 7px; font-weight: 850; white-space: nowrap; }
+    .dot { width: 9px; height: 9px; background: var(--gray); border-radius: 50%; }
+    .dot.green { background: var(--green); }
+    .dot.blue { background: var(--blue); }
+    .dot.amber { background: var(--amber); }
+    .dot.orange { background: var(--orange); }
+    .dot.red { background: var(--red); }
+
+    .code-block { position: relative; margin: 12px 0 18px; }
+    pre {
+      margin: 0;
+      padding: 18px 54px 18px 18px;
+      overflow-x: auto;
+      color: #e7eef5;
+      background: var(--code);
+      border: 1px solid #26394d;
+      border-radius: 12px;
+      line-height: 1.55;
+      white-space: pre;
+    }
+    pre code { padding: 0; color: inherit; background: transparent; border-radius: 0; font-size: .84rem; }
+    .copy {
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      padding: 6px 8px;
+      color: #d8e5f0;
+      background: #20344a;
+      border: 1px solid #3a5067;
+      border-radius: 7px;
+      cursor: pointer;
+      font: 750 .72rem inherit;
+    }
+    .copy:hover { background: #29435d; }
+
+    .step { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; padding: 18px 0; border-top: 1px solid var(--line); }
+    .step:first-of-type { border-top: 0; }
+    .step-no { width: 38px; height: 38px; display: grid; place-items: center; color: #fff; background: var(--blue); border-radius: 11px; font-weight: 950; }
+    .step h3 { margin: 4px 0 6px; }
+    .step p { margin: 0 0 9px; color: var(--muted); }
+
+    .tree { padding: 17px 18px; color: #dbe8f2; background: var(--code); border-radius: 12px; font-family: "Cascadia Code", Consolas, monospace; font-size: .84rem; line-height: 1.7; white-space: pre; overflow-x: auto; }
+    details { margin-top: 11px; background: #fafcfd; border: 1px solid var(--line); border-radius: 11px; }
+    summary { padding: 13px 15px; color: var(--navy); cursor: pointer; font-weight: 850; }
+    details > div { padding: 0 15px 15px; }
+    footer { padding: 30px 16px 45px; color: #687785; text-align: center; font-size: .85rem; }
+
+    @media (max-width: 820px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr; gap: 12px; }
+      .flow-item:not(:last-child)::after { content: "↓"; right: auto; top: auto; bottom: -22px; left: 50%; transform: translateX(-50%); }
+      .hero-inner { padding: 46px 0 40px; }
+    }
+    @media (max-width: 520px) {
+      body { word-break: normal; }
+      main { width: min(100% - 20px, 1120px); }
+      .section { padding: 20px 16px; border-radius: 15px; }
+      .step { grid-template-columns: 36px minmax(0, 1fr); gap: 10px; }
+      .step-no { width: 34px; height: 34px; }
+      th, td { padding: 10px; }
+    }
+    @media print {
+      .toc-wrap, .copy { display: none !important; }
+      body { background: #fff; font-size: 10.5pt; }
+      .hero { background: var(--navy) !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      main { width: 100%; margin: 16px 0; }
+      .section { break-inside: avoid; box-shadow: none; }
+      a { color: inherit; text-decoration: none; }
+      pre { white-space: pre-wrap; overflow: visible; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">SafeNest 팀 인수인계 문서</div>
+      <h1>LCD 화면 출력·제어와<br>피에조 부저 로직</h1>
+      <p class="hero-lead">처음 프로젝트를 받는 팀원도 배선, 무음 점검, 실행, 긴급 경보 시험, 종료, Git 업로드까지 한 번에 따라 할 수 있도록 정리했습니다.</p>
+      <div class="meta-row">
+        <span class="meta">작성 기준 2026-08-01</span>
+        <span class="meta">Raspberry Pi + Chromium</span>
+        <span class="meta">BCM GPIO18 · 880 Hz</span>
+        <span class="meta">기본 포트 8080</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="toc-wrap" aria-label="문서 목차">
+    <div class="toc">
+      <a href="#summary">핵심 요약</a>
+      <a href="#architecture">동작 구조</a>
+      <a href="#states">6개 상태</a>
+      <a href="#buzzer">부저 로직</a>
+      <a href="#wiring">배선</a>
+      <a href="#run">실행 방법</a>
+      <a href="#api">API</a>
+      <a href="#trouble">문제 해결</a>
+      <a href="#git">Git 업로드</a>
+      <a href="#handoff">인계 체크</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section" id="summary">
+      <h2>오늘 구현한 핵심</h2>
+      <p class="section-intro">Raspberry Pi 한 대가 상태 서버와 LCD 화면을 함께 실행합니다. 같은 Wi-Fi의 노트북이 제어 페이지에서 상태를 바꾸면 LCD가 즉시 갱신되고, 긴급 상태일 때만 피에조 부저가 울립니다.</p>
+
+      <div class="grid grid-3">
+        <article class="card">
+          <div class="label">LCD</div>
+          <div class="number">6</div>
+          <h3>상태별 전체화면</h3>
+          <p>정상·재실·주의·위험·긴급·오류를 색상, 큰 제목, 지표, 행동 문구로 구분합니다.</p>
+        </article>
+        <article class="card">
+          <div class="label">동기화</div>
+          <div class="number">0.4초</div>
+          <h3>LCD 상태 조회 주기</h3>
+          <p>LCD 페이지가 <code>/api/state</code>를 400 ms마다 확인하고 revision이 바뀐 경우만 다시 그립니다.</p>
+        </article>
+        <article class="card">
+          <div class="label">Alarm</div>
+          <div class="number">880 Hz</div>
+          <h3>긴급 전용 경보</h3>
+          <p><code>emergency</code>에서만 GPIO18 부저를 켜며, 다른 상태와 서버 종료에서는 끕니다.</p>
+        </article>
+      </div>
+
+      <div class="notice danger">
+        <strong>현재 범위:</strong> 화면에 보이는 CO₂·온도·움직임 수치는 실제 센서에서 수신한 값이 아니라 수동 시연용 예시값입니다. 이번 구현은 화면·원격 상태 전환·긴급 부저 연동까지이며, 센서 실시간 연동 완료를 의미하지 않습니다.
+      </div>
+
+      <h3>이 문서 작성 시 다시 확인한 것</h3>
+      <ul class="checks">
+        <li>Python 회귀 테스트 2개 통과</li>
+        <li>Python 파일 및 셸 스크립트 문법 검사 통과</li>
+        <li>부저 비활성 모드에서 <code>/health</code>, <code>/display</code>, <code>/control</code> 응답 확인</li>
+        <li class="todo">실물 LCD 표시와 GPIO 부저 소리는 Raspberry Pi에서 현장 확인 필요</li>
+      </ul>
+    </section>
+
+    <section class="section" id="architecture">
+      <h2>동작 구조</h2>
+      <div class="flow" aria-label="상태 변경 흐름">
+        <div class="flow-item"><strong>1. 노트북 제어</strong><span>버튼 또는 숫자키 1~6</span></div>
+        <div class="flow-item"><strong>2. 상태 API</strong><span>POST /api/state</span></div>
+        <div class="flow-item"><strong>3. 저장·출력</strong><span>state.json + LCD 갱신</span></div>
+        <div class="flow-item"><strong>4. 경보 판단</strong><span>emergency이면 부저 ON</span></div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:22px">
+        <article class="card">
+          <h3>LCD 화면 쪽</h3>
+          <p><code>static/display.html</code>은 400 ms마다 상태를 조회합니다. 각 상태는 <code>common.css</code>의 색상 변수로 구분되고, 긴급 화면에는 붉은 점멸 효과가 추가됩니다.</p>
+          <p>상태 <code>revision</code>이 변했을 때만 DOM을 갱신하므로 같은 상태를 반복해서 다시 그리지 않습니다.</p>
+        </article>
+        <article class="card">
+          <h3>노트북 제어 쪽</h3>
+          <p><code>static/control.html</code>은 버튼과 숫자키 1~6을 지원합니다. 자동 순환은 3초마다 다음 상태로 이동하며 수동 선택 시 즉시 멈춥니다.</p>
+          <p>공간 이름은 최대 24자로 정리되어 상태 파일에 함께 저장됩니다. 제어 페이지는 1.5초마다 서버 연결 상태를 다시 확인합니다.</p>
+        </article>
+      </div>
+
+      <h3>파일 역할</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>파일</th><th>역할</th><th>팀원이 주로 수정할 때</th></tr></thead>
+          <tbody>
+            <tr><td><code>server.py</code></td><td>HTTP 서버, 입력 검증, 상태 저장, 부저 ON/OFF</td><td>상태·API·GPIO 규칙 변경</td></tr>
+            <tr><td><code>static/display.html</code></td><td>실제 LCD 전체화면과 상태별 문구·예시값</td><td>LCD 내용 변경</td></tr>
+            <tr><td><code>static/control.html</code></td><td>노트북 미리보기, 버튼, 키보드, 자동 순환</td><td>원격 제어 UI 변경</td></tr>
+            <tr><td><code>static/common.css</code></td><td>상태 색상, LCD 레이아웃, 긴급 점멸</td><td>디자인·해상도 조정</td></tr>
+            <tr><td><code>start_lcd.sh</code></td><td>서버 시작 후 Chromium 키오스크 실행</td><td>포트·브라우저 실행 옵션 변경</td></tr>
+            <tr><td><code>stop_lcd.sh</code></td><td>PID 파일 기준 브라우저와 서버 종료</td><td>종료 대상 추가</td></tr>
+            <tr><td><code>deploy_buzzer.sh</code></td><td>테스트→재시작→긴급음 2초→해제 자동 검증</td><td>현장 검증 절차 변경</td></tr>
+            <tr><td><code>test_buzzer.py</code></td><td>실물 GPIO 없이 부저·상태 연동 회귀 검사</td><td>부저 규칙 변경 시 테스트 보강</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="states">
+      <h2>LCD 6개 상태와 부저 매핑</h2>
+      <p class="section-intro">상태 키는 서버가 허용하는 값과 화면의 시나리오 키가 같아야 합니다. 현재 부저가 켜지는 상태는 긴급 하나뿐입니다.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>키 / 조작</th><th>LCD 표시</th><th>대표 상황</th><th>색상</th><th>부저</th></tr></thead>
+          <tbody>
+            <tr><td><code>normal-empty</code><br>숫자 1</td><td>정상 · 미재실</td><td>사람 감지 없음</td><td><span class="state"><span class="dot green"></span>초록</span></td><td>OFF</td></tr>
+            <tr><td><code>normal-occupied</code><br>숫자 2</td><td>정상 · 재실</td><td>작업자 움직임 감지</td><td><span class="state"><span class="dot blue"></span>파랑</span></td><td>OFF</td></tr>
+            <tr><td><code>warning</code><br>숫자 3</td><td>환경 주의</td><td>CO₂ 농도 상승 예시</td><td><span class="state"><span class="dot amber"></span>황색</span></td><td>OFF</td></tr>
+            <tr><td><code>danger</code><br>숫자 4</td><td>작업자 위험</td><td>무움직임·호흡 이상 예시</td><td><span class="state"><span class="dot orange"></span>주황</span></td><td>OFF</td></tr>
+            <tr><td><code>emergency</code><br>숫자 5</td><td>긴급 + 붉은 점멸</td><td>고체온·호흡 이상·무움직임 예시</td><td><span class="state"><span class="dot red"></span>빨강</span></td><td><strong>ON, 880 Hz 연속음</strong></td></tr>
+            <tr><td><code>offline</code><br>숫자 6</td><td>통신 오류</td><td>센서 데이터 수신 불가</td><td><span class="state"><span class="dot"></span>회색</span></td><td>OFF</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="buzzer">
+      <h2>피에조 부저 제어 로직</h2>
+      <div class="grid grid-2">
+        <article class="card">
+          <h3>초기화</h3>
+          <p><code>gpiozero.TonalBuzzer(18)</code>을 만들고 즉시 정지합니다. 기본 주파수는 880 Hz입니다. 초기화 실패 시 오류를 기록하되 화면 서버는 계속 실행됩니다.</p>
+        </article>
+        <article class="card">
+          <h3>상태 연동</h3>
+          <p>상태를 저장한 직후 <code>state == "emergency"</code> 결과를 부저에 전달합니다. 같은 ON/OFF 요청이 반복되면 GPIO 명령을 중복 실행하지 않습니다.</p>
+        </article>
+        <article class="card">
+          <h3>안전 종료</h3>
+          <p>서버 종료 시 <code>stop()</code> 후 <code>close()</code>를 호출합니다. 자동 검증 스크립트도 EXIT·INT·TERM에서 긴급 상태를 해제하도록 방어합니다.</p>
+        </article>
+        <article class="card">
+          <h3>상태 확인</h3>
+          <p><code>/health</code>에서 활성화 여부, GPIO 사용 가능 여부, BCM 핀, 주파수, 현재 발음 상태, 오류를 확인할 수 있습니다.</p>
+        </article>
+      </div>
+
+      <div class="notice danger">
+        <strong>재시작 주의:</strong> 서버 시작 시 저장된 마지막 상태가 <code>emergency</code>이면 부저가 바로 켜집니다. 실물 부저를 연결하기 전 <code>state.json</code>의 상태를 확인하거나 아래 무음 시험으로 먼저 <code>normal-empty</code>를 저장하세요.
+      </div>
+    </section>
+
+    <section class="section" id="wiring">
+      <h2>2핀 수동 피에조 부저 배선</h2>
+      <p class="section-intro">Raspberry Pi 전원을 완전히 끈 상태에서 연결합니다. 프로그램은 BCM 번호를 사용하며, BCM GPIO18은 물리 핀 12번입니다.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>부저 단자</th><th>Raspberry Pi</th><th>물리 핀</th><th>기준 위치</th></tr></thead>
+          <tbody>
+            <tr><td><strong>+ 긴 다리</strong></td><td>BCM GPIO18</td><td>12번</td><td>USB 포트가 아래쪽일 때 위에서 6행, 바깥쪽 열</td></tr>
+            <tr><td><strong>− 짧은 다리</strong></td><td>GND</td><td>14번</td><td>USB 포트가 아래쪽일 때 위에서 7행, 바깥쪽 열</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notice danger">
+        <strong>하드웨어 안전:</strong> 전원이 켜진 상태에서 배선을 바꾸지 마세요. 5V 핀에 연결하지 않습니다. 단순 저전류 피에조 소자가 아니라 전류가 큰 부저 모듈·스피커라면 GPIO에 직결하지 말고 트랜지스터 드라이버와 보호 회로를 사용해야 합니다.
+      </div>
+    </section>
+
+    <section class="section" id="run">
+      <h2>팀원용 실행 순서</h2>
+      <p class="section-intro">처음에는 부저를 연결하지 않거나 <code>--disable-buzzer</code>로 무음 시험을 끝낸 뒤 실제 출력을 켭니다.</p>
+
+      <div class="step">
+        <div class="step-no">1</div>
+        <div>
+          <h3>Raspberry Pi 준비 상태 확인</h3>
+          <p>Pi와 노트북을 같은 Wi-Fi에 연결하고 필요한 명령이 설치되어 있는지 확인합니다.</p>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>python3 --version
+python3 -c 'import gpiozero; print("gpiozero OK")'
+command -v chromium || command -v chromium-browser
+command -v curl
+hostname -I</code></pre></div>
+          <p>빠진 항목이 있으면 Raspberry Pi OS에서 다음을 설치합니다.</p>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>sudo apt update
+sudo apt install -y python3 python3-gpiozero chromium curl</code></pre></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">2</div>
+        <div>
+          <h3>프로젝트 가져오기</h3>
+          <p>GitHub 업로드 후에는 clone 방식이 권장됩니다.</p>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>git clone https://github.com/&lt;조직또는계정&gt;/&lt;저장소명&gt;.git
+cd &lt;저장소명&gt;/safenest_lcd_remote</code></pre></div>
+          <p>아직 GitHub에 올리지 않았다면 Windows PowerShell에서 Pi로 복사합니다. 아래 IP는 현재 문서의 예시이므로 실제 Pi IP로 바꿉니다.</p>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>scp -r .\safenest_lcd_remote sandi@192.168.1.44:~/</code></pre></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">3</div>
+        <div>
+          <h3>실행 권한과 자동 테스트</h3>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>cd ~/safenest_lcd_remote
+chmod +x start_lcd.sh stop_lcd.sh deploy_buzzer.sh
+python3 -m unittest -v test_buzzer.py</code></pre></div>
+          <p>마지막에 <code>Ran 2 tests</code>와 <code>OK</code>가 표시되어야 합니다. 이 테스트는 실물 GPIO 대신 모의 부저를 사용하므로 소리가 나지 않습니다.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">4</div>
+        <div>
+          <h3>부저 없는 무음 서버 시험</h3>
+          <p>부저 출력 없이 API와 웹 화면부터 확인합니다. 이 직접 실행 방식은 Chromium 키오스크를 자동으로 띄우지 않습니다.</p>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>python3 server.py --disable-buzzer</code></pre></div>
+          <p>노트북에서 <code>http://&lt;라즈베리파이-IP&gt;:8080/control</code>을 열고 1~6 버튼을 눌러 봅니다. Pi 브라우저에서는 <code>http://127.0.0.1:8080/display</code>를 열 수 있습니다.</p>
+          <p>저장 상태가 긴급이면 제어 페이지에서 <strong>1. 정상 · 사람 없음</strong>을 선택한 뒤 <kbd>Ctrl</kbd>+<kbd>C</kbd>로 종료합니다.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">5</div>
+        <div>
+          <h3>LCD 키오스크와 실제 부저 실행</h3>
+          <p>전원을 끄고 배선을 마친 뒤 다시 켭니다. 부저가 울려도 안전한 상황인지 주변에 먼저 알립니다.</p>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>cd ~/safenest_lcd_remote
+bash start_lcd.sh</code></pre></div>
+          <p>스크립트가 서버 준비를 확인한 후 Wayland 또는 X11을 자동 선택하고 Chromium을 전체화면으로 엽니다. Raspberry Pi 5의 Chromium GPU 충돌을 피하기 위해 CPU 소프트웨어 렌더링 옵션을 사용합니다.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">6</div>
+        <div>
+          <h3>건강 상태 확인</h3>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>curl -s http://127.0.0.1:8080/health | python3 -m json.tool</code></pre></div>
+          <p>실물 부저를 사용할 때는 <code>enabled: true</code>, <code>available: true</code>, <code>pin_bcm: 18</code>, <code>frequency_hz: 880.0</code>, 초기 <code>sounding: false</code>를 확인합니다.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">7</div>
+        <div>
+          <h3>노트북에서 제어</h3>
+          <p><code>start_lcd.sh</code>가 출력한 주소를 노트북 브라우저에서 엽니다. 예: <code>http://192.168.1.44:8080/control</code>.</p>
+          <ul>
+            <li>버튼 또는 숫자키 1~6: 즉시 상태 전환</li>
+            <li>자동 순환: 3초마다 다음 상태로 이동</li>
+            <li>수동 선택: 자동 순환 즉시 중지</li>
+            <li>공간 이름 적용: 최대 24자까지 Pi에 저장</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">8</div>
+        <div>
+          <h3>실제 경보 2초 자동 시험 — 선택 사항</h3>
+          <div class="notice danger"><strong>이 명령은 실제 소리를 냅니다.</strong> 현장 인원에게 알리고, 테스트 중지 권한이 있는 사람이 옆에서 실행하세요.</div>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>cd ~/safenest_lcd_remote
+bash deploy_buzzer.sh</code></pre></div>
+          <p>단위 테스트와 GPIO 라이브러리 확인 후 LCD를 재시작하고, 긴급 상태를 약 2초 유지한 다음 자동으로 정상 상태로 되돌립니다. 중단 신호를 받아도 경보 해제를 시도합니다.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">9</div>
+        <div>
+          <h3>종료</h3>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>cd ~/safenest_lcd_remote
+bash stop_lcd.sh</code></pre></div>
+          <p>Chromium 키오스크와 SafeNest 서버에 종료 신호를 보내고 PID 파일을 정리합니다. 서버 종료 과정에서 부저도 정지·해제됩니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="api">
+      <h2>주소와 API</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>경로</th><th>방식</th><th>용도</th></tr></thead>
+          <tbody>
+            <tr><td><code>/control</code></td><td>GET</td><td>노트북 원격 제어 화면</td></tr>
+            <tr><td><code>/display</code></td><td>GET</td><td>Raspberry Pi LCD 전체화면</td></tr>
+            <tr><td><code>/api/state</code></td><td>GET</td><td>현재 상태, 공간 이름, revision, 갱신 시각 조회</td></tr>
+            <tr><td><code>/api/state</code></td><td>POST</td><td>허용 상태 또는 공간 이름 변경</td></tr>
+            <tr><td><code>/health</code></td><td>GET</td><td>서버와 부저 상태 확인</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>상태를 직접 긴급으로 바꾼 뒤 즉시 해제</h3>
+      <div class="notice danger"><strong>실물 부저가 연결되어 있으면 첫 명령부터 경보음이 납니다.</strong></div>
+      <div class="code-block"><button class="copy" type="button">복사</button><pre><code>curl -s -X POST http://127.0.0.1:8080/api/state \
+  -H 'Content-Type: application/json' \
+  -d '{"state":"emergency"}'
+
+sleep 2
+
+curl -s -X POST http://127.0.0.1:8080/api/state \
+  -H 'Content-Type: application/json' \
+  -d '{"state":"normal-empty"}'</code></pre></div>
+    </section>
+
+    <section class="section" id="trouble">
+      <h2>문제 해결</h2>
+      <details open>
+        <summary>제어 페이지는 열리는데 LCD가 안 뜹니다</summary>
+        <div>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>cat ~/safenest_lcd_remote/logs/chromium.log
+command -v chromium || command -v chromium-browser
+echo "$XDG_RUNTIME_DIR"
+echo "$WAYLAND_DISPLAY"
+echo "$DISPLAY"</code></pre></div>
+          <p>Pi의 실제 로그인 화면 세션과 SSH 세션의 Wayland/X11 환경이 다르면 Chromium이 열리지 않을 수 있습니다.</p>
+        </div>
+      </details>
+      <details>
+        <summary>서버 또는 8080 포트가 열리지 않습니다</summary>
+        <div>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>cat ~/safenest_lcd_remote/logs/server.log
+curl -v http://127.0.0.1:8080/health
+ss -ltnp | grep ':8080'</code></pre></div>
+        </div>
+      </details>
+      <details>
+        <summary>부저가 울리지 않습니다</summary>
+        <div>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>python3 -c 'import gpiozero; print(gpiozero.__file__)'
+curl -s http://127.0.0.1:8080/health | python3 -m json.tool
+tail -n 50 ~/safenest_lcd_remote/logs/server.log</code></pre></div>
+          <p><code>available: false</code> 또는 <code>error</code>가 있으면 GPIO 라이브러리, 핀 점유, 권한, 배선을 먼저 확인합니다. 2핀 수동 피에조인지도 확인하세요.</p>
+        </div>
+      </details>
+      <details>
+        <summary>노트북에서 제어 주소가 열리지 않습니다</summary>
+        <div>
+          <div class="code-block"><button class="copy" type="button">복사</button><pre><code>hostname -I
+curl -s http://127.0.0.1:8080/health</code></pre></div>
+          <p>Pi와 노트북이 같은 네트워크인지, 브라우저 주소에 Pi의 최신 IP와 포트 8080을 사용했는지 확인합니다.</p>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="git">
+      <h2>GitHub 업로드 준비</h2>
+      <p class="section-intro">현재 폴더에는 실행 중 생기는 로그·PID·상태·Chromium 프로필을 제외하는 <code>.gitignore</code>와 Linux 실행 파일의 줄바꿈을 지키는 <code>.gitattributes</code>가 준비되어 있습니다.</p>
+
+      <h3>업로드할 구조</h3>
+      <div class="tree">safenest_lcd_remote/
+├─ server.py
+├─ start_lcd.sh
+├─ stop_lcd.sh
+├─ deploy_buzzer.sh
+├─ test_buzzer.py
+├─ static/
+│  ├─ display.html
+│  ├─ control.html
+│  └─ common.css
+├─ LCD_BUZZER_TEAM_GUIDE.html
+├─ GIT_UPLOAD_GUIDE.md
+├─ README.md
+├─ state.example.json
+├─ .gitignore
+└─ .gitattributes</div>
+
+      <div class="notice info">
+        <strong>업로드 제외:</strong> <code>state.json</code>, <code>logs/</code>, PID 파일, <code>.chromium-kiosk/</code>, <code>__pycache__/</code>. 이 항목은 기기별 런타임 데이터입니다.
+      </div>
+
+      <h3>새 저장소에 올리는 명령</h3>
+      <div class="code-block"><button class="copy" type="button">복사</button><pre><code>git init
+git branch -M main
+git add .
+git update-index --chmod=+x start_lcd.sh stop_lcd.sh deploy_buzzer.sh
+git status --short
+git diff --cached --check
+git commit -m "feat: add SafeNest LCD control and emergency buzzer"
+git remote add origin https://github.com/&lt;조직또는계정&gt;/&lt;저장소명&gt;.git
+git push -u origin main</code></pre></div>
+
+      <h3>권장 PR 제목</h3>
+      <div class="code-block"><button class="copy" type="button">복사</button><pre><code>feat: Raspberry Pi LCD 원격 제어 및 긴급 피에조 경보 추가</code></pre></div>
+      <p>커밋 범위, 검증 체크리스트, 그대로 복사할 PR 본문은 같은 폴더의 <code>GIT_UPLOAD_GUIDE.md</code>에 준비되어 있습니다.</p>
+    </section>
+
+    <section class="section" id="handoff">
+      <h2>팀 인계 완료 체크리스트</h2>
+      <div class="grid grid-2">
+        <article class="card">
+          <h3>실행 담당자</h3>
+          <ul class="checks">
+            <li class="todo">Pi 전원을 끄고 GPIO18·GND 배선 확인</li>
+            <li class="todo">무음 테스트 후 저장 상태를 정상으로 초기화</li>
+            <li class="todo">LCD에서 6개 화면과 긴급 점멸 확인</li>
+            <li class="todo">긴급 부저 ON과 정상 복귀 OFF 확인</li>
+            <li class="todo"><code>stop_lcd.sh</code> 종료 후 무음 확인</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Git 업로드 담당자</h3>
+          <ul class="checks">
+            <li class="todo">런타임 파일이 staging에 없는지 확인</li>
+            <li class="todo">셸 3개 파일의 실행 권한 비트 확인</li>
+            <li class="todo">실물 확인 결과를 PR 체크박스에 반영</li>
+            <li class="todo">센서 수치가 예시값임을 PR에 명시</li>
+            <li class="todo">팀원 한 명이 clone부터 재실행</li>
+          </ul>
+        </article>
+      </div>
+      <div class="notice info">
+        <strong>완료 기준:</strong> “코드가 올라감”이 아니라, 다른 팀원이 새로 clone한 폴더에서 무음 시험 → LCD 실행 → 현장 경보 시험 → 안전 종료까지 재현해야 인계 완료입니다.
+      </div>
+    </section>
+  </main>
+
+  <footer>SafeNest LCD·피에조 부저 팀원 가이드 · 2026-08-01</footer>
+
+  <script>
+    document.querySelectorAll(".copy").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const text = button.nextElementSibling.textContent;
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = "완료";
+        } catch (_) {
+          button.textContent = "선택 후 복사";
+        }
+        window.setTimeout(() => { button.textContent = "복사"; }, 1400);
+      });
+    });
+  </script>
+</body>
+</html>

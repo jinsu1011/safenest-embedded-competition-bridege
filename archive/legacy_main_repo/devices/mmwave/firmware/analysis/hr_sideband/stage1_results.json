@@ -1,0 +1,811 @@
+{
+  "analysis_id": "mr60_hr_sideband_stage1_s1_20260801",
+  "hypothesis_final_status": "PENDING_S2",
+  "stage1_conclusion": "PRELIMINARY_NOT_SUPPORTED_FINAL_PENDING_S2",
+  "heart_verified": false,
+  "contracts": {
+    "raw_phase_source": "total_phase",
+    "auxiliary_phase_source": "heart_phase",
+    "respiration_source": "breath_phase_fft_30s_causal",
+    "vendor_breath_rate_used": false,
+    "fixed_offset_applied": false,
+    "window_seconds": 30.0,
+    "sample_rate_hz": 10.0,
+    "respiration_band_rpm": [
+      5.0,
+      40.0
+    ],
+    "heart_band_hz": [
+      0.8,
+      2.0
+    ],
+    "sideband_match_tolerance_bpm": 3.0
+  },
+  "valid_cues": 10,
+  "excluded_cues": 0,
+  "excluded_rate": 0.0,
+  "regression_error_vs_respiration": {
+    "slope": 0.3398849688484395,
+    "intercept_bpm": 9.089767638142408,
+    "pearson_r": 0.11692793429504224,
+    "n": 10,
+    "criterion_slope_0_7_to_1_3": false,
+    "criterion_r_at_least_0_6": false,
+    "stage1_preliminary_pass": false
+  },
+  "spectrum_evidence": {
+    "vendor_error_sideband_match_count": 5,
+    "vendor_error_and_dominant_spectrum_order_match_count": 0,
+    "valid_count": 10
+  },
+  "coupling": {
+    "abs_error_vs_breath_phase_std_r": -0.1465979423101229,
+    "sideband_ratio_vs_breath_phase_std_r": 0.32333333741015374,
+    "sideband_ratio_vs_breath_peak_ratio_r": 0.11585459261631806,
+    "sideband_ratio_vs_breath_filtered_valid_rate_r": -0.37828084360936776
+  },
+  "outliers": [
+    {
+      "index": 5,
+      "scheduled_elapsed_s": 150.0,
+      "watch_bpm": 75,
+      "vendor_mr60_bpm": 64.0,
+      "vendor_error_bpm": -11.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 16.71268793696722,
+      "breath_phase_std": 0.2681292298741316,
+      "breath_spectral_peak_ratio": 9.578687193514165,
+      "breath_filtered_valid_rate": 0.6229508196721312,
+      "vendor_error_nearest_order": -1,
+      "vendor_error_order_residual_bpm": 5.712687936967221,
+      "vendor_error_sideband_match": false,
+      "dominant_total_peak_bpm": 51.20487628014976,
+      "dominant_total_peak_amplitude": 10.747613187476874,
+      "dominant_heart_phase_peak_bpm": 55.960901625369495,
+      "dominant_heart_phase_peak_amplitude": 10.066082580195589,
+      "dominant_spectrum_nearest_order": -1,
+      "dominant_spectrum_order_residual_bpm": 7.082435782883017,
+      "dominant_spectrum_sideband_match": false,
+      "watch_fundamental_amplitude": 6.085691386133206,
+      "vendor_frequency_amplitude": 7.855880308824119,
+      "vendor_to_watch_amplitude_ratio": 1.2908772085821585,
+      "max_predicted_sideband_to_base_ratio": 1.5367913542963951,
+      "predicted_frequencies": {
+        "-1": {
+          "frequency_hz": 0.9714552010505464,
+          "bpm": 58.287312063032786,
+          "amplitude": 9.352437907125555,
+          "to_base_ratio": 1.5367913542963951,
+          "to_vendor_ratio": 1.1905015783680446
+        },
+        "0": {
+          "frequency_hz": 1.25,
+          "bpm": 75.0,
+          "amplitude": 6.085691386133206,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 0.7746670197224685
+        },
+        "1": {
+          "frequency_hz": 1.5285447989494536,
+          "bpm": 91.71268793696721,
+          "amplitude": 7.7408705210139015,
+          "to_base_ratio": 1.271978815529846,
+          "to_vendor_ratio": 0.9853600381766213
+        },
+        "2": {
+          "frequency_hz": 1.8070895978989072,
+          "bpm": 108.42537587393443,
+          "amplitude": 5.578311561981928,
+          "to_base_ratio": 0.9166274147079839,
+          "to_vendor_ratio": 0.7100810275477452
+        }
+      }
+    },
+    {
+      "index": 8,
+      "scheduled_elapsed_s": 240.0,
+      "watch_bpm": 71,
+      "vendor_mr60_bpm": 96.0,
+      "vendor_error_bpm": 25.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 17.149009683467828,
+      "breath_phase_std": 0.18031949783602383,
+      "breath_spectral_peak_ratio": 4.245110294842602,
+      "breath_filtered_valid_rate": 0.898360655737705,
+      "vendor_error_nearest_order": 1,
+      "vendor_error_order_residual_bpm": 7.850990316532172,
+      "vendor_error_sideband_match": false,
+      "dominant_total_peak_bpm": 63.76588520913047,
+      "dominant_total_peak_amplitude": 4.291722735070793,
+      "dominant_heart_phase_peak_bpm": 64.2193624149176,
+      "dominant_heart_phase_peak_amplitude": 5.263918771166567,
+      "dominant_spectrum_nearest_order": 0,
+      "dominant_spectrum_order_residual_bpm": 7.234114790869533,
+      "dominant_spectrum_sideband_match": false,
+      "watch_fundamental_amplitude": 3.4676462609882863,
+      "vendor_frequency_amplitude": 2.3168843971525934,
+      "vendor_to_watch_amplitude_ratio": 0.6681432368745354,
+      "max_predicted_sideband_to_base_ratio": 0.9405980189444295,
+      "predicted_frequencies": {
+        "-1": {
+          "frequency_hz": 0.8975165052755363,
+          "bpm": 53.850990316532176,
+          "amplitude": 1.6509246637627293,
+          "to_base_ratio": 0.476093736069899,
+          "to_vendor_ratio": 0.7125623815291277
+        },
+        "0": {
+          "frequency_hz": 1.1833333333333333,
+          "bpm": 71.0,
+          "amplitude": 3.4676462609882863,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 1.4966850591466527
+        },
+        "1": {
+          "frequency_hz": 1.4691501613911304,
+          "bpm": 88.14900968346782,
+          "amplitude": 3.2616612034856405,
+          "to_base_ratio": 0.9405980189444295,
+          "to_vendor_ratio": 1.407779001617068
+        },
+        "2": {
+          "frequency_hz": 1.7549669894489277,
+          "bpm": 105.29801936693566,
+          "amplitude": 1.768806153491397,
+          "to_base_ratio": 0.5100884058996501,
+          "to_vendor_ratio": 0.7634416959539396
+        }
+      }
+    },
+    {
+      "index": 9,
+      "scheduled_elapsed_s": 270.0,
+      "watch_bpm": 81,
+      "vendor_mr60_bpm": 109.0,
+      "vendor_error_bpm": 28.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 17.57227112292924,
+      "breath_phase_std": 0.14101037752529286,
+      "breath_spectral_peak_ratio": 5.259940293694697,
+      "breath_filtered_valid_rate": 0.0,
+      "vendor_error_nearest_order": 2,
+      "vendor_error_order_residual_bpm": 7.1445422458584815,
+      "vendor_error_sideband_match": false,
+      "dominant_total_peak_bpm": 71.6131313834511,
+      "dominant_total_peak_amplitude": 7.49573378822397,
+      "dominant_heart_phase_peak_bpm": 50.08657834148563,
+      "dominant_heart_phase_peak_amplitude": 6.587897008259233,
+      "dominant_spectrum_nearest_order": -1,
+      "dominant_spectrum_order_residual_bpm": 8.185402506380345,
+      "dominant_spectrum_sideband_match": false,
+      "watch_fundamental_amplitude": 2.58602581007888,
+      "vendor_frequency_amplitude": 4.489035978651075,
+      "vendor_to_watch_amplitude_ratio": 1.7358821250566514,
+      "max_predicted_sideband_to_base_ratio": 2.1099311957277846,
+      "predicted_frequencies": {
+        "-1": {
+          "frequency_hz": 1.0571288146178461,
+          "bpm": 63.42772887707077,
+          "amplitude": 4.584183789482076,
+          "to_base_ratio": 1.7726751881653673,
+          "to_vendor_ratio": 1.0211955999647817
+        },
+        "0": {
+          "frequency_hz": 1.35,
+          "bpm": 81.0,
+          "amplitude": 2.58602581007888,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 0.5760759820989368
+        },
+        "1": {
+          "frequency_hz": 1.642871185382154,
+          "bpm": 98.57227112292924,
+          "amplitude": 5.456336529642645,
+          "to_base_ratio": 2.1099311957277846,
+          "to_vendor_ratio": 1.2154806857400677
+        },
+        "2": {
+          "frequency_hz": 1.935742370764308,
+          "bpm": 116.14454224585847,
+          "amplitude": 2.989647538401979,
+          "to_base_ratio": 1.1560779968823232,
+          "to_vendor_ratio": 0.665988767436956
+        }
+      }
+    }
+  ],
+  "cue_results": [
+    {
+      "index": 1,
+      "scheduled_elapsed_s": 30.0,
+      "watch_bpm": 68,
+      "vendor_mr60_bpm": 86.0,
+      "vendor_error_bpm": 18.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 16.65554934701233,
+      "breath_phase_std": 0.15857368024813132,
+      "breath_spectral_peak_ratio": 11.031031152293155,
+      "breath_filtered_valid_rate": 0.7833333333333333,
+      "vendor_error_nearest_order": 1,
+      "vendor_error_order_residual_bpm": 1.3444506529876712,
+      "vendor_error_sideband_match": true,
+      "dominant_total_peak_bpm": 99.29626027446855,
+      "dominant_total_peak_amplitude": 9.16668607011613,
+      "dominant_heart_phase_peak_bpm": 54.151674653469435,
+      "dominant_heart_phase_peak_amplitude": 8.026442176992166,
+      "dominant_spectrum_nearest_order": 2,
+      "dominant_spectrum_order_residual_bpm": 2.0148384195561064,
+      "dominant_spectrum_sideband_match": true,
+      "watch_fundamental_amplitude": 8.147628279423198,
+      "vendor_frequency_amplitude": 7.067127976170824,
+      "vendor_to_watch_amplitude_ratio": 0.867384683469032,
+      "max_predicted_sideband_to_base_ratio": 1.1250741633938501,
+      "predicted_frequencies": {
+        "-1": {
+          "frequency_hz": 0.8557408442164611,
+          "bpm": 51.34445065298767,
+          "amplitude": 8.729879215474964,
+          "to_base_ratio": 1.071462628888242,
+          "to_vendor_ratio": 1.2352796277229816
+        },
+        "0": {
+          "frequency_hz": 1.1333333333333333,
+          "bpm": 68.0,
+          "amplitude": 8.147628279423198,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 1.152891005638449
+        },
+        "1": {
+          "frequency_hz": 1.4109258224502055,
+          "bpm": 84.65554934701233,
+          "amplitude": 7.6216082739967375,
+          "to_base_ratio": 0.9354388802008896,
+          "to_vendor_ratio": 1.0784590713081081
+        },
+        "2": {
+          "frequency_hz": 1.6885183115670777,
+          "bpm": 101.31109869402466,
+          "amplitude": 9.16668607011613,
+          "to_base_ratio": 1.1250741633938501,
+          "to_vendor_ratio": 1.2970878836529727
+        }
+      }
+    },
+    {
+      "index": 2,
+      "scheduled_elapsed_s": 60.0,
+      "watch_bpm": 71,
+      "vendor_mr60_bpm": 88.0,
+      "vendor_error_bpm": 17.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 19.93948474073419,
+      "breath_phase_std": 0.15555779352115578,
+      "breath_spectral_peak_ratio": 3.1081165803204143,
+      "breath_filtered_valid_rate": 0.0,
+      "vendor_error_nearest_order": 1,
+      "vendor_error_order_residual_bpm": 2.9394847407341906,
+      "vendor_error_sideband_match": true,
+      "dominant_total_peak_bpm": 67.49687971375533,
+      "dominant_total_peak_amplitude": 7.966201409232207,
+      "dominant_heart_phase_peak_bpm": 67.92321230496513,
+      "dominant_heart_phase_peak_amplitude": 7.291187561693925,
+      "dominant_spectrum_nearest_order": 0,
+      "dominant_spectrum_order_residual_bpm": 3.503120286244666,
+      "dominant_spectrum_sideband_match": false,
+      "watch_fundamental_amplitude": 6.9747367364388735,
+      "vendor_frequency_amplitude": 4.522544732884521,
+      "vendor_to_watch_amplitude_ratio": 0.6484179839013708,
+      "max_predicted_sideband_to_base_ratio": 0.7455862290317101,
+      "predicted_frequencies": {
+        "-1": {
+          "frequency_hz": 0.8510085876544302,
+          "bpm": 51.06051525926581,
+          "amplitude": 1.8334734404073365,
+          "to_base_ratio": 0.2628734975513158,
+          "to_vendor_ratio": 0.40540747492793294
+        },
+        "0": {
+          "frequency_hz": 1.1833333333333333,
+          "bpm": 71.0,
+          "amplitude": 6.9747367364388735,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 1.5422150909252195
+        },
+        "1": {
+          "frequency_hz": 1.5156580790122365,
+          "bpm": 90.93948474073419,
+          "amplitude": 4.01814592315259,
+          "to_base_ratio": 0.576100012801939,
+          "to_vendor_ratio": 0.8884701336253624
+        },
+        "2": {
+          "frequency_hz": 1.8479828246911398,
+          "bpm": 110.87896948146839,
+          "amplitude": 5.200267661810396,
+          "to_base_ratio": 0.7455862290317101,
+          "to_vendor_ratio": 1.1498543339987302
+        }
+      }
+    },
+    {
+      "index": 3,
+      "scheduled_elapsed_s": 90.0,
+      "watch_bpm": 75,
+      "vendor_mr60_bpm": 84.0,
+      "vendor_error_bpm": 9.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 8.084833017257557,
+      "breath_phase_std": 0.2231120921535671,
+      "breath_spectral_peak_ratio": 3.3113866196491752,
+      "breath_filtered_valid_rate": 0.08524590163934426,
+      "vendor_error_nearest_order": 1,
+      "vendor_error_order_residual_bpm": 0.9151669827424431,
+      "vendor_error_sideband_match": true,
+      "dominant_total_peak_bpm": 108.16081745977573,
+      "dominant_total_peak_amplitude": 27.067072311036284,
+      "dominant_heart_phase_peak_bpm": 107.92330933613277,
+      "dominant_heart_phase_peak_amplitude": 20.756537830652846,
+      "dominant_spectrum_nearest_order": 2,
+      "dominant_spectrum_order_residual_bpm": 16.991151425260615,
+      "dominant_spectrum_sideband_match": false,
+      "watch_fundamental_amplitude": 13.06391008752792,
+      "vendor_frequency_amplitude": 9.812805187938501,
+      "vendor_to_watch_amplitude_ratio": 0.751138451060434,
+      "max_predicted_sideband_to_base_ratio": 2.02594315426987,
+      "predicted_frequencies": {
+        "-2": {
+          "frequency_hz": 0.9805055660914148,
+          "bpm": 58.83033396548489,
+          "amplitude": 26.46673920982429,
+          "to_base_ratio": 2.02594315426987,
+          "to_vendor_ratio": 2.697163420950833
+        },
+        "-1": {
+          "frequency_hz": 1.1152527830457073,
+          "bpm": 66.91516698274243,
+          "amplitude": 13.68966438019214,
+          "to_base_ratio": 1.04789946413223,
+          "to_vendor_ratio": 1.3950816426090793
+        },
+        "0": {
+          "frequency_hz": 1.25,
+          "bpm": 75.0,
+          "amplitude": 13.06391008752792,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 1.3313124878485862
+        },
+        "1": {
+          "frequency_hz": 1.3847472169542927,
+          "bpm": 83.08483301725757,
+          "amplitude": 9.551848466100276,
+          "to_base_ratio": 0.731163059306371,
+          "to_vendor_ratio": 0.9734065115081483
+        },
+        "2": {
+          "frequency_hz": 1.5194944339085852,
+          "bpm": 91.16966603451512,
+          "amplitude": 6.684590793274108,
+          "to_base_ratio": 0.5116837722004738,
+          "to_vendor_ratio": 0.681210995759962
+        }
+      }
+    },
+    {
+      "index": 4,
+      "scheduled_elapsed_s": 120.0,
+      "watch_bpm": 70,
+      "vendor_mr60_bpm": 83.0,
+      "vendor_error_bpm": 13.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 17.78252085007488,
+      "breath_phase_std": 0.17660873777974437,
+      "breath_spectral_peak_ratio": 2.844845059688396,
+      "breath_filtered_valid_rate": 0.9114754098360656,
+      "vendor_error_nearest_order": 1,
+      "vendor_error_order_residual_bpm": 4.7825208500748815,
+      "vendor_error_sideband_match": false,
+      "dominant_total_peak_bpm": 105.48323164745695,
+      "dominant_total_peak_amplitude": 7.332941416709473,
+      "dominant_heart_phase_peak_bpm": 77.32425659652195,
+      "dominant_heart_phase_peak_amplitude": 7.039136672181149,
+      "dominant_spectrum_nearest_order": 2,
+      "dominant_spectrum_order_residual_bpm": 0.08181005269281627,
+      "dominant_spectrum_sideband_match": true,
+      "watch_fundamental_amplitude": 6.982125611736337,
+      "vendor_frequency_amplitude": 3.9877023024891662,
+      "vendor_to_watch_amplitude_ratio": 0.5711301291667097,
+      "max_predicted_sideband_to_base_ratio": 1.0502448429720952,
+      "predicted_frequencies": {
+        "-1": {
+          "frequency_hz": 0.8702913191654187,
+          "bpm": 52.21747914992512,
+          "amplitude": 6.150394360190841,
+          "to_base_ratio": 0.8808770712822139,
+          "to_vendor_ratio": 1.5423403989690252
+        },
+        "0": {
+          "frequency_hz": 1.1666666666666667,
+          "bpm": 70.0,
+          "amplitude": 6.982125611736337,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 1.7509144570240411
+        },
+        "1": {
+          "frequency_hz": 1.4630420141679148,
+          "bpm": 87.78252085007489,
+          "amplitude": 3.8228350882601534,
+          "to_base_ratio": 0.5475173752007991,
+          "to_vendor_ratio": 0.9586560877109355
+        },
+        "2": {
+          "frequency_hz": 1.7594173616691628,
+          "bpm": 105.56504170014978,
+          "amplitude": 7.332941416709473,
+          "to_base_ratio": 1.0502448429720952,
+          "to_vendor_ratio": 1.8388888789747853
+        }
+      }
+    },
+    {
+      "index": 5,
+      "scheduled_elapsed_s": 150.0,
+      "watch_bpm": 75,
+      "vendor_mr60_bpm": 64.0,
+      "vendor_error_bpm": -11.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 16.71268793696722,
+      "breath_phase_std": 0.2681292298741316,
+      "breath_spectral_peak_ratio": 9.578687193514165,
+      "breath_filtered_valid_rate": 0.6229508196721312,
+      "vendor_error_nearest_order": -1,
+      "vendor_error_order_residual_bpm": 5.712687936967221,
+      "vendor_error_sideband_match": false,
+      "dominant_total_peak_bpm": 51.20487628014976,
+      "dominant_total_peak_amplitude": 10.747613187476874,
+      "dominant_heart_phase_peak_bpm": 55.960901625369495,
+      "dominant_heart_phase_peak_amplitude": 10.066082580195589,
+      "dominant_spectrum_nearest_order": -1,
+      "dominant_spectrum_order_residual_bpm": 7.082435782883017,
+      "dominant_spectrum_sideband_match": false,
+      "watch_fundamental_amplitude": 6.085691386133206,
+      "vendor_frequency_amplitude": 7.855880308824119,
+      "vendor_to_watch_amplitude_ratio": 1.2908772085821585,
+      "max_predicted_sideband_to_base_ratio": 1.5367913542963951,
+      "predicted_frequencies": {
+        "-1": {
+          "frequency_hz": 0.9714552010505464,
+          "bpm": 58.287312063032786,
+          "amplitude": 9.352437907125555,
+          "to_base_ratio": 1.5367913542963951,
+          "to_vendor_ratio": 1.1905015783680446
+        },
+        "0": {
+          "frequency_hz": 1.25,
+          "bpm": 75.0,
+          "amplitude": 6.085691386133206,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 0.7746670197224685
+        },
+        "1": {
+          "frequency_hz": 1.5285447989494536,
+          "bpm": 91.71268793696721,
+          "amplitude": 7.7408705210139015,
+          "to_base_ratio": 1.271978815529846,
+          "to_vendor_ratio": 0.9853600381766213
+        },
+        "2": {
+          "frequency_hz": 1.8070895978989072,
+          "bpm": 108.42537587393443,
+          "amplitude": 5.578311561981928,
+          "to_base_ratio": 0.9166274147079839,
+          "to_vendor_ratio": 0.7100810275477452
+        }
+      }
+    },
+    {
+      "index": 6,
+      "scheduled_elapsed_s": 180.0,
+      "watch_bpm": 73,
+      "vendor_mr60_bpm": 89.0,
+      "vendor_error_bpm": 16.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 16.611249299343296,
+      "breath_phase_std": 0.12243219346837397,
+      "breath_spectral_peak_ratio": 3.9160153440840806,
+      "breath_filtered_valid_rate": 0.7770491803278688,
+      "vendor_error_nearest_order": 1,
+      "vendor_error_order_residual_bpm": 0.6112492993432959,
+      "vendor_error_sideband_match": true,
+      "dominant_total_peak_bpm": 57.26666080103397,
+      "dominant_total_peak_amplitude": 6.441527952056329,
+      "dominant_heart_phase_peak_bpm": 73.69612135673361,
+      "dominant_heart_phase_peak_amplitude": 5.823046730328328,
+      "dominant_spectrum_nearest_order": -1,
+      "dominant_spectrum_order_residual_bpm": 0.8779101003772674,
+      "dominant_spectrum_sideband_match": true,
+      "watch_fundamental_amplitude": 6.112268697550397,
+      "vendor_frequency_amplitude": 3.805360524001927,
+      "vendor_to_watch_amplitude_ratio": 0.6225774278422993,
+      "max_predicted_sideband_to_base_ratio": 1.0538685831396595,
+      "predicted_frequencies": {
+        "-1": {
+          "frequency_hz": 0.9398125116776117,
+          "bpm": 56.3887507006567,
+          "amplitude": 6.441527952056329,
+          "to_base_ratio": 1.0538685831396595,
+          "to_vendor_ratio": 1.6927510314534042
+        },
+        "0": {
+          "frequency_hz": 1.2166666666666666,
+          "bpm": 73.0,
+          "amplitude": 6.112268697550397,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 1.606225917097179
+        },
+        "1": {
+          "frequency_hz": 1.4935208216557214,
+          "bpm": 89.61124929934329,
+          "amplitude": 3.1207188398088217,
+          "to_base_ratio": 0.5105663697441027,
+          "to_vendor_ratio": 0.820084935481199
+        },
+        "2": {
+          "frequency_hz": 1.7703749766447765,
+          "bpm": 106.22249859868658,
+          "amplitude": 2.7103108500218194,
+          "to_base_ratio": 0.44342141750215036,
+          "to_vendor_ratio": 0.7122349729879226
+        }
+      }
+    },
+    {
+      "index": 7,
+      "scheduled_elapsed_s": 210.0,
+      "watch_bpm": 77,
+      "vendor_mr60_bpm": 96.0,
+      "vendor_error_bpm": 19.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 9.867615346130355,
+      "breath_phase_std": 0.2909609631933887,
+      "breath_spectral_peak_ratio": 3.9343172196550897,
+      "breath_filtered_valid_rate": 0.6852459016393443,
+      "vendor_error_nearest_order": 2,
+      "vendor_error_order_residual_bpm": 0.7352306922607106,
+      "vendor_error_sideband_match": true,
+      "dominant_total_peak_bpm": 107.40380380935686,
+      "dominant_total_peak_amplitude": 13.861698710382829,
+      "dominant_heart_phase_peak_bpm": 48.872015476333836,
+      "dominant_heart_phase_peak_amplitude": 14.117910869799413,
+      "dominant_spectrum_nearest_order": 2,
+      "dominant_spectrum_order_residual_bpm": 10.668573117096148,
+      "dominant_spectrum_sideband_match": false,
+      "watch_fundamental_amplitude": 7.726611802307013,
+      "vendor_frequency_amplitude": 7.930532371146613,
+      "vendor_to_watch_amplitude_ratio": 1.0263919780179345,
+      "max_predicted_sideband_to_base_ratio": 1.4017680272991295,
+      "predicted_frequencies": {
+        "-2": {
+          "frequency_hz": 0.9544128217956549,
+          "bpm": 57.26476930773929,
+          "amplitude": 8.332869958182243,
+          "to_base_ratio": 1.07846364893008,
+          "to_vendor_ratio": 1.0507327337190429
+        },
+        "-1": {
+          "frequency_hz": 1.1188730775644942,
+          "bpm": 67.13238465386965,
+          "amplitude": 10.830917383826073,
+          "to_base_ratio": 1.4017680272991295,
+          "to_vendor_ratio": 1.3657238728678331
+        },
+        "0": {
+          "frequency_hz": 1.2833333333333334,
+          "bpm": 77.0,
+          "amplitude": 7.726611802307013,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 0.9742866481976018
+        },
+        "1": {
+          "frequency_hz": 1.4477935891021727,
+          "bpm": 86.86761534613036,
+          "amplitude": 8.288256299364143,
+          "to_base_ratio": 1.0726896227515188,
+          "to_vendor_ratio": 1.0451071771069271
+        },
+        "2": {
+          "frequency_hz": 1.612253844871012,
+          "bpm": 96.73523069226071,
+          "amplitude": 7.930532371146613,
+          "to_base_ratio": 1.0263919780179345,
+          "to_vendor_ratio": 1.0
+        }
+      }
+    },
+    {
+      "index": 8,
+      "scheduled_elapsed_s": 240.0,
+      "watch_bpm": 71,
+      "vendor_mr60_bpm": 96.0,
+      "vendor_error_bpm": 25.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 17.149009683467828,
+      "breath_phase_std": 0.18031949783602383,
+      "breath_spectral_peak_ratio": 4.245110294842602,
+      "breath_filtered_valid_rate": 0.898360655737705,
+      "vendor_error_nearest_order": 1,
+      "vendor_error_order_residual_bpm": 7.850990316532172,
+      "vendor_error_sideband_match": false,
+      "dominant_total_peak_bpm": 63.76588520913047,
+      "dominant_total_peak_amplitude": 4.291722735070793,
+      "dominant_heart_phase_peak_bpm": 64.2193624149176,
+      "dominant_heart_phase_peak_amplitude": 5.263918771166567,
+      "dominant_spectrum_nearest_order": 0,
+      "dominant_spectrum_order_residual_bpm": 7.234114790869533,
+      "dominant_spectrum_sideband_match": false,
+      "watch_fundamental_amplitude": 3.4676462609882863,
+      "vendor_frequency_amplitude": 2.3168843971525934,
+      "vendor_to_watch_amplitude_ratio": 0.6681432368745354,
+      "max_predicted_sideband_to_base_ratio": 0.9405980189444295,
+      "predicted_frequencies": {
+        "-1": {
+          "frequency_hz": 0.8975165052755363,
+          "bpm": 53.850990316532176,
+          "amplitude": 1.6509246637627293,
+          "to_base_ratio": 0.476093736069899,
+          "to_vendor_ratio": 0.7125623815291277
+        },
+        "0": {
+          "frequency_hz": 1.1833333333333333,
+          "bpm": 71.0,
+          "amplitude": 3.4676462609882863,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 1.4966850591466527
+        },
+        "1": {
+          "frequency_hz": 1.4691501613911304,
+          "bpm": 88.14900968346782,
+          "amplitude": 3.2616612034856405,
+          "to_base_ratio": 0.9405980189444295,
+          "to_vendor_ratio": 1.407779001617068
+        },
+        "2": {
+          "frequency_hz": 1.7549669894489277,
+          "bpm": 105.29801936693566,
+          "amplitude": 1.768806153491397,
+          "to_base_ratio": 0.5100884058996501,
+          "to_vendor_ratio": 0.7634416959539396
+        }
+      }
+    },
+    {
+      "index": 9,
+      "scheduled_elapsed_s": 270.0,
+      "watch_bpm": 81,
+      "vendor_mr60_bpm": 109.0,
+      "vendor_error_bpm": 28.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 17.57227112292924,
+      "breath_phase_std": 0.14101037752529286,
+      "breath_spectral_peak_ratio": 5.259940293694697,
+      "breath_filtered_valid_rate": 0.0,
+      "vendor_error_nearest_order": 2,
+      "vendor_error_order_residual_bpm": 7.1445422458584815,
+      "vendor_error_sideband_match": false,
+      "dominant_total_peak_bpm": 71.6131313834511,
+      "dominant_total_peak_amplitude": 7.49573378822397,
+      "dominant_heart_phase_peak_bpm": 50.08657834148563,
+      "dominant_heart_phase_peak_amplitude": 6.587897008259233,
+      "dominant_spectrum_nearest_order": -1,
+      "dominant_spectrum_order_residual_bpm": 8.185402506380345,
+      "dominant_spectrum_sideband_match": false,
+      "watch_fundamental_amplitude": 2.58602581007888,
+      "vendor_frequency_amplitude": 4.489035978651075,
+      "vendor_to_watch_amplitude_ratio": 1.7358821250566514,
+      "max_predicted_sideband_to_base_ratio": 2.1099311957277846,
+      "predicted_frequencies": {
+        "-1": {
+          "frequency_hz": 1.0571288146178461,
+          "bpm": 63.42772887707077,
+          "amplitude": 4.584183789482076,
+          "to_base_ratio": 1.7726751881653673,
+          "to_vendor_ratio": 1.0211955999647817
+        },
+        "0": {
+          "frequency_hz": 1.35,
+          "bpm": 81.0,
+          "amplitude": 2.58602581007888,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 0.5760759820989368
+        },
+        "1": {
+          "frequency_hz": 1.642871185382154,
+          "bpm": 98.57227112292924,
+          "amplitude": 5.456336529642645,
+          "to_base_ratio": 2.1099311957277846,
+          "to_vendor_ratio": 1.2154806857400677
+        },
+        "2": {
+          "frequency_hz": 1.935742370764308,
+          "bpm": 116.14454224585847,
+          "amplitude": 2.989647538401979,
+          "to_base_ratio": 1.1560779968823232,
+          "to_vendor_ratio": 0.665988767436956
+        }
+      }
+    },
+    {
+      "index": 10,
+      "scheduled_elapsed_s": 300.0,
+      "watch_bpm": 71,
+      "vendor_mr60_bpm": 81.0,
+      "vendor_error_bpm": 10.0,
+      "valid": true,
+      "exclusion_reason": null,
+      "respiration_rpm": 15.860942316074606,
+      "breath_phase_std": 0.10626482618316815,
+      "breath_spectral_peak_ratio": 3.5387981004208,
+      "breath_filtered_valid_rate": 0.0,
+      "vendor_error_nearest_order": 1,
+      "vendor_error_order_residual_bpm": 5.860942316074606,
+      "vendor_error_sideband_match": false,
+      "dominant_total_peak_bpm": 57.2303007469191,
+      "dominant_total_peak_amplitude": 3.212141500681433,
+      "dominant_heart_phase_peak_bpm": 57.53377209428438,
+      "dominant_heart_phase_peak_amplitude": 3.8794552240165703,
+      "dominant_spectrum_nearest_order": -1,
+      "dominant_spectrum_order_residual_bpm": 2.091243062993705,
+      "dominant_spectrum_sideband_match": true,
+      "watch_fundamental_amplitude": 3.0091013327979677,
+      "vendor_frequency_amplitude": 1.8211094816724538,
+      "vendor_to_watch_amplitude_ratio": 0.6052004503215326,
+      "max_predicted_sideband_to_base_ratio": 1.0674753507535326,
+      "predicted_frequencies": {
+        "-1": {
+          "frequency_hz": 0.9189842947320899,
+          "bpm": 55.139057683925394,
+          "amplitude": 3.212141500681433,
+          "to_base_ratio": 1.0674753507535326,
+          "to_vendor_ratio": 1.7638376676461518
+        },
+        "0": {
+          "frequency_hz": 1.1833333333333333,
+          "bpm": 71.0,
+          "amplitude": 3.0091013327979677,
+          "to_base_ratio": 1.0,
+          "to_vendor_ratio": 1.6523451023024145
+        },
+        "1": {
+          "frequency_hz": 1.4476823719345768,
+          "bpm": 86.86094231607461,
+          "amplitude": 2.813221743719919,
+          "to_base_ratio": 0.9349042895488292,
+          "to_vendor_ratio": 1.5447845239575262
+        },
+        "2": {
+          "frequency_hz": 1.71203141053582,
+          "bpm": 102.7218846321492,
+          "amplitude": 2.368268655345161,
+          "to_base_ratio": 0.7870351953694633,
+          "to_vendor_ratio": 1.3004537504083566
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "S1 Watch range is narrow; final H1 criterion is reserved for preregistered S1+S2 regression.",
+    "Apple Watch is a consumer wearable, not a medical reference.",
+    "total_phase is the rawest phase field exposed by the fixed ESP schema; heart_phase is auxiliary only."
+  ]
+}

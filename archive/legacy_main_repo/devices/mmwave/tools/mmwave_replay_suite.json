@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "suite_id": "safenest_mr60_real_v5_replay_20260808",
+  "datasets": [
+    {
+      "id": "empty_30min_v120",
+      "path": "devices/mmwave/firmware/logs/final/2026-08-01_empty_v120_30min.jsonl",
+      "scenario": "empty_space_30min",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": true,
+      "presence_ground_truth": "ABSENT"
+    },
+    {
+      "id": "occupied_31min_v120",
+      "path": "devices/mmwave/firmware/logs/final/2026-08-01_occupied_d09_v120_31min_attempt02.jsonl",
+      "scenario": "one_stationary_person_long_duration",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": true,
+      "presence_ground_truth": "PRESENT",
+      "analysis_start_s": 60.0,
+      "analysis_duration_s": 1800.0
+    },
+    {
+      "id": "distance_0_6m",
+      "path": "devices/mmwave/firmware/logs/matrix/2026-07-25_occupied_d06_v1_360s.jsonl",
+      "scenario": "stationary_normal_0.6m",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": false,
+      "presence_ground_truth": "PRESENT",
+      "ai_class_ground_truth": "NORMAL",
+      "analysis_start_s": 60.0,
+      "analysis_duration_s": 300.0
+    },
+    {
+      "id": "distance_0_9m",
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-25_occupied_d09_v1_360s.jsonl",
+      "scenario": "stationary_normal_0.9m",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": false,
+      "presence_ground_truth": "PRESENT",
+      "ai_class_ground_truth": "NORMAL",
+      "analysis_start_s": 60.0,
+      "analysis_duration_s": 300.0
+    },
+    {
+      "id": "distance_1_2m",
+      "path": "devices/mmwave/firmware/logs/matrix/2026-07-25_occupied_d12_v1_360s.jsonl",
+      "scenario": "stationary_normal_1.2m_range_limit",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": false,
+      "presence_ground_truth": "PRESENT",
+      "ai_class_ground_truth": "NORMAL",
+      "analysis_start_s": 60.0,
+      "analysis_duration_s": 300.0
+    },
+    {
+      "id": "distance_1_5m",
+      "path": "devices/mmwave/firmware/logs/matrix/2026-07-25_occupied_d15_v1_360s.jsonl",
+      "scenario": "stationary_normal_1.5m_lock_loss",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": false,
+      "presence_ground_truth": "PRESENT",
+      "ai_class_ground_truth": "NORMAL",
+      "analysis_start_s": 60.0,
+      "analysis_duration_s": 300.0
+    },
+    {
+      "id": "paced_12rpm",
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_12rpm_explicit_v2_attempt03.jsonl",
+      "scenario": "paced_breathing_12rpm",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": false,
+      "presence_ground_truth": "PRESENT",
+      "reference_respiration_rpm": 12.0,
+      "measurement_stage": "measurement",
+      "analysis_duration_s": 180.0
+    },
+    {
+      "id": "paced_15rpm",
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_15rpm_explicit_full_v3.jsonl",
+      "scenario": "paced_breathing_15rpm",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": false,
+      "presence_ground_truth": "PRESENT",
+      "reference_respiration_rpm": 15.0,
+      "measurement_stage": "measurement",
+      "analysis_duration_s": 180.0
+    },
+    {
+      "id": "paced_20rpm",
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_20rpm_explicit_full_v2.jsonl",
+      "scenario": "paced_breathing_20rpm",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": false,
+      "presence_ground_truth": "PRESENT",
+      "reference_respiration_rpm": 20.0,
+      "measurement_stage": "measurement",
+      "analysis_duration_s": 180.0
+    },
+    {
+      "id": "entry_exit_20",
+      "path": "devices/mmwave/firmware/logs/kpi/2026-07-28_entry_exit_20_v2.jsonl",
+      "scenario": "entry_still_exit_20_trials",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": false,
+      "presence_ground_truth": "ENTRY_EXIT"
+    },
+    {
+      "id": "accepted_empty_6min_v2",
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-28_empty_v2_360s.jsonl",
+      "scenario": "accepted_empty_room_6min",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": false,
+      "presence_ground_truth": "ABSENT"
+    },
+    {
+      "id": "accepted_occupied_6min_v2",
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-28_occupied_d09_v2_360s.jsonl",
+      "scenario": "accepted_stationary_person_0.8_to_1.0m",
+      "classification": "REAL_REPLAY_READY",
+      "strict_provenance": false,
+      "presence_ground_truth": "PRESENT",
+      "analysis_start_s": 60.0,
+      "analysis_duration_s": 300.0
+    }
+  ]
+}

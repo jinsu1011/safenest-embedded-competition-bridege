@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "release_purpose": "B_COMPLETE_OFFLINE_CANDIDATE_BASELINE",
+  "sync_date": "2026-08-16",
+  "source_repository": "https://github.com/sheepmeat/test",
+  "source_sha": "efc7e2eb61a49e221ce0ebf6057b0c1617525ad1",
+  "team_repository": "https://github.com/jinsu1011/safenest-embedded-competition",
+  "team_base_sha": "3d86bf2a7a4e527d7aba2dfabcb087201ffeb46e",
+  "destination": "ondevice_ai/",
+  "claim_boundary": "This synchronization establishes the reproducible offline AI candidate baseline for team Raspberry Pi integration and subsequent real-device validation. It does not establish real-device performance approval, hardware-domain validation, final Raspberry Pi deployment approval, multisensor long-run stability, or production safety certification.",
+  "included_sensor_phase_state": {
+    "mmwave": "M-A0..M-A6 and M-B0..M-B12 frozen offline candidate; M-C0/M-C1/M-C2 not started",
+    "co2": "C-A0..C-A6, C-B0..C-B6 frozen offline occupancy candidate; SCD40 device-domain not complete; C-C1 docs/tooling only",
+    "thermal": "T-A0..T-A6 and T-B0..T-B5 offline lock with limitations; T-B5 FULL_INT8 binary external-SSD only; T-C not complete"
+  },
+  "known_exclusions": [
+    "raw datasets and raw archives",
+    "real-device capture logs",
+    "standalone .github/",
+    "standalone archive/",
+    "repro_test_dir/",
+    "standalone root .gitignore",
+    "devices/, shared/contracts/, root dashboard/runtime",
+    "ESP32 firmware changes",
+    "Pi runtime redesign"
+  ],
+  "known_hardware_limitations": {
+    "MR60_device_domain_validation": "NOT_COMPLETE",
+    "SCD40_device_domain_validation": "NOT_COMPLETE",
+    "Thermal_real_device_validation": "NOT_COMPLETE",
+    "Raspberry_Pi_long_run_validation": "NOT_COMPLETE",
+    "thermal_t_b5_int8_binary": "EXTERNAL_SSD_ONLY_NOT_IN_GIT"
+  },
+  "runtime_model_resolution": "HISTORICAL_V010_MANIFEST_REMAINS_DEFAULT; B_COMPLETE_CANDIDATES_RECORDED_SEPARATELY",
+  "predecessor_team_sync": {
+    "source_sha": "77b1695ac66fd595bd037e4574d1626b8917654c",
+    "record": "docs/integration/20260813_intermediate_release_apply_plan.json"
+  }
+}

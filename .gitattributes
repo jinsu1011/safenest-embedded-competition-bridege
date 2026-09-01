@@ -1,0 +1,13 @@
+# Raw ESP serial captures are immutable byte evidence and may use device CRLF.
+firmware/esp_wroom32_mr60_monitor/logs/final/*.jsonl binary
+firmware/esp_wroom32_mr60_monitor/logs/diagnostics/*.jsonl binary
+firmware/esp_wroom32_mr60_monitor/logs/kpi/*.jsonl binary
+
+# Thermal contract manifests are checksum-sensitive and must remain LF on all hosts.
+ondevice_ai/datasets/thermal/** text eol=lf
+ondevice_ai/datasets/thermal/**/*.bin binary
+ondevice_ai/scripts/*thermal*.py text eol=lf
+ondevice_ai/tests/test_thermal*.py text eol=lf
+ondevice_ai/docs/*Thermal*.md text eol=lf
+ondevice_ai/docs/THERMAL*.md text eol=lf
+devices/thermal/xiao_esp32c6_thermal90_udp_capture/** text eol=lf

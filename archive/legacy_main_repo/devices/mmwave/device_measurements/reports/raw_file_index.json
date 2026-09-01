@@ -1,0 +1,475 @@
+{
+  "source_repository": "https://github.com/jinsu1011/safenest-embedded-competition",
+  "source_ref": "main",
+  "source_commit": "fdf34b804f35e5868356f0ed6f804a248aa69131",
+  "files": [
+    {
+      "index": 0,
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-13_empty_desk_collector_v1_30s.jsonl",
+      "git_blob_sha": "f444c4c8c8d4e5b93e700cf57dcc255c8fa52c47",
+      "size_bytes": 347956
+    },
+    {
+      "index": 1,
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-13_empty_desk_collector_v2_30s.jsonl",
+      "git_blob_sha": "12ea6a08337edd9a152a4942f969f8daecd04db7",
+      "size_bytes": 146487
+    },
+    {
+      "index": 2,
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-13_empty_desk_prechange_30s.jsonl",
+      "git_blob_sha": "57a3b895700d1fb848ddfa7414e1a41d2318ce16",
+      "size_bytes": 64428
+    },
+    {
+      "index": 3,
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-13_empty_fixed_d06_e0_5min.jsonl",
+      "git_blob_sha": "9a2305c9896163b6d729db2318243563cca0f1b5",
+      "size_bytes": 1488048
+    },
+    {
+      "index": 4,
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-13_occupied_front_p0_5min.jsonl",
+      "git_blob_sha": "27de6b05e314809b00e4db6899d99fb14432b898",
+      "size_bytes": 1494787
+    },
+    {
+      "index": 5,
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-25_empty_gate_v1_360s.jsonl",
+      "git_blob_sha": "14b21752ac2dcdb3886b2a5c87b67d316680f500",
+      "size_bytes": 1785223
+    },
+    {
+      "index": 6,
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-25_occupied_d09_v1_360s.jsonl",
+      "git_blob_sha": "b48075a1b58d9b6002c6975c867926b1350db401",
+      "size_bytes": 1793029
+    },
+    {
+      "index": 7,
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-28_empty_v2_360s.jsonl",
+      "git_blob_sha": "2d0eaf105bba3545fb5f29dbb6e6bc812b19481e",
+      "size_bytes": 1785798
+    },
+    {
+      "index": 8,
+      "path": "devices/mmwave/firmware/logs/baseline/2026-07-28_occupied_d09_v2_360s.jsonl",
+      "git_blob_sha": "2a05c4af928521efe2d39896b31bd3c9fc9d44ba",
+      "size_bytes": 1794148
+    },
+    {
+      "index": 9,
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-25_breath_paced_12rpm.jsonl",
+      "git_blob_sha": "d8c9543aebac1c7de5bda1573343b72fc179a354",
+      "size_bytes": 1432772
+    },
+    {
+      "index": 10,
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-26_breath_paced_15rpm.jsonl",
+      "git_blob_sha": "0e5233c10a1a3f406144e2fdbc685ebb02e49f9a",
+      "size_bytes": 2362295
+    },
+    {
+      "index": 11,
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-26_breath_paced_20rpm.jsonl",
+      "git_blob_sha": "4cb124ba0b85e7a8a58492db0d0f0a60fa4744e7",
+      "size_bytes": 2345238
+    },
+    {
+      "index": 12,
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-26_breath_paced_20rpm_deep.jsonl",
+      "git_blob_sha": "c50fddf8701adc686c9d02b7c2aa47c3940e496d",
+      "size_bytes": 2338452
+    },
+    {
+      "index": 13,
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_12rpm_explicit_v2.jsonl",
+      "git_blob_sha": "f1ee4d9134785133ea565fffe5753680f3b881af",
+      "size_bytes": 537047
+    },
+    {
+      "index": 14,
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_12rpm_explicit_v2_attempt02.jsonl",
+      "git_blob_sha": "637ca7ab05c03312a3d2dc02cbc93038c4679ac6",
+      "size_bytes": 471240
+    },
+    {
+      "index": 15,
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_12rpm_explicit_v2_attempt03.jsonl",
+      "git_blob_sha": "29ca83025b55ec22f32e4af068e962172ca411b2",
+      "size_bytes": 1476615
+    },
+    {
+      "index": 16,
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_15rpm_explicit_full_v3.jsonl",
+      "git_blob_sha": "07915a2eddfb38469198f2df961144cd9180f806",
+      "size_bytes": 1477753
+    },
+    {
+      "index": 17,
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_15rpm_retry_v2.jsonl",
+      "git_blob_sha": "a8925aff84732dea2dd93457edf809203d3b0527",
+      "size_bytes": 1606454
+    },
+    {
+      "index": 18,
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_15rpm_v2.jsonl",
+      "git_blob_sha": "5490b8e3b4c534f438381d4f3a01e6eb22f19249",
+      "size_bytes": 1442064
+    },
+    {
+      "index": 19,
+      "path": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_20rpm_explicit_full_v2.jsonl",
+      "git_blob_sha": "23a427c28f26610b5aebbf09d50233d6a82d1429",
+      "size_bytes": 1483051
+    },
+    {
+      "index": 20,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-25_empty_gate_120s.jsonl",
+      "git_blob_sha": "6c0fe38298e7c4adb7204395cbf44dcd60c75c5f",
+      "size_bytes": 593974
+    },
+    {
+      "index": 21,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-25_empty_gate_attempt02_60s.jsonl",
+      "git_blob_sha": "22f433e7814c9113e4996faae3eb39d2e1295a36",
+      "size_bytes": 298330
+    },
+    {
+      "index": 22,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-25_empty_gate_attempt03_15s.jsonl",
+      "git_blob_sha": "2ed043543b745f431136aa3d88718085c2dddbc6",
+      "size_bytes": 74569
+    },
+    {
+      "index": 23,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-25_empty_gate_attempt03_60s.jsonl",
+      "git_blob_sha": "b6cf7ae2f514651d1b5d9c0e40de7c98106df889",
+      "size_bytes": 303801
+    },
+    {
+      "index": 24,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-25_healthcheck_15s.jsonl",
+      "git_blob_sha": "b3dd99f5e18285366f52b4f1d0e8c7cdc4817936",
+      "size_bytes": 74268
+    },
+    {
+      "index": 25,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-25_occupied_d09_60s.jsonl",
+      "git_blob_sha": "959817ffec8884f89cdd3e0f09cf899e8cf48bee",
+      "size_bytes": 299056
+    },
+    {
+      "index": 26,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-25_occupied_front_d06_60s.jsonl",
+      "git_blob_sha": "eaac565dff8258d000f56341bf1618d684b58cad",
+      "size_bytes": 296178
+    },
+    {
+      "index": 27,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath12_preflight_10s.jsonl",
+      "git_blob_sha": "0f44be0686f3e827a773a0ecfa6822e488d7cf7b",
+      "size_bytes": 49935
+    },
+    {
+      "index": 28,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_explicit_audible_retry_30s.jsonl",
+      "git_blob_sha": "1928df997cde56a8634d74c3e862b6403149fc18",
+      "size_bytes": 392006
+    },
+    {
+      "index": 29,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_explicit_preflight02_10s.jsonl",
+      "git_blob_sha": "2ed2b2e701898bcaf02074ba3754b0164b74a53d",
+      "size_bytes": 49815
+    },
+    {
+      "index": 30,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_explicit_preflight_10s.jsonl",
+      "git_blob_sha": "9388dea2e70d7ec1fad876ae094f17ec6b37f1e1",
+      "size_bytes": 49848
+    },
+    {
+      "index": 31,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_explicit_quickcheck_30s.jsonl",
+      "git_blob_sha": "5592f7f741945252b6d34e76d66162bcd9707993",
+      "size_bytes": 391435
+    },
+    {
+      "index": 32,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_full_preflight_10s.jsonl",
+      "git_blob_sha": "156c1433db7dc97ce2eb3540bcafa83ad01cd783",
+      "size_bytes": 49537
+    },
+    {
+      "index": 33,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_preflight_10s.jsonl",
+      "git_blob_sha": "5d7bf2a0321fcda1c7547d9dcfa620ca206bde64",
+      "size_bytes": 49853
+    },
+    {
+      "index": 34,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_quickcheck_30s.jsonl",
+      "git_blob_sha": "edb4b985f6097bfc722dab4b782731cd5fff671c",
+      "size_bytes": 343777
+    },
+    {
+      "index": 35,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_retry_preflight02_10s.jsonl",
+      "git_blob_sha": "044963f436e27aa8eb7d69a4fdd30e71b0ce9791",
+      "size_bytes": 49926
+    },
+    {
+      "index": 36,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_retry_preflight03_10s.jsonl",
+      "git_blob_sha": "647fd9ae6850b2aa3f5fc112036b5fc750d31745",
+      "size_bytes": 49849
+    },
+    {
+      "index": 37,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_retry_preflight_10s.jsonl",
+      "git_blob_sha": "d4b3f00eb7da2bad98e5e8f91c63457965a88bba",
+      "size_bytes": 49745
+    },
+    {
+      "index": 38,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_tones_retry_30s.jsonl",
+      "git_blob_sha": "7898bf14007ba2ab0cf0e3f2f78135c1463f219a",
+      "size_bytes": 420044
+    },
+    {
+      "index": 39,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath20_full_preflight_10s.jsonl",
+      "git_blob_sha": "fe752534b7794834528b76f09457f666ff888aee",
+      "size_bytes": 50072
+    },
+    {
+      "index": 40,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_empty_preflight_20s.jsonl",
+      "git_blob_sha": "1d11e3b5d39c87ca205211c1aa965df65511f249",
+      "size_bytes": 99232
+    },
+    {
+      "index": 41,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_entry_exit_preflight_10s.jsonl",
+      "git_blob_sha": "65a9bcca491d0e57cd14bdc137ed56d40c1970e7",
+      "size_bytes": 49628
+    },
+    {
+      "index": 42,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_healthcheck_15s.jsonl",
+      "git_blob_sha": "f6d869134cb064d9b3629d1234b50fcc9e365d10",
+      "size_bytes": 74305
+    },
+    {
+      "index": 43,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_healthcheck_15s_v2.jsonl",
+      "git_blob_sha": "9c269762450209084d8e4050706d1d124d02dd7d",
+      "size_bytes": 74181
+    },
+    {
+      "index": 44,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_occupied_d09_preflight02_10s.jsonl",
+      "git_blob_sha": "c15dc6d76933509a9965b82342916580893a6525",
+      "size_bytes": 49928
+    },
+    {
+      "index": 45,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_occupied_d09_preflight03_10s.jsonl",
+      "git_blob_sha": "8847169e4eb923696eefa5a52337e699f553ca06",
+      "size_bytes": 49852
+    },
+    {
+      "index": 46,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-07-28_occupied_d09_preflight_20s.jsonl",
+      "git_blob_sha": "06cbd39e046a02285d90a2aa32a404171a879bdf",
+      "size_bytes": 99895
+    },
+    {
+      "index": 47,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-08-01_healthcheck_resume_15s.jsonl",
+      "git_blob_sha": "6741cbde6a312d86da9eb8ff75ace0ef40952147",
+      "size_bytes": 123416
+    },
+    {
+      "index": 48,
+      "path": "devices/mmwave/firmware/logs/diagnostics/2026-08-01_heartrate_watch_s1_preflight_v120_15s.jsonl",
+      "git_blob_sha": "42e34d783f8f45379964770d46c8b9b13b5ccf26",
+      "size_bytes": 150205
+    },
+    {
+      "index": 49,
+      "path": "devices/mmwave/firmware/logs/final/2026-08-01_empty_v120_30min.jsonl",
+      "git_blob_sha": "1ce0aa03398f9d53ea1c63d817fdad4cbbe1e12c",
+      "size_bytes": 18358335
+    },
+    {
+      "index": 50,
+      "path": "devices/mmwave/firmware/logs/final/2026-08-01_empty_v120_preflight_60s.jsonl",
+      "git_blob_sha": "ed0084a6929e9faf78d9d6d3f6068502e94c8d5b",
+      "size_bytes": 612115
+    },
+    {
+      "index": 51,
+      "path": "devices/mmwave/firmware/logs/final/2026-08-01_healthcheck_v110_15s.jsonl",
+      "git_blob_sha": "df6ff511cde20ebb70568ce448e87506a1902753",
+      "size_bytes": 121746
+    },
+    {
+      "index": 52,
+      "path": "devices/mmwave/firmware/logs/final/2026-08-01_healthcheck_v120_75s.jsonl",
+      "git_blob_sha": "d756c03b80a1a1905bb63e4c071f2c63d7cb6e0d",
+      "size_bytes": 751229
+    },
+    {
+      "index": 53,
+      "path": "devices/mmwave/firmware/logs/final/2026-08-01_occupied_d09_v120_31min.jsonl",
+      "git_blob_sha": "53e1d662d68b1bbfed9577cc4fcbcc3311936802",
+      "size_bytes": 18886470
+    },
+    {
+      "index": 54,
+      "path": "devices/mmwave/firmware/logs/final/2026-08-01_occupied_d09_v120_31min_attempt02.jsonl",
+      "git_blob_sha": "ffdaa0cbb3bd6bc32f5fd1ca91130a69f4075426",
+      "size_bytes": 18956494
+    },
+    {
+      "index": 55,
+      "path": "devices/mmwave/firmware/logs/final/2026-08-01_occupied_d09_v120_positioncheck_180s.jsonl",
+      "git_blob_sha": "3af1d73d5e1136b6ab38f503085551ab1b443c74",
+      "size_bytes": 1826216
+    },
+    {
+      "index": 56,
+      "path": "devices/mmwave/firmware/logs/final/2026-08-01_occupied_d09_v120_positioncheck_attempt02_180s.jsonl",
+      "git_blob_sha": "aeddffbc57a95e81144d8df5b87a7f5537d6d71d",
+      "size_bytes": 1837273
+    },
+    {
+      "index": 57,
+      "path": "devices/mmwave/firmware/logs/final/2026-08-01_occupied_d09_v120_positioncheck_attempt03_60s.jsonl",
+      "git_blob_sha": "9c26c7172087e10a0d894d9c80e941bc05250f30",
+      "size_bytes": 597739
+    },
+    {
+      "index": 58,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-07-25_entry_exit_10.jsonl",
+      "git_blob_sha": "f445f87ef308e7bee13708d263973425c3d0ea88",
+      "size_bytes": 2500367
+    },
+    {
+      "index": 59,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-07-26_heartrate_ref_applewatch_300s.jsonl",
+      "git_blob_sha": "ea9ef1688cbae7b07a3bc5a1abdd8d3eaeb86a5a",
+      "size_bytes": 2471433
+    },
+    {
+      "index": 60,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-07-26_heartrate_ref_applewatch_run2_300s.jsonl",
+      "git_blob_sha": "7c4ebdcbbdf821d713d32fe352e8937da58fbdd8",
+      "size_bytes": 2434885
+    },
+    {
+      "index": 61,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-07-28_entry_exit_20_v2.jsonl",
+      "git_blob_sha": "6d1b82dac5126f4a5441fe434c291e6dfefa0471",
+      "size_bytes": 6795941
+    },
+    {
+      "index": 62,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-08-01_heartrate_watch_s1_v120_300s.jsonl",
+      "git_blob_sha": "81277d1f2306a659b22acbd0cb8a2c3701d94ec8",
+      "size_bytes": 3057039
+    },
+    {
+      "index": 63,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-08-01_heartrate_watch_s1_v120_telemetry_receipts.jsonl",
+      "git_blob_sha": "043a9816caad496fc97e31b9e853d46d2d04e990",
+      "size_bytes": 325404
+    },
+    {
+      "index": 64,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-08-01_heartrate_watch_s1_v120_watch_prompts.jsonl",
+      "git_blob_sha": "273d19395ce1e39d50d5eff5e55793ea62bd16d5",
+      "size_bytes": 1048
+    },
+    {
+      "index": 65,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-08-01_heartrate_watch_s2_recovery_attempt02_v120_360s.jsonl",
+      "git_blob_sha": "c9df1884397d1adacf56c269337069589c591fb0",
+      "size_bytes": 1084032
+    },
+    {
+      "index": 66,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-08-01_heartrate_watch_s2_recovery_attempt02_v120_telemetry_receipts.jsonl",
+      "git_blob_sha": "45dd5a148ac01f41e7d7d57d7fd2d68d97df0320",
+      "size_bytes": 115668
+    },
+    {
+      "index": 67,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-08-01_heartrate_watch_s2_recovery_attempt02_v120_watch_prompts.jsonl",
+      "git_blob_sha": "e26085a93222bf31597850a13ca856f9b21b6e56",
+      "size_bytes": 312
+    },
+    {
+      "index": 68,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-08-01_heartrate_watch_s2_recovery_v120_480s.jsonl",
+      "git_blob_sha": "9a4b667940f2d4ce9ab30c647745c6c7174b3189",
+      "size_bytes": 4854744
+    },
+    {
+      "index": 69,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-08-01_heartrate_watch_s2_recovery_v120_telemetry_receipts.jsonl",
+      "git_blob_sha": "7ab6310e271674912a3a1e085cfd3d9427298c75",
+      "size_bytes": 520014
+    },
+    {
+      "index": 70,
+      "path": "devices/mmwave/firmware/logs/kpi/2026-08-01_heartrate_watch_s2_recovery_v120_watch_prompts.jsonl",
+      "git_blob_sha": "843f450e463ee3284607c5992894637b56df3fc6",
+      "size_bytes": 1684
+    },
+    {
+      "index": 71,
+      "path": "devices/mmwave/firmware/logs/matrix/2026-07-25_occupied_d06_v1_360s.jsonl",
+      "git_blob_sha": "253343fdf1b29841dee1edc33d0aa077b8e86e12",
+      "size_bytes": 1800829
+    },
+    {
+      "index": 72,
+      "path": "devices/mmwave/firmware/logs/matrix/2026-07-25_occupied_d12_v1_360s.jsonl",
+      "git_blob_sha": "7299c7b0d6188b71bb507dac3e9e05530aed79bd",
+      "size_bytes": 1802621
+    },
+    {
+      "index": 73,
+      "path": "devices/mmwave/firmware/logs/matrix/2026-07-25_occupied_d15_v1_360s.jsonl",
+      "git_blob_sha": "ea274bd183fa676da6c355eb2949b11b3963b9fd",
+      "size_bytes": 1853318
+    },
+    {
+      "index": 74,
+      "path": "devices/mmwave/firmware/logs/transitions/2026-07-13_d06_m0_trial01.jsonl",
+      "git_blob_sha": "bd511c1f107f94b0ea3c802206f0a04394a63fd3",
+      "size_bytes": 647324
+    },
+    {
+      "index": 75,
+      "path": "devices/mmwave/firmware/logs/transitions/2026-07-13_d06_m0_trial01_timing.jsonl",
+      "git_blob_sha": "413f91fde6f71f6016ddaff77717302174b6849e",
+      "size_bytes": 139226
+    },
+    {
+      "index": 76,
+      "path": "devices/mmwave/firmware/logs/transitions/2026-07-13_d06_m0_trial02.jsonl",
+      "git_blob_sha": "b95299eba936dff0002dabe6c738bfead9709c36",
+      "size_bytes": 779879
+    },
+    {
+      "index": 77,
+      "path": "devices/mmwave/firmware/logs/transitions/2026-07-13_d06_m0_trial02_timing.jsonl",
+      "git_blob_sha": "10b0e62f5983fe59ba1d23f526e75bc5b6b6dc2a",
+      "size_bytes": 167898
+    }
+  ]
+}

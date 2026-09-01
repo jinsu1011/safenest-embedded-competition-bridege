@@ -1,0 +1,16 @@
+{
+  "candidate_id": "C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001",
+  "feature_order": [
+    "CO2",
+    "CO2_slope"
+  ],
+  "locked_test_rows": 0,
+  "manifest_version": "1.0",
+  "oversampled_duplicate_draws": 0,
+  "phase": "C-B6",
+  "sample_count": 8140,
+  "sample_ids_fingerprint": "492ca1f67e44b4a2018b743ec0fc3d20b418f7823d5f2643d8c90b0d39de8fab",
+  "scaler_fingerprint": "a92123ad37e9b284929ba0fe53179126345d54d487ec4b3a73c910d00490a462",
+  "source_population": "ORIGINAL_NATURALLY_DISTRIBUTED_TRAIN",
+  "validation_rows": 0
+}

@@ -1,0 +1,68 @@
+{
+  "source": "logs/final/2026-08-01_occupied_d09_v120_31min.jsonl",
+  "skip_seconds": 60.0,
+  "records_skipped": 600,
+  "records": 17988,
+  "invalid_json_lines": 1,
+  "elapsed_s": 1799.839,
+  "telemetry_rate_hz": 9.994227261438384,
+  "uart_frames": 123849,
+  "uart_frame_rate_hz": 68.81115477551047,
+  "checksum_errors": 0,
+  "checksum_error_rate": 0.0,
+  "parse_errors": 0,
+  "parse_error_rate": 0.0,
+  "reboots_detected": 0,
+  "presence": {
+    "true_count": 15263,
+    "false_count": 2725,
+    "unknown_count": 0,
+    "true_rate": 0.8485101178563487
+  },
+  "presence_stable": {
+    "true_count": 15261,
+    "false_count": 2727,
+    "unknown_count": 0,
+    "true_rate": 0.8483989326217478
+  },
+  "sensor_states": {
+    "DEGRADED": 7779,
+    "UNKNOWN": 2737,
+    "VALID": 3084,
+    "WARMUP": 4388
+  },
+  "uart_frame_not_ok_count": 0,
+  "checksum_not_ok_count": 0,
+  "firmware_versions": [
+    "safenest-mr60-esp/1.2.0"
+  ],
+  "config_hashes": [
+    "b817e8bfd5e52b18275626f7b6a9bd60098ea4b108428a5aaf63600dbc987834"
+  ],
+  "distance_cm_raw": {
+    "count": 15263,
+    "mean": 101.46784118456397,
+    "median": 103.32,
+    "stddev": 4.172310607689598,
+    "min": 86.1,
+    "max": 109.06
+  },
+  "breath_rate_raw": {
+    "count": 14989,
+    "mean": 17.356394689438922,
+    "median": 19.0,
+    "stddev": 6.770101677669394,
+    "min": 1.0,
+    "max": 32.0
+  },
+  "heart_rate_raw": {
+    "count": 15225,
+    "mean": 90.57668308702792,
+    "median": 90.0,
+    "stddev": 13.066960222428879,
+    "min": 61.0,
+    "max": 123.0
+  },
+  "breath_positive_rate": 0.8332777407160329,
+  "heart_positive_rate": 0.8463975983989326
+}

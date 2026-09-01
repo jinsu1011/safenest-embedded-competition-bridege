@@ -1,0 +1,25 @@
+{
+  "architecture": "LINEAR_LOGISTIC",
+  "c_c2_started": false,
+  "c_d_authorized": false,
+  "candidate_id": "C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001",
+  "feature_order": [
+    "CO2",
+    "CO2_slope"
+  ],
+  "final_threshold": 0.43,
+  "historical_b5_modified": false,
+  "imbalance_strategy": "BALANCED_RANDOM_OVERSAMPLE",
+  "locked_test_membership_count": 9749,
+  "locked_test_predictive_evaluation": false,
+  "manifest_version": "1.0",
+  "phase": "C-B6",
+  "phase_name": "Reduced-Feature Candidate Development and Lock",
+  "physical_acquisition_started": false,
+  "seed": 20260810,
+  "slope_profile": "CO2_SLOPE_FEATURE_PROFILE_001",
+  "threshold_0_58_inheritance": "FORBIDDEN",
+  "threshold_source": "TRAIN_INTERNAL_ONLY",
+  "train_population": 8140,
+  "validation_population": 2662
+}

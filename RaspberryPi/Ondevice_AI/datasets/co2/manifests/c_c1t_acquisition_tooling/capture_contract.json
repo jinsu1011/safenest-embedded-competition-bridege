@@ -1,0 +1,109 @@
+{
+  "contract_version": "1.0",
+  "phase": "C-C1T",
+  "contract_date": "2026-08-15",
+  "agent": "Codex (CO2 C-C1T Acquisition Tooling Readiness Agent)",
+  "protocol_identity": {
+    "protocol_id": "CO2_C_C1R_REDUCED_MEASUREMENT_PROTOCOL_001",
+    "protocol_version": "1.0.0",
+    "candidate_id": "C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001",
+    "candidate_lock_path": "datasets/co2/manifests/c_b6_reduced_feature_candidate/candidate_lock.json",
+    "candidate_lock_sha256": "5f7772ff26ca10ca95aa5216b45f3eebd96c2429b98a7ee66963ec4ea73c6fd2",
+    "feature_order": [
+      "CO2",
+      "CO2_slope"
+    ],
+    "slope_profile": "CO2_SLOPE_FEATURE_PROFILE_001",
+    "slope_method": "ENDPOINT_H150",
+    "slope_history_sec": 150,
+    "slope_gap_reset_sec": 90
+  },
+  "effective_cadence_contract": {
+    "effective_model_input_interval_sec": 60,
+    "normal_co2_export_interval_sec": 60,
+    "effective_model_input_cadence": "NOMINAL",
+    "native_sensor_cadence_separate": true,
+    "native_scd40_cadence_claim": "NOT_CLAIMED_BY_THIS_PROTOCOL",
+    "stale_reuse": "FORBIDDEN",
+    "synthetic_fill": "FORBIDDEN",
+    "forward_fill": "FORBIDDEN",
+    "missed_nominal_event_recording": "REQUIRED"
+  },
+  "standalone_capture_tool": {
+    "path": "scripts/capture_co2_c_c1t_session.py",
+    "source": "Pi /health JSON or deterministic JSONL fixture",
+    "raw_layer_before_preprocessing": true,
+    "model_inference": false,
+    "slope_computation": false,
+    "session_id_generated_by_tool": true,
+    "bundle_files": [
+      "raw_measurements.jsonl",
+      "session_manifest.json",
+      "ground_truth_events.jsonl",
+      "failure_events.jsonl",
+      "deviation_events.jsonl",
+      "checksums.sha256",
+      "operator_notes.md"
+    ]
+  },
+  "team_producer_observability": {
+    "required_payload_fields": [
+      "co2_measurement_event_id",
+      "co2_measurement_monotonic_ms",
+      "co2_measurement_event_valid"
+    ],
+    "event_id_changes_only_after_successful_read": true,
+    "event_monotonic_ms_is_producer_side": true,
+    "same_event_id_is_cached_retransmission": true,
+    "transport_freshness_is_sensor_freshness": false,
+    "co2_valid_is_not_event_freshness": true,
+    "pi_pass_through_required": true
+  },
+  "team_change": {
+    "repository": "https://github.com/jinsu1011/safenest-embedded-competition",
+    "team_main_base_sha": "3d86bf2a7a4e527d7aba2dfabcb087201ffeb46e",
+    "feature_branch": "feature/C-C1T-co2-fresh-event-observability",
+    "feature_branch_commit": "a7db03e6d7c65e91c52839e7b337c0886fa3431a",
+    "producer_change_required": true,
+    "pr_number": 19,
+    "pr_state": "OPEN",
+    "pr_url": "https://github.com/jinsu1011/safenest-embedded-competition/pull/19",
+    "deployed_to_team_main": false,
+    "merge_authorized_by_user": false,
+    "formal_protocol_collection_before_deployment": "FORBIDDEN",
+    "exploratory_collection_before_deployment": "ALLOWED_WITH_UNVERIFIED_EVENT_LIMITATION"
+  },
+  "required_dry_run_cases": [
+    "fresh_event",
+    "cached_retransmission_same_event_id",
+    "second_fresh_event_in_chronology",
+    "missing_sensor_event_marker",
+    "transport_failure",
+    "independent_ground_truth_VACANT_or_OCCUPIED",
+    "finalization_and_checksum_verification"
+  ],
+  "fixture_input_path": "datasets/co2/manifests/c_c1t_acquisition_tooling/fixtures/valid_session_input.jsonl",
+  "invalid_fixture_input_paths": [
+    "datasets/co2/manifests/c_c1t_acquisition_tooling/fixtures/missing_event_marker.jsonl",
+    "datasets/co2/manifests/c_c1t_acquisition_tooling/fixtures/transport_failure.jsonl"
+  ],
+  "readiness_policy": {
+    "dry_run_pass_is_not_real_sensor_validation": true,
+    "pre_deployment_exploratory_collection": {
+      "allowed": true,
+      "evidence_class": "PRE_DEPLOYMENT_EXPLORATORY_REAL_DEVICE_EVIDENCE",
+      "fresh_sensor_event_identity": "UNVERIFIED_ALLOWED_AS_LIMITATION",
+      "formal_c_c2_eligibility_by_default": false,
+      "formal_endpoint_h150_claim": "BLOCKED_UNLESS_FRESH_EVENT_CHRONOLOGY_IS_VERIFIED"
+    },
+    "formal_protocol_controlled_collection": {
+      "allowed_before_team_producer_deployment": false,
+      "evidence_class_after_release": "PROTOCOL_CONTROLLED_REAL_DEVICE_EVIDENCE",
+      "team_pr_must_be_merged_and_deployed": true,
+      "live_c_c1t_readiness_must_pass": true
+    },
+    "operator_handoff_ready_only_after_precollection_pass": true,
+    "c_c2_started": false,
+    "c_d_authorized": false
+  }
+}

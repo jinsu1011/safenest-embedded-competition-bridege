@@ -1,0 +1,959 @@
+{
+  "authorization_evaluation": {
+    "authorized_for_exploratory_inference": false,
+    "decision_stands": true,
+    "exact_preprocessing_correspondence_gate": "BLOCKED_NOT_ESTABLISHED",
+    "reason": "PR18 pilot temporal correspondence now holds, but semantic correspondence and exact frozen preprocessing correspondence remain unestablished; temporal sufficiency alone does not authorize model invocation.",
+    "semantic_gate": "BLOCKED_UNDETERMINED",
+    "temporal_gate_for_pr18_pilots": "PASS"
+  },
+  "blocking_reason": "SIGNAL_CORRESPONDENCE_NOT_ESTABLISHED",
+  "branch": "codex/mmwave-m-c0-correspondence",
+  "correspondence_disproven": false,
+  "correspondence_evaluated": true,
+  "decision": "BLOCKED_PENDING_SIGNAL_CORRESPONDENCE",
+  "decision_is_successful_blocked_outcome": true,
+  "evidence_root": "devices/mmwave/firmware",
+  "evidence_root_file_count": 224,
+  "execution": {
+    "locked_test_reopened": false,
+    "m_c0_executed": true,
+    "m_c0b_inference_executed": false,
+    "m_c1_capture_executed": false,
+    "m_c2_metrics_executed": false,
+    "model_scoring_executed": false,
+    "raw_files_copied": false,
+    "raw_files_modified": false
+  },
+  "expected_input_file_count": 12,
+  "expected_input_files_hashed_count": 12,
+  "expected_input_present_count": 12,
+  "head_at_run": "230f1b6d6dc63996dc0e3d89a023e3e153da79c8",
+  "known_but_not_provided_count": 0,
+  "phase": "M-C0",
+  "pilot_evidence_root": "devices/mmwave/device_measurements",
+  "pilot_evidence_root_file_count": 35,
+  "pipeline_breath_rate_raw_used_as_waveform": false,
+  "pr18_retrieval": {
+    "attempts": [
+      {
+        "command": "git fetch origin pull/18/head:pr18-head",
+        "result": "SUCCESS: refs/pull/18/head -> pr18-head"
+      },
+      {
+        "command": "git fetch origin 62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "SUCCESS: 62eb0d867cfa02295c9a1d023b813134c434b8eb -> FETCH_HEAD"
+      },
+      {
+        "command": "git fetch origin refs/pull/18/head",
+        "result": "SUCCESS: refs/pull/18/head -> FETCH_HEAD"
+      }
+    ],
+    "head": "62eb0d867cfa02295c9a1d023b813134c434b8eb",
+    "paths_checked": [
+      {
+        "path": "devices/mmwave/device_measurements/",
+        "ref": "HEAD",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "FOUND"
+      },
+      {
+        "path": "devices/mmwave/firmware/device_measurements/M-C0-PILOT-DESKWORK-001.jsonl",
+        "ref": "HEAD",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/firmware/device_measurements/M-C0-PILOT-STATIONARY-001.jsonl",
+        "ref": "HEAD",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/firmware/device_measurements/M-C0-PILOT-DESKWORK-001/records.jsonl",
+        "ref": "HEAD",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/firmware/device_measurements/M-C0-PILOT-STATIONARY-001/records.jsonl",
+        "ref": "HEAD",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/M-C0-PILOT-DESKWORK-001.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/M-C0-PILOT-STATIONARY-001.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/M-C0-PILOT-DESKWORK-001/records.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/M-C0-PILOT-STATIONARY-001/records.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "NOT_FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/pilot/M-C0-PILOT-DESKWORK-001.raw.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "FOUND"
+      },
+      {
+        "path": "devices/mmwave/device_measurements/pilot/M-C0-PILOT-STATIONARY-001.raw.jsonl",
+        "ref": "pr18-head@62eb0d867cfa02295c9a1d023b813134c434b8eb",
+        "result": "FOUND"
+      }
+    ],
+    "pilot_fresh_cadence_finding": {
+      "basis": "Both corrected pilot cadences approach their telemetry row cadences, and pilot phase_age_ms p95 is 15 ms versus 195627 ms in the legacy long log. The earlier (a) verdict was based on a faulty phase-age-decrease estimator that undercounted always-low pilot age values.",
+      "comparison": {
+        "computation": "for each pilot, compare corrected cadence with its telemetry row cadence and superseded age-decrease cadence; explicitly require pilot phase-age p95 below legacy p95",
+        "legacy_corrected_fresh_cadence_hz": 8.419003785,
+        "legacy_phase_age_p95_ms": 195627.0,
+        "legacy_superseded_fresh_cadence_hz": 4.30467137,
+        "legacy_superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+        "pilot_phase_age_p95_ms": [
+          15.0,
+          15.0
+        ]
+      },
+      "pilot_measurements": [
+        {
+          "fresh_0x0A13_cadence_hz": 9.988438535,
+          "phase_age_ms": {
+            "fraction_over_30000_ms": 0.0,
+            "max": 111.0,
+            "median": 12.0,
+            "min": 0.0,
+            "p95": 15.0
+          },
+          "session_id": "M-C0-PILOT-DESKWORK-001",
+          "superseded_fresh_0x0A13_cadence_hz": 3.679658492,
+          "superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+          "telemetry_row_cadence_hz": 9.993996932
+        },
+        {
+          "fresh_0x0A13_cadence_hz": 9.993330369,
+          "phase_age_ms": {
+            "fraction_over_30000_ms": 0.0,
+            "max": 17.0,
+            "median": 12.0,
+            "min": 0.0,
+            "p95": 15.0
+          },
+          "session_id": "M-C0-PILOT-STATIONARY-001",
+          "superseded_fresh_0x0A13_cadence_hz": 3.518230325,
+          "superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+          "telemetry_row_cadence_hz": 9.993330369
+        }
+      ],
+      "previous_verdict": "A_STRUCTURAL_MR60_ESP_TELEMETRY_PATH_LIMITATION_SUPPORTED",
+      "previous_verdict_status": "RETRACTED_FAULTY_ESTIMATOR",
+      "verdict": "B_2026_07_26_LEGACY_CAPTURE_METHOD_LIMITATION_SUPPORTED"
+    }
+  },
+  "preflight_gate": "PASS_INHERITED_FROM_PREVIOUS_STANDALONE_RUN",
+  "provenance": {
+    "evidence_files_hashed_read_only": true,
+    "expected_long_log_sha256": "7f9e9ac65377c6dc217af92f9dee2401b6162540e2245fce97acf2ed49368a34",
+    "raw_mr60_jsonl_csv_committed": false,
+    "raw_mr60_jsonl_csv_modified": false
+  },
+  "raw_expected_files_analyzed_count": 12,
+  "schema_version": "M-C0_SUMMARY_V2",
+  "semantic_correspondence": "UNDETERMINED",
+  "session_results": [
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "range_m",
+        "finite_sample_count": 2998,
+        "sample_std": 0.020855161,
+        "sample_std_cm": 2.08551608,
+        "stats": {
+          "count": 2998,
+          "max": 0.7462,
+          "mean": 0.73722048,
+          "median": 0.7462,
+          "min": 0.6888,
+          "p05": 0.6888,
+          "p95": 0.7462,
+          "std": 0.020851682
+        },
+        "unit": "m"
+      },
+      "evidence_group": "PRE_PR18_LEGACY_LOGS",
+      "fresh_0x0A13_cadence_hz": null,
+      "freshness_estimator_methods": null,
+      "freshness_regression_guards": null,
+      "phase_age_ms": {
+        "fraction_over_30000_ms": null,
+        "max": null,
+        "median": null,
+        "min": null,
+        "p95": null
+      },
+      "phase_rpm": 20.04468266,
+      "record_count": 2998,
+      "session_id": "S001_NORMAL_D06",
+      "superseded_fresh_0x0A13_cadence_hz": null,
+      "superseded_fresh_cadence_status": null,
+      "telemetry_row_cadence_hz": 9.994964166,
+      "windows_with_300_genuinely_fresh_samples": 0
+    },
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "range_m",
+        "finite_sample_count": 2998,
+        "sample_std": 0.026971503,
+        "sample_std_cm": 2.697150324,
+        "stats": {
+          "count": 2998,
+          "max": 0.9758,
+          "mean": 0.956921948,
+          "median": 0.9758,
+          "min": 0.9184,
+          "p05": 0.9184,
+          "p95": 0.9758,
+          "std": 0.026967005
+        },
+        "unit": "m"
+      },
+      "evidence_group": "PRE_PR18_LEGACY_LOGS",
+      "fresh_0x0A13_cadence_hz": null,
+      "freshness_estimator_methods": null,
+      "freshness_regression_guards": null,
+      "phase_age_ms": {
+        "fraction_over_30000_ms": null,
+        "max": null,
+        "median": null,
+        "min": null,
+        "p95": null
+      },
+      "phase_rpm": 19.699214478,
+      "record_count": 2998,
+      "session_id": "S001_NORMAL_D09",
+      "superseded_fresh_0x0A13_cadence_hz": null,
+      "superseded_fresh_cadence_status": null,
+      "telemetry_row_cadence_hz": 9.99613096,
+      "windows_with_300_genuinely_fresh_samples": 0
+    },
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "range_m",
+        "finite_sample_count": 2441,
+        "sample_std": 0.021990244,
+        "sample_std_cm": 2.199024384,
+        "stats": {
+          "count": 2441,
+          "max": 1.3776,
+          "mean": 1.324973535,
+          "median": 1.3202,
+          "min": 1.2054,
+          "p05": 1.3202,
+          "p95": 1.3776,
+          "std": 0.021985739
+        },
+        "unit": "m"
+      },
+      "evidence_group": "PRE_PR18_LEGACY_LOGS",
+      "fresh_0x0A13_cadence_hz": null,
+      "freshness_estimator_methods": null,
+      "freshness_regression_guards": null,
+      "phase_age_ms": {
+        "fraction_over_30000_ms": null,
+        "max": null,
+        "median": null,
+        "min": null,
+        "p95": null
+      },
+      "phase_rpm": 20.266696872,
+      "record_count": 2998,
+      "session_id": "S001_NORMAL_D12",
+      "superseded_fresh_0x0A13_cadence_hz": null,
+      "superseded_fresh_cadence_status": null,
+      "telemetry_row_cadence_hz": 9.995797563,
+      "windows_with_300_genuinely_fresh_samples": 0
+    },
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "range_m",
+        "finite_sample_count": 2639,
+        "sample_std": 0.029375969,
+        "sample_std_cm": 2.93759692,
+        "stats": {
+          "count": 2639,
+          "max": 1.8368,
+          "mean": 1.818268435,
+          "median": 1.8368,
+          "min": 1.722,
+          "p05": 1.7794,
+          "p95": 1.8368,
+          "std": 0.029370403
+        },
+        "unit": "m"
+      },
+      "evidence_group": "PRE_PR18_LEGACY_LOGS",
+      "fresh_0x0A13_cadence_hz": null,
+      "freshness_estimator_methods": null,
+      "freshness_regression_guards": null,
+      "phase_age_ms": {
+        "fraction_over_30000_ms": null,
+        "max": null,
+        "median": null,
+        "min": null,
+        "p95": null
+      },
+      "phase_rpm": null,
+      "record_count": 2999,
+      "session_id": "S001_NORMAL_D15",
+      "superseded_fresh_0x0A13_cadence_hz": null,
+      "superseded_fresh_cadence_status": null,
+      "telemetry_row_cadence_hz": 9.998365844,
+      "windows_with_300_genuinely_fresh_samples": 0
+    },
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "range_m",
+        "finite_sample_count": 2087,
+        "sample_std": 0.029971485,
+        "sample_std_cm": 2.997148522,
+        "stats": {
+          "count": 2087,
+          "max": 1.0332,
+          "mean": 0.9620207,
+          "median": 0.9758,
+          "min": 0.9184,
+          "p05": 0.9184,
+          "p95": 0.9758,
+          "std": 0.029964304
+        },
+        "unit": "m"
+      },
+      "evidence_group": "PRE_PR18_LEGACY_LOGS",
+      "fresh_0x0A13_cadence_hz": null,
+      "freshness_estimator_methods": null,
+      "freshness_regression_guards": null,
+      "phase_age_ms": {
+        "fraction_over_30000_ms": null,
+        "max": null,
+        "median": null,
+        "min": null,
+        "p95": null
+      },
+      "phase_rpm": 10.598330195,
+      "record_count": 2087,
+      "session_id": "S001_BREATH_PACED_12_01",
+      "superseded_fresh_0x0A13_cadence_hz": null,
+      "superseded_fresh_cadence_status": null,
+      "telemetry_row_cadence_hz": 9.995304219,
+      "windows_with_300_genuinely_fresh_samples": 0
+    },
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "range_m",
+        "finite_sample_count": 1774,
+        "sample_std": 0.020241382,
+        "sample_std_cm": 2.024138244,
+        "stats": {
+          "count": 1774,
+          "max": 0.861,
+          "mean": 0.811947914,
+          "median": 0.8036,
+          "min": 0.8036,
+          "p05": 0.8036,
+          "p95": 0.861,
+          "std": 0.020235677
+        },
+        "unit": "m"
+      },
+      "evidence_group": "PRE_PR18_LEGACY_LOGS",
+      "fresh_0x0A13_cadence_hz": null,
+      "freshness_estimator_methods": null,
+      "freshness_regression_guards": null,
+      "phase_age_ms": {
+        "fraction_over_30000_ms": null,
+        "max": null,
+        "median": null,
+        "min": null,
+        "p95": null
+      },
+      "phase_rpm": 12.18605948,
+      "record_count": 1774,
+      "session_id": "S001_BREATH_PACED_12_02",
+      "superseded_fresh_0x0A13_cadence_hz": null,
+      "superseded_fresh_cadence_status": null,
+      "telemetry_row_cadence_hz": 9.995433558,
+      "windows_with_300_genuinely_fresh_samples": 0
+    },
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "range_m",
+        "finite_sample_count": 1779,
+        "sample_std": 0.0,
+        "sample_std_cm": 0.0,
+        "stats": {
+          "count": 1779,
+          "max": 0.861,
+          "mean": 0.861,
+          "median": 0.861,
+          "min": 0.861,
+          "p05": 0.861,
+          "p95": 0.861,
+          "std": 0.0
+        },
+        "unit": "m"
+      },
+      "evidence_group": "PRE_PR18_LEGACY_LOGS",
+      "fresh_0x0A13_cadence_hz": null,
+      "freshness_estimator_methods": null,
+      "freshness_regression_guards": null,
+      "phase_age_ms": {
+        "fraction_over_30000_ms": null,
+        "max": null,
+        "median": null,
+        "min": null,
+        "p95": null
+      },
+      "phase_rpm": 14.928893032,
+      "record_count": 1779,
+      "session_id": "S001_BREATH_PACED_15_03",
+      "superseded_fresh_0x0A13_cadence_hz": null,
+      "superseded_fresh_cadence_status": null,
+      "telemetry_row_cadence_hz": 9.994097974,
+      "windows_with_300_genuinely_fresh_samples": 0
+    },
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "range_m",
+        "finite_sample_count": 1735,
+        "sample_std": 0.0,
+        "sample_std_cm": 0.0,
+        "stats": {
+          "count": 1735,
+          "max": 0.861,
+          "mean": 0.861,
+          "median": 0.861,
+          "min": 0.861,
+          "p05": 0.861,
+          "p95": 0.861,
+          "std": 0.0
+        },
+        "unit": "m"
+      },
+      "evidence_group": "PRE_PR18_LEGACY_LOGS",
+      "fresh_0x0A13_cadence_hz": null,
+      "freshness_estimator_methods": null,
+      "freshness_regression_guards": null,
+      "phase_age_ms": {
+        "fraction_over_30000_ms": null,
+        "max": null,
+        "median": null,
+        "min": null,
+        "p95": null
+      },
+      "phase_rpm": 20.170279064,
+      "record_count": 1784,
+      "session_id": "S001_BREATH_PACED_20_04",
+      "superseded_fresh_0x0A13_cadence_hz": null,
+      "superseded_fresh_cadence_status": null,
+      "telemetry_row_cadence_hz": 9.994226554,
+      "windows_with_300_genuinely_fresh_samples": 0
+    },
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "range_m",
+        "finite_sample_count": 1784,
+        "sample_std": 0.025986429,
+        "sample_std_cm": 2.598642918,
+        "stats": {
+          "count": 1784,
+          "max": 0.9184,
+          "mean": 0.903728251,
+          "median": 0.9184,
+          "min": 0.8036,
+          "p05": 0.861,
+          "p95": 0.9184,
+          "std": 0.025979145
+        },
+        "unit": "m"
+      },
+      "evidence_group": "PRE_PR18_LEGACY_LOGS",
+      "fresh_0x0A13_cadence_hz": null,
+      "freshness_estimator_methods": null,
+      "freshness_regression_guards": null,
+      "phase_age_ms": {
+        "fraction_over_30000_ms": null,
+        "max": null,
+        "median": null,
+        "min": null,
+        "p95": null
+      },
+      "phase_rpm": 20.030636268,
+      "record_count": 1784,
+      "session_id": "S001_BREATH_PACED_20_05",
+      "superseded_fresh_0x0A13_cadence_hz": null,
+      "superseded_fresh_cadence_status": null,
+      "telemetry_row_cadence_hz": 9.992994255,
+      "windows_with_300_genuinely_fresh_samples": 0
+    },
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "distance_cm_raw",
+        "finite_sample_count": 18354,
+        "sample_std": 25.355997063,
+        "sample_std_cm": null,
+        "stats": {
+          "count": 18354,
+          "max": 166.46,
+          "mean": 108.035469108,
+          "median": 97.58,
+          "min": 86.1,
+          "p05": 91.84,
+          "p95": 166.46,
+          "std": 25.355306305
+        },
+        "unit": "cm"
+      },
+      "evidence_group": "PRE_PR18_LEGACY_LOGS",
+      "fresh_0x0A13_cadence_hz": 8.419003785,
+      "freshness_estimator_methods": {
+        "old_phase_age_decrease_proxy": {
+          "cadence_hz": 4.30467137,
+          "computation": "count phase_age_ms[i] < phase_age_ms[i-1]; divide by timestamp span",
+          "role": "systematically undercounts always-low pilot age values",
+          "status": "RETRACTED_FAULTY_ESTIMATOR",
+          "transition_count": 8006
+        },
+        "phase_age_less_than_previous_row_interval": {
+          "cadence_hz": 8.419003785,
+          "computation": "count phase_age_ms[i] < telemetry interval[i]; divide by timestamp span",
+          "role": "independent confirmation that an update is newer than the previous emission",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 15658
+        },
+        "phase_value_change_or_age_decrease": {
+          "cadence_hz": 7.661949415,
+          "computation": "count breath_phase changes or phase_age_ms decreases; divide by timestamp span",
+          "role": "independent lower bound because quantized phase values can repeat",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 14250
+        },
+        "reconstructed_update_instant_advances": {
+          "cadence_hz": 8.419003785,
+          "computation": "update_ms=round(timestamp_s*1000)-phase_age_ms; count update_ms[i] > update_ms[i-1]; divide by timestamp span",
+          "role": "selected because it directly tests whether the recorded source-update instant advances",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 15658
+        }
+      },
+      "freshness_regression_guards": {
+        "age_interval_transition_count": 15658,
+        "cross_check": "EXACT_MATCH",
+        "low_age_definition": "max(phase_age_ms) < 2 * median telemetry interval; regression diagnostic only",
+        "low_age_regime": false,
+        "materially_below_row_cadence_definition": "fresh cadence < 0.95 * row cadence; regression diagnostic only",
+        "status": "PASS",
+        "timestamp_age_transition_count": 15658
+      },
+      "phase_age_ms": {
+        "fraction_over_30000_ms": 0.139173038,
+        "max": 288530.0,
+        "median": 12.0,
+        "min": 0.0,
+        "p95": 195627.0
+      },
+      "phase_rpm": 19.264097775,
+      "record_count": 18574,
+      "session_id": "2026-08-01_occupied_d09_v120_31min_attempt02",
+      "superseded_fresh_0x0A13_cadence_hz": 4.30467137,
+      "superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+      "telemetry_row_cadence_hz": 9.986342911,
+      "windows_with_300_genuinely_fresh_samples": 27
+    },
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "distance_cm_raw",
+        "finite_sample_count": 1799,
+        "sample_std": 20.42376135,
+        "sample_std_cm": null,
+        "stats": {
+          "count": 1799,
+          "max": 120.54,
+          "mean": 56.06311284,
+          "median": 51.66,
+          "min": 40.18,
+          "p05": 45.92,
+          "p95": 120.54,
+          "std": 20.41808414
+        },
+        "unit": "cm"
+      },
+      "evidence_group": "PR18_PILOT_CAPTURE",
+      "fresh_0x0A13_cadence_hz": 9.988438535,
+      "freshness_estimator_methods": {
+        "old_phase_age_decrease_proxy": {
+          "cadence_hz": 3.679658492,
+          "computation": "count phase_age_ms[i] < phase_age_ms[i-1]; divide by timestamp span",
+          "role": "systematically undercounts always-low pilot age values",
+          "status": "RETRACTED_FAULTY_ESTIMATOR",
+          "transition_count": 662
+        },
+        "phase_age_less_than_previous_row_interval": {
+          "cadence_hz": 9.988438535,
+          "computation": "count phase_age_ms[i] < telemetry interval[i]; divide by timestamp span",
+          "role": "independent confirmation that an update is newer than the previous emission",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1797
+        },
+        "phase_value_change_or_age_decrease": {
+          "cadence_hz": 9.126887076,
+          "computation": "count breath_phase changes or phase_age_ms decreases; divide by timestamp span",
+          "role": "independent lower bound because quantized phase values can repeat",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1642
+        },
+        "reconstructed_update_instant_advances": {
+          "cadence_hz": 9.988438535,
+          "computation": "update_ms=round(timestamp_s*1000)-phase_age_ms; count update_ms[i] > update_ms[i-1]; divide by timestamp span",
+          "role": "selected because it directly tests whether the recorded source-update instant advances",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1797
+        }
+      },
+      "freshness_regression_guards": {
+        "age_interval_transition_count": 1797,
+        "cross_check": "EXACT_MATCH",
+        "low_age_definition": "max(phase_age_ms) < 2 * median telemetry interval; regression diagnostic only",
+        "low_age_regime": true,
+        "materially_below_row_cadence_definition": "fresh cadence < 0.95 * row cadence; regression diagnostic only",
+        "status": "PASS",
+        "timestamp_age_transition_count": 1797
+      },
+      "phase_age_ms": {
+        "fraction_over_30000_ms": 0.0,
+        "max": 111.0,
+        "median": 12.0,
+        "min": 0.0,
+        "p95": 15.0
+      },
+      "phase_rpm": 20.347847528,
+      "record_count": 1799,
+      "session_id": "M-C0-PILOT-DESKWORK-001",
+      "superseded_fresh_0x0A13_cadence_hz": 3.679658492,
+      "superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+      "telemetry_row_cadence_hz": 9.993996932,
+      "windows_with_300_genuinely_fresh_samples": 4
+    },
+    {
+      "distance_or_range": {
+        "computation": "population stats plus sample standard deviation over finite distance telemetry values; legacy CSV range_m is in metres",
+        "field": "distance_cm_raw",
+        "finite_sample_count": 1799,
+        "sample_std": 20.378211738,
+        "sample_std_cm": null,
+        "stats": {
+          "count": 1799,
+          "max": 91.84,
+          "mean": 63.714319066,
+          "median": 51.66,
+          "min": 45.92,
+          "p05": 45.92,
+          "p95": 91.84,
+          "std": 20.37254719
+        },
+        "unit": "cm"
+      },
+      "evidence_group": "PR18_PILOT_CAPTURE",
+      "fresh_0x0A13_cadence_hz": 9.993330369,
+      "freshness_estimator_methods": {
+        "old_phase_age_decrease_proxy": {
+          "cadence_hz": 3.518230325,
+          "computation": "count phase_age_ms[i] < phase_age_ms[i-1]; divide by timestamp span",
+          "role": "systematically undercounts always-low pilot age values",
+          "status": "RETRACTED_FAULTY_ESTIMATOR",
+          "transition_count": 633
+        },
+        "phase_age_less_than_previous_row_interval": {
+          "cadence_hz": 9.993330369,
+          "computation": "count phase_age_ms[i] < telemetry interval[i]; divide by timestamp span",
+          "role": "independent confirmation that an update is newer than the previous emission",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1798
+        },
+        "phase_value_change_or_age_decrease": {
+          "cadence_hz": 9.131836372,
+          "computation": "count breath_phase changes or phase_age_ms decreases; divide by timestamp span",
+          "role": "independent lower bound because quantized phase values can repeat",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1643
+        },
+        "reconstructed_update_instant_advances": {
+          "cadence_hz": 9.993330369,
+          "computation": "update_ms=round(timestamp_s*1000)-phase_age_ms; count update_ms[i] > update_ms[i-1]; divide by timestamp span",
+          "role": "selected because it directly tests whether the recorded source-update instant advances",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1798
+        }
+      },
+      "freshness_regression_guards": {
+        "age_interval_transition_count": 1798,
+        "cross_check": "EXACT_MATCH",
+        "low_age_definition": "max(phase_age_ms) < 2 * median telemetry interval; regression diagnostic only",
+        "low_age_regime": true,
+        "materially_below_row_cadence_definition": "fresh cadence < 0.95 * row cadence; regression diagnostic only",
+        "status": "PASS",
+        "timestamp_age_transition_count": 1798
+      },
+      "phase_age_ms": {
+        "fraction_over_30000_ms": 0.0,
+        "max": 17.0,
+        "median": 12.0,
+        "min": 0.0,
+        "p95": 15.0
+      },
+      "phase_rpm": 22.329196977,
+      "record_count": 1799,
+      "session_id": "M-C0-PILOT-STATIONARY-001",
+      "superseded_fresh_0x0A13_cadence_hz": 3.518230325,
+      "superseded_fresh_cadence_status": "RETRACTED_FAULTY_ESTIMATOR",
+      "telemetry_row_cadence_hz": 9.993330369,
+      "windows_with_300_genuinely_fresh_samples": 5
+    }
+  ],
+  "temporal_correspondence": "MEASURED_SUFFICIENT_FOR_PR18_PILOT_CAPTURE_ONLY",
+  "temporal_correspondence_by_evidence_group": {
+    "PR18_PILOT_CAPTURE": "MEASURED_SUFFICIENT",
+    "PRE_PR18_LEGACY_LOGS": "MIXED_LONG_JSONL_SUFFICIENT_LEGACY_CSV_UNPROVABLE"
+  },
+  "valid_300_fresh_windows": {
+    "PR18_PILOT_CAPTURE": 9,
+    "PRE_PR18_LEGACY_LOGS": 27
+  },
+  "valid_300_fresh_windows_aggregate_reported": false,
+  "what_remains_unknown": [
+    "Exact physical/numeric semantic mapping from MR60 breath_phase to the frozen Phase-B input.",
+    "Official phase-age failure threshold and direct 0x0A13 packet identity/update cadence.",
+    "Approved interpolation/resampling method and acceptable distortion.",
+    "Formal pre-BPF/post-BPF training-distribution comparison for MR60.",
+    "Stage responsible for the historical all-APNEA collapse.",
+    "Independent M-C1 reference hardware, sample size, and paced-rpm-to-label mapping.",
+    "Official measurement distances.",
+    "Whether the historical 620 windows contained genuinely fresh 0x0A13 samples; legacy CSV freshness metadata is absent."
+  ],
+  "window_results_by_evidence_group": {
+    "PR18_PILOT_CAPTURE": {
+      "sessions": [
+        {
+          "computation": "anchor fixed non-overlapping 30 s bins at the first telemetry timestamp; include the first identifiable timestamp-age update, then each advancing reconstructed update instant; count bins with >=300 fresh samples",
+          "fresh_sample_counts_by_window": [
+            300,
+            300,
+            300,
+            300,
+            299,
+            299
+          ],
+          "maximum_fresh_samples_in_window": 300,
+          "session_id": "M-C0-PILOT-DESKWORK-001",
+          "status": "MEASURED_FROM_RECONSTRUCTED_UPDATE_INSTANTS",
+          "valid_300_fresh_windows": 4,
+          "window_count_evaluated": 6
+        },
+        {
+          "computation": "anchor fixed non-overlapping 30 s bins at the first telemetry timestamp; include the first identifiable timestamp-age update, then each advancing reconstructed update instant; count bins with >=300 fresh samples",
+          "fresh_sample_counts_by_window": [
+            300,
+            300,
+            300,
+            300,
+            299,
+            300
+          ],
+          "maximum_fresh_samples_in_window": 300,
+          "session_id": "M-C0-PILOT-STATIONARY-001",
+          "status": "MEASURED_FROM_RECONSTRUCTED_UPDATE_INSTANTS",
+          "valid_300_fresh_windows": 5,
+          "window_count_evaluated": 6
+        }
+      ],
+      "valid_300_fresh_windows": 9
+    },
+    "PRE_PR18_LEGACY_LOGS": {
+      "sessions": [
+        {
+          "computation": "no window count because phase_age_ms/update instant is absent",
+          "fresh_sample_counts_by_window": [],
+          "maximum_fresh_samples_in_window": 0,
+          "session_id": "S001_NORMAL_D06",
+          "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+          "valid_300_fresh_windows": 0,
+          "window_count_evaluated": 0
+        },
+        {
+          "computation": "no window count because phase_age_ms/update instant is absent",
+          "fresh_sample_counts_by_window": [],
+          "maximum_fresh_samples_in_window": 0,
+          "session_id": "S001_NORMAL_D09",
+          "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+          "valid_300_fresh_windows": 0,
+          "window_count_evaluated": 0
+        },
+        {
+          "computation": "no window count because phase_age_ms/update instant is absent",
+          "fresh_sample_counts_by_window": [],
+          "maximum_fresh_samples_in_window": 0,
+          "session_id": "S001_NORMAL_D12",
+          "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+          "valid_300_fresh_windows": 0,
+          "window_count_evaluated": 0
+        },
+        {
+          "computation": "no window count because phase_age_ms/update instant is absent",
+          "fresh_sample_counts_by_window": [],
+          "maximum_fresh_samples_in_window": 0,
+          "session_id": "S001_NORMAL_D15",
+          "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+          "valid_300_fresh_windows": 0,
+          "window_count_evaluated": 0
+        },
+        {
+          "computation": "no window count because phase_age_ms/update instant is absent",
+          "fresh_sample_counts_by_window": [],
+          "maximum_fresh_samples_in_window": 0,
+          "session_id": "S001_BREATH_PACED_12_01",
+          "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+          "valid_300_fresh_windows": 0,
+          "window_count_evaluated": 0
+        },
+        {
+          "computation": "no window count because phase_age_ms/update instant is absent",
+          "fresh_sample_counts_by_window": [],
+          "maximum_fresh_samples_in_window": 0,
+          "session_id": "S001_BREATH_PACED_12_02",
+          "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+          "valid_300_fresh_windows": 0,
+          "window_count_evaluated": 0
+        },
+        {
+          "computation": "no window count because phase_age_ms/update instant is absent",
+          "fresh_sample_counts_by_window": [],
+          "maximum_fresh_samples_in_window": 0,
+          "session_id": "S001_BREATH_PACED_15_03",
+          "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+          "valid_300_fresh_windows": 0,
+          "window_count_evaluated": 0
+        },
+        {
+          "computation": "no window count because phase_age_ms/update instant is absent",
+          "fresh_sample_counts_by_window": [],
+          "maximum_fresh_samples_in_window": 0,
+          "session_id": "S001_BREATH_PACED_20_04",
+          "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+          "valid_300_fresh_windows": 0,
+          "window_count_evaluated": 0
+        },
+        {
+          "computation": "no window count because phase_age_ms/update instant is absent",
+          "fresh_sample_counts_by_window": [],
+          "maximum_fresh_samples_in_window": 0,
+          "session_id": "S001_BREATH_PACED_20_05",
+          "status": "NOT_PROVABLE_NO_PHASE_AGE_FIELD",
+          "valid_300_fresh_windows": 0,
+          "window_count_evaluated": 0
+        },
+        {
+          "computation": "anchor fixed non-overlapping 30 s bins at the first telemetry timestamp; include the first identifiable timestamp-age update, then each advancing reconstructed update instant; count bins with >=300 fresh samples",
+          "fresh_sample_counts_by_window": [
+            300,
+            300,
+            299,
+            300,
+            299,
+            300,
+            299,
+            300,
+            300,
+            269,
+            300,
+            299,
+            300,
+            299,
+            299,
+            300,
+            299,
+            300,
+            299,
+            299,
+            300,
+            300,
+            299,
+            300,
+            299,
+            299,
+            300,
+            299,
+            300,
+            299,
+            300,
+            300,
+            299,
+            300,
+            299,
+            300,
+            299,
+            300,
+            299,
+            299,
+            300,
+            299,
+            300,
+            300,
+            299,
+            300,
+            299,
+            300,
+            299,
+            300,
+            300,
+            299,
+            114,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "maximum_fresh_samples_in_window": 300,
+          "session_id": "2026-08-01_occupied_d09_v120_31min_attempt02",
+          "status": "MEASURED_FROM_RECONSTRUCTED_UPDATE_INSTANTS",
+          "valid_300_fresh_windows": 27,
+          "window_count_evaluated": 62
+        }
+      ],
+      "valid_300_fresh_windows": 27
+    }
+  }
+}

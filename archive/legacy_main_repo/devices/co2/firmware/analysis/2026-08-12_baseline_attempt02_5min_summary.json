@@ -1,0 +1,32 @@
+{
+  "schema": "safenest.scd40.evidence-summary.v1",
+  "source": "logs/2026-08-12_baseline_attempt02_5min.csv",
+  "source_sha256": "409b788437e4685f8136f6d6b19c2f47d3ecd081ee56f46d958bf6ab486f9ad1",
+  "scenario": "baseline",
+  "sample_count": 300,
+  "valid_sample_count": 300,
+  "missing_sample_count": 0,
+  "missing_rate": 0.0,
+  "elapsed_seconds": 298.998731136322,
+  "sample_interval_seconds": {
+    "minimum": 0.9978320598602295,
+    "maximum": 1.00246000289917,
+    "mean": 0.9999957563087694
+  },
+  "co2_ppm": {
+    "minimum": 505.0,
+    "maximum": 516.0,
+    "mean": 511.06666666666666
+  },
+  "sensor_states": {
+    "NORMAL": 300
+  },
+  "errors": {
+    "NONE": 300
+  },
+  "verdict": "PASS",
+  "verdict_reasons": [
+    "유효 표본과 계산 가능한 통계가 존재함",
+    "missing_rate=0.000000"
+  ]
+}

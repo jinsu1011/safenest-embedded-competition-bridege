@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# SafeNest runtime state and process files
+state.json
+state.json.tmp
+.server.pid
+.browser.pid
+logs/
+.chromium-kiosk/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

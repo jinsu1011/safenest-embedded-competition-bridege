@@ -1,0 +1,67 @@
+{
+  "manifest_version": "1.0",
+  "analysis_id": "mr60_hr_sideband_stage2_shortened_s2_20260801",
+  "existing_manifest_modified": false,
+  "artifacts": [
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s2_recovery_v120_480s.jsonl",
+      "sha256": "c7518086111a4d9c6aef1b6ad517115f3cbb491f368364e07abdf6bb41a0dfc6",
+      "size_bytes": 4854744
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s2_recovery_v120_telemetry_receipts.jsonl",
+      "sha256": "0c65eed2181c2b140219482c790e9a48bd0b0bd050ec8a274f2be651cf508b3c",
+      "size_bytes": 520014
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s2_recovery_reference.json",
+      "sha256": "d5fdcdf35c2cf2149f0f49fa9aeae6b962c32ec5d463ed272449b32ccc409ef7",
+      "size_bytes": 1706
+    },
+    {
+      "path": "analysis/hr_sideband/stage1_results.json",
+      "sha256": "2e19bfd5426ab0d49b08437bcc04e6d53230a6779154c938b53ca462dee2bc9c",
+      "size_bytes": 30389
+    },
+    {
+      "path": "/Users/kimjinsu/Documents/임베디드 소프트웨어 경진대회/firmware/esp_wroom32_mr60_monitor/analysis_tools/hr_sideband_stage2.py",
+      "sha256": "cae293a886af37e9b973e9d9753a8b8c5d1d4b539d67ffb20a3ae272e4f143c9",
+      "size_bytes": 15071
+    },
+    {
+      "path": "analysis/hr_sideband/stage2_results.json",
+      "sha256": "34a97614153f05f178d382be4191df74d28793f6ceaefa9a3d4d1e026bd1a54b",
+      "size_bytes": 18023
+    },
+    {
+      "path": "analysis/hr_sideband/s2_pair_sideband_metrics.csv",
+      "sha256": "696ac396d0151c30c7548a2f724b74e87b09921dafdc464156fb7e0ae245725b",
+      "size_bytes": 1937
+    },
+    {
+      "path": "analysis/hr_sideband/s2_recovery_trace.png",
+      "sha256": "7c6941b614aa117b9f166a40a20abda779decd59b9db79c4cffe7a2af92e81c0",
+      "size_bytes": 101575
+    },
+    {
+      "path": "analysis/hr_sideband/s1_s2_error_vs_respiration.png",
+      "sha256": "88cc11003ccb9b0d2897f607c390521e375ca215bace573f50e8a518180b5f84",
+      "size_bytes": 102000
+    },
+    {
+      "path": "analysis/hr_sideband/s2_spectrum_sample_02.png",
+      "sha256": "a070b21eb291907188214ab1d8614bcff082ca79ec349cac41dc3bf2f8731efd",
+      "size_bytes": 177866
+    },
+    {
+      "path": "analysis/hr_sideband/s2_spectrum_sample_04.png",
+      "sha256": "fd33b0004caa337853a265fc9d83d27b546188201fbd0b05358a15973a759546",
+      "size_bytes": 186806
+    },
+    {
+      "path": "analysis/hr_sideband/s2_spectrum_sample_07.png",
+      "sha256": "03caa66889f56ac02938768b6bbc6377be2f4cf20e2a4bf96404a288c7dfa6ee",
+      "size_bytes": 196279
+    }
+  ]
+}

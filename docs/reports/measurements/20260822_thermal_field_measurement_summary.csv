@@ -1,0 +1,23 @@
+metric,value,unit_or_note
+pi_ip,192.168.137.249,SafeNest :8000 host
+esp_peer,192.168.137.107,thermal.state.peer
+system,ONLINE/DEGRADED,
+tcp_connections,4,
+telemetry_packets,15987,cumulative at snapshot
+thermal_completed_frames,10074,
+thermal_written,10068,sensor_logging.written
+thermal_ai_state,NOT_HUMAN,live snapshot
+thermal_confidence,0.9921875,
+temperature_calibrated,false,
+preprocessing,per_frame_minmax,
+model,thermal_fall_int8@0.1.0,
+mmwave_presence,true,
+mmwave_human_detected_raw,true,
+npz_on_disk,3516,
+npz_readable,3484,
+recent500_analysis_frames,6163,
+recent500_NOT_HUMAN,5879,
+recent500_HUMAN_NORMAL,189,
+recent500_HUMAN_FALL,95,
+recent500_HUMAN_star_pct,4.6,%
+recent_raw_span_mean,465.54,uint16 max-min

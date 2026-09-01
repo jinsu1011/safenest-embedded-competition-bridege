@@ -1,0 +1,46 @@
+{
+  "source": "logs/baseline/2026-07-13_occupied_front_p0_5min.jsonl",
+  "records": 2999,
+  "invalid_json_lines": 0,
+  "elapsed_s": 299.932,
+  "telemetry_rate_hz": 9.99893309150074,
+  "uart_frames": 22861,
+  "uart_frame_rate_hz": 76.22061000493444,
+  "checksum_errors": 0,
+  "checksum_error_rate": 0.0,
+  "parse_errors": 0,
+  "parse_error_rate": 0.0,
+  "reboots_detected": 0,
+  "presence": {
+    "true_count": 2999,
+    "false_count": 0,
+    "unknown_count": 0,
+    "true_rate": 1.0
+  },
+  "distance_cm_raw": {
+    "count": 2999,
+    "mean": 57.54546182060687,
+    "median": 57.4,
+    "stddev": 3.6376647520570664,
+    "min": 45.92,
+    "max": 68.88
+  },
+  "breath_rate_raw": {
+    "count": 2999,
+    "mean": 18.528842947649217,
+    "median": 20.0,
+    "stddev": 5.638286845077533,
+    "min": 1.0,
+    "max": 29.0
+  },
+  "heart_rate_raw": {
+    "count": 2999,
+    "mean": 80.54718239413138,
+    "median": 79.0,
+    "stddev": 10.838973512050858,
+    "min": 62.0,
+    "max": 111.0
+  },
+  "breath_positive_rate": 1.0,
+  "heart_positive_rate": 1.0
+}

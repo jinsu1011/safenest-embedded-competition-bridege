@@ -1,0 +1,13 @@
+dataset_id,scenario,classification,result,source_total_lines,attempted_windows,completed_windows,rejected_windows,window_success_rate,tflite_runs,fallback_count,prediction_distribution,model_latency_p95_ms,presence_detection_rate,false_presence_rate,respiration_mae_rpm
+empty_30min_v120,empty_space_30min,REAL_REPLAY_READY,PASS,17995,0,0,0,,0,0,{},,,0.0,
+occupied_31min_v120,one_stationary_person_long_duration,REAL_REPLAY_READY,PASS,18574,49,45,4,0.9183673469387755,45,0,"{""NORMAL"": 45}",0.13949160929769275,0.9877044620006676,,
+distance_0_6m,stationary_normal_0.6m,REAL_REPLAY_READY,PASS,3598,10,9,1,0.9,9,0,"{""NORMAL"": 9}",0.14759162440896034,1.0,,
+distance_0_9m,stationary_normal_0.9m,REAL_REPLAY_READY,PARTIAL,3598,10,7,3,0.7,7,0,"{""NORMAL"": 7}",0.16311255749315023,1.0,,
+distance_1_2m,stationary_normal_1.2m_range_limit,REAL_REPLAY_READY,PARTIAL,3598,9,7,2,0.7777777777777778,7,0,"{""NORMAL"": 7}",0.17562507418915624,0.814209472981988,,
+distance_1_5m,stationary_normal_1.5m_lock_loss,REAL_REPLAY_READY,PARTIAL,3599,0,0,0,,0,0,{},,0.8799599866622208,,
+paced_12rpm,paced_breathing_12rpm,REAL_REPLAY_READY,PASS,2545,6,6,0,1.0,6,0,"{""NORMAL"": 6}",0.15470825019292533,1.0,,0.2704738793291381
+paced_15rpm,paced_breathing_15rpm,REAL_REPLAY_READY,PASS,2567,6,6,0,1.0,6,0,"{""NORMAL"": 6}",0.16509348643012345,1.0,,0.27476714362331683
+paced_20rpm,paced_breathing_20rpm,REAL_REPLAY_READY,PARTIAL,2609,6,2,4,0.3333333333333333,2,0,"{""NORMAL"": 2}",0.15325205749832094,0.9861111111111112,,0.5499111077650625
+entry_exit_20,entry_still_exit_20_trials,REAL_REPLAY_READY,PARTIAL,11394,22,1,21,0.045454545454545456,1,0,"{""NORMAL"": 1}",0.1597920199856162,,,
+accepted_empty_6min_v2,accepted_empty_room_6min,REAL_REPLAY_READY,PASS,3599,0,0,0,,0,0,{},,,0.0,
+accepted_occupied_6min_v2,accepted_stationary_person_0.8_to_1.0m,REAL_REPLAY_READY,PASS,3598,10,9,1,0.9,9,0,"{""NORMAL"": 9}",0.15574961435049772,1.0,,

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafeNest 노트북 열화상</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070b11;
+      --panel: #111923;
+      --line: #263545;
+      --muted: #93a7b8;
+      --ok: #52d8a4;
+      --warn: #ffba55;
+      --error: #ff625a;
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; margin: 0; }
+    body {
+      color: #f4f8fb;
+      background: radial-gradient(circle at 50% 0, #18293a, var(--bg) 55%);
+      font-family: system-ui, -apple-system, "Noto Sans KR", sans-serif;
+    }
+    .app { display: flex; flex-direction: column; min-height: 100vh; padding: 16px; gap: 12px; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    h1 { margin: 0; font-size: clamp(22px, 3vw, 36px); letter-spacing: -.04em; }
+    .status { color: var(--muted); font-size: 13px; text-align: right; }
+    .status strong { display: block; margin-bottom: 2px; color: var(--ok); }
+    .status.warn strong { color: var(--warn); }
+    .status.error strong { color: var(--error); }
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .metric {
+      min-width: 0; padding: 10px 14px; border: 1px solid var(--line);
+      border-radius: 12px; background: rgba(17, 25, 35, .9);
+    }
+    .metric-label { display: block; margin-bottom: 2px; color: var(--muted); font-size: 12px; }
+    .metric-value { display: block; overflow: hidden; font-size: clamp(18px, 2vw, 26px); font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+    .metric.invalid .metric-value { color: #697b89; }
+    .viewer {
+      position: relative; flex: 1 1 440px; min-height: 320px; overflow: hidden;
+      background: #000; border: 1px solid var(--line); border-radius: 18px;
+      box-shadow: 0 22px 70px rgba(0, 0, 0, .38);
+    }
+    #thermalCanvas { display: block; width: 100%; height: 100%; }
+    .waiting {
+      position: absolute; inset: 0; display: grid; place-items: center; padding: 24px;
+      color: #d4e0e8; background: rgba(0, 0, 0, .76); font-size: 17px;
+      font-weight: 800; text-align: center; white-space: pre-line;
+    }
+    .waiting.hidden { display: none; }
+    .footer { display: grid; grid-template-columns: auto minmax(120px, 1fr) auto auto; align-items: center; gap: 12px; }
+    .bar {
+      height: 12px; border-radius: 999px;
+      background: linear-gradient(90deg, #000004, #420a68, #932667, #dd513a, #fca50a, #fcffa4);
+    }
+    .temperature { min-width: 68px; font-weight: 850; }
+    .frame { color: var(--muted); font-size: 13px; }
+    @media (max-width: 720px) {
+      .app { padding: 9px; }
+      header { align-items: flex-start; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .footer { grid-template-columns: auto 1fr auto; }
+      .frame { grid-column: 1 / -1; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>SafeNest 노트북 열화상 · 80×62</h1>
+      <div class="status" id="status">
+        <strong id="statusTitle">연결 대기</strong>
+        <span id="statusDetail">Raspberry Pi 수신 상태 확인 중</span>
+      </div>
+    </header>
+
+    <section class="metrics" aria-label="실시간 센서값">
+      <div class="metric invalid" id="respCard"><span class="metric-label">호흡수</span><span class="metric-value" id="respiration">-- rpm</span></div>
+      <div class="metric invalid" id="heartCard"><span class="metric-label">심박수</span><span class="metric-value" id="heart">-- bpm</span></div>
+      <div class="metric invalid" id="co2Card"><span class="metric-label">CO₂</span><span class="metric-value" id="co2">-- ppm</span></div>
+      <div class="metric invalid" id="pirCard"><span class="metric-label">움직임</span><span class="metric-value" id="pir">--</span></div>
+    </section>
+
+    <section class="viewer">
+      <canvas id="thermalCanvas" width="800" height="620"></canvas>
+      <div class="waiting" id="waiting">ESP32 열화상 프레임을 기다리고 있습니다.</div>
+    </section>
+
+    <footer class="footer">
+      <span class="temperature" id="minimum">-- °C</span>
+      <div class="bar"></div>
+      <span class="temperature" id="maximum">-- °C</span>
+      <span class="frame" id="frameInfo">프레임 대기 중</span>
+    </footer>
+  </main>
+
+  <script>
+    "use strict";
+
+    const WIDTH = 80;
+    const HEIGHT = 62;
+    const META_BYTES = 16;
+    const PAYLOAD_BYTES = META_BYTES + WIDTH * HEIGHT * 2;
+    const FREEZE_MS = 3000;
+    const canvas = document.getElementById("thermalCanvas");
+    const context = canvas.getContext("2d", { alpha: false });
+    const source = document.createElement("canvas");
+    source.width = WIDTH;
+    source.height = HEIGHT;
+    const sourceContext = source.getContext("2d", { alpha: false });
+    const image = sourceContext.createImageData(WIDTH, HEIGHT);
+    const waiting = document.getElementById("waiting");
+    const status = document.getElementById("status");
+    const statusTitle = document.getElementById("statusTitle");
+    const statusDetail = document.getElementById("statusDetail");
+    const minimum = document.getElementById("minimum");
+    const maximum = document.getElementById("maximum");
+    const frameInfo = document.getElementById("frameInfo");
+    let etag = null;
+    let thermalFetching = false;
+    let stateFetching = false;
+    let scaleMin = null;
+    let scaleMax = null;
+    let lastFrameAt = 0;
+    let lastSequence = null;
+
+    const stops = [
+      [0.00, 0, 0, 4], [0.18, 42, 10, 91], [0.36, 101, 21, 110],
+      [0.54, 159, 42, 99], [0.70, 221, 81, 58], [0.86, 252, 165, 10],
+      [1.00, 252, 255, 164]
+    ];
+
+    function setStatus(kind, title, detail) {
+      status.className = `status ${kind}`.trim();
+      statusTitle.textContent = title;
+      statusDetail.textContent = detail;
+    }
+
+    function colour(value) {
+      const x = Math.max(0, Math.min(1, value));
+      for (let index = 1; index < stops.length; index += 1) {
+        const left = stops[index - 1];
+        const right = stops[index];
+        if (x <= right[0]) {
+          const ratio = (x - left[0]) / (right[0] - left[0]);
+          return [1, 2, 3].map(channel => Math.round(left[channel] + (right[channel] - left[channel]) * ratio));
+        }
+      }
+      return [252, 255, 164];
+    }
+
+    function resize() {
+      const bounds = canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      const width = Math.max(1, Math.round(bounds.width * ratio));
+      const height = Math.max(1, Math.round(bounds.height * ratio));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+    }
+
+    function draw(buffer) {
+      if (buffer.byteLength !== PAYLOAD_BYTES) throw new Error(`패킷 길이 오류: ${buffer.byteLength} bytes`);
+      const view = new DataView(buffer);
+      const width = view.getUint16(0, false);
+      const height = view.getUint16(2, false);
+      const sequence = view.getUint32(4, false);
+      if (width !== WIDTH || height !== HEIGHT) throw new Error(`해상도 오류: ${width}×${height}`);
+
+      const temperatures = new Float32Array(WIDTH * HEIGHT);
+      const valid = [];
+      for (let index = 0; index < temperatures.length; index += 1) {
+        const raw = view.getUint16(META_BYTES + index * 2, false);
+        const celsius = raw * 0.1 - 273.15;
+        temperatures[index] = celsius;
+        if (celsius >= -40 && celsius <= 150) valid.push(celsius);
+      }
+      if (valid.length < temperatures.length * 0.95) {
+        throw new Error(`비정상 온도 데이터: 유효 픽셀 ${valid.length}/${temperatures.length}`);
+      }
+
+      valid.sort((a, b) => a - b);
+      let low = valid[Math.floor(valid.length * 0.02)];
+      let high = valid[Math.floor(valid.length * 0.98)];
+      if (high - low < 2) {
+        const centre = (low + high) / 2;
+        low = centre - 1;
+        high = centre + 1;
+      }
+      scaleMin = scaleMin === null ? low : scaleMin * 0.82 + low * 0.18;
+      scaleMax = scaleMax === null ? high : scaleMax * 0.82 + high * 0.18;
+      const range = Math.max(0.1, scaleMax - scaleMin);
+
+      for (let index = 0; index < temperatures.length; index += 1) {
+        const [red, green, blue] = colour((temperatures[index] - scaleMin) / range);
+        const offset = index * 4;
+        image.data[offset] = red;
+        image.data[offset + 1] = green;
+        image.data[offset + 2] = blue;
+        image.data[offset + 3] = 255;
+      }
+      sourceContext.putImageData(image, 0, 0);
+      resize();
+      context.imageSmoothingEnabled = true;
+      context.imageSmoothingQuality = "high";
+      context.drawImage(source, 0, 0, canvas.width, canvas.height);
+
+      if (sequence !== lastSequence) lastFrameAt = performance.now();
+      lastSequence = sequence;
+      waiting.classList.add("hidden");
+      minimum.textContent = `${scaleMin.toFixed(1)} °C`;
+      maximum.textContent = `${scaleMax.toFixed(1)} °C`;
+      frameInfo.textContent = `Frame ${sequence} · 표시 범위 ${low.toFixed(1)}~${high.toFixed(1)} °C`;
+    }
+
+    function showMetric(cardId, valueId, value, valid, suffix = "") {
+      const card = document.getElementById(cardId);
+      const target = document.getElementById(valueId);
+      card.classList.toggle("invalid", !valid);
+      target.textContent = valid ? `${value}${suffix}` : `--${suffix}`;
+    }
+
+    async function updateState() {
+      if (stateFetching) return;
+      stateFetching = true;
+      try {
+        const response = await fetch("/api/state", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const state = await response.json();
+        const valid = state.valid || {};
+        showMetric("respCard", "respiration", Number(state.resp_rate_bpm).toFixed(1), state.fresh && valid.respiration, " rpm");
+        showMetric("heartCard", "heart", Number(state.heart_rate_bpm).toFixed(1), state.fresh && valid.heart, " bpm");
+        showMetric("co2Card", "co2", Math.round(Number(state.co2_ppm)), state.fresh && valid.co2, " ppm");
+        showMetric("pirCard", "pir", state.pir_motion ? "감지" : "없음", state.fresh && typeof state.pir_motion === "boolean");
+
+        const thermal = state.thermal || {};
+        if (!state.connected) {
+          setStatus("error", "ESP32 연결 끊김", "전원·Wi-Fi·라즈베리파이 주소를 확인하세요");
+        } else if (!state.fresh) {
+          setStatus("warn", "센서값 수신 지연", `마지막 텔레메트리 ${state.age_seconds ?? "--"}초 전`);
+        } else if (!thermal.fresh || (lastFrameAt && performance.now() - lastFrameAt > FREEZE_MS)) {
+          setStatus("error", "열화상 수신 멈춤", `마지막 프레임 ${thermal.age_seconds ?? "--"}초 전 · ESP32 자동 복구 중`);
+          waiting.classList.remove("hidden");
+          waiting.textContent = "열화상 프레임 수신이 멈췄습니다.\nESP32 카메라 스트림을 자동 복구하는 중입니다.";
+        } else {
+          setStatus("", "실시간 수신", `센서값 + 열화상 · Frame ${thermal.sequence ?? "--"}`);
+        }
+      } catch (error) {
+        setStatus("error", "웹 상태 조회 오류", error.message);
+      } finally {
+        stateFetching = false;
+      }
+    }
+
+    async function updateThermal() {
+      if (thermalFetching) return;
+      thermalFetching = true;
+      try {
+        const headers = etag ? { "If-None-Match": etag } : {};
+        const response = await fetch("/api/thermal", { cache: "no-store", headers });
+        if (response.status === 204 || response.status === 304) return;
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const nextEtag = response.headers.get("ETag");
+        draw(await response.arrayBuffer());
+        if (nextEtag) etag = nextEtag;
+      } catch (error) {
+        setStatus("error", "열화상 데이터 오류", error.message);
+        waiting.classList.remove("hidden");
+        waiting.textContent = `손상된 열화상 프레임을 표시하지 않았습니다.\n${error.message}`;
+      } finally {
+        thermalFetching = false;
+      }
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    updateState();
+    updateThermal();
+    setInterval(updateState, 500);
+    setInterval(updateThermal, 120);
+  </script>
+</body>
+</html>

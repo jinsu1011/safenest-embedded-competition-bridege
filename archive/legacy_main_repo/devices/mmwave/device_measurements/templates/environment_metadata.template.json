@@ -1,0 +1,48 @@
+{
+  "template_version": "m-c0-environment-1.0",
+  "session_id": "M-C0-YYYYMMDD-001",
+  "recorded_at_utc": "2026-08-14T00:00:00Z",
+  "location_class": "office_or_lab",
+  "sensor": {
+    "model": "MR60BHA2",
+    "device_id": "PENDING_CAPTURE",
+    "esp_firmware_version": "PENDING_CAPTURE",
+    "sensor_firmware_version": "PENDING_CAPTURE",
+    "config_hash": "PENDING_CAPTURE",
+    "transport": "ESP32_UART_USB"
+  },
+  "geometry": {
+    "distance_cm": null,
+    "sensor_height_cm": null,
+    "sensor_angle_deg": null,
+    "orientation": null,
+    "target_posture": null
+  },
+  "target": {
+    "subject_id": "SUBJ-PSEUDONYM-001",
+    "clothing": null,
+    "bedding": null,
+    "breathing_mode": "normal_spontaneous",
+    "movement_context": null
+  },
+  "background": {
+    "other_people_present": null,
+    "other_people_distance_m": null,
+    "other_people_in_sensor_fov": null,
+    "other_people_motion": null,
+    "background_movement": null,
+    "door_or_fan_or_hvac": null,
+    "notes": null
+  },
+  "privacy": {
+    "video_collected": false,
+    "face_or_name_recorded": false,
+    "workplace_permission_or_consent": null
+  },
+  "capture_checks": {
+    "raw_jsonl_immutable": false,
+    "sha256_recorded_after_capture": false,
+    "timestamp_source_noted": false,
+    "independent_reference_status_noted": false
+  }
+}

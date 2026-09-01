@@ -1,0 +1,69 @@
+{
+  "schema_version": "m-c0-session-1.0",
+  "status": "pilot",
+  "session_id": "M-C0-20260818-CAP2-S001-01",
+  "subject_id": "SUBJ-001",
+  "trial_id": "T1",
+  "boot_id": "BOOT-20260818-A",
+  "operator_id": "OP-LOCAL-001",
+  "start_time_utc": "2026-08-18T00:40:03.683Z",
+  "end_time_utc": "2026-08-18T00:44:03.627Z",
+  "sensor": {
+    "model": "MR60BHA2",
+    "transport": "ESP32_UART_USB",
+    "firmware_version": "safenest-mr60-esp/1.2.0",
+    "sensor_firmware_version": "UNKNOWN_NOT_REPORTED",
+    "config_hash": "b817e8bfd5e52b18275626f7b6a9bd60098ea4b108428a5aaf63600dbc987834",
+    "device_id": "safenest-node-01"
+  },
+  "setup": {
+    "distance_cm": 52,
+    "sensor_height_cm": 75,
+    "sensor_angle_deg": 100,
+    "orientation": "front_slightly_left_of_subject",
+    "posture": "seated_at_desk_against_backrest",
+    "clothing": "cardigan",
+    "bedding": "none",
+    "environment": "indoor_office_or_lab",
+    "other_people_present": true,
+    "other_people_distance_m": null,
+    "background_movement": "minimal_reported_not_verified"
+  },
+  "condition": {
+    "breathing_mode": "normal_spontaneous",
+    "movement_context": "stationary_no_deliberate_arm_movement",
+    "notes": "CAP-2 neutral device-domain session, first of the sensor-owner acquisition track. PILOT_NOT_FORMAL_EVALUATION. distance_cm=52 is DEVICE-DERIVED (median distance_cm_raw 51.66, range 45.92-57.40, sd 2.27); it was not tape-measured, so it is not directly comparable to M-C0-PILOT-* where the operator reported a physical measurement. sensor_angle_deg=100 uses the OPERATOR convention for this session: angle from the desk surface, 90 = perpendicular to the desk, so the sensor was reclined about 10 degrees past vertical. This is NOT the M-C0-PILOT-* convention where 0 meant horizontal alignment with the chest; do not compare the two numbers directly. One other person was present in the room; their distance was not recorded and their stillness is operator-reported, not verified. Producer flagged BREATH_PHASE_LOW_AMPLITUDE on 1032 of 2398 records (43%) concentrated in the 90-180s span while distance stayed constant at 51.7cm, which is consistent with shallower breathing rather than a setup or geometry fault. boot_id is DERIVED, not emitted by the firmware: sessions sharing a boot show a monotonically increasing ts_monotonic_ms, and a backwards jump marks a new boot. This session belongs to BOOT-20260818-A. condition_intent records operator intent only; M-N10 sets intent_is_not_label=true, so it must never be mapped to a class. These three fields were added for M-N10 session_identity_required; whether M-N10 expects boot_id per RECORD rather than per SESSION is an open question with the model track, and this manifest takes the per-session reading. GEOMETRY MEASURED POST-SESSION, PARTIALLY INVALIDATED. On 2026-08-18, after all four sessions were recorded, the operator tape-measured the bench and in the same pass re-set the sensor tilt to 90 deg. Consequences, field by field: (a) sensor_height_cm is corrected from 100 to 75. The earlier 100 was an eyeball estimate; 75 cm is a tape measurement from the floor to the antenna face. The adjustment changed tilt only, not the desk or the mount, so 75 cm is taken to hold for the capture as well. (b) sensor_angle_deg REMAINS 100 (operator convention: angle from the desk surface, 90 = perpendicular). The bench now sits at 90 deg, but that is the post-session state and MUST NOT be read as this session's geometry. Any future session at 90 deg is not comparable to these four on angle. (c) distance_cm stays device-derived. A 50 cm tape reading was taken, but only after the tilt change, so it is recorded here rather than substituted. It is consistent with capture: distance_cm_raw is quantized to 5.74 cm bins and the observed 51.66 bin spans roughly 48.8-54.5 cm, which contains 50 cm. The capture-time tilt is therefore known only as the operator's ~100 deg estimate, and that uncertainty cannot now be reduced for these four sessions.",
+    "condition_intent": "quiet_rest_breathing_seated"
+  },
+  "reference": {
+    "type": "none",
+    "independent": false,
+    "synchronized": false,
+    "status": "not_collected",
+    "file": null,
+    "notes": "INDEPENDENT_REFERENCE = NOT_AVAILABLE. No respiration or heart accuracy claim. Contract-designated reference (MOVESENSE_CHEST_ACC) is not available to this track.",
+    "actual_reference_availability": "NOT_AVAILABLE"
+  },
+  "files": {
+    "raw_immutable": true,
+    "raw_jsonl": [
+      {
+        "path": "raw/M-C0-20260818-CAP2-S001-01.jsonl",
+        "sha256": "f6312341918b52856968e9eb8e9ebc3c4e8079140f5d035f4045e625916d6f53",
+        "record_count": 2398,
+        "byte_count": 2412884
+      }
+    ]
+  },
+  "privacy": {
+    "identifiers_removed": true,
+    "video_collected": false,
+    "third_party_visible": false,
+    "consent_or_workplace_permission": "Subject is the operator. No identifying media collected. One other person was in the room but was not measured and is not a subject."
+  },
+  "qa": {
+    "status": "pass_with_limitations",
+    "validator_version": "m-c0-validator-1.1",
+    "notes": "Stream integrity passed: 0 uart/checksum errors, 0 seq gaps, 0 gaps over 500ms, max gap 103ms, jitter 0.43ms, phase_age max 18ms. M-N4 canonical yield 7 of 7 windows accepted, 0 rejected, 0 republications dropped. Limitations: no independent physiological reference, single subject, device-derived rather than tape-measured distance, other person present at unrecorded distance, sensor firmware version unavailable, and 43% producer BREATH_PHASE_LOW_AMPLITUDE which M-N4 does not gate."
+  }
+}

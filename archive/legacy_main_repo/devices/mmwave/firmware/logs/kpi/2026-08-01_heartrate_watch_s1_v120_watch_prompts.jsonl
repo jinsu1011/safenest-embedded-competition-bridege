@@ -1,0 +1,10 @@
+{"kind": "watch_prompt", "index": 1, "scheduled_elapsed_s": 30.0, "host_monotonic_ns": 601057401240208}
+{"kind": "watch_prompt", "index": 2, "scheduled_elapsed_s": 60.0, "host_monotonic_ns": 601087369556458}
+{"kind": "watch_prompt", "index": 3, "scheduled_elapsed_s": 90.0, "host_monotonic_ns": 601117415175791}
+{"kind": "watch_prompt", "index": 4, "scheduled_elapsed_s": 120.0, "host_monotonic_ns": 601147397566250}
+{"kind": "watch_prompt", "index": 5, "scheduled_elapsed_s": 150.0, "host_monotonic_ns": 601177422292250}
+{"kind": "watch_prompt", "index": 6, "scheduled_elapsed_s": 180.0, "host_monotonic_ns": 601207386191416}
+{"kind": "watch_prompt", "index": 7, "scheduled_elapsed_s": 210.0, "host_monotonic_ns": 601237423095458}
+{"kind": "watch_prompt", "index": 8, "scheduled_elapsed_s": 240.0, "host_monotonic_ns": 601267413227333}
+{"kind": "watch_prompt", "index": 9, "scheduled_elapsed_s": 270.0, "host_monotonic_ns": 601297377267916}
+{"kind": "watch_prompt", "index": 10, "scheduled_elapsed_s": 300.0, "host_monotonic_ns": 601327353504000}

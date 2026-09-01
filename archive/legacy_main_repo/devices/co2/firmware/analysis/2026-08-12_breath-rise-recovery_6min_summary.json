@@ -1,0 +1,39 @@
+{
+  "schema": "safenest.scd40.evidence-summary.v1",
+  "source": "logs/2026-08-12_breath-rise-recovery_6min.csv",
+  "source_sha256": "2f5a2b7b6e4baf4d2544baefc3c0e3a65dc082bac7a95565002d784454a096c9",
+  "scenario": "breath-rise-recovery",
+  "sample_count": 360,
+  "valid_sample_count": 329,
+  "missing_sample_count": 31,
+  "missing_rate": 0.08611111111111111,
+  "elapsed_seconds": 358.999892950058,
+  "sample_interval_seconds": {
+    "minimum": 0.9994511604309082,
+    "maximum": 1.0005362033843994,
+    "mean": 0.9999997018107465
+  },
+  "co2_ppm": {
+    "minimum": 507.0,
+    "maximum": 1493.0,
+    "mean": 896.2431610942249
+  },
+  "sensor_states": {
+    "NORMAL": 329,
+    "NOT_CONNECTED": 16,
+    "STALE": 15
+  },
+  "errors": {
+    "NONE": 329,
+    "ESP32_NOT_CONNECTED": 16,
+    "ESP32_TELEMETRY_STALE": 15
+  },
+  "verdict": "PASS_WITH_WARNINGS",
+  "verdict_reasons": [
+    "baseline_mean_ppm=508.233",
+    "peak_ppm=1493.000",
+    "rise_ppm=984.767",
+    "recovery_observed=true",
+    "missing_rate=0.086111"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "source": "firmware/esp_wroom32_mr60_monitor/logs/diagnostics/2026-07-25_occupied_d09_60s.jsonl",
+  "skip_seconds": 30.0,
+  "records_skipped": 300,
+  "records": 300,
+  "invalid_json_lines": 0,
+  "elapsed_s": 29.917,
+  "telemetry_rate_hz": 10.027743423471604,
+  "uart_frames": 2275,
+  "uart_frame_rate_hz": 76.04372096132633,
+  "checksum_errors": 0,
+  "checksum_error_rate": 0.0,
+  "parse_errors": 0,
+  "parse_error_rate": 0.0,
+  "reboots_detected": 0,
+  "presence": {
+    "true_count": 300,
+    "false_count": 0,
+    "unknown_count": 0,
+    "true_rate": 1.0
+  },
+  "distance_cm_raw": {
+    "count": 300,
+    "mean": 86.1,
+    "median": 86.1,
+    "stddev": 0.0,
+    "min": 86.1,
+    "max": 86.1
+  },
+  "breath_rate_raw": {
+    "count": 300,
+    "mean": 22.433333333333334,
+    "median": 23.0,
+    "stddev": 4.124997888584304,
+    "min": 7.0,
+    "max": 28.0
+  },
+  "heart_rate_raw": {
+    "count": 300,
+    "mean": 70.00333333333333,
+    "median": 69.0,
+    "stddev": 6.108548937565368,
+    "min": 62.0,
+    "max": 81.0
+  },
+  "breath_positive_rate": 1.0,
+  "heart_positive_rate": 1.0
+}

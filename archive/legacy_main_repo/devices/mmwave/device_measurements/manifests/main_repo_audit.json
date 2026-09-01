@@ -1,0 +1,98 @@
+{
+  "audit_schema_version": "m-c0-audit-1.0",
+  "audit_mode": "read_only",
+  "source_repository": "https://github.com/jinsu1011/safenest-embedded-competition",
+  "source_branch": "main",
+  "source_commit": "fdf34b804f35e5868356f0ed6f804a248aa69131",
+  "main_repository_modified": false,
+  "raw_scan": {
+    "scope": "devices/mmwave/firmware/logs/**/*.jsonl",
+    "files": 78,
+    "physical_lines": 172390,
+    "valid_json_objects": 172387,
+    "invalid_json_lines": 3,
+    "schema_versions": {
+      "1.0": 75476,
+      "1.1": 13868,
+      "1.2": 69750
+    },
+    "timestamp_backward": 0,
+    "timestamp_duplicates": 683,
+    "schema_1_2_timestamp_duplicates": 0,
+    "schema_1_2_max_gap_ms": 200,
+    "schema_1_2_sequence_gaps": 2,
+    "schema_1_2_heart_verified_true": 0,
+    "invalid_paths": [
+      "devices/mmwave/firmware/logs/baseline/2026-07-13_empty_desk_collector_v1_30s.jsonl:1",
+      "devices/mmwave/firmware/logs/final/2026-08-01_occupied_d09_v120_31min.jsonl:9000",
+      "devices/mmwave/firmware/logs/kpi/2026-08-01_heartrate_watch_s2_recovery_v120_480s.jsonl:607"
+    ]
+  },
+  "scope_discrepancy": {
+    "existing_final_manifest_files": 68,
+    "existing_final_manifest_lines": 154413,
+    "current_tree_files": 78,
+    "current_tree_lines": 172390,
+    "status": "NOT_VERIFIED"
+  },
+  "offline_additional_audit": {
+    "report": "reports/offline_remaining_audit.md",
+    "machine_readable": "reports/offline_analysis_results.json",
+    "csv_files": 9,
+    "csv_sha_matches": 9,
+    "csv_record_count_matches": 9,
+    "csv_adapter_windows": 620,
+    "adapter_replay_sensor_like_records": 159368,
+    "adapter_replay_schema_mismatch": 89618,
+    "adapter_replay_output_valid": 31328,
+    "adapter_replay_heart_verified": 0,
+    "exact_bpf_status": "COMPLETED_TEMPORARY_SCIPY_RUNTIME",
+    "preprocessed_csv_windows": 620,
+    "int8_saturation_ratio": 0.0,
+    "negative_tests_passed": 4,
+    "tflite_invoke_status": "COMPLETED_HOST_BENCHMARK",
+    "tflite_invoke_count": 620,
+    "tflite_latency_p95_ms": 0.008333,
+    "formal_accuracy_status": "NOT_COMPUTED_NO_ALIGNED_GROUND_TRUTH",
+    "live_monitor_replay_status": "PASS_WITH_EXCEPTIONS"
+  },
+  "reusable_existing_evidence": [
+    {
+      "item": "MR60 ESP JSONL field names",
+      "paths": ["devices/mmwave/firmware/src/main.cpp", "devices/mmwave/firmware/capture_serial.py"],
+      "status": "VERIFIED",
+      "note": "현재 firmware가 schema 1.2 필드와 USB JSONL capture 경로를 정의한다. 실제 새 세션의 값 검증은 별도다."
+    },
+    {
+      "item": "raw timestamp and sequence handling",
+      "paths": ["devices/mmwave/src/mr60_esp_adapter.py", "devices/mmwave/firmware/logs/"],
+      "status": "VERIFIED",
+      "note": "기존 문서에 monotonic timestamp, cadence, gap 점검 결과가 기록되어 있다. M-C0 formal 조건 전체 충족 여부는 별도 판정한다."
+    },
+    {
+      "item": "offline candidate input contract",
+      "paths": ["ondevice_ai/models/mmwave/mmwave_offline_candidate_lock_v1.json"],
+      "status": "VERIFIED",
+      "note": "후보 계약은 BPF_ZSCORE와 1 x 300 x 1, 30초 창이다. 이것은 physical MR60 validation 완료를 뜻하지 않는다."
+    }
+  ],
+  "not_verified_without_mmwave": [
+    "현재 장치의 실제 cadence, gap, jitter, packet error",
+    "현재 설치 환경에서 phase 단위·스케일·필터·리셋·결측 의미",
+    "새 subject/session과 환경 조건의 raw JSONL",
+    "독립 호흡 reference와 센서 timestamp 동기화",
+    "MR60 → ESP32 → USB → Raspberry Pi end-to-end 안정성"
+  ],
+  "hardware_required_next": [
+    "MR60BHA2 → ESP32 UART2 → USB serial 연결 및 device/firmware/config 기록",
+    "정상 자발 호흡 기반 pilot과 formal session",
+    "거리·높이·각도·방향·자세·의복/이불·주변 움직임 메타데이터",
+    "다른 사람이 보이는 경우 third-party presence/distance/movement 메모",
+    "필요한 경우 독립 reference와 동기화된 세션"
+  ],
+  "safety_constraints": [
+    "숨 참기·과호흡·극단적 동작·가스·밀폐 환경을 필수 측정으로 사용하지 않음",
+    "임상 apnea 또는 deployment-ready를 선언하지 않음",
+    "raw record를 필터링·보간·수정하지 않음"
+  ]
+}

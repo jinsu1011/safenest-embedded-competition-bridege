@@ -1,0 +1,240 @@
+{
+  "exported_at_iso": "2026-07-25",
+  "signal_source": "MR60BHA2_breath_phase",
+  "spec_reference": "han-junwoo mmwave csv 인수 조건 2026-07-25",
+  "notes": {
+    "resp_phase": "ESP breath_phase 원값. ×100, Z-Score, offset 제거 없음.",
+    "timestamp_s": "세션 시작 시각을 0으로 리베이스한 초 단위. ESP ts_monotonic_ms 기반.",
+    "presence_zero_policy": "presence=0 구간에 resp_phase 임의 생성 없음.",
+    "class1": "RAPID_OR_ABNORMAL은 이 배치에 포함되지 않음.",
+    "trial_split_rule": "enter 비프의 host_monotonic_ns를 센서 로그에 매핑하여 각 시도별 session_id 분리."
+  },
+  "sources": [
+    {
+      "role": "normal",
+      "path": "firmware/esp_wroom32_mr60_monitor/logs/baseline/2026-07-25_occupied_d09_v1_360s.jsonl",
+      "sha256": "dc7430de268de8d82139cbedb1aea4152c65859c35909aa50d97b72c69796421",
+      "size_bytes": 1793029
+    },
+    {
+      "role": "trial",
+      "path": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-25_entry_exit_10.jsonl",
+      "sha256": "311bf49a53e7534ba7c83b1ba04a85d8444d87cb0a0f47be0bff6f19e297a148",
+      "size_bytes": 2500367
+    }
+  ],
+  "sessions": [
+    {
+      "session_id": "S001_NORMAL_5MIN_01",
+      "label": "NORMAL",
+      "records": 2998,
+      "csv_path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-25_han_junwoo_delivery/2026-07-25_occupied_d09_v1_360s__S001_NORMAL_5MIN_01.csv",
+      "csv_sha256": "aab1f377f179220a21b2966e80dfb4e87cf1babb90d25137612d7761c55aa250",
+      "origin_jsonl": "firmware/esp_wroom32_mr60_monitor/logs/baseline/2026-07-25_occupied_d09_v1_360s.jsonl",
+      "warmup_skipped_seconds": 60.0
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_01",
+      "label": "PRESENCE_TRANSITION",
+      "records": 409,
+      "csv_path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-25_han_junwoo_delivery/2026-07-25_entry_exit_10__S001_ENTRY_EXIT_01.csv",
+      "csv_sha256": "6ca47b75111aa863221949cc272af549f87515624b2d07768a404c113373f797",
+      "origin_jsonl": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-25_entry_exit_10.jsonl"
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_02",
+      "label": "PRESENCE_TRANSITION",
+      "records": 409,
+      "csv_path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-25_han_junwoo_delivery/2026-07-25_entry_exit_10__S001_ENTRY_EXIT_02.csv",
+      "csv_sha256": "da73bb42d466df3f4c46a72d237fa378ace53dfe1302ec1b14ab79b21882f77c",
+      "origin_jsonl": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-25_entry_exit_10.jsonl"
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_03",
+      "label": "PRESENCE_TRANSITION",
+      "records": 409,
+      "csv_path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-25_han_junwoo_delivery/2026-07-25_entry_exit_10__S001_ENTRY_EXIT_03.csv",
+      "csv_sha256": "d2a13dcb29f6c3b05cfd3cf6866f8b8c48f491e3b8a7d3c58a4325be59bdab96",
+      "origin_jsonl": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-25_entry_exit_10.jsonl"
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_04",
+      "label": "PRESENCE_TRANSITION",
+      "records": 409,
+      "csv_path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-25_han_junwoo_delivery/2026-07-25_entry_exit_10__S001_ENTRY_EXIT_04.csv",
+      "csv_sha256": "d34135fb7fa34849ddac41364725d012d067652d5b72d06f8ae26b901bb69d99",
+      "origin_jsonl": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-25_entry_exit_10.jsonl"
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_05",
+      "label": "PRESENCE_TRANSITION",
+      "records": 410,
+      "csv_path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-25_han_junwoo_delivery/2026-07-25_entry_exit_10__S001_ENTRY_EXIT_05.csv",
+      "csv_sha256": "531411e91b39a8272ca12ac89f2af2fc1bc8580b0b454c08ea82ab04336095a1",
+      "origin_jsonl": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-25_entry_exit_10.jsonl"
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_06",
+      "label": "PRESENCE_TRANSITION",
+      "records": 410,
+      "csv_path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-25_han_junwoo_delivery/2026-07-25_entry_exit_10__S001_ENTRY_EXIT_06.csv",
+      "csv_sha256": "7a699c3a7adb5cd4d3a31a1dcbe0fc36914fa7c6a93b43f733a45fc5135d8892",
+      "origin_jsonl": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-25_entry_exit_10.jsonl"
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_07",
+      "label": "PRESENCE_TRANSITION",
+      "records": 410,
+      "csv_path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-25_han_junwoo_delivery/2026-07-25_entry_exit_10__S001_ENTRY_EXIT_07.csv",
+      "csv_sha256": "5d1dc4de91a97f54fae5117a24ec6d8b4e2ba014f0e34e549fa98b7ab1abbfe8",
+      "origin_jsonl": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-25_entry_exit_10.jsonl"
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_08",
+      "label": "PRESENCE_TRANSITION",
+      "records": 410,
+      "csv_path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-25_han_junwoo_delivery/2026-07-25_entry_exit_10__S001_ENTRY_EXIT_08.csv",
+      "csv_sha256": "5571a2186aeaebfca1a88a36a6aea71b79bd3e482cdec614f747b3f21233c8af",
+      "origin_jsonl": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-25_entry_exit_10.jsonl"
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_09",
+      "label": "PRESENCE_TRANSITION",
+      "records": 411,
+      "csv_path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-25_han_junwoo_delivery/2026-07-25_entry_exit_10__S001_ENTRY_EXIT_09.csv",
+      "csv_sha256": "72d28d987f76125d2b3c4dcacffa80338d452f57bbd0d7f3d02d78b5a5be2757",
+      "origin_jsonl": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-25_entry_exit_10.jsonl"
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_10",
+      "label": "PRESENCE_TRANSITION",
+      "records": 362,
+      "csv_path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-25_han_junwoo_delivery/2026-07-25_entry_exit_10__S001_ENTRY_EXIT_10.csv",
+      "csv_sha256": "cdfec6bd06c2a050c5b534f9e8dc7aec7a0153d9dbf3bafd2d507578211512a8",
+      "origin_jsonl": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-25_entry_exit_10.jsonl"
+    }
+  ],
+  "diagnostics": [
+    {
+      "session_id": "S001_NORMAL_5MIN_01",
+      "label": "NORMAL",
+      "records": 2998,
+      "duration_s": 299.816,
+      "measured_rate_hz": 9.996130960322331,
+      "max_gap_ms": 101,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": []
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_01",
+      "label": "PRESENCE_TRANSITION",
+      "records": 409,
+      "duration_s": 40.819,
+      "measured_rate_hz": 9.99534530488253,
+      "max_gap_ms": 102,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": []
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_02",
+      "label": "PRESENCE_TRANSITION",
+      "records": 409,
+      "duration_s": 40.815,
+      "measured_rate_hz": 9.99632488055862,
+      "max_gap_ms": 102,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": []
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_03",
+      "label": "PRESENCE_TRANSITION",
+      "records": 409,
+      "duration_s": 40.821,
+      "measured_rate_hz": 9.994855589035057,
+      "max_gap_ms": 101,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": []
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_04",
+      "label": "PRESENCE_TRANSITION",
+      "records": 409,
+      "duration_s": 40.816,
+      "measured_rate_hz": 9.996079968639748,
+      "max_gap_ms": 101,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": []
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_05",
+      "label": "PRESENCE_TRANSITION",
+      "records": 410,
+      "duration_s": 40.923,
+      "measured_rate_hz": 9.994379688683626,
+      "max_gap_ms": 102,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": []
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_06",
+      "label": "PRESENCE_TRANSITION",
+      "records": 410,
+      "duration_s": 40.914,
+      "measured_rate_hz": 9.996578188395171,
+      "max_gap_ms": 102,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": []
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_07",
+      "label": "PRESENCE_TRANSITION",
+      "records": 410,
+      "duration_s": 40.922,
+      "measured_rate_hz": 9.994623918674552,
+      "max_gap_ms": 102,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": []
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_08",
+      "label": "PRESENCE_TRANSITION",
+      "records": 410,
+      "duration_s": 40.921,
+      "measured_rate_hz": 9.994868160602135,
+      "max_gap_ms": 102,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": []
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_09",
+      "label": "PRESENCE_TRANSITION",
+      "records": 411,
+      "duration_s": 41.013,
+      "measured_rate_hz": 9.99683027332797,
+      "max_gap_ms": 101,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": []
+    },
+    {
+      "session_id": "S001_ENTRY_EXIT_10",
+      "label": "PRESENCE_TRANSITION",
+      "records": 362,
+      "duration_s": 36.117,
+      "measured_rate_hz": 9.995293075283108,
+      "max_gap_ms": 102,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": []
+    }
+  ]
+}

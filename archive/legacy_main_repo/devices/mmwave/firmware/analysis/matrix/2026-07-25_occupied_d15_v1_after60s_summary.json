@@ -1,0 +1,48 @@
+{
+  "source": "firmware/esp_wroom32_mr60_monitor/logs/matrix/2026-07-25_occupied_d15_v1_360s.jsonl",
+  "skip_seconds": 60.0,
+  "records_skipped": 600,
+  "records": 2999,
+  "invalid_json_lines": 0,
+  "elapsed_s": 299.849,
+  "telemetry_rate_hz": 10.00170085609757,
+  "uart_frames": 10859,
+  "uart_frame_rate_hz": 36.21489483039797,
+  "checksum_errors": 0,
+  "checksum_error_rate": 0.0,
+  "parse_errors": 0,
+  "parse_error_rate": 0.0,
+  "reboots_detected": 0,
+  "presence": {
+    "true_count": 2639,
+    "false_count": 360,
+    "unknown_count": 0,
+    "true_rate": 0.8799599866622208
+  },
+  "distance_cm_raw": {
+    "count": 2639,
+    "mean": 181.82684350132627,
+    "median": 183.68,
+    "stddev": 2.9375969202384775,
+    "min": 172.2,
+    "max": 183.68
+  },
+  "breath_rate_raw": {
+    "count": 2999,
+    "mean": 15.0,
+    "median": 15.0,
+    "stddev": 0.0,
+    "min": 15.0,
+    "max": 15.0
+  },
+  "heart_rate_raw": {
+    "count": 2999,
+    "mean": 87.0,
+    "median": 87.0,
+    "stddev": 0.0,
+    "min": 87.0,
+    "max": 87.0
+  },
+  "breath_positive_rate": 1.0,
+  "heart_positive_rate": 1.0
+}

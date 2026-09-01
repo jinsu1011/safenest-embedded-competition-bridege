@@ -1,0 +1,330 @@
+{
+  "exported_at_iso": "2026-08-01",
+  "signal_source": "MR60BHA2_breath_phase",
+  "spec_reference": "han-junwoo mmwave csv 인수 조건 2026-07-25",
+  "notes": {
+    "resp_phase": "ESP breath_phase 원값. ×100, Z-Score, offset 제거 없음.",
+    "timestamp_s": "세션 시작 시각을 0으로 리베이스한 초 단위. ESP ts_monotonic_ms 기반.",
+    "presence_zero_policy": "presence=0 구간에 resp_phase 임의 생성 없음.",
+    "class1": "RAPID_OR_ABNORMAL은 이 배치에 포함되지 않음.",
+    "trial_split_rule": "enter 비프의 host_monotonic_ns를 센서 로그에 매핑하여 각 시도별 session_id 분리.",
+    "clock_rule": "cue와 센서 monotonic clock은 변환하지 않음. paced 세션은 파일 기록 순서의 measurement cue 범위로 선택.",
+    "heart_rate": "절대 bpm은 미검증. heart_raw_valid=true는 사람 존재의 단방향 양성 증거로만 사용.",
+    "known_caveats": [
+      "2026-07-25 12rpm 로그는 절반 호흡 사고로 실제 약 6rpm.",
+      "20rpm 얕은 호흡 로그는 저진폭 실패 사례이며 deep 로그와 구분해야 함.",
+      "MR60 breath_rate_raw는 신뢰 불가; resp_phase 원값 기반 모델을 사용할 것.",
+      "D15의 거리 std=0은 원거리 한계가 아니라 lock-loss 시그니처."
+    ]
+  },
+  "sources": [
+    {
+      "role": "matrix",
+      "path": "logs/matrix/2026-07-25_occupied_d06_v1_360s.jsonl",
+      "sha256": "093903a28617925ad96cc3f4cd1b5f750b1b7ed5dd76162132143feb7f1a54d8",
+      "size_bytes": 1800829,
+      "copied_path": "csv/2026-07-26_han_junwoo_delivery_v2/original_jsonl/2026-07-25_occupied_d06_v1_360s.jsonl",
+      "copied_sha256": "093903a28617925ad96cc3f4cd1b5f750b1b7ed5dd76162132143feb7f1a54d8"
+    },
+    {
+      "role": "matrix",
+      "path": "logs/baseline/2026-07-25_occupied_d09_v1_360s.jsonl",
+      "sha256": "dc7430de268de8d82139cbedb1aea4152c65859c35909aa50d97b72c69796421",
+      "size_bytes": 1793029,
+      "copied_path": "csv/2026-07-26_han_junwoo_delivery_v2/original_jsonl/2026-07-25_occupied_d09_v1_360s.jsonl",
+      "copied_sha256": "dc7430de268de8d82139cbedb1aea4152c65859c35909aa50d97b72c69796421"
+    },
+    {
+      "role": "matrix",
+      "path": "logs/matrix/2026-07-25_occupied_d12_v1_360s.jsonl",
+      "sha256": "58442d57e381c9e8187d9d9e7bb3445f83d17af3d7a04f2bd772e9b78f0d8e27",
+      "size_bytes": 1802621,
+      "copied_path": "csv/2026-07-26_han_junwoo_delivery_v2/original_jsonl/2026-07-25_occupied_d12_v1_360s.jsonl",
+      "copied_sha256": "58442d57e381c9e8187d9d9e7bb3445f83d17af3d7a04f2bd772e9b78f0d8e27"
+    },
+    {
+      "role": "matrix",
+      "path": "logs/matrix/2026-07-25_occupied_d15_v1_360s.jsonl",
+      "sha256": "952f3b8e915917051d1379911ff1450d372675c53bf4b2d750db3ae623d60f78",
+      "size_bytes": 1853318,
+      "copied_path": "csv/2026-07-26_han_junwoo_delivery_v2/original_jsonl/2026-07-25_occupied_d15_v1_360s.jsonl",
+      "copied_sha256": "952f3b8e915917051d1379911ff1450d372675c53bf4b2d750db3ae623d60f78"
+    },
+    {
+      "role": "breath",
+      "path": "logs/breath/2026-07-25_breath_paced_12rpm.jsonl",
+      "sha256": "f15c397ac84735affc11931cad635e9838dd63149ad0111344f2a0710a247b7b",
+      "size_bytes": 1432772,
+      "copied_path": "csv/2026-07-26_han_junwoo_delivery_v2/original_jsonl/2026-07-25_breath_paced_12rpm.jsonl",
+      "copied_sha256": "f15c397ac84735affc11931cad635e9838dd63149ad0111344f2a0710a247b7b"
+    },
+    {
+      "role": "breath",
+      "path": "logs/breath/2026-07-28_breath_paced_12rpm_explicit_v2_attempt03.jsonl",
+      "sha256": "c8d989607aa7dc4499c217d3614fc6c39f4ce767cc82b8d5f69b65d1b0f3093f",
+      "size_bytes": 1476615,
+      "copied_path": "csv/2026-07-26_han_junwoo_delivery_v2/original_jsonl/2026-07-28_breath_paced_12rpm_explicit_v2_attempt03.jsonl",
+      "copied_sha256": "c8d989607aa7dc4499c217d3614fc6c39f4ce767cc82b8d5f69b65d1b0f3093f"
+    },
+    {
+      "role": "breath",
+      "path": "logs/breath/2026-07-26_breath_paced_15rpm.jsonl",
+      "sha256": "5c9aecbc8e9c7b7ac49affd1a07e57d8074d40b191104d4dc52a80f7de47c324",
+      "size_bytes": 2362295,
+      "copied_path": "csv/2026-07-26_han_junwoo_delivery_v2/original_jsonl/2026-07-26_breath_paced_15rpm.jsonl",
+      "copied_sha256": "5c9aecbc8e9c7b7ac49affd1a07e57d8074d40b191104d4dc52a80f7de47c324"
+    },
+    {
+      "role": "breath",
+      "path": "logs/breath/2026-07-26_breath_paced_20rpm.jsonl",
+      "sha256": "4dc8545a929613aa4501d7be2ee8597e6f7448be1424c5e2a69bf02d713a618f",
+      "size_bytes": 2345238,
+      "copied_path": "csv/2026-07-26_han_junwoo_delivery_v2/original_jsonl/2026-07-26_breath_paced_20rpm.jsonl",
+      "copied_sha256": "4dc8545a929613aa4501d7be2ee8597e6f7448be1424c5e2a69bf02d713a618f"
+    },
+    {
+      "role": "breath",
+      "path": "logs/breath/2026-07-26_breath_paced_20rpm_deep.jsonl",
+      "sha256": "484cd208bdb8ad725294fa142e18085d32e380b4a174ad127abbed54c04b7afe",
+      "size_bytes": 2338452,
+      "copied_path": "csv/2026-07-26_han_junwoo_delivery_v2/original_jsonl/2026-07-26_breath_paced_20rpm_deep.jsonl",
+      "copied_sha256": "484cd208bdb8ad725294fa142e18085d32e380b4a174ad127abbed54c04b7afe"
+    }
+  ],
+  "sessions": [
+    {
+      "session_id": "S001_NORMAL_D06",
+      "label": "NORMAL_D06",
+      "records": 2998,
+      "csv_path": "csv/2026-07-26_han_junwoo_delivery_v2/2026-07-25_occupied_d06_v1_360s__S001_NORMAL_D06.csv",
+      "csv_sha256": "8a2b8cb8aa017110672fd3045f0d2b0228dfc7da6e40f6ce30e03dbca9cfee98",
+      "origin_jsonl": "logs/matrix/2026-07-25_occupied_d06_v1_360s.jsonl",
+      "interpretation": {
+        "use": "normal_validation"
+      },
+      "warmup_skipped_seconds": 60.0
+    },
+    {
+      "session_id": "S001_NORMAL_D09",
+      "label": "NORMAL_D09",
+      "records": 2998,
+      "csv_path": "csv/2026-07-26_han_junwoo_delivery_v2/2026-07-25_occupied_d09_v1_360s__S001_NORMAL_D09.csv",
+      "csv_sha256": "23c7eb303f679cd6134c84db8d735c756f70c39a21de8e41bca77b7e4889505b",
+      "origin_jsonl": "logs/baseline/2026-07-25_occupied_d09_v1_360s.jsonl",
+      "interpretation": {
+        "use": "normal_validation"
+      },
+      "warmup_skipped_seconds": 60.0
+    },
+    {
+      "session_id": "S001_NORMAL_D12",
+      "label": "NORMAL_D12",
+      "records": 2998,
+      "csv_path": "csv/2026-07-26_han_junwoo_delivery_v2/2026-07-25_occupied_d12_v1_360s__S001_NORMAL_D12.csv",
+      "csv_sha256": "4b52b83367f67e6f317bb3178c641372eb9f5f81c4b9535dba3008c5aef04617",
+      "origin_jsonl": "logs/matrix/2026-07-25_occupied_d12_v1_360s.jsonl",
+      "interpretation": {
+        "use": "range_limit_case",
+        "reason": "재실 81.4%로 KPI 미달"
+      },
+      "warmup_skipped_seconds": 60.0
+    },
+    {
+      "session_id": "S001_NORMAL_D15",
+      "label": "NORMAL_D15",
+      "records": 2999,
+      "csv_path": "csv/2026-07-26_han_junwoo_delivery_v2/2026-07-25_occupied_d15_v1_360s__S001_NORMAL_D15.csv",
+      "csv_sha256": "cf98144314ba2e339a7dd660f2ce5e1296dc7d83bf81b994ba3e77d06245c60e",
+      "origin_jsonl": "logs/matrix/2026-07-25_occupied_d15_v1_360s.jsonl",
+      "interpretation": {
+        "use": "lock_loss_case",
+        "reason": "거리 std=0은 원거리 한계가 아니라 lock-loss 시그니처"
+      },
+      "warmup_skipped_seconds": 60.0
+    },
+    {
+      "session_id": "S001_BREATH_PACED_12_01",
+      "label": "BREATH_PACED_12",
+      "records": 2087,
+      "csv_path": "csv/2026-07-26_han_junwoo_delivery_v2/2026-07-25_breath_paced_12rpm__S001_BREATH_PACED_12_01.csv",
+      "csv_sha256": "2502ff4d4f66613c062231ec3a3a2de8d3a045fdb1efe52731c87cff364478fb",
+      "origin_jsonl": "logs/breath/2026-07-25_breath_paced_12rpm.jsonl",
+      "interpretation": {
+        "use": "failure_case",
+        "actual_breath_rpm": 6.06,
+        "reason": "절반 호흡 안내 해석 사고; 12rpm 정답 데이터로 사용 금지"
+      }
+    },
+    {
+      "session_id": "S001_BREATH_PACED_12_02",
+      "label": "BREATH_PACED_12",
+      "records": 1774,
+      "csv_path": "csv/2026-07-26_han_junwoo_delivery_v2/2026-07-28_breath_paced_12rpm_explicit_v2_attempt03__S001_BREATH_PACED_12_02.csv",
+      "csv_sha256": "6ea49a108e89c7b1627cb3f04009ea1ae0a05d13b82c54a92de5d3b72a799de1",
+      "origin_jsonl": "logs/breath/2026-07-28_breath_paced_12rpm_explicit_v2_attempt03.jsonl",
+      "interpretation": {
+        "use": "preferred_validation",
+        "actual_breath_rpm": 12.0,
+        "reason": "명시적 들숨/날숨 안내로 재측정한 유효 12rpm 세션"
+      }
+    },
+    {
+      "session_id": "S001_BREATH_PACED_15_03",
+      "label": "BREATH_PACED_15",
+      "records": 1779,
+      "csv_path": "csv/2026-07-26_han_junwoo_delivery_v2/2026-07-26_breath_paced_15rpm__S001_BREATH_PACED_15_03.csv",
+      "csv_sha256": "5d630fd40a59a2b484581584ac311f85c507503bb5856eea6b84327b75b3c645",
+      "origin_jsonl": "logs/breath/2026-07-26_breath_paced_15rpm.jsonl",
+      "interpretation": {
+        "use": "preferred_validation",
+        "actual_breath_rpm": 15.0,
+        "reason": "30초 영교차 ±2rpm 통과율 100%"
+      }
+    },
+    {
+      "session_id": "S001_BREATH_PACED_20_04",
+      "label": "BREATH_PACED_20",
+      "records": 1784,
+      "csv_path": "csv/2026-07-26_han_junwoo_delivery_v2/2026-07-26_breath_paced_20rpm__S001_BREATH_PACED_20_04.csv",
+      "csv_sha256": "87e9292254cef55696f25d1550b295612f7f2721bb79dd61306e4c02650b88dd",
+      "origin_jsonl": "logs/breath/2026-07-26_breath_paced_20rpm.jsonl",
+      "interpretation": {
+        "use": "failure_case",
+        "actual_breath_rpm": 20.0,
+        "reason": "얕은 호흡 저진폭 실패 사례"
+      }
+    },
+    {
+      "session_id": "S001_BREATH_PACED_20_05",
+      "label": "BREATH_PACED_20",
+      "records": 1784,
+      "csv_path": "csv/2026-07-26_han_junwoo_delivery_v2/2026-07-26_breath_paced_20rpm_deep__S001_BREATH_PACED_20_05.csv",
+      "csv_sha256": "6bd13bd5de4242fc3147746031b236516947dfebb85923ef1421f88413444a06",
+      "origin_jsonl": "logs/breath/2026-07-26_breath_paced_20rpm_deep.jsonl",
+      "interpretation": {
+        "use": "preferred_validation",
+        "actual_breath_rpm": 20.0,
+        "reason": "충분한 흉부 변위; 30초 영교차 ±2rpm 통과율 100%"
+      }
+    }
+  ],
+  "diagnostics": [
+    {
+      "session_id": "S001_NORMAL_D06",
+      "label": "NORMAL_D06",
+      "records": 2998,
+      "duration_s": 299.851,
+      "measured_rate_hz": 9.99496416553555,
+      "max_gap_ms": 102,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": [],
+      "breath_phase_std": 0.33144214197724325,
+      "presence_true_percent": 100.0
+    },
+    {
+      "session_id": "S001_NORMAL_D09",
+      "label": "NORMAL_D09",
+      "records": 2998,
+      "duration_s": 299.816,
+      "measured_rate_hz": 9.996130960322331,
+      "max_gap_ms": 101,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": [],
+      "breath_phase_std": 0.12394745670484512,
+      "presence_true_percent": 100.0
+    },
+    {
+      "session_id": "S001_NORMAL_D12",
+      "label": "NORMAL_D12",
+      "records": 2998,
+      "duration_s": 299.826,
+      "measured_rate_hz": 9.9957975625863,
+      "max_gap_ms": 102,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": [],
+      "breath_phase_std": 0.2310135400551335,
+      "presence_true_percent": 81.4209472981988
+    },
+    {
+      "session_id": "S001_NORMAL_D15",
+      "label": "NORMAL_D15",
+      "records": 2999,
+      "duration_s": 299.849,
+      "measured_rate_hz": 9.998365844141551,
+      "max_gap_ms": 102,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": [],
+      "breath_phase_std": 0.0,
+      "presence_true_percent": 87.99599866622208
+    },
+    {
+      "session_id": "S001_BREATH_PACED_12_01",
+      "label": "BREATH_PACED_12",
+      "records": 2087,
+      "duration_s": 208.698,
+      "measured_rate_hz": 9.995304219494196,
+      "max_gap_ms": 102,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": [],
+      "breath_phase_std": 0.35882085084908616,
+      "presence_true_percent": 100.0
+    },
+    {
+      "session_id": "S001_BREATH_PACED_12_02",
+      "label": "BREATH_PACED_12",
+      "records": 1774,
+      "duration_s": 177.381,
+      "measured_rate_hz": 9.99543355827287,
+      "max_gap_ms": 101,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": [],
+      "breath_phase_std": 0.37828824007597545,
+      "presence_true_percent": 100.0
+    },
+    {
+      "session_id": "S001_BREATH_PACED_15_03",
+      "label": "BREATH_PACED_15",
+      "records": 1779,
+      "duration_s": 177.905,
+      "measured_rate_hz": 9.994097973637615,
+      "max_gap_ms": 103,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": [],
+      "breath_phase_std": 0.34537804690484786,
+      "presence_true_percent": 100.0
+    },
+    {
+      "session_id": "S001_BREATH_PACED_20_04",
+      "label": "BREATH_PACED_20",
+      "records": 1784,
+      "duration_s": 178.403,
+      "measured_rate_hz": 9.994226554486191,
+      "max_gap_ms": 103,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": [],
+      "breath_phase_std": 0.11338136366708766,
+      "presence_true_percent": 97.25336322869956
+    },
+    {
+      "session_id": "S001_BREATH_PACED_20_05",
+      "label": "BREATH_PACED_20",
+      "records": 1784,
+      "duration_s": 178.425,
+      "measured_rate_hz": 9.992994255289338,
+      "max_gap_ms": 103,
+      "timestamp_duplicates": [],
+      "timestamp_backwards": [],
+      "bad_or_missing_phase": [],
+      "breath_phase_std": 0.50069872338751,
+      "presence_true_percent": 100.0
+    }
+  ]
+}

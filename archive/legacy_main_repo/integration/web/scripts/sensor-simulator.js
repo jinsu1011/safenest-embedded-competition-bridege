@@ -1,0 +1,3 @@
+const base=process.env.SAFENEST_URL||"http://localhost:3000";const key=process.env.SENSOR_API_KEY||"dev-sensor-key-change-me";let t=0;
+async function send(){t++;const data={nodeId:"SN-A01",co2:Math.round(760+Math.sin(t/3)*120),temperature:Number((25+Math.sin(t/5)).toFixed(1)),bodyTemperature:Number((36.6+Math.sin(t/4)*.2).toFixed(1)),breathRate:Math.round(16+Math.sin(t/2)*2),motion:true,occupied:true,motionlessSeconds:0};const r=await fetch(base+"/api/sensor-data",{method:"POST",headers:{"content-type":"application/json","x-api-key":key},body:JSON.stringify(data)});console.log(new Date().toLocaleTimeString(),r.status,await r.text())}
+send();setInterval(send,2000);

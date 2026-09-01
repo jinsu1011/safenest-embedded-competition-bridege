@@ -1,0 +1,232 @@
+{
+  "claim_boundaries": {
+    "clinical_apnea_validated": false,
+    "deployment_ready": false,
+    "heart_accuracy_verified": false,
+    "physical_signal_captured": true,
+    "respiration_accuracy_verified": false
+  },
+  "communication": {
+    "checksum_bad": 0,
+    "uart_bad": 0
+  },
+  "coverage": {
+    "breath_phase": {
+      "populated": 2398,
+      "ratio": 1.0
+    },
+    "breath_phase_std": {
+      "populated": 2398,
+      "ratio": 1.0
+    },
+    "breath_rate_filtered": {
+      "populated": 1366,
+      "ratio": 0.569641
+    },
+    "breath_rate_raw": {
+      "populated": 2398,
+      "ratio": 1.0
+    },
+    "distance_cm_raw": {
+      "populated": 2398,
+      "ratio": 1.0
+    },
+    "distance_std_cm": {
+      "populated": 2393,
+      "ratio": 0.997915
+    },
+    "heart_phase": {
+      "populated": 2398,
+      "ratio": 1.0
+    },
+    "heart_rate_raw": {
+      "populated": 2398,
+      "ratio": 1.0
+    },
+    "human_detected_raw": {
+      "populated": 2398,
+      "ratio": 1.0
+    },
+    "human_detected_stable": {
+      "populated": 2398,
+      "ratio": 1.0
+    },
+    "sensor_firmware_version": {
+      "populated": 0,
+      "ratio": 0.0
+    },
+    "total_phase": {
+      "populated": 2398,
+      "ratio": 1.0
+    }
+  },
+  "error_code_counts": {
+    "BREATH_PHASE_LOW_AMPLITUDE": 1032,
+    "None": 1366
+  },
+  "freshness": {
+    "exact_phase_frame_arrival_identity_available": false,
+    "fresh_phase_cadence_status": "FRESH_PHASE_CADENCE_NOT_YET_FULLY_VERIFIED",
+    "limitation": "phase_age_ms is staleness evidence, not an exact log of every 0x0A13 frame arrival.",
+    "phase_age_ms": {
+      "at_or_above_threshold": 0,
+      "count": 2398,
+      "invalid": 0,
+      "max_ms": 18.0,
+      "median_ms": 12.0,
+      "min_ms": 0.0,
+      "missing_or_null": 0,
+      "p95_ms": 15.0,
+      "threshold_classification": "PRODUCER_VALIDITY_THRESHOLD_DEFINED",
+      "threshold_ms": 500,
+      "threshold_source": "devices/mmwave/firmware/include/mmwave_config.h:kPhaseMaxAgeMs"
+    },
+    "repeated_identical_breath_phase_is_sufficient_stale_proof": false,
+    "telemetry_row_cadence_is_fresh_phase_cadence": false
+  },
+  "heart_verified_true": 0,
+  "identity": {
+    "config_hashes": [
+      "b817e8bfd5e52b18275626f7b6a9bd60098ea4b108428a5aaf63600dbc987834"
+    ],
+    "device_ids": [
+      "safenest-node-01"
+    ],
+    "firmware_versions": [
+      "safenest-mr60-esp/1.2.0"
+    ],
+    "sensor_firmware_versions": [
+      "None"
+    ]
+  },
+  "numeric_ranges": {
+    "breath_phase": {
+      "count": 2398,
+      "max": 0.72,
+      "mean": -0.00055,
+      "median": 0.01,
+      "min": -0.65
+    },
+    "breath_phase_std": {
+      "count": 2398,
+      "max": 0.29,
+      "mean": 0.204775,
+      "median": 0.22,
+      "min": 0.12
+    },
+    "breath_rate_filtered": {
+      "count": 1366,
+      "max": 21.19,
+      "mean": 16.678016,
+      "median": 16.71,
+      "min": 13.21
+    },
+    "breath_rate_raw": {
+      "count": 2398,
+      "max": 28.0,
+      "mean": 20.211009,
+      "median": 22.0,
+      "min": 2.0
+    },
+    "distance_cm_raw": {
+      "count": 2398,
+      "max": 57.4,
+      "mean": 51.028073,
+      "median": 51.66,
+      "min": 45.92
+    },
+    "distance_std_cm": {
+      "count": 2393,
+      "max": 4.51,
+      "mean": 1.786899,
+      "median": 1.76,
+      "min": 0.0
+    },
+    "heart_phase": {
+      "count": 2398,
+      "max": 1.8,
+      "mean": 0.001043,
+      "median": 0.0,
+      "min": -1.55
+    },
+    "heart_rate_raw": {
+      "count": 2398,
+      "max": 114.0,
+      "mean": 87.891576,
+      "median": 89.0,
+      "min": 60.0
+    },
+    "total_phase": {
+      "count": 2398,
+      "max": 3.11,
+      "mean": -0.002898,
+      "median": -0.02,
+      "min": -3.14
+    }
+  },
+  "qa_schema_version": "m-c0-physical-qa-1.2",
+  "raw": {
+    "byte_count": 2412884,
+    "malformed_line_count": 0,
+    "malformed_lines": [],
+    "path": "raw/M-C0-20260818-CAP2-S001-01.jsonl",
+    "physical_lines": 2398,
+    "sha256": "f6312341918b52856968e9eb8e9ebc3c4e8079140f5d035f4045e625916d6f53",
+    "valid_json_records": 2398
+  },
+  "schema_conformance": {
+    "anomalous_record_count": 0,
+    "anomalous_record_indices": [],
+    "inconsistent_key_counts": {},
+    "missing_required_key_counts": {},
+    "note": "Undeclared keys present on every record are current-firmware fields the schema has not declared; informational only. A key present on some records but not others indicates a truncated serial line that still parsed as JSON.",
+    "pass": true,
+    "record_count": 2398,
+    "schema": "raw_record.schema.json",
+    "undeclared_keys_on_every_record": [
+      "breath_age_ms",
+      "breath_rate_raw_trusted",
+      "breath_raw_valid",
+      "checksum_errors",
+      "consecutive_uart_errors",
+      "distance_age_ms",
+      "freeze_detected",
+      "heart_age_ms",
+      "parse_errors",
+      "presence_age_ms",
+      "uart_frames_total",
+      "vital_presence_detected"
+    ]
+  },
+  "sensor_state_counts": {
+    "DEGRADED": 1032,
+    "VALID": 1366
+  },
+  "sequence": {
+    "backwards": 0,
+    "duplicates": 0,
+    "first": 6333,
+    "gap_events": 0,
+    "last": 8730,
+    "missing_sequences": 0
+  },
+  "stream_integrity_pass": true,
+  "timing": {
+    "backward_timestamps": 0,
+    "duplicate_timestamps": 0,
+    "duration_ms": 239944,
+    "effective_cadence_hz": 9.989831,
+    "first_ts_monotonic_ms": 634993,
+    "gap_over_500ms": 0,
+    "jitter_pstdev_ms": 0.433843,
+    "last_ts_monotonic_ms": 874937,
+    "maximum_gap_ms": 103.0,
+    "mean_interval_ms": 100.101794,
+    "median_interval_ms": 100.0,
+    "minimum_interval_ms": 100.0,
+    "nominal_30s_windows": 7,
+    "p95_interval_ms": 101.0,
+    "telemetry_interval_count": 2397,
+    "telemetry_row_count": 2398
+  }
+}

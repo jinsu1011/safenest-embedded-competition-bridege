@@ -1,0 +1,141 @@
+{
+  "dataset_id": "paced_12rpm",
+  "scenario": "paced_breathing_12rpm",
+  "classification": "REAL_REPLAY_READY",
+  "real_hardware": true,
+  "source_file": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_12rpm_explicit_v2_attempt03.jsonl",
+  "source_sha256": "c8d989607aa7dc4499c217d3614fc6c39f4ce767cc82b8d5f69b65d1b0f3093f",
+  "source_git_commit": "38274c084544af6f26b1377e593b012628a7eb05",
+  "source_total_lines": 2545,
+  "valid_json_lines": 2545,
+  "invalid_json_lines": 0,
+  "strict_provenance": false,
+  "analysis_start_s": 64.929,
+  "analysis_duration_requested_s": 180.0,
+  "raw_quality": {
+    "sensor_records": 2449,
+    "schema_versions": {
+      "1.0": 2449
+    },
+    "duration_s": 244.90999999999985,
+    "effective_sample_rate_hz": 9.99550855416276,
+    "sample_interval_s": {
+      "count": 2448,
+      "mean": 0.10004493464052282,
+      "p50": 0.1000000000003638,
+      "p95": 0.1000000000003638,
+      "max": 0.10199999999895226
+    },
+    "sequence_drops": 0,
+    "nonmonotonic_sequences": 0,
+    "uart_bad_records": 0,
+    "checksum_bad_records": 0,
+    "checksum_error_increase": 0,
+    "parser_error_increase": 0,
+    "presence_true": 2449,
+    "presence_false": 0,
+    "presence_unknown": 0,
+    "distance_valid": 2449,
+    "breath_phase_finite": 2449,
+    "breath_phase_usable": 2449,
+    "invalid_or_nonfinite_phase": 0,
+    "stale_phase_records": 0,
+    "stream_gap_count": 0,
+    "maximum_gap_s": 0.10199999999895226
+  },
+  "analysis_quality": {
+    "sensor_records": 1800,
+    "schema_versions": {
+      "1.0": 1800
+    },
+    "duration_s": 179.98099999999977,
+    "effective_sample_rate_hz": 9.995499524949869,
+    "sample_interval_s": {
+      "count": 1799,
+      "mean": 0.10004502501389648,
+      "p50": 0.1000000000003638,
+      "p95": 0.1000000000003638,
+      "max": 0.10100000000056752
+    },
+    "sequence_drops": 0,
+    "nonmonotonic_sequences": 0,
+    "uart_bad_records": 0,
+    "checksum_bad_records": 0,
+    "checksum_error_increase": 0,
+    "parser_error_increase": 0,
+    "presence_true": 1800,
+    "presence_false": 0,
+    "presence_unknown": 0,
+    "distance_valid": 1800,
+    "breath_phase_finite": 1800,
+    "breath_phase_usable": 1800,
+    "invalid_or_nonfinite_phase": 0,
+    "stale_phase_records": 0,
+    "stream_gap_count": 0,
+    "maximum_gap_s": 0.10100000000056752
+  },
+  "presence": {
+    "ground_truth": "PRESENT",
+    "detection_rate": 1.0,
+    "false_presence_rate": null
+  },
+  "entry_exit": null,
+  "attempted_windows": 6,
+  "completed_windows": 6,
+  "rejected_windows": 0,
+  "window_success_rate": 1.0,
+  "reset_reasons": {},
+  "adapter_event_reasons": {
+    "MMWAVE_WINDOW_NOT_READY": 1794,
+    "VALID": 6
+  },
+  "longest_continuous_valid_inference_windows": 6,
+  "longest_continuous_valid_inference_s": 180.0,
+  "tflite_runs": 6,
+  "fallback_count": 0,
+  "prediction_distribution": {
+    "NORMAL": 6
+  },
+  "model_latency_ms": {
+    "count": 6,
+    "mean": 0.11577765690162778,
+    "p50": 0.106374965980649,
+    "p95": 0.15131206600926816,
+    "max": 0.16316608525812626
+  },
+  "respiration_rate": {
+    "ground_truth_rpm": 12.0,
+    "window_estimates_rpm": [
+      12.16186151663015,
+      11.911636374369467,
+      11.70123514987321,
+      12.56602418240707,
+      11.630599731762366,
+      11.861571167057349
+    ],
+    "estimated_rpm_mean": 11.972154687016603,
+    "absolute_errors_rpm": [
+      0.16186151663015025,
+      0.08836362563053335,
+      0.29876485012679055,
+      0.5660241824070695,
+      0.3694002682376336,
+      0.13842883294265107
+    ],
+    "mae_rpm": 0.2704738793291381,
+    "max_absolute_error_rpm": 0.5660241824070695,
+    "within_2rpm_count": 6,
+    "within_2rpm_rate": 1.0
+  },
+  "ai_class_ground_truth": null,
+  "classification_accuracy": null,
+  "classification_accuracy_note": "해당 데이터에는 신뢰 가능한 NORMAL/ABNORMAL/APNEA ground truth가 없으므로 분류 정확도를 계산하지 않았습니다.",
+  "model_id": "mmwave_resp_int8",
+  "model_version": "0.1.0",
+  "model_sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158",
+  "model_sha256_matches": true,
+  "benchmark_tool_version": "0.1.0",
+  "benchmark_tool_git_commit": "6da2a7141af758ed4eebba61a7f09950022deb7b",
+  "result": "PASS",
+  "benchmark_elapsed_s": 0.1063522920012474
+}

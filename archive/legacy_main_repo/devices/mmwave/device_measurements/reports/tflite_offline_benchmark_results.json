@@ -1,0 +1,87 @@
+{
+  "runtime": {
+    "tensorflow": "2.21.0",
+    "threads": 1,
+    "host_benchmark": true,
+    "delegate": "XNNPACK_CPU"
+  },
+  "model": {
+    "authoritative_evidence_repository": "https://github.com/sheepmeat/test.git",
+    "authoritative_evidence_commit": "efc7e2eb61a49e221ce0ebf6057b0c1617525ad1",
+    "authoritative_lock_path": "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120_int8.tflite",
+    "source_relative_path": "ondevice_ai/models/mmwave/experiments/M-B5_representative_calibration/M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120_int8.tflite",
+    "sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5",
+    "input_shape": [1, 300, 1],
+    "input_dtype": "int8",
+    "input_scale": 0.041720833629369736,
+    "input_zero_point": -3,
+    "output_shape": [1, 3],
+    "output_dtype": "int8",
+    "output_scale": 0.00390625,
+    "output_zero_point": -128
+  },
+  "dataset": {
+    "csv_files": 9,
+    "windows": 620,
+    "preprocessed_shape": [620, 300, 1],
+    "label_alignment": "NOT_COMPUTED_CSV_LABELS_ARE_NOT_MODEL_CLASS_GROUND_TRUTH",
+    "source_label_counts": {
+      "BREATH_PACED_12": 110,
+      "BREATH_PACED_15": 50,
+      "BREATH_PACED_20": 100,
+      "NORMAL_D06": 90,
+      "NORMAL_D09": 90,
+      "NORMAL_D12": 90,
+      "NORMAL_D15": 90
+    }
+  },
+  "input_quantization": {
+    "saturation_ratio": 0.0,
+    "quantized_min": -12,
+    "quantized_max": 9
+  },
+  "inference": {
+    "classification": "EXPLORATORY_PRE_CORRESPONDENCE_INFERENCE",
+    "warning_classifications": [
+      "PIPELINE_CORRESPONDENCE_WARNING",
+      "DEVICE_DOMAIN_MISMATCH_WARNING"
+    ],
+    "m_c0_correspondence_complete": false,
+    "m_c2_complete": false,
+    "clinical_apnea_evidence": false,
+    "single_root_cause_claimed": false,
+    "invoke_count": 620,
+    "warmup_count": 10,
+    "all_invokes_completed": true,
+    "latency_ms_set_tensor_plus_invoke": {
+      "mean": 0.00819715806451613,
+      "median_p50": 0.008041,
+      "p95": 0.008333,
+      "min": 0.007334,
+      "max": 0.052583
+    },
+    "prediction_counts": {
+      "NORMAL": 0,
+      "RAPID_OR_ABNORMAL": 0,
+      "APNEA": 620
+    },
+    "prediction_counts_by_source_label": {
+      "BREATH_PACED_12": {"NORMAL": 0, "RAPID_OR_ABNORMAL": 0, "APNEA": 110},
+      "BREATH_PACED_15": {"NORMAL": 0, "RAPID_OR_ABNORMAL": 0, "APNEA": 50},
+      "BREATH_PACED_20": {"NORMAL": 0, "RAPID_OR_ABNORMAL": 0, "APNEA": 100},
+      "NORMAL_D06": {"NORMAL": 0, "RAPID_OR_ABNORMAL": 0, "APNEA": 90},
+      "NORMAL_D09": {"NORMAL": 0, "RAPID_OR_ABNORMAL": 0, "APNEA": 90},
+      "NORMAL_D12": {"NORMAL": 0, "RAPID_OR_ABNORMAL": 0, "APNEA": 90},
+      "NORMAL_D15": {"NORMAL": 0, "RAPID_OR_ABNORMAL": 0, "APNEA": 90}
+    },
+    "output_quantized_range": [-116, 93],
+    "output_float_range": [0.046875, 0.86328125]
+  },
+  "performance_metrics": {
+    "accuracy": null,
+    "macro_f1": null,
+    "recall": null,
+    "confusion_matrix": null,
+    "reason": "No independent ground-truth labels aligned to the three model classes were available."
+  }
+}

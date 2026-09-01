@@ -1,0 +1,293 @@
+{
+  "audit_id": "mr60_hr_s2_time_sync_20260801",
+  "search_range_seconds": [
+    -10,
+    10
+  ],
+  "step_seconds": 1,
+  "pair_half_window_seconds": 2.5,
+  "best_shift_seconds": 10,
+  "best_pearson_r": 0.43629174300068807,
+  "maximum_at_boundary": true,
+  "interior_local_peak_shifts_seconds": [
+    -3
+  ],
+  "single_interior_peak": false,
+  "correction_applied": false,
+  "decision": "NO_CORRECTION_MAXIMUM_AT_SEARCH_BOUNDARY",
+  "scan": [
+    {
+      "shift_seconds": -10,
+      "pearson_r": 0.24467167608405466,
+      "vendor_medians_bpm": [
+        101.5,
+        99.0,
+        117.0,
+        85.5,
+        105.0,
+        86.0,
+        87.0
+      ]
+    },
+    {
+      "shift_seconds": -9,
+      "pearson_r": 0.14804809582074463,
+      "vendor_medians_bpm": [
+        98.0,
+        100.0,
+        117.0,
+        80.0,
+        106.0,
+        84.0,
+        91.0
+      ]
+    },
+    {
+      "shift_seconds": -8,
+      "pearson_r": 0.03133029479957697,
+      "vendor_medians_bpm": [
+        95.0,
+        105.0,
+        117.0,
+        78.0,
+        107.0,
+        84.0,
+        98.0
+      ]
+    },
+    {
+      "shift_seconds": -7,
+      "pearson_r": -0.0974180437862831,
+      "vendor_medians_bpm": [
+        89.0,
+        108.0,
+        115.0,
+        72.0,
+        109.0,
+        84.0,
+        101.0
+      ]
+    },
+    {
+      "shift_seconds": -6,
+      "pearson_r": -0.15572191580490194,
+      "vendor_medians_bpm": [
+        84.5,
+        110.0,
+        105.0,
+        69.5,
+        109.0,
+        84.0,
+        102.5
+      ]
+    },
+    {
+      "shift_seconds": -5,
+      "pearson_r": -0.17778763283974816,
+      "vendor_medians_bpm": [
+        81.0,
+        112.0,
+        99.0,
+        68.0,
+        109.0,
+        82.0,
+        102.5
+      ]
+    },
+    {
+      "shift_seconds": -4,
+      "pearson_r": -0.17797414706595274,
+      "vendor_medians_bpm": [
+        78.0,
+        113.0,
+        93.0,
+        66.0,
+        108.0,
+        80.0,
+        101.0
+      ]
+    },
+    {
+      "shift_seconds": -3,
+      "pearson_r": -0.1534060821962826,
+      "vendor_medians_bpm": [
+        76.0,
+        114.0,
+        87.0,
+        65.0,
+        106.0,
+        79.0,
+        95.0
+      ]
+    },
+    {
+      "shift_seconds": -2,
+      "pearson_r": -0.17659542997422173,
+      "vendor_medians_bpm": [
+        73.0,
+        114.0,
+        86.0,
+        64.0,
+        104.0,
+        77.0,
+        93.0
+      ]
+    },
+    {
+      "shift_seconds": -1,
+      "pearson_r": -0.17688019189433818,
+      "vendor_medians_bpm": [
+        71.0,
+        114.0,
+        82.0,
+        63.0,
+        103.0,
+        76.0,
+        91.0
+      ]
+    },
+    {
+      "shift_seconds": 0,
+      "pearson_r": -0.1963187265615654,
+      "vendor_medians_bpm": [
+        68.0,
+        113.0,
+        82.0,
+        61.0,
+        102.0,
+        73.0,
+        90.0
+      ]
+    },
+    {
+      "shift_seconds": 1,
+      "pearson_r": -0.2013690104453937,
+      "vendor_medians_bpm": [
+        66.0,
+        113.0,
+        81.0,
+        61.0,
+        101.0,
+        71.0,
+        87.0
+      ]
+    },
+    {
+      "shift_seconds": 2,
+      "pearson_r": -0.18382631320366397,
+      "vendor_medians_bpm": [
+        66.0,
+        110.0,
+        81.0,
+        61.0,
+        100.0,
+        70.0,
+        82.0
+      ]
+    },
+    {
+      "shift_seconds": 3,
+      "pearson_r": -0.16749668984551175,
+      "vendor_medians_bpm": [
+        66.5,
+        110.0,
+        84.0,
+        61.0,
+        99.0,
+        69.0,
+        80.0
+      ]
+    },
+    {
+      "shift_seconds": 4,
+      "pearson_r": -0.12482632071391385,
+      "vendor_medians_bpm": [
+        69.0,
+        107.0,
+        83.5,
+        61.0,
+        99.0,
+        69.0,
+        80.0
+      ]
+    },
+    {
+      "shift_seconds": 5,
+      "pearson_r": 0.006014823365969753,
+      "vendor_medians_bpm": [
+        75.0,
+        107.0,
+        83.5,
+        61.0,
+        99.0,
+        69.0,
+        80.0
+      ]
+    },
+    {
+      "shift_seconds": 6,
+      "pearson_r": 0.13153292802524788,
+      "vendor_medians_bpm": [
+        81.0,
+        107.0,
+        82.0,
+        60.0,
+        99.0,
+        70.0,
+        83.0
+      ]
+    },
+    {
+      "shift_seconds": 7,
+      "pearson_r": 0.23355984269200347,
+      "vendor_medians_bpm": [
+        86.0,
+        107.0,
+        80.5,
+        60.0,
+        99.0,
+        73.0,
+        83.0
+      ]
+    },
+    {
+      "shift_seconds": 8,
+      "pearson_r": 0.3268234187913261,
+      "vendor_medians_bpm": [
+        91.0,
+        107.0,
+        78.0,
+        60.0,
+        100.5,
+        76.0,
+        83.0
+      ]
+    },
+    {
+      "shift_seconds": 9,
+      "pearson_r": 0.36725934381273057,
+      "vendor_medians_bpm": [
+        93.0,
+        107.0,
+        73.0,
+        60.0,
+        102.0,
+        77.0,
+        82.0
+      ]
+    },
+    {
+      "shift_seconds": 10,
+      "pearson_r": 0.43629174300068807,
+      "vendor_medians_bpm": [
+        97.0,
+        107.0,
+        71.0,
+        59.0,
+        104.0,
+        77.0,
+        80.0
+      ]
+    }
+  ]
+}

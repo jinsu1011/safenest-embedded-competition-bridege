@@ -1,0 +1,41 @@
+{
+  "label": "REAL SCD40 CO2 session — REAL SENSOR EVIDENCE",
+  "session_start_unix": 1786206940.0999,
+  "session_end_unix": 1786207310.772539,
+  "session_duration_sec": 370.67263984680176,
+  "stabilization_sec": 70.0,
+  "qualified_window_sec": 300.0,
+  "port": "/dev/cu.usbserial-110",
+  "baudrate": 115200,
+  "host": {
+    "platform": "macOS-26.5-arm64-arm-64bit",
+    "machine": "arm64",
+    "python": "3.12.4"
+  },
+  "git": {
+    "branch": "codex/mmwave-20rpm-root-cause",
+    "head": "0e8538c75354691fccf5f223029b0e633c1260af",
+    "dirty": "M ondevice_ai/integrated_node/esp32_sensor_node.ino\n?? devices/co2/src/co2_serial_adapter.py\n?? devices/co2/src/run_co2_v5_node.py\n?? devices/co2/tests/\n?? devices/co2/tools/\n?? devices/co2/validation_results/\n?? devices/mmwave/tests/test_mmwave_quality_policy_diagnostic.py\n?? devices/mmwave/tools/mmwave_quality_policy_diagnostic.py\n?? devices/mmwave/validation_results/2026-08-08_live_baseline_3windows.jsonl\n?? devices/mmwave/validation_results/2026-08-08_preflight_10s.jsonl\n?? devices/mmwave/validation_results/2026-08-08_preflight_10s_attempt02.jsonl\n?? devices/mmwave/validation_results/final_live/2026-08-08_current_production_attempt01/\n?? devices/mmwave/validation_results/final_live/2026-08-08_standalone_mmwave_attempt01/identity_raw_20s.jsonl\n?? devices/mmwave/validation_results/final_live/2026-08-08_standalone_mmwave_attempt01/live_fail_closed_flat_70s_attempt03.jsonl\n?? devices/mmwave/validation_results/final_live/2026-08-08_standalone_mmwave_attempt01/live_fail_closed_no_person_45s.jsonl\n?? devices/mmwave/validation_results/final_live/2026-08-08_standalone_mmwave_attempt01/live_fail_closed_no_person_60s_attempt02.jsonl\n?? devices/mmwave/validation_results/final_live/2026-08-08_standalone_mmwave_attempt01/live_recovery_1window.jsonl\n?? devices/mmwave/validation_results/final_live/2026-08-08_standalone_mmwave_attempt01/no_person_raw_10s.jsonl\n?? devices/mmwave/validation_results/quality_policy/\n?? docs/dashboard/assets/\n?? docs/dashboard/index.html"
+  },
+  "raw_line_count": 408,
+  "model": {
+    "path": "ondevice_ai/models/co2/co2_occupancy_int8_v0.1.0.tflite",
+    "model_id": "co2_occupancy_int8",
+    "version": "0.1.0",
+    "status": "candidate",
+    "sha256_actual": "3a8c86c4c132df0f1edaac668d9a136c3f6234789df48f02bdda8e92f29d0462",
+    "sha256_expected": "3a8c86c4c132df0f1edaac668d9a136c3f6234789df48f02bdda8e92f29d0462",
+    "sha256_matches": true
+  },
+  "provider_runtime_settings": {
+    "timeout_sec": 5.0,
+    "stale_sec": 10.0,
+    "sample_rate_hz": 0.2,
+    "window_samples": 30,
+    "window_seconds": 150.0
+  },
+  "required_history_sec": 5.0,
+  "physical_sample_count": 79,
+  "duplicate_line_count": 292,
+  "tflite_invocations": 77
+}

@@ -1,0 +1,52 @@
+{
+  "status_version": "1.0",
+  "phase": "C-C1T-HUMAN-HANDOFF",
+  "date": "2026-08-16",
+  "agent": "Codex (CO2 Human-First Documentation Agent)",
+  "standalone_main_sha": "d43b8b2cdecd8368bbe3f9568e44d6708bf81409",
+  "handoff_status": "CO2_HANDOFF_PACKAGE_READY",
+  "handoff_document_version": "03",
+  "handoff_document": "docs/handoff/20260815_SafeNest_CO2_AI_and_Measurement_Handoff_KO_01.md",
+  "measurement_guide_version": "02",
+  "measurement_guide": "docs/prompts/20260815_SafeNest_CO2_SCD40_Physical_Measurement_Guide_KO_01.md",
+  "exploratory_operator_handoff": {
+    "status": "READY_FOR_HANDOFF",
+    "physical_collection_allowed": true,
+    "evidence_class": "PRE_DEPLOYMENT_EXPLORATORY_REAL_DEVICE_EVIDENCE",
+    "fresh_sensor_event_identity": "UNVERIFIED_ALLOWED_AS_EXPLICIT_LIMITATION",
+    "automatically_c_c2_eligible": false,
+    "formal_model_performance_claims": false
+  },
+  "formal_operator_handoff": {
+    "status": "HOLD_PENDING_PRODUCER_DEPLOYMENT_AND_LIVE_C_C1T_VERIFICATION",
+    "physical_collection_allowed": false,
+    "evidence_class_after_release": "PROTOCOL_CONTROLLED_REAL_DEVICE_EVIDENCE",
+    "c_c2_started": false
+  },
+  "producer_dependency": {
+    "required_semantics": [
+      "new accepted SCD40 measurement increments event ID",
+      "same event ID identifies cached retransmission",
+      "producer measurement chronology is preserved separately from transport receipt freshness"
+    ],
+    "current_team_pr": 19,
+    "current_team_pr_state_at_documentation": "OPEN",
+    "deployed_and_live_verified": false
+  },
+  "model_contract": {
+    "feature_order": [
+      "CO2",
+      "CO2_slope"
+    ],
+    "temperature_required": false,
+    "humidity_required": false,
+    "slope_method": "ENDPOINT_H150",
+    "slope_history_sec": 150,
+    "gap_reset_sec": 90,
+    "effective_model_input_cadence_sec": 60,
+    "threshold": 0.43,
+    "threshold_source": "TRAIN_INTERNAL_ONLY"
+  },
+  "c_c2_started": false,
+  "c_d_authorized": false
+}

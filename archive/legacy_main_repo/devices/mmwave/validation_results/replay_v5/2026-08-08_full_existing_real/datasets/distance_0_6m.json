@@ -1,0 +1,139 @@
+{
+  "dataset_id": "distance_0_6m",
+  "scenario": "stationary_normal_0.6m",
+  "classification": "REAL_REPLAY_READY",
+  "real_hardware": true,
+  "source_file": "devices/mmwave/firmware/logs/matrix/2026-07-25_occupied_d06_v1_360s.jsonl",
+  "source_sha256": "093903a28617925ad96cc3f4cd1b5f750b1b7ed5dd76162132143feb7f1a54d8",
+  "source_git_commit": "38274c084544af6f26b1377e593b012628a7eb05",
+  "source_total_lines": 3598,
+  "valid_json_lines": 3598,
+  "invalid_json_lines": 0,
+  "strict_provenance": false,
+  "analysis_start_s": 60.0,
+  "analysis_duration_requested_s": 300.0,
+  "raw_quality": {
+    "sensor_records": 3598,
+    "schema_versions": {
+      "1.0": 3598
+    },
+    "duration_s": 359.884,
+    "effective_sample_rate_hz": 9.994887241444465,
+    "sample_interval_s": {
+      "count": 3597,
+      "mean": 0.10005115373922714,
+      "p50": 0.1000000000003638,
+      "p95": 0.10020000000004056,
+      "max": 0.10200000000077125
+    },
+    "sequence_drops": 0,
+    "nonmonotonic_sequences": 0,
+    "uart_bad_records": 0,
+    "checksum_bad_records": 0,
+    "checksum_error_increase": 0,
+    "parser_error_increase": 0,
+    "presence_true": 3598,
+    "presence_false": 0,
+    "presence_unknown": 0,
+    "distance_valid": 3598,
+    "breath_phase_finite": 3598,
+    "breath_phase_usable": 3598,
+    "invalid_or_nonfinite_phase": 0,
+    "stale_phase_records": 0,
+    "stream_gap_count": 0,
+    "maximum_gap_s": 0.10200000000077125
+  },
+  "analysis_quality": {
+    "sensor_records": 2998,
+    "schema_versions": {
+      "1.0": 2998
+    },
+    "duration_s": 299.85100000000057,
+    "effective_sample_rate_hz": 9.99496416553553,
+    "sample_interval_s": {
+      "count": 2997,
+      "mean": 0.10005038371705058,
+      "p50": 0.1000000000003638,
+      "p95": 0.1000000000003638,
+      "max": 0.10200000000077125
+    },
+    "sequence_drops": 0,
+    "nonmonotonic_sequences": 0,
+    "uart_bad_records": 0,
+    "checksum_bad_records": 0,
+    "checksum_error_increase": 0,
+    "parser_error_increase": 0,
+    "presence_true": 2998,
+    "presence_false": 0,
+    "presence_unknown": 0,
+    "distance_valid": 2998,
+    "breath_phase_finite": 2998,
+    "breath_phase_usable": 2998,
+    "invalid_or_nonfinite_phase": 0,
+    "stale_phase_records": 0,
+    "stream_gap_count": 0,
+    "maximum_gap_s": 0.10200000000077125
+  },
+  "presence": {
+    "ground_truth": "PRESENT",
+    "detection_rate": 1.0,
+    "false_presence_rate": null
+  },
+  "entry_exit": null,
+  "attempted_windows": 10,
+  "completed_windows": 9,
+  "rejected_windows": 1,
+  "window_success_rate": 0.9,
+  "reset_reasons": {
+    "MMWAVE_INSUFFICIENT_HISTORY": 1
+  },
+  "adapter_event_reasons": {
+    "MMWAVE_WINDOW_NOT_READY": 2989,
+    "VALID": 9
+  },
+  "longest_continuous_valid_inference_windows": 9,
+  "longest_continuous_valid_inference_s": 270.0,
+  "tflite_runs": 9,
+  "fallback_count": 0,
+  "prediction_distribution": {
+    "NORMAL": 9
+  },
+  "model_latency_ms": {
+    "count": 9,
+    "mean": 0.12132866928974788,
+    "p50": 0.10366691276431084,
+    "p95": 0.19281639251857993,
+    "max": 0.21375005599111319
+  },
+  "respiration_rate": {
+    "ground_truth_rpm": null,
+    "window_estimates_rpm": [
+      20.727624855844784,
+      22.747257957543937,
+      23.03659317083908,
+      15.963760281260837,
+      11.418217461194176,
+      11.95586185451823,
+      19.31641276382087,
+      17.107465503430923,
+      22.384394036872628
+    ],
+    "estimated_rpm_mean": 18.295287542813938,
+    "absolute_errors_rpm": [],
+    "mae_rpm": null,
+    "max_absolute_error_rpm": null,
+    "within_2rpm_count": null,
+    "within_2rpm_rate": null
+  },
+  "ai_class_ground_truth": "NORMAL",
+  "classification_accuracy": 1.0,
+  "classification_accuracy_note": null,
+  "model_id": "mmwave_resp_int8",
+  "model_version": "0.1.0",
+  "model_sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158",
+  "model_sha256_matches": true,
+  "benchmark_tool_version": "0.1.0",
+  "benchmark_tool_git_commit": "6da2a7141af758ed4eebba61a7f09950022deb7b",
+  "result": "PASS",
+  "benchmark_elapsed_s": 0.1214866250520572
+}

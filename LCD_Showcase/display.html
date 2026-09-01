@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko" translate="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google" content="notranslate" />
+  <title>SafeNest LCD</title>
+  <link rel="stylesheet" href="./common.css?v=20260825-1" />
+  <style>
+    html, body { height: 100%; overflow: hidden; background: #111820; cursor: none; }
+    .display-frame { width: 100vw; height: 100vh; background: #fff; }
+    .lcd[data-state="warning-empty"] { --state: var(--warning); }
+    .connection {
+      position: fixed;
+      right: 10px;
+      bottom: 8px;
+      z-index: 40;
+      padding: 4px 8px;
+      color: #fff;
+      background: rgba(23, 32, 42, .74);
+      border-radius: 999px;
+      font-size: 11px;
+      opacity: 0;
+      transition: opacity .2s ease;
+    }
+    .connection.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+  <main class="display-frame">
+    <section class="lcd" id="lcd" data-state="normal-empty" aria-live="polite">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark"></span>SafeNest</div>
+        <div class="topbar-meta">
+          <span class="sensor-status" id="sensorStatus" data-status="live">센서 실시간</span>
+          <strong class="room-name" id="roomName">밀폐공간 A-01</strong>
+        </div>
+      </header>
+      <section class="emergency-banner" id="emergencyBanner" data-phase="active" role="alert" aria-live="assertive" hidden>
+        <div class="emergency-banner-copy">
+          <strong id="emergencyBannerTitle">🚨 긴급 상황 — 작업자 상태를 즉시 확인하세요</strong>
+        </div>
+        <button class="emergency-confirm" id="emergencyConfirm" type="button">확인</button>
+      </section>
+      <div class="main-state"><div>
+        <div class="status-pill" id="statusPill">정상 · 미재실</div>
+        <h1 class="state-title" id="stateTitle">정상</h1>
+        <p class="state-subtitle" id="stateSubtitle">감지된 사람이 없습니다</p>
+      </div></div>
+      <div class="metrics" id="metrics"></div>
+      <div class="comment" id="comment">정상 모니터링 중입니다</div>
+    </section>
+  </main>
+  <div class="connection" id="connection">제어 서버 연결 중…</div>
+
+  <script>
+    const scenarios = {
+      "normal-empty": {
+        pill: "정상 · 미재실", title: "정상", subtitle: "감지된 사람이 없습니다",
+        metricPlan: [
+          { label: "심박수", value: "없음" },
+          { label: "호흡수", value: "없음" },
+          { label: "CO₂", range: [560, 680], unit: "ppm" },
+          { label: "움직임", value: "감지 안 됨" }
+        ],
+        comment: "정상 모니터링 중입니다"
+      },
+      "normal-occupied": {
+        pill: "정상 · 재실", title: "안전", subtitle: "작업자의 움직임이 감지됩니다",
+        metricPlan: [
+          { label: "심박수", range: [68, 82], unit: "bpm" },
+          { label: "호흡수", range: [14, 20], unit: "회/분" },
+          { label: "CO₂", range: [720, 880], unit: "ppm" },
+          { label: "움직임", value: "감지됨" }
+        ],
+        comment: "안전 상태를 계속 확인합니다"
+      },
+      warning: {
+        pill: "환경 주의", title: "주의", subtitle: "CO₂ 농도가 높습니다",
+        metricPlan: [
+          { label: "심박수", range: [70, 95], unit: "bpm" },
+          { label: "호흡수", range: [16, 24], unit: "회/분" },
+          { label: "CO₂", range: [1200, 1600], unit: "ppm" },
+          { label: "움직임", value: "감지됨" }
+        ],
+        comment: "환기 후 작업자 상태를 확인하세요"
+      },
+      "warning-empty": {
+        pill: "환경 주의", title: "주의", subtitle: "CO₂ 농도가 높습니다",
+        metricPlan: [
+          { label: "심박수", value: "없음" },
+          { label: "호흡수", value: "없음" },
+          { label: "CO₂", range: [1200, 1600], unit: "ppm" },
+          { label: "움직임", value: "감지 안 됨" }
+        ],
+        comment: "환기 후 작업자 상태를 확인하세요"
+      },
+      danger: {
+        pill: "작업자 위험", title: "위험", subtitle: "무움직임과 호흡 이상 감지",
+        metricPlan: [
+          { label: "심박수", range: [88, 118], unit: "bpm" },
+          { label: "호흡수", range: [4, 10], unit: "회/분" },
+          { label: "CO₂", range: [900, 1100], unit: "ppm" },
+          { label: "움직임", value: "감지 안 됨" }
+        ],
+        comment: "작업자의 상태를 즉시 확인하세요"
+      },
+      emergency: {
+        pill: "긴급 경보 작동 중", title: "긴급", subtitle: "고체온·호흡 이상·무움직임",
+        metricPlan: [
+          { label: "심박수", range: [110, 150], unit: "bpm" },
+          { label: "호흡수", range: [2, 8], unit: "회/분" },
+          { label: "CO₂", range: [1100, 1400], unit: "ppm" },
+          { label: "움직임", value: "감지 안 됨" }
+        ],
+        comment: "즉시 현장을 확인하고 구조를 요청하세요"
+      },
+      offline: {
+        pill: "시스템 점검 필요", title: "통신 오류", subtitle: "센서 데이터를 받을 수 없습니다",
+        metricPlan: [
+          { label: "심박수", value: "수신 불가" },
+          { label: "호흡수", value: "수신 불가" },
+          { label: "CO₂", value: "수신 불가" },
+          { label: "움직임", value: "감지 불가" }
+        ],
+        comment: "장비 전원과 센서 통신 연결을 확인하세요"
+      }
+    };
+
+    const lcd = document.getElementById("lcd");
+    const roomName = document.getElementById("roomName");
+    const sensorStatus = document.getElementById("sensorStatus");
+    const emergencyBanner = document.getElementById("emergencyBanner");
+    const emergencyBannerTitle = document.getElementById("emergencyBannerTitle");
+    const emergencyConfirm = document.getElementById("emergencyConfirm");
+    const statusPill = document.getElementById("statusPill");
+    const stateTitle = document.getElementById("stateTitle");
+    const stateSubtitle = document.getElementById("stateSubtitle");
+    const metrics = document.getElementById("metrics");
+    const comment = document.getElementById("comment");
+    const connection = document.getElementById("connection");
+    let failed = false;
+    let emergencyActionPending = false;
+    let emergencyDismissed = false;
+    let presentationMetricState = "";
+    let presentationMetricUpdatedAt = 0;
+    let presentationMetricCache = [];
+    let showcaseCue = null;
+    const showcaseTtsLabels = {
+      a: "낙상 위험",
+      b: "무호흡 위험",
+      c: "CO₂ 위험",
+      d: "호흡 이상 주의",
+      e: "CO₂ 주의",
+      f: "장시간 무움직임 주의",
+      g: "열화상 이상 주의",
+      h: "일반 주의",
+      i: "일반 위험"
+    };
+
+    const LCD_SENSOR_SHORT = {
+      AVAILABLE: "OK",
+      STALE: "STALE",
+      UNAVAILABLE: "OFF",
+      INVALID: "BAD"
+    };
+    const LCD_AI_SHORT = {
+      ACTIVE: "ON",
+      BLOCKED: "HOLD",
+      MODEL_PENDING: "HOLD",
+      NOT_APPLICABLE: "N/A",
+      UNAVAILABLE: "OFF",
+      NOT_EVALUATED: "?"
+    };
+    const LCD_RUNTIME_LABELS = {
+      READY: "운영 가능",
+      READY_WITH_LIMITATIONS: "제한 운영",
+      DEGRADED: "성능 저하",
+      NOT_READY: "운영 불가"
+    };
+
+    function lcdSensorShort(status) {
+      return LCD_SENSOR_SHORT[status] || "?";
+    }
+
+    function lcdAiShort(status) {
+      if (status === "ACTIVE") return LCD_AI_SHORT.ACTIVE;
+      return LCD_AI_SHORT[status] || "?";
+    }
+
+    function runtimeDocument(payload) {
+      return payload?.runtime_status && typeof payload.runtime_status === "object"
+        ? payload.runtime_status
+        : {};
+    }
+
+    function legacySensorState(sensor, values, valid) {
+      const statusMap = {
+        live: "LIVE",
+        stale: "STALE",
+        error: "INVALID",
+        waiting: "NO_DATA"
+      };
+      const status = statusMap[sensor?.status] || "NO_DATA";
+      return {
+        status,
+        current: status === "LIVE" && sensor?.fresh === true,
+        connected: sensor?.connected === true,
+        valid: valid === true,
+        values,
+      };
+    }
+
+    function normalizeSensors(sensors) {
+      const integrated = ["mmwave", "thermal", "co2", "pir"]
+        .some((sensorId) => sensors?.[sensorId]?.state);
+      if (integrated) return sensors;
+
+      const legacy = sensors || {};
+      const valid = legacy.valid || {};
+      const mmwaveValid = valid.respiration === true || valid.heart === true;
+      return {
+        mmwave: {
+          state: legacySensorState(
+            legacy,
+            {
+              respiration_rate_bpm: legacy.resp_rate_bpm,
+              heart_rate_bpm: legacy.heart_rate_bpm,
+              respiration_valid: valid.respiration === true,
+              heart_valid: valid.heart === true,
+            },
+            mmwaveValid,
+          ),
+        },
+        thermal: {
+          state: legacySensorState(legacy, {}, false),
+        },
+        co2: {
+          state: legacySensorState(
+            legacy,
+            { ppm: legacy.co2_ppm },
+            valid.co2 === true,
+          ),
+        },
+        pir: {
+          state: legacySensorState(
+            legacy,
+            { motion: legacy.pir_motion },
+            typeof legacy.pir_motion === "boolean",
+          ),
+        },
+      };
+    }
+
+    function sensorState(sensor) {
+      return sensor?.state || {};
+    }
+
+    function sensorValues(sensor) {
+      return sensorState(sensor).values || {};
+    }
+
+    function isCurrent(sensor) {
+      const currentState = sensorState(sensor);
+      return currentState.status === "LIVE" && currentState.current === true;
+    }
+
+    function unavailableValue(sensor, valid) {
+      const currentState = sensorState(sensor);
+      if (currentState.status === "NO_DATA" || !currentState.status) return "수신 대기";
+      if (currentState.status === "DISCONNECTED") return "연결 끊김";
+      if (currentState.status === "STALE") return "지연";
+      if (currentState.status === "INVALID" || valid !== true) return "측정 중";
+      return "측정 중";
+    }
+
+    function numberValue(sensor, value, valid, digits, unit) {
+      return isCurrent(sensor) && valid === true && Number.isFinite(value)
+        ? `${value.toFixed(digits)} ${unit}`
+        : unavailableValue(sensor, valid);
+    }
+
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function presentationMetrics(stateName, scenario) {
+      const now = Date.now();
+      const shouldRefresh = stateName !== presentationMetricState
+        || now - presentationMetricUpdatedAt >= 1800;
+      if (shouldRefresh) {
+        presentationMetricState = stateName;
+        presentationMetricUpdatedAt = now;
+        presentationMetricCache = scenario.metricPlan.map((metric) => {
+          if (metric.range) {
+            return [
+              metric.label,
+              `${randomInt(metric.range[0], metric.range[1]).toLocaleString("ko-KR")} ${metric.unit}`
+            ];
+          }
+          return [metric.label, metric.value];
+        });
+      }
+      return presentationMetricCache;
+    }
+
+    function renderSensorStatus() {
+      sensorStatus.dataset.status = "live";
+      sensorStatus.textContent = "센서 실시간";
+      sensorStatus.removeAttribute("title");
+      sensorStatus.removeAttribute("aria-label");
+    }
+
+    function renderAvailabilityMetadata(payload) {
+      const runtime = runtimeDocument(payload);
+      if (!runtime.status) {
+        sensorStatus.removeAttribute("title");
+        sensorStatus.removeAttribute("aria-label");
+        return;
+      }
+      const sensors = runtime.sensors || {};
+      const rows = [
+        ["CO2", sensors.co2],
+        ["THM", sensors.thermal],
+        ["PIR", sensors.pir],
+      ];
+      const details = rows.map(([code, entry]) => {
+        const sensor = lcdSensorShort(entry?.sensor_status);
+        const ai = lcdAiShort(entry?.ai_status);
+        return `${code} S:${sensor} AI:${ai}`;
+      });
+      const globalStatus = runtime.status;
+      const system = {
+        READY: "READY",
+        READY_WITH_LIMITATIONS: "LIMITED",
+        DEGRADED: "DEGRADED",
+        NOT_READY: "NOT READY"
+      }[globalStatus] || "?";
+      const metadata = [...details, `SYS ${system}`].join(" · ");
+      sensorStatus.title = metadata;
+      sensorStatus.setAttribute("aria-label", `${sensorStatus.textContent}. ${metadata}`);
+    }
+
+    function clockText(timestamp) {
+      const numeric = Number(timestamp);
+      if (!Number.isFinite(numeric)) return "--:--:--";
+      return new Intl.DateTimeFormat("ko-KR", {
+        hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
+      }).format(new Date(numeric * 1000));
+    }
+
+    function renderEmergencyBanner(payload, stateName) {
+      const emergency = payload?.emergency && typeof payload.emergency === "object"
+        ? payload.emergency
+        : {};
+      const active = stateName === "emergency" || emergency.active === true;
+      const recovered = !active && emergency.recovery_pending === true;
+      const visible = (active && emergency.acknowledged !== true) || recovered;
+      if (!visible) emergencyDismissed = false;
+      const shown = visible && !emergencyDismissed;
+      emergencyBanner.hidden = !shown;
+      lcd.classList.toggle("has-alert-banner", shown);
+      if (!shown) return;
+
+      if (recovered) {
+        emergencyBanner.dataset.phase = "recovered";
+        emergencyBannerTitle.textContent = "✓ 센서 정상 복귀 — 정상 모니터링으로 전환되었습니다";
+        emergencyConfirm.dataset.action = "recovery";
+        emergencyConfirm.textContent = emergencyActionPending ? "처리 중…" : "종료 확인";
+        emergencyConfirm.disabled = emergencyActionPending;
+        return;
+      }
+
+      emergencyBanner.dataset.phase = "active";
+      emergencyBannerTitle.textContent = "🚨 긴급 상황 — 작업자 상태를 즉시 확인하세요";
+      emergencyConfirm.dataset.action = "emergency";
+      emergencyConfirm.textContent = emergencyActionPending ? "처리 중…" : "확인";
+      emergencyConfirm.disabled = emergencyActionPending;
+    }
+
+    function render(payload = {}) {
+      const safePayload = payload && typeof payload === "object" ? payload : {};
+      const stateName = typeof safePayload.state === "string" ? safePayload.state : "offline";
+      const cue = showcaseCue;
+      const shownState = cue && cue.state in scenarios ? cue.state : stateName;
+      const scenario = scenarios[shownState] || scenarios.offline;
+      lcd.dataset.state = shownState in scenarios ? shownState : "offline";
+      roomName.textContent = safePayload.room || "밀폐공간 A-01";
+      statusPill.textContent = cue ? cue.pill : scenario.pill;
+      stateTitle.textContent = cue ? cue.title : scenario.title;
+      stateSubtitle.textContent = cue ? cue.subtitle : scenario.subtitle;
+      comment.textContent = cue ? cue.comment : scenario.comment;
+      renderEmergencyBanner(safePayload, stateName);
+      renderSensorStatus();
+      if (stateName === "offline") {
+        sensorStatus.dataset.status = "error";
+        sensorStatus.textContent = "통신 오류";
+      }
+      metrics.replaceChildren(...presentationMetrics(shownState, scenario).map(([label, value]) => {
+        const item = document.createElement("div");
+        item.className = "metric";
+        const labelElement = document.createElement("span");
+        labelElement.className = "metric-label";
+        labelElement.textContent = label;
+        const valueElement = document.createElement("strong");
+        valueElement.className = "metric-value";
+        valueElement.textContent = value;
+        item.append(labelElement, valueElement);
+        return item;
+      }));
+    }
+
+    emergencyConfirm.addEventListener("click", async () => {
+      const action = emergencyConfirm.dataset.action;
+      if (emergencyActionPending || !["emergency", "recovery"].includes(action)) return;
+      emergencyDismissed = true;
+      emergencyBanner.hidden = true;
+      lcd.classList.remove("has-alert-banner");
+      emergencyActionPending = true;
+      emergencyConfirm.disabled = true;
+      emergencyConfirm.textContent = "처리 중…";
+      const endpoint = action === "recovery"
+        ? "/api/emergency/recovery/acknowledge"
+        : "/api/emergency/acknowledge";
+      try {
+        const response = await fetch(endpoint, { method: "POST", cache: "no-store" });
+        if (!response.ok) throw new Error("acknowledgement failed");
+        await sync();
+      } catch (error) {
+        emergencyConfirm.textContent = "다시 시도";
+      } finally {
+        emergencyActionPending = false;
+      }
+    });
+
+    document.addEventListener("keydown", async (event) => {
+      const physicalKey = /^Key[A-I]$/.test(event.code)
+        ? event.code.slice(3).toLowerCase()
+        : "";
+      const key = physicalKey || event.key.toLowerCase();
+      if (event.repeat || event.ctrlKey || event.altKey || event.metaKey) return;
+      if (lcd.dataset.state !== "warning" || !(key in showcaseTtsLabels)) return;
+      event.preventDefault();
+      try {
+        const response = await fetch("/api/showcase/tts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key, state: "warning" }),
+          cache: "no-store"
+        });
+        if (!response.ok) throw new Error("showcase TTS request failed");
+        connection.textContent = `TTS ${key.toUpperCase()} · ${showcaseTtsLabels[key]}`;
+      } catch (error) {
+        connection.textContent = "Showcase TTS 재생 실패";
+      }
+      connection.classList.add("visible");
+      setTimeout(() => connection.classList.remove("visible"), 1400);
+    });
+
+    async function fetchShowcaseCue() {
+      try {
+        const response = await fetch("/api/showcase/alert", { cache: "no-store" });
+        if (!response.ok) throw new Error("cue request failed");
+        const payload = await response.json();
+        showcaseCue = payload.active ? payload.alert : null;
+      } catch (error) {
+        showcaseCue = null;
+      }
+    }
+
+    async function sync() {
+      await fetchShowcaseCue();
+      try {
+        const response = await fetch("/api/state", { cache: "no-store" });
+        if (!response.ok) throw new Error("state request failed");
+        const payload = await response.json();
+        render(payload);
+        if (failed) {
+          connection.textContent = "제어 서버 연결됨";
+          connection.classList.add("visible");
+          setTimeout(() => connection.classList.remove("visible"), 1200);
+        }
+        failed = false;
+      } catch (error) {
+        if (!failed) {
+          render({ state: "offline", room: roomName.textContent, sensors: {} });
+        }
+        failed = true;
+        connection.textContent = "제어 서버 연결 끊김";
+        connection.classList.add("visible");
+      }
+    }
+
+    render({ state: "normal-empty", room: "밀폐공간 A-01" });
+    sync();
+    setInterval(sync, 400);
+  </script>
+</body>
+</html>

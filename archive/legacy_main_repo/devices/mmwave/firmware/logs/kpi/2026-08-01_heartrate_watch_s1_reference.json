@@ -1,0 +1,7 @@
+{
+  "session_id": "2026-08-01_heartrate_watch_s1_v120",
+  "reference_device": "Apple Watch",
+  "reference_type": "consumer_wearable_display",
+  "recording_instruction": "Value visible at each 30-second voice prompt; NA if unavailable.",
+  "watch_bpm": [68, 71, 75, 70, 75, 73, 77, 71, 81, 71]
+}

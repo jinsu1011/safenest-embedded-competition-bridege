@@ -1,0 +1,84 @@
+# macOS and editors
+.DS_Store
+**/.DS_Store
+.idea/
+.vscode/
+
+# Python
+**/__pycache__/
+*.py[cod]
+**/.venv/
+.venv/
+.pytest_cache/
+
+# PlatformIO / Arduino build output
+**/.pio/
+**/.cache/
+**/build/
+
+# ---------------------------------------------------------------------------
+# Secrets. Only the *.example templates are committed.
+# ESP32 credentials belong in the sketch-local secrets.h, which is never tracked.
+# ---------------------------------------------------------------------------
+**/secrets.h
+**/wifi_secrets.h
+ESP32/secret.h
+ESP32/Arduino/**/secrets.h
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# ---------------------------------------------------------------------------
+# Runtime output. The SafeNest service writes these on the Pi; they are state,
+# not source. Directory placeholders (.gitkeep) stay tracked.
+# ---------------------------------------------------------------------------
+RaspberryPi/Runtime/data/*.db
+RaspberryPi/Runtime/data/*.db-wal
+RaspberryPi/Runtime/data/*.db-shm
+RaspberryPi/Runtime/data/mmwave/*
+RaspberryPi/Runtime/data/co2/*
+RaspberryPi/Runtime/data/thermal/*
+RaspberryPi/Runtime/data/tts/*
+!RaspberryPi/Runtime/data/**/.gitkeep
+*.sqlite
+*.sqlite3
+*.pid
+*.log
+
+# LCD kiosk local state
+RaspberryPi/LCD/state.json
+RaspberryPi/LCD/logs/
+RaspberryPi/LCD/.chromium-kiosk/
+
+# Research workspaces keep bulky datasets and model binaries out of Git.
+# Identities and checksums stay in the tracked manifests.
+research/thermal_ai/data/**
+research/thermal_ai/artifacts/**
+research/thermal_ai/models/*
+!research/thermal_ai/models/README.md
+!research/thermal_ai/**/.gitkeep
+research/co2_validation/sessions/*
+!research/co2_validation/sessions/.gitkeep
+
+# Node
+node_modules/
+.pnpm-store/
+npm-debug.log*
+
+# Rendered/intermediate documents
+tmp/
+
+# 외부 저장소의 중첩 clone. sheepmeat/test 는 별도 저장소로 관리한다.
+/safenest-mmwave-standalone/
+
+# M-N10 로컬 raw. Git에는 manifest/SHA만 두고 payload는 커밋하지 않는다.
+RaspberryPi/Ondevice_AI/datasets/mmwave/raw/
+
+# 2026-08-13 통합 전달본 압축 해제물. GitHub 의 yuname121/integration 이 상위 버전이다.
+/safenest_integration/
+
+# 전달용 압축 아카이브
+*.zip

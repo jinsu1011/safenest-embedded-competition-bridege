@@ -1,0 +1,182 @@
+{
+  "execution": {
+    "inference_executed": false,
+    "model_invoked": false,
+    "raw_files_modified": false
+  },
+  "method_disagreement": {
+    "finding": "The old age-decrease proxy systematically undercounts always-fresh pilot rows. Phase-change-or-age-decrease is a lower bound because quantized phase values can repeat. Reconstructed update instants and the age-versus-row-interval test independently place both pilots near 10 Hz.",
+    "no_methods_averaged": true,
+    "selected_method": "reconstructed_update_instant_advances",
+    "selection_reason": "It directly reconstructs the source-update instant from two recorded fields and detects an advancing update even when age does not decrease and the phase value repeats.",
+    "status": "MATERIAL_DISAGREEMENT"
+  },
+  "old_estimator_implementation": "for previous, current in zip(age_pairs, age_pairs[1:]):\n    if current[2] < previous[2]:\n        reset_indices.append(current[0])\n        reset_times.append(current[1])\nspan = age_pairs[-1][1] - age_pairs[0][1]\ncadence = len(reset_times) / span if span > 0 else None",
+  "old_estimator_source": "scripts/mmwave_m_c0_correspondence_audit.py::freshness_summary",
+  "old_estimator_status": "RETRACTED_FAULTY_ESTIMATOR",
+  "schema_version": "M-C0_FRESHNESS_ESTIMATOR_REAUDIT_V1",
+  "sessions": [
+    {
+      "methods": {
+        "old_phase_age_decrease_proxy": {
+          "cadence_hz": 4.30467137,
+          "definition": "count rows where phase_age_ms[i] < phase_age_ms[i-1]; divide by timestamp span",
+          "role": "systematically undercounts always-low age after genuinely new updates",
+          "status": "RETRACTED_FAULTY_ESTIMATOR",
+          "transition_count": 8006
+        },
+        "phase_age_less_than_previous_row_interval": {
+          "cadence_hz": 8.419003785,
+          "definition": "count rows where phase_age_ms[i] < ts[i]-ts[i-1]; divide by timestamp span",
+          "role": "independent confirmation that the stored phase update is newer than the previous telemetry emission",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 15658
+        },
+        "phase_value_change_or_age_decrease": {
+          "cadence_hz": 7.661949415,
+          "definition": "count rows where breath_phase changes or phase_age_ms decreases; divide by timestamp span",
+          "role": "independent evidence lower bound; repeated quantized phase values can hide genuine updates",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 14250
+        },
+        "reconstructed_update_instant_advances": {
+          "cadence_hz": 8.419003785,
+          "definition": "reconstruct update_ms[i]=ts_monotonic_ms[i]-phase_age_ms[i]; count rows where update_ms[i] > update_ms[i-1]; divide by timestamp span",
+          "role": "selected estimator because it directly tests whether the stored source-update instant advances and does not depend on phase-value changes or age decreases",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 15658
+        }
+      },
+      "phase_age_ms": {
+        "max": 288530.0,
+        "median": 12.0,
+        "min": 0.0,
+        "p95": 195627.0
+      },
+      "record_count": 18574,
+      "regression_guards": {
+        "age_interval_transition_count": 15658,
+        "cross_check": "EXACT_MATCH",
+        "low_age_definition": "max(phase_age_ms) < 2 * median telemetry interval; regression diagnostic only",
+        "low_age_regime": false,
+        "materially_below_row_cadence_definition": "fresh cadence < 0.95 * row cadence; regression diagnostic only",
+        "status": "PASS",
+        "timestamp_age_transition_count": 15658
+      },
+      "selected_method": "reconstructed_update_instant_advances",
+      "session_id": "2026-08-01_occupied_d09_v120_31min_attempt02",
+      "source_path": "devices/mmwave/firmware/logs/final/2026-08-01_occupied_d09_v120_31min_attempt02.jsonl",
+      "source_sha256": "7f9e9ac65377c6dc217af92f9dee2401b6162540e2245fce97acf2ed49368a34",
+      "telemetry_row_cadence_hz": 9.986342911,
+      "timestamp_span_s": 1859.84
+    },
+    {
+      "methods": {
+        "old_phase_age_decrease_proxy": {
+          "cadence_hz": 3.679658492,
+          "definition": "count rows where phase_age_ms[i] < phase_age_ms[i-1]; divide by timestamp span",
+          "role": "systematically undercounts always-low age after genuinely new updates",
+          "status": "RETRACTED_FAULTY_ESTIMATOR",
+          "transition_count": 662
+        },
+        "phase_age_less_than_previous_row_interval": {
+          "cadence_hz": 9.988438535,
+          "definition": "count rows where phase_age_ms[i] < ts[i]-ts[i-1]; divide by timestamp span",
+          "role": "independent confirmation that the stored phase update is newer than the previous telemetry emission",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1797
+        },
+        "phase_value_change_or_age_decrease": {
+          "cadence_hz": 9.126887076,
+          "definition": "count rows where breath_phase changes or phase_age_ms decreases; divide by timestamp span",
+          "role": "independent evidence lower bound; repeated quantized phase values can hide genuine updates",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1642
+        },
+        "reconstructed_update_instant_advances": {
+          "cadence_hz": 9.988438535,
+          "definition": "reconstruct update_ms[i]=ts_monotonic_ms[i]-phase_age_ms[i]; count rows where update_ms[i] > update_ms[i-1]; divide by timestamp span",
+          "role": "selected estimator because it directly tests whether the stored source-update instant advances and does not depend on phase-value changes or age decreases",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1797
+        }
+      },
+      "phase_age_ms": {
+        "max": 111.0,
+        "median": 12.0,
+        "min": 0.0,
+        "p95": 15.0
+      },
+      "record_count": 1799,
+      "regression_guards": {
+        "age_interval_transition_count": 1797,
+        "cross_check": "EXACT_MATCH",
+        "low_age_definition": "max(phase_age_ms) < 2 * median telemetry interval; regression diagnostic only",
+        "low_age_regime": true,
+        "materially_below_row_cadence_definition": "fresh cadence < 0.95 * row cadence; regression diagnostic only",
+        "status": "PASS",
+        "timestamp_age_transition_count": 1797
+      },
+      "selected_method": "reconstructed_update_instant_advances",
+      "session_id": "M-C0-PILOT-DESKWORK-001",
+      "source_path": "devices/mmwave/device_measurements/pilot/M-C0-PILOT-DESKWORK-001.raw.jsonl",
+      "source_sha256": "368e6a16e897b9231ff5fcdecd3edcc5b725a0a4dc6b20dee1e3162405bc2876",
+      "telemetry_row_cadence_hz": 9.993996932,
+      "timestamp_span_s": 179.908
+    },
+    {
+      "methods": {
+        "old_phase_age_decrease_proxy": {
+          "cadence_hz": 3.518230325,
+          "definition": "count rows where phase_age_ms[i] < phase_age_ms[i-1]; divide by timestamp span",
+          "role": "systematically undercounts always-low age after genuinely new updates",
+          "status": "RETRACTED_FAULTY_ESTIMATOR",
+          "transition_count": 633
+        },
+        "phase_age_less_than_previous_row_interval": {
+          "cadence_hz": 9.993330369,
+          "definition": "count rows where phase_age_ms[i] < ts[i]-ts[i-1]; divide by timestamp span",
+          "role": "independent confirmation that the stored phase update is newer than the previous telemetry emission",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1798
+        },
+        "phase_value_change_or_age_decrease": {
+          "cadence_hz": 9.131836372,
+          "definition": "count rows where breath_phase changes or phase_age_ms decreases; divide by timestamp span",
+          "role": "independent evidence lower bound; repeated quantized phase values can hide genuine updates",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1643
+        },
+        "reconstructed_update_instant_advances": {
+          "cadence_hz": 9.993330369,
+          "definition": "reconstruct update_ms[i]=ts_monotonic_ms[i]-phase_age_ms[i]; count rows where update_ms[i] > update_ms[i-1]; divide by timestamp span",
+          "role": "selected estimator because it directly tests whether the stored source-update instant advances and does not depend on phase-value changes or age decreases",
+          "status": "CURRENT_DIAGNOSTIC",
+          "transition_count": 1798
+        }
+      },
+      "phase_age_ms": {
+        "max": 17.0,
+        "median": 12.0,
+        "min": 0.0,
+        "p95": 15.0
+      },
+      "record_count": 1799,
+      "regression_guards": {
+        "age_interval_transition_count": 1798,
+        "cross_check": "EXACT_MATCH",
+        "low_age_definition": "max(phase_age_ms) < 2 * median telemetry interval; regression diagnostic only",
+        "low_age_regime": true,
+        "materially_below_row_cadence_definition": "fresh cadence < 0.95 * row cadence; regression diagnostic only",
+        "status": "PASS",
+        "timestamp_age_transition_count": 1798
+      },
+      "selected_method": "reconstructed_update_instant_advances",
+      "session_id": "M-C0-PILOT-STATIONARY-001",
+      "source_path": "devices/mmwave/device_measurements/pilot/M-C0-PILOT-STATIONARY-001.raw.jsonl",
+      "source_sha256": "e2b832fd3a72f18b4c3a370738c10e58c0269283dac218ae2d7d4dad48036f6f",
+      "telemetry_row_cadence_hz": 9.993330369,
+      "timestamp_span_s": 179.92
+    }
+  ]
+}

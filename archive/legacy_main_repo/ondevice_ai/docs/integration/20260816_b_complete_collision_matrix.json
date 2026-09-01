@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "source_sha": "efc7e2eb61a49e221ce0ebf6057b0c1617525ad1",
+  "team_base_sha": "3d86bf2a7a4e527d7aba2dfabcb087201ffeb46e",
+  "decisions": [
+    {
+      "relative_path": "datasets/co2/manifests/c_b6_reduced_feature_candidate/**",
+      "decision": "ADD_SOURCE",
+      "reason": "C-B6 frozen occupancy candidate metadata required for B-complete baseline",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "models/co2/candidates/c_b6/**",
+      "decision": "ADD_SOURCE",
+      "reason": "C-B6 float/INT8 artifacts and contracts",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "datasets/thermal/manifests/T-B0_offline_model_protocol/**",
+      "decision": "ADD_SOURCE",
+      "reason": "Thermal Phase B protocol through T-B5 lock evidence",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "datasets/thermal/manifests/T-B1_full_experiment/**",
+      "decision": "ADD_SOURCE",
+      "reason": "Thermal T-B1 evidence",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "datasets/thermal/manifests/T-B5_robustness_latency_candidate_lock/**",
+      "decision": "ADD_SOURCE",
+      "reason": "Thermal T-B5 offline lock; binary remains EXTERNAL_SSD_ONLY",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "docs/20260815_SafeNest_mmWave_*",
+      "decision": "ADD_SOURCE",
+      "reason": "mmWave handoff and PRE-M-C1 measurement guide",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "docs/handoff/20260815_SafeNest_CO2_AI_and_Measurement_Handoff_KO_01.md",
+      "decision": "ADD_SOURCE",
+      "reason": "CO2 human handoff",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "AGENTS.md",
+      "decision": "MERGE_MANUALLY",
+      "reason": "Keep team ondevice_ai path rules; update B-complete status and source SHA",
+      "required_reviewer": "@sheepmeat @jinsu1011"
+    },
+    {
+      "relative_path": "README.md",
+      "decision": "MERGE_MANUALLY",
+      "reason": "Keep team runtime/fail-closed instructions; replace stale phase status",
+      "required_reviewer": "@sheepmeat @jinsu1011"
+    },
+    {
+      "relative_path": "docs/TEAM_HANDOFF_GUIDE.md",
+      "decision": "MERGE_MANUALLY",
+      "reason": "Keep team device/shared-contract rules; update sensor phase status",
+      "required_reviewer": "@sheepmeat @jinsu1011"
+    },
+    {
+      "relative_path": "docs/README.md",
+      "decision": "MERGE_MANUALLY",
+      "reason": "Index new handoff/measurement docs without dropping team historical context link",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "datasets/mmwave/manifests/a0_raw_inventory/command_log.txt",
+      "decision": "PRESERVE_TEAM",
+      "reason": "Team copy already stripped local absolute paths; source still contains /Users/ paths",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "integrated_node/competition_runtime/**",
+      "decision": "PRESERVE_TEAM",
+      "reason": "TEAM_RUNTIME / PI_INTEGRATION_GLUE; standalone is not authoritative",
+      "required_reviewer": "@jinsu1011"
+    },
+    {
+      "relative_path": "integrated_node/esp32_sensor_node.ino",
+      "decision": "PRESERVE_TEAM",
+      "reason": "Team firmware copy inside ondevice_ai; AI sync must not modify firmware",
+      "required_reviewer": "@jinsu1011"
+    },
+    {
+      "relative_path": "models/mmwave/safenest_lstm_quant.tflite",
+      "decision": "PRESERVE_HISTORICAL",
+      "reason": "Team historical model; not the B-complete active candidate",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "models/thermal/thermal_fall_model.h5",
+      "decision": "PRESERVE_HISTORICAL",
+      "reason": "Team historical model retained",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "config/models.yaml",
+      "decision": "PRESERVE_TEAM",
+      "reason": "Changing runtime default to B-complete would break thermal (binary not in git) and existing v0.1.0 tests; recorded as INTEGRATION_CONTRACT_MISMATCH for a follow-up AI runtime PR",
+      "required_reviewer": "@sheepmeat @jinsu1011"
+    },
+    {
+      "relative_path": "models/model_manifest.json",
+      "decision": "PRESERVE_TEAM",
+      "reason": "Same runtime-default collision as models.yaml",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "repro_test_dir/**",
+      "decision": "EXCLUDE_FROM_RELEASE",
+      "reason": "Non-canonical local reproduction dump; not the frozen mmWave candidate path",
+      "required_reviewer": "@sheepmeat"
+    },
+    {
+      "relative_path": "sensors/**",
+      "decision": "PRESERVE_TEAM",
+      "reason": "Already identical AI-side mocks; do not duplicate team devices/ drivers",
+      "required_reviewer": "@sheepmeat"
+    }
+  ]
+}

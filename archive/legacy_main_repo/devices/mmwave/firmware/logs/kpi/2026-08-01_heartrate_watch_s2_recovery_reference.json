@@ -1,0 +1,21 @@
+{
+  "session": "S2 recovery holdout",
+  "status": "final_user_terminated_after_7_values",
+  "expected_watch_values": 7,
+  "received_watch_values": 7,
+  "entry_event": "2026-08-01_heartrate_watch_s2_recovery_entry_event.json",
+  "nominal_interval_seconds": 30,
+  "watch_bpm_in_received_order": [135, 100, 92, 92, 94, 86, 91],
+  "samples": [
+    {"sample": 1, "watch_bpm": 135, "host_monotonic_ns": 603398075344583, "elapsed_from_entry_s": 0.0, "source": "entry_event"},
+    {"sample": 2, "watch_bpm": 100, "host_monotonic_ns": 603433713084916, "elapsed_from_entry_s": 35.638, "source": "watch_prompt_11"},
+    {"sample": 3, "watch_bpm": 92, "host_monotonic_ns": 603463760467083, "elapsed_from_entry_s": 65.685, "source": "watch_prompt_12"},
+    {"sample": 4, "watch_bpm": 92, "host_monotonic_ns": 603493679776416, "elapsed_from_entry_s": 95.604, "source": "watch_prompt_13"},
+    {"sample": 5, "watch_bpm": 94, "host_monotonic_ns": 603523714924208, "elapsed_from_entry_s": 125.640, "source": "watch_prompt_14"},
+    {"sample": 6, "watch_bpm": 86, "host_monotonic_ns": 603553743358541, "elapsed_from_entry_s": 155.668, "source": "watch_prompt_15"},
+    {"sample": 7, "watch_bpm": 91, "host_monotonic_ns": 603583673318041, "elapsed_from_entry_s": 185.598, "source": "watch_prompt_16"}
+  ],
+  "timing_note": "The first post-entry prompt was intentionally ignored because it occurred 5.606 s after entry. Values 2-7 align to original capture prompts 11-16. User requested audio/capture termination after seven values.",
+  "limitation": "Observed recovery span is 185.598 s rather than the planned 8 minutes; report as shortened S2 and do not claim the full protocol was completed.",
+  "heart_verified": false
+}

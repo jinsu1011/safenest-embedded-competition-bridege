@@ -1,0 +1,48 @@
+{
+  "source": "logs/baseline/2026-07-13_empty_fixed_d06_e0_5min.jsonl",
+  "skip_seconds": 0.0,
+  "records_skipped": 0,
+  "records": 2999,
+  "invalid_json_lines": 0,
+  "elapsed_s": 299.854,
+  "telemetry_rate_hz": 10.001534079918894,
+  "uart_frames": 18082,
+  "uart_frame_rate_hz": 60.302680637910456,
+  "checksum_errors": 0,
+  "checksum_error_rate": 0.0,
+  "parse_errors": 0,
+  "parse_error_rate": 0.0,
+  "reboots_detected": 0,
+  "presence": {
+    "true_count": 59,
+    "false_count": 2940,
+    "unknown_count": 0,
+    "true_rate": 0.019673224408136045
+  },
+  "distance_cm_raw": {
+    "count": 59,
+    "mean": 82.40305084745762,
+    "median": 80.36,
+    "stddev": 6.888223647255607,
+    "min": 68.88,
+    "max": 91.84
+  },
+  "breath_rate_raw": {
+    "count": 16,
+    "mean": 1.0,
+    "median": 1.0,
+    "stddev": 0.0,
+    "min": 1.0,
+    "max": 1.0
+  },
+  "heart_rate_raw": {
+    "count": 25,
+    "mean": 94.16,
+    "median": 93.0,
+    "stddev": 1.972308292331602,
+    "min": 92.0,
+    "max": 97.0
+  },
+  "breath_positive_rate": 0.0053351117039013,
+  "heart_positive_rate": 0.008336112037345782
+}

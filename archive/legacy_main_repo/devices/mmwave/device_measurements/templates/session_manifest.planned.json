@@ -1,0 +1,65 @@
+{
+  "schema_version": "m-c0-session-1.0",
+  "status": "planned",
+  "session_id": "M-C0-YYYYMMDD-001",
+  "subject_id": "SUBJ-PSEUDONYM-001",
+  "operator_id": "OP-INITIALS-001",
+  "start_time_utc": "2026-08-14T00:00:00Z",
+  "end_time_utc": "2026-08-14T00:30:00Z",
+  "sensor": {
+    "model": "MR60BHA2",
+    "transport": "ESP32_UART_USB",
+    "firmware_version": "PENDING_CAPTURE",
+    "sensor_firmware_version": "PENDING_CAPTURE",
+    "config_hash": "PENDING_CAPTURE",
+    "device_id": "PENDING_CAPTURE"
+  },
+  "setup": {
+    "distance_cm": 0,
+    "sensor_height_cm": 0,
+    "sensor_angle_deg": 0,
+    "orientation": "PENDING_CAPTURE",
+    "posture": "PENDING_CAPTURE",
+    "clothing": "PENDING_CAPTURE",
+    "bedding": "PENDING_CAPTURE",
+    "environment": "PENDING_CAPTURE",
+    "other_people_present": false,
+    "other_people_distance_m": null,
+    "background_movement": "PENDING_CAPTURE"
+  },
+  "condition": {
+    "breathing_mode": "normal_spontaneous",
+    "movement_context": "PENDING_CAPTURE",
+    "notes": "Replace every PENDING_CAPTURE field before marking completed. Use normal spontaneous breathing only."
+  },
+  "reference": {
+    "type": "none",
+    "independent": false,
+    "synchronized": false,
+    "status": "planned",
+    "file": null,
+    "notes": "Record whether an independent respiration reference is actually collected."
+  },
+  "files": {
+    "raw_immutable": true,
+    "raw_jsonl": [
+      {
+        "path": "PENDING_AFTER_CAPTURE.jsonl",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "record_count": 0,
+        "byte_count": 0
+      }
+    ]
+  },
+  "privacy": {
+    "identifiers_removed": true,
+    "video_collected": false,
+    "third_party_visible": false,
+    "consent_or_workplace_permission": "PENDING_CAPTURE"
+  },
+  "qa": {
+    "status": "pending",
+    "validator_version": "m-c0-validator-1.1",
+    "notes": "Template only; do not treat as measurement evidence."
+  }
+}

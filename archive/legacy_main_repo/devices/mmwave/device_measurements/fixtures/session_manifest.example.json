@@ -1,0 +1,65 @@
+{
+  "schema_version": "m-c0-session-1.0",
+  "status": "completed",
+  "session_id": "M-C0-EXAMPLE-001",
+  "subject_id": "SUBJ-EXAMPLE",
+  "operator_id": "OP-EXAMPLE",
+  "start_time_utc": "2026-08-14T00:00:00Z",
+  "end_time_utc": "2026-08-14T00:00:31Z",
+  "sensor": {
+    "model": "MR60BHA2",
+    "transport": "ESP32_UART_USB",
+    "firmware_version": "fixture",
+    "sensor_firmware_version": "fixture",
+    "config_hash": "fixture",
+    "device_id": "fixture-device"
+  },
+  "setup": {
+    "distance_cm": 100,
+    "sensor_height_cm": 120,
+    "sensor_angle_deg": 0,
+    "orientation": "front",
+    "posture": "seated",
+    "clothing": "ordinary",
+    "bedding": "none",
+    "environment": "fixture_only",
+    "other_people_present": false,
+    "other_people_distance_m": null,
+    "background_movement": "none"
+  },
+  "condition": {
+    "breathing_mode": "normal_spontaneous",
+    "movement_context": "minimal",
+    "notes": "Synthetic fixture; not a physical measurement."
+  },
+  "reference": {
+    "type": "none",
+    "independent": false,
+    "synchronized": false,
+    "status": "not_collected",
+    "file": null,
+    "notes": "Synthetic fixture; no physiological claim."
+  },
+  "files": {
+    "raw_immutable": true,
+    "raw_jsonl": [
+      {
+        "path": "fixtures/example.raw.jsonl",
+        "sha256": "c2729f1a1f6f6c0e2a062445f5ef231678f16f10e4ad38820024bd693b4fdf11",
+        "record_count": 2,
+        "byte_count": 1222
+      }
+    ]
+  },
+  "privacy": {
+    "identifiers_removed": true,
+    "video_collected": false,
+    "third_party_visible": false,
+    "consent_or_workplace_permission": "fixture only"
+  },
+  "qa": {
+    "status": "pass",
+    "validator_version": "m-c0-validator-1.0",
+    "notes": "Schema fixture only."
+  }
+}

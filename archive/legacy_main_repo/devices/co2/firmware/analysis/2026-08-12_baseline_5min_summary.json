@@ -1,0 +1,36 @@
+{
+  "schema": "safenest.scd40.evidence-summary.v1",
+  "source": "logs/2026-08-12_baseline_5min.csv",
+  "source_sha256": "11f58c3d624cff907f033fdcaa1e1041614a6aad282c3b6005efb052c7af7c42",
+  "scenario": "baseline",
+  "sample_count": 300,
+  "valid_sample_count": 277,
+  "missing_sample_count": 23,
+  "missing_rate": 0.07666666666666666,
+  "elapsed_seconds": 298.9995160102844,
+  "sample_interval_seconds": {
+    "minimum": 0.998974084854126,
+    "maximum": 1.0006401538848877,
+    "mean": 0.9999983813052991
+  },
+  "co2_ppm": {
+    "minimum": 495.0,
+    "maximum": 506.0,
+    "mean": 500.10830324909745
+  },
+  "sensor_states": {
+    "NOT_CONNECTED": 14,
+    "STALE": 9,
+    "NORMAL": 277
+  },
+  "errors": {
+    "ESP32_NOT_CONNECTED": 14,
+    "ESP32_TELEMETRY_STALE": 9,
+    "NONE": 277
+  },
+  "verdict": "FAIL",
+  "verdict_reasons": [
+    "유효 표본과 계산 가능한 통계가 존재함",
+    "missing_rate=0.076667"
+  ]
+}

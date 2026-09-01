@@ -1,0 +1,85 @@
+{
+  "runtime": {
+    "numpy": "2.5.2",
+    "scipy": "1.18.0",
+    "installation_scope": "temporary_runtime_only"
+  },
+  "source_contract": {
+    "sample_rate_hz": 10.0,
+    "window_samples": 300,
+    "filter": "Butterworth bandpass 0.1-0.5 Hz order 4 + filtfilt",
+    "zscore_mean": 0.0031162832173884064,
+    "zscore_std": 2.955399434649939,
+    "clip": [-5.0, 5.0],
+    "int8_scale": 0.041720833629369736,
+    "int8_zero_point": -3
+  },
+  "csv": {
+    "files": 9,
+    "windows": 620,
+    "shape": [620, 300, 1],
+    "all_finite": true,
+    "quality_invalid": 0,
+    "preprocess_clip_ratio": 0.0,
+    "processed_mean": -0.001090207719244063,
+    "processed_std": 0.09085936099290848,
+    "processed_min": -0.384689062833786,
+    "processed_max": 0.4851733148097992,
+    "quantized_min": -12,
+    "quantized_max": 9,
+    "quantized_saturation_ratio": 0.0,
+    "dequantized_mae": 0.008656763471662998,
+    "dequantized_max_abs_error": 0.020860284566879272
+  },
+  "synthetic_cases": {
+    "clean_sine": {"shape": [1, 300, 1], "finite": true, "quality_valid": true},
+    "constant": {"shape": [1, 300, 1], "finite": true, "quality_valid": true},
+    "nan_inf": {"shape": [1, 300, 1], "finite": true, "quality_valid": false},
+    "short_signal": {"shape": [1, 300, 1], "finite": true, "quality_valid": false}
+  },
+  "bundle_audit": {
+    "csv_files": 9,
+    "csv_max_gap_s": 0.10300000000000864,
+    "csv_timestamp_backward": 0,
+    "csv_timestamp_duplicate": 0,
+    "raw_files": 78,
+    "raw_physical_lines": 172390,
+    "raw_valid_json_objects": 172387,
+    "raw_invalid_json_lines": 3,
+    "raw_timestamp_backward": 0,
+    "raw_timestamp_duplicate": 683,
+    "raw_schema_versions": {"1.0": 75476, "1.1": 13868, "1.2": 69750, "MISSING": 13293},
+    "status": "PASS_WITH_EXCEPTIONS"
+  },
+  "negative_tests": {
+    "cases": 4,
+    "all_passed": true,
+    "covered": ["backward_timestamp", "malformed_json", "strict_duplicate_timestamp", "privacy_video_collected"]
+  },
+  "live_monitor_replay": {
+    "records": 18574,
+    "observed_rate_hz": 10.0,
+    "last_gap_ms": 100.0,
+    "max_gap_ms": 103.0,
+    "json_bad": 0,
+    "uart_bad": 0,
+    "checksum_bad": 0,
+    "window": "READY",
+    "state": "UNKNOWN_DISTANCE",
+    "state_reason": "last_distance_cm=166.5_outside_40_to_150_config_range"
+  },
+  "tflite_invoke": {
+    "status": "COMPLETED_HOST_BENCHMARK",
+    "classification": "EXPLORATORY_PRE_CORRESPONDENCE_INFERENCE",
+    "warning_classifications": ["PIPELINE_CORRESPONDENCE_WARNING", "DEVICE_DOMAIN_MISMATCH_WARNING"],
+    "m_c0_correspondence_complete": false,
+    "m_c2_complete": false,
+    "clinical_apnea_evidence": false,
+    "tensorflow": "2.21.0",
+    "model_sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5",
+    "invoke_count": 620,
+    "latency_p95_ms": 0.008333,
+    "prediction_counts": {"NORMAL": 0, "RAPID_OR_ABNORMAL": 0, "APNEA": 620},
+    "formal_accuracy_status": "NOT_COMPUTED_NO_ALIGNED_GROUND_TRUTH"
+  }
+}

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SafeNest 센서 실기기 증거 확보 계획 (SCD40 / PIR)</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --fg:#16181d; --muted:#5b6270; --line:#d8dce4; --card:#ffffff;
+    --accent:#1f5fd8; --accent-soft:#e8effc; --warn:#8a5300; --warn-soft:#fdf3df;
+    --danger:#a4262c; --danger-soft:#fdeaea; --ok:#166c3b; --ok-soft:#e6f4ec;
+    --code-bg:#12151b; --code-fg:#e6e9ef;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0f1116; --fg:#e6e9ef; --muted:#9aa3b2; --line:#2a2f3a; --card:#161a22;
+      --accent:#7aa7ff; --accent-soft:#1a2438; --warn:#e3b464; --warn-soft:#2a2313;
+      --danger:#ff8a8a; --danger-soft:#2c1618; --ok:#7ddba4; --ok-soft:#12271b;
+      --code-bg:#0a0c10; --code-fg:#e6e9ef;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:0;background:var(--bg);color:var(--fg);
+    font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",system-ui,-apple-system,sans-serif;
+    line-height:1.65;font-size:15px}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 20px 96px}
+  header.top{border-bottom:2px solid var(--line);padding-bottom:20px;margin-bottom:28px}
+  h1{font-size:26px;margin:0 0 8px}
+  h2{font-size:20px;margin:44px 0 12px;padding-top:12px;border-top:1px solid var(--line)}
+  h3{font-size:16px;margin:26px 0 8px}
+  .sub{color:var(--muted);font-size:13.5px;margin:0}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chip{background:var(--accent-soft);color:var(--accent);border:1px solid var(--line);
+    border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:600}
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card);margin:14px 0}
+  table{border-collapse:collapse;width:100%;min-width:720px;font-size:13.5px}
+  th,td{border-bottom:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:var(--accent-soft);color:var(--fg);font-weight:700;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  td.num{white-space:nowrap;font-weight:700;color:var(--accent);width:64px}
+  code{background:var(--accent-soft);padding:1px 5px;border-radius:4px;font-size:12.5px;
+    font-family:Consolas,"D2Coding",monospace;word-break:break-all}
+  pre{background:var(--code-bg);color:var(--code-fg);padding:12px 14px;border-radius:8px;
+    overflow-x:auto;font-size:12.5px;font-family:Consolas,"D2Coding",monospace;line-height:1.5;margin:8px 0}
+  pre code{background:none;color:inherit;padding:0}
+  .box{border:1px solid var(--line);border-left-width:4px;border-radius:8px;padding:12px 16px;margin:14px 0;background:var(--card)}
+  .box.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .box.danger{border-left-color:var(--danger);background:var(--danger-soft)}
+  .box.ok{border-left-color:var(--ok);background:var(--ok-soft)}
+  .box.info{border-left-color:var(--accent);background:var(--accent-soft)}
+  .box h4{margin:0 0 6px;font-size:14px}
+  .step{border:1px solid var(--line);border-radius:10px;background:var(--card);margin:16px 0;overflow:hidden}
+  .step > .hd{background:var(--accent-soft);padding:10px 14px;font-weight:700;font-size:15px;
+    border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .step > .hd .tag{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;
+    background:var(--card);border:1px solid var(--line);color:var(--muted)}
+  .step .bd{padding:0}
+  .step table{min-width:560px;font-size:13.5px}
+  .step th{width:150px;background:transparent;border-right:1px solid var(--line);white-space:nowrap}
+  ul,ol{margin:6px 0;padding-left:22px}
+  li{margin:3px 0}
+  .track-co2{border-left:4px solid #2c7a5e}
+  .track-pir{border-left:4px solid #8a5a9e}
+  .track-common{border-left:4px solid #556}
+  footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:10px 0}
+  .legend span b{color:var(--fg)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>SafeNest 센서 실기기 증거 확보 계획</h1>
+  <p class="sub">SCD40(CO2) · HC-SR501 계열(PIR) 실측 증거를 <code>devices/co2/</code>, <code>devices/pir/</code> 아래에 남기기 위한 작업 절차서</p>
+  <div class="meta">
+    <span class="chip">작성일 2026-08-12</span>
+    <span class="chip">저장소 safenest-embedded-competition</span>
+    <span class="chip">기준 구조 devices/mmwave/</span>
+    <span class="chip">셸 PowerShell (Windows 11)</span>
+  </div>
+</header>
+
+<h2>0. 이 문서의 사용 규칙</h2>
+<div class="box danger">
+  <h4>절대 규칙</h4>
+  <ul>
+    <li><b>측정하지 않은 값은 만들지 않는다.</b> <code>mock_sensor.py</code> 출력, 시뮬레이션 값, 손으로 쓴 숫자는 증거가 아니다.</li>
+    <li><b>로그 파일(<code>logs/*.jsonl</code>, <code>*.csv</code>)은 생성 후 사람이 편집하지 않는다.</b> 잘못 찍혔으면 다시 측정한다.</li>
+    <li><b>결측을 0으로 바꾸지 않는다.</b> 센서 분리·타임아웃은 <code>null + error_code</code>로 기록하고 <code>SensorState</code>로 표기한다.</li>
+    <li><b>한 번에 한 단계만 진행한다.</b> 이전 단계의 통과 기준을 충족하기 전에 다음 단계로 넘어가지 않는다.</li>
+    <li><b>배선 변경은 모든 전원(USB-C·외부전원)을 뺀 상태에서만 한다.</b> (<code>docs/operations/HARDWARE_RUNBOOK.md</code> §0)</li>
+    <li><b>git 커밋·푸시는 승인 후에만.</b> <code>main</code>에 직접 커밋하지 않는다.</li>
+  </ul>
+</div>
+<div class="legend">
+  <span><b>트랙 표기</b></span>
+  <span>■ <b>공통</b> — 두 센서 공통 준비</span>
+  <span>■ <b>CO2</b> — <code>feature/co2-scd40-verification</code></span>
+  <span>■ <b>PIR</b> — <code>feature/pir-verification</code></span>
+</div>
+
+<h2>1. 현재 저장소 상태 진단</h2>
+
+<h3>1.1 증거 산출물 존재 여부</h3>
+<div class="tblwrap">
+<table>
+<thead><tr>
+  <th>요구 산출물</th><th>devices/mmwave (기준)</th><th>devices/co2</th><th>devices/pir</th>
+</tr></thead>
+<tbody>
+<tr><td><code>docs/WIRING.md</code> (배선·전원·사진)</td><td>docs/ 7종 존재(배선 전용 문서는 없음)</td><td>없음 (<code>docs/</code> 디렉터리 자체 없음)</td><td>없음 (<code>docs/</code> 디렉터리 자체 없음)</td></tr>
+<tr><td><code>firmware/capture_*.py</code></td><td><code>capture_serial.py</code> 존재</td><td>없음 (<code>firmware/</code> 없음)</td><td>없음 (<code>firmware/</code> 없음)</td></tr>
+<tr><td><code>firmware/logs/</code> 실측 로그</td><td>baseline·breath·diagnostics·final 60여 개 JSONL</td><td>없음</td><td>없음</td></tr>
+<tr><td><code>firmware/analysis/*_summary.json</code></td><td>40여 개 존재</td><td>없음</td><td>없음</td></tr>
+<tr><td><code>tests/</code> 기기 단독 테스트</td><td>4개 (로그 리플레이 포함)</td><td>없음</td><td>없음</td></tr>
+<tr><td><code>docs/VERIFICATION_REPORT_*.md</code></td><td><code>MMWAVE_TUNING_REPORT_2026-07-29.md</code> 등</td><td>없음</td><td>없음</td></tr>
+</tbody>
+</table>
+</div>
+<p class="sub">현재 <code>devices/co2/</code>는 <code>README.md</code>, <code>src/co2_adapter.py</code>, <code>src/mock_sensor.py</code>, <code>src/__init__.py</code> 4개 파일뿐이고 <code>devices/pir/</code>도 동일 구성이다. 즉 <b>6종 산출물 중 0종</b>이 존재한다.</p>
+
+<h3>1.2 코드 레벨에서 발견한 문제</h3>
+<div class="tblwrap">
+<table>
+<thead><tr><th>위치</th><th>내용</th><th>영향</th></tr></thead>
+<tbody>
+<tr>
+  <td><code>devices/co2/src/co2_adapter.py:52-54</code></td>
+  <td><code>read_raw_values()</code>가 <code>(650.0, 45.0, 23.5)</code> 고정값을 반환. 실제 I2C 통신 코드가 한 줄도 없다.</td>
+  <td>이름은 "Hardware SCD40 I2C Adapter"지만 <b>실체는 상수 스텁</b>. 지금 상태로 돌리면 하드웨어가 없어도 "정상 동작"처럼 보인다.</td>
+</tr>
+<tr>
+  <td><code>devices/co2/src/co2_adapter.py:28-38</code></td>
+  <td><code>connect()</code>가 <code>self.connected = True</code>만 하고 무조건 성공을 반환.</td>
+  <td>센서를 뽑아도 <code>NOT_CONNECTED</code>가 되지 않는다. <b>결측 시나리오가 현재 코드로는 재현 불가.</b></td>
+</tr>
+<tr>
+  <td><code>devices/pir/src/pir_adapter.py:34-36</code></td>
+  <td><code>read_gpio()</code>가 항상 <code>True</code> 반환. GPIO 접근 코드 없음.</td>
+  <td>영구 "동작 감지" 상태. <b>무동작 5분 오검출 0 검증이 구조적으로 불가능.</b></td>
+</tr>
+<tr>
+  <td><code>devices/pir/src/pir_adapter.py:22-32</code></td>
+  <td><code>connect()</code>가 GPIO 설정 없이 무조건 성공.</td>
+  <td>CO2와 동일 문제.</td>
+</tr>
+<tr>
+  <td><code>devices/mmwave/firmware/src/main.cpp:528</code></td>
+  <td>부팅 이벤트가 <code>"board":"esp-wroom-32"</code>를 보고. 반면 <code>HARDWARE_RUNBOOK.md §3</code>은 XIAO ESP32-C6 핀맵(D4/D5/D0)을 권장.</td>
+  <td><b>문서와 펌웨어의 보드가 불일치.</b> 실물 보드를 확인해야 배선표를 쓸 수 있다. → 질문 Q2</td>
+</tr>
+<tr>
+  <td><code>main.cpp</code> 전체 (546줄)</td>
+  <td><code>scd</code>/<code>co2</code>/<code>pir</code>/<code>Wire</code>/<code>i2c</code> 문자열이 <b>하나도 없음</b>. 현재 ESP 펌웨어는 mmWave UART 전용.</td>
+  <td>SCD40/PIR을 ESP32에 붙이기로 하면 <b>펌웨어에 센서 읽기·JSON 필드 추가가 필요</b>하다(통신 재구축이 아니라 필드 추가). → 질문 Q1/Q3</td>
+</tr>
+<tr>
+  <td><code>.gitattributes</code></td>
+  <td>경로가 <code>firmware/esp_wroom32_mr60_monitor/logs/...</code>로 되어 있어 현재 구조(<code>devices/mmwave/firmware/logs/</code>)와 맞지 않는 <b>사문화된 규칙</b>.</td>
+  <td>새 로그가 CRLF 변환·자동 정규화로 <b>바이트가 바뀔 수 있다.</b> 1단계에서 <code>devices/*/firmware/logs/**</code> 규칙을 추가한다.</td>
+</tr>
+<tr>
+  <td>작업 트리 상태</td>
+  <td><code>devices/mmwave/firmware/capture_serial.py</code> 수정됨(M), <code>monitor_serial.py</code>·<code>logs/live/</code> 미추적(??).</td>
+  <td>브랜치를 파기 전에 이 변경을 어떻게 처리할지 결정해야 한다. → 질문 Q11</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>1.3 계약(<code>shared/contracts/base_sensor.py</code>) 요약</h3>
+<div class="tblwrap">
+<table>
+<thead><tr><th>요소</th><th>정의</th><th>검증에서 의미</th></tr></thead>
+<tbody>
+<tr><td><code>SensorState</code></td><td>NORMAL / NOT_CONNECTED / READ_TIMEOUT / INVALID_FORMAT / NAN_OR_INF / OUT_OF_BOUNDS / INFER_FAILED / STALE / SHUTDOWN</td><td>센서 분리 시 <b>NOT_CONNECTED 또는 READ_TIMEOUT</b>이어야 하고 값은 <code>valid=False</code>여야 한다.</td></tr>
+<tr><td><code>BaseSensor</code> 추상 메서드</td><td><code>connect()</code>, <code>read() -> InferenceResult</code>, <code>close()</code></td><td>기기 테스트는 이 3개와 <code>health()</code>를 저장된 로그로 재생해 검증한다.</td></tr>
+<tr><td><code>SensorHealth</code></td><td>sensor_id, connected, state, last_read_ts, age_sec, read_count, error_count, last_error</td><td><code>stale_sec</code>(기본 5초) 초과 시 <code>STALE</code>로 전이되는지 확인한다.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>2. 진행 전 확인이 필요한 사항</h2>
+<div class="box warn">
+  <h4>아래 답변 전에는 1단계 이후로 진행하지 않는다</h4>
+  <p class="sub" style="margin-top:6px">핀 번호·포트·보드·전원은 <b>추측하면 하드웨어가 망가진다.</b> 모르는 항목은 "모름"이라고 답하면 확인 절차부터 계획에 넣는다.</p>
+</div>
+<div class="tblwrap">
+<table>
+<thead><tr><th>번호</th><th>질문</th><th>왜 필요한가</th></tr></thead>
+<tbody>
+<tr><td class="num">Q1</td><td>SCD40과 PIR을 <b>각각 어느 보드</b>에 붙일 것인가? (ESP32 / 라즈베리파이 5)</td><td>캡처 경로가 완전히 달라진다. ESP32면 펌웨어 수정 + 시리얼 캡처, Pi면 Python I2C/GPIO 직접 읽기.</td></tr>
+<tr><td class="num">Q2</td><td>실물 ESP32 보드 모델은? (<code>main.cpp</code>는 esp-wroom-32, 런북은 XIAO ESP32-C6)</td><td>핀 이름(D4/D5/D0 vs GPIO21/22)과 전압 규격이 다르다.</td></tr>
+<tr><td class="num">Q3</td><td>현재 ESP32 펌웨어에 SCD40/PIR 읽기 코드가 이미 있는가? 있다면 어느 파일인가?</td><td>없으면 펌웨어에 센서 필드를 추가해야 하고, 그러면 재플래싱 절차가 계획에 들어간다.</td></tr>
+<tr><td class="num">Q4</td><td>SCD40 배선 실제 핀: SDA / SCL이 각각 어느 핀에 꽂혀 있는가? (아직 안 꽂았으면 "미배선")</td><td><code>WIRING.md</code>의 핵심 내용이며, 이후 명령의 I2C 버스 번호와 직결된다.</td></tr>
+<tr><td class="num">Q5</td><td>SCD40 breakout <b>제품명</b>과 전원 핀 실크 표기는? (<code>VIN</code> / <code>VDD</code> / <code>3V3</code>) 레귤레이터·레벨시프터 유무는?</td><td>5V를 넣으면 안 되는 보드에 5V를 넣으면 센서가 죽는다. 런북 §6-3 필수 확인 항목.</td></tr>
+<tr><td class="num">Q6</td><td>PIR 모듈 정확한 모델명(HC-SR501?)과 <b>OUT 핀 HIGH 전압 실측값</b>은? VCC는 5V인가 3.3V인가?</td><td>OUT이 3.3V를 넘으면 레벨시프터 없이 MCU에 직결 금지(런북 §7-2).</td></tr>
+<tr><td class="num">Q7</td><td>PIR OUT을 연결할 핀 번호, 그리고 모듈의 <b>홀드타임/감도 볼륨</b>과 <b>재트리거 점퍼(H/L)</b> 현재 설정은?</td><td>검출 지연·검출률 해석에 반드시 필요하다. 홀드타임이 길면 10회 반복 간격을 그에 맞춰야 한다.</td></tr>
+<tr><td class="num">Q8</td><td>캡처 스크립트를 <b>어디서</b> 실행하는가? (Windows PC에서 USB 시리얼 / 라즈베리파이에서 SSH)</td><td>PowerShell 명령의 형태가 달라진다. Pi 실행이면 SSH 원격 명령으로 감싼다.</td></tr>
+<tr><td class="num">Q9</td><td>Windows PC에서 ESP32가 잡히는 <b>COM 포트 번호</b>는? (예: COM5)</td><td><code>capture_*.py --port</code> 인자. 2단계에서 목록을 뽑는 명령으로 같이 확인할 수 있다.</td></tr>
+<tr><td class="num">Q10</td><td>라즈베리파이 접속 방법: <b>IP 주소, 사용자 계정, SSH 키 사용 여부</b>. (비밀번호는 알려주지 말 것 — 필요 시 본인이 직접 입력)</td><td>Pi에서 측정하거나 Pi로 파일을 가져올 때 필요.</td></tr>
+<tr><td class="num">Q11</td><td>현재 미커밋 상태인 <code>devices/mmwave/firmware/capture_serial.py</code>(수정), <code>monitor_serial.py</code>·<code>logs/live/</code>(미추적)를 어떻게 할까? (그대로 두기 / 별도 커밋 / stash)</td><td>브랜치를 파기 전에 정리해야 CO2·PIR 커밋에 섞이지 않는다.</td></tr>
+<tr><td class="num">Q12</td><td>배선 사진 촬영이 가능한가? 촬영본을 어디에 두면 되는가?</td><td><code>WIRING.md</code>에 사진이 요구 산출물로 명시되어 있다.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>3. 만들 디렉터리 구조 (mmwave와 동일 형태)</h2>
+<pre><code>devices/co2/                          devices/pir/
+├─ docs/                              ├─ docs/
+│  ├─ WIRING.md                       │  ├─ WIRING.md
+│  ├─ images/                         │  ├─ images/
+│  └─ VERIFICATION_REPORT_YYYY-MM-DD.md  │  └─ VERIFICATION_REPORT_YYYY-MM-DD.md
+├─ firmware/                          ├─ firmware/
+│  ├─ capture_scd40.py                │  ├─ capture_pir.py
+│  ├─ analyze_scd40_log.py            │  ├─ analyze_pir_log.py
+│  ├─ logs/                           │  ├─ logs/
+│  │  ├─ diagnostics/                 │  │  ├─ diagnostics/
+│  │  ├─ baseline/                    │  │  ├─ baseline/
+│  │  ├─ scenario/                    │  │  ├─ scenario/
+│  │  └─ fault/                       │  │  └─ fault/
+│  └─ analysis/*_summary.json         │  └─ analysis/*_summary.json
+├─ src/ (기존)                        ├─ src/ (기존)
+└─ tests/test_co2_contract.py         └─ tests/test_pir_contract.py</code></pre>
+
+<h2>4. 단계 요약표</h2>
+<div class="tblwrap">
+<table>
+<thead><tr><th>단계</th><th>트랙</th><th>이름</th><th>핵심 산출물</th></tr></thead>
+<tbody>
+<tr><td class="num">S1</td><td>공통</td><td>하드웨어 정보 확정</td><td>Q1~Q12 답변 (이후 모든 문서의 근거)</td></tr>
+<tr><td class="num">S2</td><td>공통</td><td>작업 트리 정리 · CO2 브랜치 생성 · 디렉터리 골격 · <code>.gitattributes</code> 보강</td><td><code>feature/co2-scd40-verification</code>, 빈 디렉터리 구조</td></tr>
+<tr><td class="num">S3</td><td>공통</td><td>캡처 환경 점검 (Python, pyserial, COM 포트 / SSH)</td><td>실행 가능 확인 로그</td></tr>
+<tr><td class="num">S4</td><td>CO2</td><td>SCD40 배선 + 사진 + <code>WIRING.md</code> 초안</td><td><code>devices/co2/docs/WIRING.md</code>, <code>docs/images/</code></td></tr>
+<tr><td class="num">S5</td><td>CO2</td><td>원시 판독 경로 확보 (펌웨어 필드 추가 또는 Pi I2C 리더)</td><td>펌웨어 패치 또는 리더 코드</td></tr>
+<tr><td class="num">S6</td><td>CO2</td><td><code>capture_scd40.py</code> 작성</td><td><code>devices/co2/firmware/capture_scd40.py</code></td></tr>
+<tr><td class="num">S7</td><td>CO2</td><td>헬스체크 60초 (0x62 검출, CRC 오류 0)</td><td><code>logs/diagnostics/*_healthcheck_60s.jsonl</code></td></tr>
+<tr><td class="num">S8</td><td>CO2</td><td>워밍업 후 실내 baseline 5분</td><td><code>logs/baseline/*_indoor_baseline_300s.jsonl</code></td></tr>
+<tr><td class="num">S9</td><td>CO2</td><td>입김 주입 → 상승·복귀 시나리오</td><td><code>logs/scenario/*_breath_injection.jsonl</code></td></tr>
+<tr><td class="num">S10</td><td>CO2</td><td>센서 분리 → 결측 표기 시나리오</td><td><code>logs/fault/*_disconnect.jsonl</code></td></tr>
+<tr><td class="num">S11</td><td>CO2</td><td><code>analyze_scd40_log.py</code> 작성 및 실행</td><td><code>analysis/*_summary.json</code> 4종</td></tr>
+<tr><td class="num">S12</td><td>CO2</td><td>계약 테스트 작성·실행 (저장 로그 리플레이)</td><td><code>devices/co2/tests/test_co2_contract.py</code></td></tr>
+<tr><td class="num">S13</td><td>CO2</td><td>검증 보고서 작성 · <code>WIRING.md</code> 확정</td><td><code>docs/VERIFICATION_REPORT_YYYY-MM-DD.md</code></td></tr>
+<tr><td class="num">S14</td><td>CO2</td><td>커밋 · 푸시 · PR (승인 후)</td><td>원격 브랜치 + PR</td></tr>
+<tr><td class="num">S15</td><td>PIR</td><td><code>main</code>에서 PIR 브랜치 생성 · 디렉터리 골격</td><td><code>feature/pir-verification</code></td></tr>
+<tr><td class="num">S16</td><td>PIR</td><td>OUT 전압 실측 → 배선 + 사진 + <code>WIRING.md</code> 초안</td><td><code>devices/pir/docs/WIRING.md</code></td></tr>
+<tr><td class="num">S17</td><td>PIR</td><td>원시 판독 경로 확보 + <code>capture_pir.py</code> 작성</td><td><code>devices/pir/firmware/capture_pir.py</code></td></tr>
+<tr><td class="num">S18</td><td>PIR</td><td>전원 인가 후 워밍업 60초 캡처</td><td><code>logs/diagnostics/*_warmup_60s.jsonl</code></td></tr>
+<tr><td class="num">S19</td><td>PIR</td><td>무동작 5분 오검출 0 확인</td><td><code>logs/baseline/*_no_motion_300s.jsonl</code></td></tr>
+<tr><td class="num">S20</td><td>PIR</td><td>동작 10회 반복 → 검출률·검출 지연</td><td><code>logs/scenario/*_motion_trials_10.jsonl</code> + 큐 파일</td></tr>
+<tr><td class="num">S21</td><td>PIR</td><td>센서 분리 → 결측 처리 확인</td><td><code>logs/fault/*_disconnect.jsonl</code></td></tr>
+<tr><td class="num">S22</td><td>PIR</td><td><code>analyze_pir_log.py</code> 작성 및 실행</td><td><code>analysis/*_summary.json</code> 4종</td></tr>
+<tr><td class="num">S23</td><td>PIR</td><td>계약 테스트 작성·실행</td><td><code>devices/pir/tests/test_pir_contract.py</code></td></tr>
+<tr><td class="num">S24</td><td>PIR</td><td>검증 보고서 작성</td><td><code>docs/VERIFICATION_REPORT_YYYY-MM-DD.md</code></td></tr>
+<tr><td class="num">S25</td><td>PIR</td><td>커밋 · 푸시 · PR (승인 후)</td><td>원격 브랜치 + PR</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>5. 단계별 상세</h2>
+<p class="sub"><code>&lt;확정 후&gt;</code>로 표시된 명령은 S1 답변에 따라 값이 정해진다. 그 전에는 실행하지 않는다.</p>
+
+<!-- S1 -->
+<div class="step track-common">
+  <div class="hd">S1. 하드웨어 정보 확정 <span class="tag">공통</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>추측 없이 배선표·캡처 명령을 확정한다.</td></tr>
+    <tr><th>내 물리 작업</th><td>보드·모듈 실물을 보고 §2의 Q1~Q12에 답한다. 모르면 "모름"으로 답한다. SCD40 breakout과 PIR 모듈의 실크(핀 이름) 사진을 찍어두면 좋다.</td></tr>
+    <tr><th>AI 작업</th><td>답변을 정리하고 S2 이후 명령의 인자(포트·핀·경로)를 확정한다. "모름" 항목은 확인 절차를 별도 단계로 추가한다.</td></tr>
+    <tr><th>PowerShell</th><td>없음 (대화로 진행)</td></tr>
+    <tr><th>통과 기준</th><td>Q1·Q2·Q8이 확정됨. 나머지는 "모름"이어도 확인 절차로 대체 가능.</td></tr>
+    <tr><th>산출물</th><td>없음 (S4/S16의 <code>WIRING.md</code>에 반영)</td></tr>
+  </table></div></div>
+</div>
+
+<!-- S2 -->
+<div class="step track-common">
+  <div class="hd">S2. 작업 트리 정리 · 브랜치 · 디렉터리 골격 <span class="tag">공통</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>깨끗한 브랜치에서 시작하고, 로그가 CRLF 변환으로 오염되지 않게 막는다.</td></tr>
+    <tr><th>내 물리 작업</th><td>없음</td></tr>
+    <tr><th>AI 작업</th><td>Q11 답변에 따라 미커밋 변경 처리 → <code>main</code> 최신화 → CO2 브랜치 생성 → 디렉터리·<code>.gitkeep</code> 생성 → <code>.gitattributes</code>에 <code>devices/*/firmware/logs/**/*.jsonl binary</code> 규칙 추가.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>git -C "&lt;repo&gt;" fetch origin
+git -C "&lt;repo&gt;" switch -c feature/co2-scd40-verification origin/main</code></pre>디렉터리 생성 명령은 S2 실행 시 함께 제시</td></tr>
+    <tr><th>통과 기준</th><td><code>git status</code>가 예상대로 나오고, 브랜치가 <code>feature/co2-scd40-verification</code>이며 <code>main</code>이 아니다.</td></tr>
+    <tr><th>산출물</th><td>브랜치, 빈 디렉터리 구조, <code>.gitattributes</code> 갱신</td></tr>
+  </table></div></div>
+</div>
+
+<!-- S3 -->
+<div class="step track-common">
+  <div class="hd">S3. 캡처 환경 점검 <span class="tag">공통</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>측정 직전에 환경 문제로 실패하는 것을 막는다.</td></tr>
+    <tr><th>내 물리 작업</th><td>ESP32(또는 Pi)를 PC에 연결한 상태로 둔다.</td></tr>
+    <tr><th>AI 작업</th><td>결과를 보고 누락 패키지·포트 문제를 진단한다.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python --version
+python -c "import serial; print(serial.__version__)"
+Get-CimInstance Win32_SerialPort | Select-Object DeviceID, Description</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>Python 3.x 확인, <code>pyserial</code> 임포트 성공, ESP32 COM 포트가 목록에 보임 (Pi 실행이면 SSH 접속 성공).</td></tr>
+    <tr><th>산출물</th><td>없음 (확인용)</td></tr>
+  </table></div></div>
+</div>
+
+<!-- S4 -->
+<div class="step track-co2">
+  <div class="hd">S4. SCD40 배선 + 사진 + WIRING.md 초안 <span class="tag">CO2</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>제3자가 재현할 수 있는 배선 근거를 남긴다.</td></tr>
+    <tr><th>내 물리 작업</th><td>① 모든 전원 분리 ② 무전원에서 VCC-GND 저항 측정(0Ω 근처면 중단) ③ SDA/SCL/GND 연결(20cm 이내) ④ 전원 핀은 Q5 확인 결과에 따라 결정 — <b>정체 불명 보드에 5V 금지</b> ⑤ 사진 3장: 전원 전 전체 / 핀 근접 / 전원 후 상태 LED.</td></tr>
+    <tr><th>AI 작업</th><td>답변·사진 파일명을 받아 <code>WIRING.md</code> 초안 작성 (보드, 핀 대응표, 공급 전압, 풀업 유무, I2C 주소, 사진 링크).</td></tr>
+    <tr><th>PowerShell</th><td>사진 복사 명령 <code>&lt;확정 후&gt;</code></td></tr>
+    <tr><th>통과 기준</th><td>단락 없음, 사진 3장 확보, 배선표의 모든 칸이 실측/실물 확인으로 채워짐(추정 없음).</td></tr>
+    <tr><th>산출물</th><td><code>devices/co2/docs/WIRING.md</code>, <code>devices/co2/docs/images/*</code></td></tr>
+  </table></div></div>
+</div>
+
+<!-- S5 -->
+<div class="step track-co2">
+  <div class="hd">S5. SCD40 원시 판독 경로 확보 <span class="tag">CO2</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>실제 I2C로 읽은 값이 타임스탬프와 함께 호스트까지 도달하게 한다. (현재 <code>co2_adapter.py</code>는 상수 스텁이라 그대로는 증거가 될 수 없다.)</td></tr>
+    <tr><th>내 물리 작업</th><td>ESP32 경로면 펌웨어 재플래싱, Pi 경로면 I2C 활성화(<code>raspi-config</code>) 및 <code>i2cdetect</code> 실행.</td></tr>
+    <tr><th>AI 작업</th><td>Q1/Q3에 따라 ESP 펌웨어에 SCD40 필드 추가 코드를 쓰거나, Pi용 I2C 리더를 작성한다. 오류는 <code>null + error_code</code>로 내보내도록 한다(런북 §8-4).</td></tr>
+    <tr><th>PowerShell</th><td><code>&lt;확정 후&gt;</code></td></tr>
+    <tr><th>통과 기준</th><td>I2C 스캔에서 <code>0x62</code> 검출. 콘솔에 실제로 변하는 ppm/온도/습도가 출력됨.</td></tr>
+    <tr><th>산출물</th><td>펌웨어 패치 또는 리더 코드</td></tr>
+  </table></div></div>
+</div>
+
+<!-- S6 -->
+<div class="step track-co2">
+  <div class="hd">S6. capture_scd40.py 작성 <span class="tag">CO2</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>원시 로그를 <b>가공 없이</b> JSONL로 저장한다. (<code>devices/mmwave/firmware/capture_serial.py</code>와 동일 철학)</td></tr>
+    <tr><th>내 물리 작업</th><td>없음</td></tr>
+    <tr><th>AI 작업</th><td><code>--port --duration --output</code> 인자, UTC 타임스탬프 + 단조 시각, 수신 레코드 무변형 기록, 결측·타임아웃 시 <code>null + error_code</code> 기록, 종료 시 레코드 수 출력.</td></tr>
+    <tr><th>PowerShell</th><td>없음 (파일 작성)</td></tr>
+    <tr><th>통과 기준</th><td>스크립트가 <code>--help</code>로 정상 실행되고, 값 보정·평활·결측 대체 로직이 들어있지 않다.</td></tr>
+    <tr><th>산출물</th><td><code>devices/co2/firmware/capture_scd40.py</code></td></tr>
+  </table></div></div>
+</div>
+
+<!-- S7 -->
+<div class="step track-co2">
+  <div class="hd">S7. 헬스체크 60초 <span class="tag">CO2</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>본 측정 전에 통신이 안정적인지 확인한다.</td></tr>
+    <tr><th>내 물리 작업</th><td>센서 근처에서 숨을 쉬지 말고 60초 대기.</td></tr>
+    <tr><th>AI 작업</th><td>레코드 수·결측·CRC 오류를 확인하고 이상이면 원인을 진단한다.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python devices/co2/firmware/capture_scd40.py `
+  --port &lt;COM&gt; --duration 60 `
+  --output devices/co2/firmware/logs/diagnostics/2026-MM-DD_healthcheck_60s.jsonl</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>재부팅 0회, I2C timeout/CRC 오류 0회, 결측 없이 값 갱신.</td></tr>
+    <tr><th>산출물</th><td><code>logs/diagnostics/*_healthcheck_60s.jsonl</code></td></tr>
+  </table></div></div>
+</div>
+
+<!-- S8 -->
+<div class="step track-co2">
+  <div class="hd">S8. 워밍업 후 실내 baseline 5분 <span class="tag">CO2</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>기준 실내 농도와 노이즈 수준을 확보한다.</td></tr>
+    <tr><th>내 물리 작업</th><td>전원 인가 후 <b>5분 워밍업</b>(런북 §6-6). 그다음 센서에서 1m 이상 떨어져 5분간 유지. 환기·재실 인원·창문 상태를 기록해 알려준다. 측정 중 센서 쪽으로 숨을 쉬지 않는다.</td></tr>
+    <tr><th>AI 작업</th><td>명령 제공 후 결과 검토.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python devices/co2/firmware/capture_scd40.py `
+  --port &lt;COM&gt; --duration 300 `
+  --output devices/co2/firmware/logs/baseline/2026-MM-DD_indoor_baseline_300s.jsonl</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>레코드 결측률 &lt; 1%, 비현실적 점프 없음, 값이 물리적으로 타당한 범위(대략 400~2000ppm 실내).</td></tr>
+    <tr><th>산출물</th><td><code>logs/baseline/*_indoor_baseline_300s.jsonl</code></td></tr>
+  </table></div></div>
+</div>
+
+<!-- S9 -->
+<div class="step track-co2">
+  <div class="hd">S9. 입김 주입 → 상승·복귀 <span class="tag">CO2</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>센서가 <b>실제 자극에 반응</b>한다는 것을 보인다. 상수 스텁으로는 절대 나올 수 없는 증거다.</td></tr>
+    <tr><th>내 물리 작업</th><td>구간을 시계로 지키고 각 전환 시각을 메모: ①0~60초 무자극 ②60~90초 센서 10cm 앞에서 천천히 날숨 ③90~300초 자리를 떠나 복귀 관찰. 시작·종료 시각을 알려준다.</td></tr>
+    <tr><th>AI 작업</th><td>구간별 통계로 상승폭·복귀 시상수를 계산한다.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python devices/co2/firmware/capture_scd40.py `
+  --port &lt;COM&gt; --duration 300 `
+  --output devices/co2/firmware/logs/scenario/2026-MM-DD_breath_injection.jsonl</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>자극 구간 최대값이 baseline 평균 + 200ppm 이상 상승하고, 이후 baseline 방향으로 단조 감소(복귀)한다.</td></tr>
+    <tr><th>산출물</th><td><code>logs/scenario/*_breath_injection.jsonl</code></td></tr>
+  </table></div></div>
+</div>
+
+<!-- S10 -->
+<div class="step track-co2">
+  <div class="hd">S10. 센서 분리 → 결측 표기 <span class="tag">CO2</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>결측이 <b>0으로 위조되지 않고</b> 결측 상태로 남는지 증명한다.</td></tr>
+    <tr><th>내 물리 작업</th><td>캡처 시작 → 30초 정상 기록 → <b>SDA(또는 SCL) 점퍼 1개만</b> 뽑음 → 60초 유지 → 다시 꽂음 → 30초 기록. 전원선은 뽑지 않는다(단락 위험). 뽑고 꽂은 시각을 알려준다.</td></tr>
+    <tr><th>AI 작업</th><td>결측 구간의 값이 <code>null</code>이고 상태가 <code>NOT_CONNECTED</code>/<code>READ_TIMEOUT</code>인지 확인한다.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python devices/co2/firmware/capture_scd40.py `
+  --port &lt;COM&gt; --duration 120 `
+  --output devices/co2/firmware/logs/fault/2026-MM-DD_disconnect.jsonl</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>결측 구간에 <code>co2_ppm = 0</code>인 레코드가 <b>0개</b>. <code>null</code> 또는 명시적 error_code로만 기록됨. 재연결 후 정상 복귀.</td></tr>
+    <tr><th>산출물</th><td><code>logs/fault/*_disconnect.jsonl</code></td></tr>
+  </table></div></div>
+</div>
+
+<!-- S11 -->
+<div class="step track-co2">
+  <div class="hd">S11. 분석 스크립트 실행 <span class="tag">CO2</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>재현 가능한 수치 요약을 남긴다. (<code>analyze_mmwave_log.py</code>와 동형)</td></tr>
+    <tr><th>내 물리 작업</th><td>없음</td></tr>
+    <tr><th>AI 작업</th><td><code>analyze_scd40_log.py</code> 작성: 샘플 수, 결측 수·결측률, ppm 평균/중앙/표준편차/최소/최대, 샘플링 주기, CRC·파싱 오류 수, 구간별 통계, 판정(PASS/FAIL).</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python devices/co2/firmware/analyze_scd40_log.py `
+  devices/co2/firmware/logs/baseline/2026-MM-DD_indoor_baseline_300s.jsonl `
+  --output devices/co2/firmware/analysis/2026-MM-DD_indoor_baseline_300s_summary.json</code></pre>(4개 로그에 대해 반복)</td></tr>
+    <tr><th>통과 기준</th><td>summary 4개 생성. 각 파일에 <code>records</code>, <code>missing_rate</code>, 통계, <code>verdict</code>가 존재.</td></tr>
+    <tr><th>산출물</th><td><code>devices/co2/firmware/analysis/*_summary.json</code> ×4</td></tr>
+  </table></div></div>
+</div>
+
+<!-- S12 -->
+<div class="step track-co2">
+  <div class="hd">S12. 계약 테스트 <span class="tag">CO2</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>저장된 실측 로그를 재생해 <code>BaseSensor</code> 계약 준수를 자동 검증한다.</td></tr>
+    <tr><th>내 물리 작업</th><td>없음</td></tr>
+    <tr><th>AI 작업</th><td><code>test_co2_contract.py</code> 작성: ①<code>connect/read/close</code> 구현 확인 ②baseline 로그 리플레이 시 <code>valid=True</code>, ppm 범위 타당 ③fault 로그 리플레이 시 <code>valid=False</code>이고 상태가 <code>NOT_CONNECTED</code>/<code>READ_TIMEOUT</code>, <b>score가 0으로 위조되지 않음</b> ④<code>stale_sec</code> 초과 시 <code>STALE</code> 전이 ⑤로그 파일이 실측본임을 파일 해시로 고정.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python -m pytest devices/co2/tests -v</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>전 테스트 통과. mock을 쓰지 않고 저장 로그만 사용.</td></tr>
+    <tr><th>산출물</th><td><code>devices/co2/tests/test_co2_contract.py</code></td></tr>
+  </table></div></div>
+</div>
+
+<!-- S13 -->
+<div class="step track-co2">
+  <div class="hd">S13. 검증 보고서 작성 <span class="tag">CO2</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>측정 조건·기대값·실측값·합격 여부를 한 문서로 묶는다.</td></tr>
+    <tr><th>내 물리 작업</th><td>환경 정보 제공(실내 면적, 재실 인원, 환기 상태, 기온, 측정 시각).</td></tr>
+    <tr><th>AI 작업</th><td>보고서 작성: 장비·펌웨어 버전, 배선 버전, 시나리오별 조건/기대/실측/판정 표, 로그 파일 경로와 SHA-256, 미달 항목과 사유.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>Get-FileHash devices/co2/firmware/logs/*/*.jsonl -Algorithm SHA256 |
+  Select-Object Hash, Path</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>4개 시나리오 전부 표에 있고, 각 행의 실측값이 로그에서 계산된 값과 일치.</td></tr>
+    <tr><th>산출물</th><td><code>devices/co2/docs/VERIFICATION_REPORT_2026-MM-DD.md</code></td></tr>
+  </table></div></div>
+</div>
+
+<!-- S14 -->
+<div class="step track-co2">
+  <div class="hd">S14. 커밋 · 푸시 · PR <span class="tag">CO2</span> <span class="tag">승인 필수</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>제3자가 GitHub에서 증거를 확인할 수 있게 한다.</td></tr>
+    <tr><th>내 물리 작업</th><td>변경 목록 확인 후 승인.</td></tr>
+    <tr><th>AI 작업</th><td><code>git status</code>·<code>git diff --stat</code>을 먼저 보여주고 승인받은 뒤에만 커밋·푸시.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>git -C "&lt;repo&gt;" add devices/co2
+git -C "&lt;repo&gt;" commit -m "&lt;메시지&gt;"
+git -C "&lt;repo&gt;" push -u origin feature/co2-scd40-verification</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>원격 브랜치에 로그·summary·테스트·문서가 모두 올라가고 <code>main</code>은 변경되지 않음.</td></tr>
+    <tr><th>산출물</th><td>원격 브랜치, PR</td></tr>
+  </table></div></div>
+</div>
+
+<!-- PIR -->
+<div class="step track-pir">
+  <div class="hd">S15. PIR 브랜치 생성 · 디렉터리 골격 <span class="tag">PIR</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>CO2와 독립된 브랜치에서 PIR 증거를 만든다.</td></tr>
+    <tr><th>내 물리 작업</th><td>없음</td></tr>
+    <tr><th>AI 작업</th><td><code>origin/main</code>에서 <code>feature/pir-verification</code> 생성, <code>devices/pir/</code> 하위 구조 생성.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>git -C "&lt;repo&gt;" switch -c feature/pir-verification origin/main</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>브랜치 전환 성공, 작업 트리 깨끗함.</td></tr>
+    <tr><th>산출물</th><td>브랜치, 디렉터리</td></tr>
+  </table></div></div>
+</div>
+
+<div class="step track-pir">
+  <div class="hd">S16. OUT 전압 실측 → 배선 + 사진 + WIRING.md <span class="tag">PIR</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>MCU 입력 파괴 없이 안전하게 연결하고 근거를 남긴다.</td></tr>
+    <tr><th>내 물리 작업</th><td>① 전원 분리 ② PIR VCC/GND만 먼저 연결하고 <b>OUT 핀 HIGH 전압을 멀티미터로 실측</b> ③ 3.3V 초과면 중단하고 보고(분압/레벨시프터 필요) ④ 안전 확인 후 OUT을 지정 핀에 연결 ⑤ 감도·홀드타임·재트리거 점퍼 설정 기록 ⑥ 사진 3장 ⑦ 히터·직사광·환풍기에서 이격.</td></tr>
+    <tr><th>AI 작업</th><td>실측값 기반으로 <code>WIRING.md</code> 작성 (핀 대응표, VCC, OUT HIGH 실측 전압, 홀드타임, 재트리거 모드, 설치 높이·각도, 사진).</td></tr>
+    <tr><th>PowerShell</th><td>사진 복사 <code>&lt;확정 후&gt;</code></td></tr>
+    <tr><th>통과 기준</th><td>OUT HIGH 실측값이 문서에 기록됨. 3.3V 초과 시 보호 회로 없이 연결하지 않았음.</td></tr>
+    <tr><th>산출물</th><td><code>devices/pir/docs/WIRING.md</code>, <code>docs/images/*</code></td></tr>
+  </table></div></div>
+</div>
+
+<div class="step track-pir">
+  <div class="hd">S17. 원시 판독 경로 + capture_pir.py <span class="tag">PIR</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>엣지 타임스탬프를 놓치지 않고 기록한다. (검출 지연 측정의 정확도가 여기서 결정된다.)</td></tr>
+    <tr><th>내 물리 작업</th><td>필요 시 펌웨어 재플래싱 또는 Pi GPIO 준비.</td></tr>
+    <tr><th>AI 작업</th><td>20~50ms 폴링 또는 엣지 인터럽트로 상태 변화 시각을 밀리초 단위 기록. 매 레코드에 <code>seq</code>, 단조 시각, UTC 시각, 원시 GPIO 레벨. 큐(cue) 기능으로 동작 시작 시각을 별도 파일에 남겨 지연 계산 기준을 만든다.</td></tr>
+    <tr><th>PowerShell</th><td>없음 (파일 작성)</td></tr>
+    <tr><th>통과 기준</th><td>손을 흔들면 콘솔에서 상태가 실제로 변한다.</td></tr>
+    <tr><th>산출물</th><td><code>devices/pir/firmware/capture_pir.py</code></td></tr>
+  </table></div></div>
+</div>
+
+<div class="step track-pir">
+  <div class="hd">S18. 워밍업 60초 <span class="tag">PIR</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>HC-SR501 계열은 전원 인가 직후 오출력이 있다. 워밍업 구간을 증거로 남긴다.</td></tr>
+    <tr><th>내 물리 작업</th><td>전원을 넣는 즉시 캡처 시작하고 <b>센서 시야에서 벗어난 채</b> 60초 대기.</td></tr>
+    <tr><th>AI 작업</th><td>워밍업 중 토글 횟수를 세어 안정화 시점을 판단.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python devices/pir/firmware/capture_pir.py `
+  --port &lt;COM&gt; --duration 60 `
+  --output devices/pir/firmware/logs/diagnostics/2026-MM-DD_warmup_60s.jsonl</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>60초 끝 시점에서 출력이 LOW로 안정. 안정되지 않으면 대기 시간을 늘리고 재측정.</td></tr>
+    <tr><th>산출물</th><td><code>logs/diagnostics/*_warmup_60s.jsonl</code></td></tr>
+  </table></div></div>
+</div>
+
+<div class="step track-pir">
+  <div class="hd">S19. 무동작 5분 · 오검출 0 <span class="tag">PIR</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>오검출률 0을 실측으로 보인다.</td></tr>
+    <tr><th>내 물리 작업</th><td>워밍업 직후 이어서 측정. <b>센서 시야 밖으로 완전히 이동</b>해 5분간 정지. 문 개폐·에어컨·직사광 변화가 없도록 한다. 실내 조건을 기록해 알려준다.</td></tr>
+    <tr><th>AI 작업</th><td>HIGH 전이 횟수를 센다.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python devices/pir/firmware/capture_pir.py `
+  --port &lt;COM&gt; --duration 300 `
+  --output devices/pir/firmware/logs/baseline/2026-MM-DD_no_motion_300s.jsonl</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>HIGH 전이 <b>0회</b>. 1회라도 있으면 실패로 기록하고 원인(열원·바람·감도)을 진단한 뒤 재측정.</td></tr>
+    <tr><th>산출물</th><td><code>logs/baseline/*_no_motion_300s.jsonl</code></td></tr>
+  </table></div></div>
+</div>
+
+<div class="step track-pir">
+  <div class="hd">S20. 동작 10회 반복 · 검출률과 지연 <span class="tag">PIR</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>검출률과 검출 지연을 수치로 남긴다.</td></tr>
+    <tr><th>내 물리 작업</th><td>스크립트의 큐 신호에 맞춰 10회 반복: 큐가 울리면 <b>정해진 위치에서 센서 앞을 횡방향으로 1회 통과</b>. 통과 사이에는 홀드타임 + 5초 이상 시야 밖에서 대기(간격은 Q7의 홀드타임에 따라 확정). 거리·각도·보행 속도를 매회 동일하게 유지하고 조건을 알려준다.</td></tr>
+    <tr><th>AI 작업</th><td>큐 시각과 HIGH 전이 시각을 매칭해 검출률과 지연(평균·중앙·최대)을 계산.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python devices/pir/firmware/capture_pir.py `
+  --port &lt;COM&gt; --duration &lt;확정&gt; --cue-count 10 --cue-interval &lt;확정&gt; `
+  --output devices/pir/firmware/logs/scenario/2026-MM-DD_motion_trials_10.jsonl `
+  --cue-output devices/pir/firmware/logs/scenario/2026-MM-DD_motion_trials_10_cues.jsonl</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>10회 중 <b>10회 검출</b>(런북 §7 기준 95% 이상). 검출 지연 중앙값이 기록되고 이상치 사유가 설명됨.</td></tr>
+    <tr><th>산출물</th><td><code>logs/scenario/*_motion_trials_10.jsonl</code> + <code>*_cues.jsonl</code></td></tr>
+  </table></div></div>
+</div>
+
+<div class="step track-pir">
+  <div class="hd">S21. 센서 분리 → 결측 처리 <span class="tag">PIR</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>PIR은 LOW와 "연결 없음"이 겉보기에 같다. 이 둘을 구분해 기록하는지 증명한다.</td></tr>
+    <tr><th>내 물리 작업</th><td>캡처 중 30초 정상 → <b>OUT 선만</b> 분리 60초 → 재연결 30초. 시각을 알려준다. (VCC/GND는 유지)</td></tr>
+    <tr><th>AI 작업</th><td>결측 구간이 <code>motion=false</code>가 아니라 <code>null</code> + <code>NOT_CONNECTED</code>로 기록되는지 확인한다. 하드웨어만으로 구분이 불가능하면 그 사실을 보고서에 <b>한계로 명시</b>하고, 어댑터 레벨에서 어떤 근거(신호 없음 타임아웃 등)로 결측을 판정하는지 문서화한다.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python devices/pir/firmware/capture_pir.py `
+  --port &lt;COM&gt; --duration 120 `
+  --output devices/pir/firmware/logs/fault/2026-MM-DD_disconnect.jsonl</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>결측 구간이 정상 LOW와 구분되어 기록되거나, 구분 불가 사실과 대응 설계가 문서화됨.</td></tr>
+    <tr><th>산출물</th><td><code>logs/fault/*_disconnect.jsonl</code></td></tr>
+  </table></div></div>
+</div>
+
+<div class="step track-pir">
+  <div class="hd">S22. 분석 스크립트 실행 <span class="tag">PIR</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>PIR 지표를 재현 가능하게 요약한다.</td></tr>
+    <tr><th>내 물리 작업</th><td>없음</td></tr>
+    <tr><th>AI 작업</th><td><code>analyze_pir_log.py</code>: 샘플 수, 폴링 주기, 결측률, HIGH 전이 횟수, HIGH 유지시간 통계, 검출률, 검출 지연 통계, 판정.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python devices/pir/firmware/analyze_pir_log.py `
+  devices/pir/firmware/logs/baseline/2026-MM-DD_no_motion_300s.jsonl `
+  --output devices/pir/firmware/analysis/2026-MM-DD_no_motion_300s_summary.json</code></pre>(4개 로그 반복)</td></tr>
+    <tr><th>통과 기준</th><td>summary 4개 생성, 각 파일에 판정 결과 포함.</td></tr>
+    <tr><th>산출물</th><td><code>devices/pir/firmware/analysis/*_summary.json</code> ×4</td></tr>
+  </table></div></div>
+</div>
+
+<div class="step track-pir">
+  <div class="hd">S23. 계약 테스트 <span class="tag">PIR</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>저장 로그 리플레이로 <code>PIRSensorAdapter</code>의 계약 준수를 검증한다.</td></tr>
+    <tr><th>내 물리 작업</th><td>없음</td></tr>
+    <tr><th>AI 작업</th><td>테스트 작성: ①무동작 로그 리플레이 시 <code>MOTION</code> 상태가 0회 ②동작 로그 리플레이 시 10회 검출 ③결측 로그 리플레이 시 <code>valid=False</code>이고 <code>NOT_CONNECTED</code> ④<code>no_motion_threshold_sec</code> 경과 시 <code>LONG_NO_MOTION</code> 전이 ⑤로그 해시 고정.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>python -m pytest devices/pir/tests -v</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>전 테스트 통과. mock 미사용.</td></tr>
+    <tr><th>산출물</th><td><code>devices/pir/tests/test_pir_contract.py</code></td></tr>
+  </table></div></div>
+</div>
+
+<div class="step track-pir">
+  <div class="hd">S24. 검증 보고서 작성 <span class="tag">PIR</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>측정 조건·기대값·실측값·합격 여부를 문서화한다.</td></tr>
+    <tr><th>내 물리 작업</th><td>설치 높이·각도·통과 거리·실내 조건 제공.</td></tr>
+    <tr><th>AI 작업</th><td>보고서 작성 + 로그 SHA-256 기재.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>Get-FileHash devices/pir/firmware/logs/*/*.jsonl -Algorithm SHA256 |
+  Select-Object Hash, Path</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>4개 시나리오가 모두 표에 있고 실측값이 로그와 일치.</td></tr>
+    <tr><th>산출물</th><td><code>devices/pir/docs/VERIFICATION_REPORT_2026-MM-DD.md</code></td></tr>
+  </table></div></div>
+</div>
+
+<div class="step track-pir">
+  <div class="hd">S25. 커밋 · 푸시 · PR <span class="tag">PIR</span> <span class="tag">승인 필수</span></div>
+  <div class="bd"><div class="tblwrap"><table>
+    <tr><th>목적</th><td>PIR 증거를 원격에 반영한다.</td></tr>
+    <tr><th>내 물리 작업</th><td>변경 목록 확인 후 승인.</td></tr>
+    <tr><th>AI 작업</th><td>diff 제시 → 승인 후 커밋·푸시.</td></tr>
+    <tr><th>PowerShell</th><td><pre><code>git -C "&lt;repo&gt;" add devices/pir
+git -C "&lt;repo&gt;" commit -m "&lt;메시지&gt;"
+git -C "&lt;repo&gt;" push -u origin feature/pir-verification</code></pre></td></tr>
+    <tr><th>통과 기준</th><td>원격 브랜치에 전 산출물 반영, <code>main</code> 무변경.</td></tr>
+    <tr><th>산출물</th><td>원격 브랜치, PR</td></tr>
+  </table></div></div>
+</div>
+
+<h2>6. 최종 완료 판정 체크리스트</h2>
+<div class="tblwrap">
+<table>
+<thead><tr><th>#</th><th>확인 항목</th><th>CO2</th><th>PIR</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td><code>docs/WIRING.md</code>에 보드·핀·전압·사진이 모두 실측 기반으로 있다</td><td>☐</td><td>☐</td></tr>
+<tr><td class="num">2</td><td><code>firmware/capture_*.py</code>가 원시 로그를 무변형으로 저장한다</td><td>☐</td><td>☐</td></tr>
+<tr><td class="num">3</td><td><code>firmware/logs/</code>에 4개 시나리오 실측 로그가 있다</td><td>☐</td><td>☐</td></tr>
+<tr><td class="num">4</td><td><code>firmware/analysis/*_summary.json</code>에 샘플 수·결측률·통계·판정이 있다</td><td>☐</td><td>☐</td></tr>
+<tr><td class="num">5</td><td><code>tests/</code>가 저장 로그로 <code>base_sensor.py</code> 계약을 검증하고 통과한다</td><td>☐</td><td>☐</td></tr>
+<tr><td class="num">6</td><td><code>docs/VERIFICATION_REPORT_YYYY-MM-DD.md</code>에 조건/기대/실측/합격이 있다</td><td>☐</td><td>☐</td></tr>
+<tr><td class="num">7</td><td>결측이 0으로 위조되지 않음이 로그와 테스트로 동시에 증명된다</td><td>☐</td><td>☐</td></tr>
+<tr><td class="num">8</td><td>모든 로그의 SHA-256이 보고서에 기재되어 있다</td><td>☐</td><td>☐</td></tr>
+<tr><td class="num">9</td><td>커밋에 mock·시뮬레이션 데이터가 증거로 포함되지 않았다</td><td>☐</td><td>☐</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box info">
+  <h4>측정 전 매번 확인</h4>
+  <ol>
+    <li>배선 변경 시 전원이 완전히 분리되어 있는가</li>
+    <li>이번 측정의 시나리오·시간·기대값을 알고 있는가</li>
+    <li>출력 경로가 올바른 <code>logs/</code> 하위 디렉터리인가</li>
+    <li>측정 중 개입 시각(입김 시작, 점퍼 분리 등)을 기록할 준비가 되었는가</li>
+  </ol>
+</div>
+
+<footer>
+  SafeNest 임베디드 SW 경진대회 · <code>docs/operations/SENSOR_EVIDENCE_PLAN.html</code> · 생성 2026-08-12<br>
+  관련 문서: <code>docs/operations/HARDWARE_RUNBOOK.md</code> (Gate C: SCD40, Gate D: PIR) · 기준 구조: <code>devices/mmwave/firmware/</code>
+</footer>
+
+</div>
+</body>
+</html>

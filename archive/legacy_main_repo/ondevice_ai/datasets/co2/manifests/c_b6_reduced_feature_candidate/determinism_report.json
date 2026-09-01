@@ -1,0 +1,12 @@
+{
+  "candidate_id": "C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001",
+  "data_pipeline_determinism": "PASS",
+  "float_tflite_bytes_identical_on_repeat": true,
+  "int8_tflite_bytes_identical_on_repeat": true,
+  "manifest_version": "1.0",
+  "phase": "C-B6",
+  "reference_model_fingerprint": "ceea97df33b7fa799012cc4ac5baf2a4e7d7cf063b4dbf9726ce6c04737ddd0c",
+  "status": "PASS",
+  "threshold_determinism": "PASS",
+  "threshold_result_fingerprint": "b4006c20ed18b6da754ecc80ccbf2cd1cfafbb7559b10acd88c5e88e79c78683"
+}

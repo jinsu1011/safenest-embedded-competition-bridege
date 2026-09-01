@@ -1,0 +1,35 @@
+{
+  "generated_at_kst_hint": "2026-08-22T01:33:25",
+  "thermal_npz_readable_total": 3484,
+  "thermal_npz_on_disk": 3516,
+  "recent_window_files": 500,
+  "recent_analysis_frames": 6163,
+  "recent_ai_state_counts": {
+    "NOT_HUMAN": 5879,
+    "HUMAN_NORMAL": 189,
+    "HUMAN_FALL": 95
+  },
+  "recent_human_star_frames": 284,
+  "recent_raw_span": {
+    "mean": 465.54,
+    "min": 280.0,
+    "max": 1017.0
+  },
+  "recent_hot75_pixel_count": {
+    "mean": 433.88,
+    "min": 17,
+    "max": 4067
+  },
+  "frame_shape": [
+    62,
+    80
+  ],
+  "dtype": "uint16",
+  "sample_newest_files": [
+    "20260821_163305_045966_0000010128-0000010140.npz",
+    "20260821_163307_089642_0000010141-0000010158.npz",
+    "20260821_163309_983774_0000010159-0000010171.npz",
+    "20260821_163312_008879_0000010172-0000010184.npz",
+    "20260821_163314_077573_0000010185-0000010197.npz"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "safenest.scd40.evidence-summary.v1",
+  "source": "logs/2026-08-12_preflight_30s.csv",
+  "source_sha256": "dea523b77258b8cf6f08987e575102c2aa29877fb96b8cbcf05985acd5918f2f",
+  "scenario": "preflight",
+  "sample_count": 30,
+  "valid_sample_count": 30,
+  "missing_sample_count": 0,
+  "missing_rate": 0.0,
+  "elapsed_seconds": 28.999946117401123,
+  "sample_interval_seconds": {
+    "minimum": 0.9993629455566406,
+    "maximum": 1.000655174255371,
+    "mean": 0.9999981419793491
+  },
+  "co2_ppm": {
+    "minimum": 504.0,
+    "maximum": 634.0,
+    "mean": 560.3666666666667
+  },
+  "sensor_states": {
+    "NORMAL": 30
+  },
+  "errors": {
+    "NONE": 30
+  },
+  "verdict": "PASS",
+  "verdict_reasons": [
+    "유효 표본과 계산 가능한 통계가 존재함",
+    "missing_rate=0.000000"
+  ]
+}

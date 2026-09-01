@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "mmwave": {
+    "role": "OFFLINE_CANDIDATE_NOT_RUNTIME_DEFAULT",
+    "candidate_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120",
+    "artifact": "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120_int8.tflite",
+    "sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5",
+    "input": {"shape": [1, 300, 1], "dtype": "int8", "preprocessing": "BPF_ZSCORE", "window_s": 30, "hz": 10},
+    "class_map": {"0": "NORMAL", "1": "RAPID_OR_ABNORMAL", "2": "APNEA"},
+    "artifact_status": "REAL_DATA_OFFLINE_CANDIDATE",
+    "historical_runtime_default": "models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
+    "device_domain": "NOT_COMPLETE"
+  },
+  "co2": {
+    "role": "OFFLINE_CANDIDATE_NOT_RUNTIME_DEFAULT",
+    "candidate_id": "C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001",
+    "artifact": "models/co2/candidates/c_b6/full_integer_int8.tflite",
+    "sha256": "c5969b367f5b5e28c4d27f1bdd6220f7d02da92e99604e3f85c9f1291e98dd3b",
+    "feature_order": ["CO2", "CO2_slope"],
+    "threshold": 0.43,
+    "threshold_source": "TRAIN_INTERNAL_ONLY",
+    "historical_runtime_default": "models/co2/co2_occupancy_int8_v0.1.0.tflite",
+    "occupancy_model_is_not": ["co2_safety_threshold", "sensor_health", "multisensor_risk"],
+    "device_domain": "NOT_COMPLETE"
+  },
+  "thermal": {
+    "role": "OFFLINE_CANDIDATE_IDENTITY_ONLY",
+    "candidate_id": "FULL_INT8",
+    "logical_path": "T-B4/artifacts/SMALL_CNN_BASELINE_V1_P1_full_int8.tflite",
+    "sha256": "fa9730c29535477a3994c11e664474a0ca0116afaaa172889f47446ab2ac46be",
+    "binaries_tracked_in_git": false,
+    "binary_storage": "EXTERNAL_SSD_ONLY",
+    "historical_runtime_default": "models/thermal/thermal_fall_int8_v0.1.0.tflite",
+    "human_fall_is_not": "FALL_EVENT",
+    "device_domain": "NOT_COMPLETE"
+  }
+}

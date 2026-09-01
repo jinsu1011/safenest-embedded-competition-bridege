@@ -1,0 +1,65 @@
+{
+  "schema_version": "m-c0-session-1.0",
+  "status": "pilot",
+  "session_id": "M-C0-PILOT-DESKWORK-001",
+  "subject_id": "SUBJ-001",
+  "operator_id": "OP-LOCAL-001",
+  "start_time_utc": "2026-08-14T06:20:00.299921Z",
+  "end_time_utc": "2026-08-14T06:23:00.309841Z",
+  "sensor": {
+    "model": "MR60BHA2",
+    "transport": "ESP32_UART_USB",
+    "firmware_version": "safenest-mr60-esp/1.2.0",
+    "sensor_firmware_version": "UNKNOWN_NOT_REPORTED",
+    "config_hash": "b817e8bfd5e52b18275626f7b6a9bd60098ea4b108428a5aaf63600dbc987834",
+    "device_id": "safenest-node-01"
+  },
+  "setup": {
+    "distance_cm": 55,
+    "sensor_height_cm": null,
+    "sensor_angle_deg": 0,
+    "orientation": "front",
+    "posture": "seated",
+    "clothing": "ordinary_unspecified",
+    "bedding": "none",
+    "environment": "indoor_office_or_lab",
+    "other_people_present": true,
+    "other_people_distance_m": 2.0,
+    "background_movement": "none_reported"
+  },
+  "condition": {
+    "breathing_mode": "normal_spontaneous",
+    "movement_context": "desk_work_small_arm_movements",
+    "notes": "PILOT_NOT_FORMAL_EVALUATION. Sensor-to-chest distance was reported as approximately 50-60cm; 55cm is the manifest representative value. Sensor was aligned horizontally with the chest, but absolute floor height was not measured. One other person was approximately 2m behind the target and reportedly stationary."
+  },
+  "reference": {
+    "type": "none",
+    "independent": false,
+    "synchronized": false,
+    "status": "not_collected",
+    "file": null,
+    "notes": "Technical acquisition/movement Pilot only; no respiration or heart accuracy claim."
+  },
+  "files": {
+    "raw_immutable": true,
+    "raw_jsonl": [
+      {
+        "path": "pilot/M-C0-PILOT-DESKWORK-001.raw.jsonl",
+        "sha256": "368e6a16e897b9231ff5fcdecd3edcc5b725a0a4dc6b20dee1e3162405bc2876",
+        "record_count": 1799,
+        "byte_count": 1819539
+      }
+    ]
+  },
+  "privacy": {
+    "identifiers_removed": true,
+    "video_collected": false,
+    "third_party_visible": false,
+    "consent_or_workplace_permission": "No identifying media collected; workplace permission status not independently verified for this technical Pilot."
+  },
+  "qa": {
+    "status": "pass_with_limitations",
+    "validator_version": "m-c0-validator-1.1",
+    "notes": "Stream integrity passed. Limitations: desk-work arm movement, unmeasured absolute sensor height, other person about 2m behind target, sensor firmware version unavailable, and no independent physiological reference."
+  }
+}

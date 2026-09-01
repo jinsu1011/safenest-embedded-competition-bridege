@@ -1,0 +1,21 @@
+{
+  "name": "safenest-monitoring-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SafeNest 공간/차량 센서 통합 관제 백엔드",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "simulate": "node scripts/sensor-simulator.js",
+    "simulate:rpi": "node scripts/rpi-protocol-simulator.js",
+    "generate:qr": "node scripts/generate-qr.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "qrcode": "^1.5.4"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "architecture": "LINEAR_LOGISTIC",
+  "candidate_id": "C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001",
+  "class_map": {
+    "0": "VACANT",
+    "1": "OCCUPIED"
+  },
+  "coefficient_vector": [
+    3.753746964786834,
+    1.8542290025432075
+  ],
+  "feature_order": [
+    "CO2",
+    "CO2_slope"
+  ],
+  "intercept": -0.6543106248288225,
+  "manifest_version": "1.0",
+  "oversampled_train_fingerprint": "a3c61800df26a6b995e79f2debb1d7003ba0517985c38ade74e2cdceeba7a551",
+  "oversampling_seed": 20260810,
+  "phase": "C-B6",
+  "positive_class": "OCCUPIED",
+  "reference_model_fingerprint": "ceea97df33b7fa799012cc4ac5baf2a4e7d7cf063b4dbf9726ce6c04737ddd0c",
+  "scaler_fingerprint": "a92123ad37e9b284929ba0fe53179126345d54d487ec4b3a73c910d00490a462",
+  "slope_profile": "CO2_SLOPE_FEATURE_PROFILE_001",
+  "source_library": "sklearn.linear_model.LogisticRegression",
+  "source_library_version": "1.6.1",
+  "threshold": 0.43,
+  "threshold_source": "TRAIN_INTERNAL_ONLY"
+}

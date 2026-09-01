@@ -1,0 +1,140 @@
+{
+  "dataset_id": "paced_20rpm",
+  "scenario": "paced_breathing_20rpm",
+  "classification": "REAL_REPLAY_READY",
+  "real_hardware": true,
+  "source_file": "devices/mmwave/firmware/logs/breath/2026-07-28_breath_paced_20rpm_explicit_full_v2.jsonl",
+  "source_sha256": "7ec04ab21e08740de840d1f9f6f58c362293cb3ce9a2d243657225fe246b4b88",
+  "source_git_commit": "38274c084544af6f26b1377e593b012628a7eb05",
+  "source_total_lines": 2609,
+  "valid_json_lines": 2609,
+  "invalid_json_lines": 0,
+  "strict_provenance": false,
+  "analysis_start_s": 64.926,
+  "analysis_duration_requested_s": 180.0,
+  "raw_quality": {
+    "sensor_records": 2449,
+    "schema_versions": {
+      "1.0": 2449
+    },
+    "duration_s": 244.8889999999992,
+    "effective_sample_rate_hz": 9.99636570037857,
+    "sample_interval_s": {
+      "count": 2448,
+      "mean": 0.10003635620915001,
+      "p50": 0.1000000000003638,
+      "p95": 0.1000000000003638,
+      "max": 0.10200000000077125
+    },
+    "sequence_drops": 0,
+    "nonmonotonic_sequences": 0,
+    "uart_bad_records": 0,
+    "checksum_bad_records": 0,
+    "checksum_error_increase": 0,
+    "parser_error_increase": 0,
+    "presence_true": 2424,
+    "presence_false": 25,
+    "presence_unknown": 0,
+    "distance_valid": 2424,
+    "breath_phase_finite": 2449,
+    "breath_phase_usable": 2424,
+    "invalid_or_nonfinite_phase": 0,
+    "stale_phase_records": 0,
+    "stream_gap_count": 0,
+    "maximum_gap_s": 0.10200000000077125
+  },
+  "analysis_quality": {
+    "sensor_records": 1800,
+    "schema_versions": {
+      "1.0": 1800
+    },
+    "duration_s": 179.96299999999974,
+    "effective_sample_rate_hz": 9.996499280407654,
+    "sample_interval_s": {
+      "count": 1799,
+      "mean": 0.10003501945525277,
+      "p50": 0.1000000000003638,
+      "p95": 0.1000000000003638,
+      "max": 0.10200000000077125
+    },
+    "sequence_drops": 0,
+    "nonmonotonic_sequences": 0,
+    "uart_bad_records": 0,
+    "checksum_bad_records": 0,
+    "checksum_error_increase": 0,
+    "parser_error_increase": 0,
+    "presence_true": 1775,
+    "presence_false": 25,
+    "presence_unknown": 0,
+    "distance_valid": 1775,
+    "breath_phase_finite": 1800,
+    "breath_phase_usable": 1775,
+    "invalid_or_nonfinite_phase": 0,
+    "stale_phase_records": 0,
+    "stream_gap_count": 0,
+    "maximum_gap_s": 0.10200000000077125
+  },
+  "presence": {
+    "ground_truth": "PRESENT",
+    "detection_rate": 0.9861111111111112,
+    "false_presence_rate": null
+  },
+  "entry_exit": null,
+  "attempted_windows": 6,
+  "completed_windows": 2,
+  "rejected_windows": 4,
+  "window_success_rate": 0.3333333333333333,
+  "reset_reasons": {
+    "MMWAVE_SPECTRAL_PEAK_WEAK": 2,
+    "MMWAVE_PRESENCE_NOT_DETECTED": 1,
+    "MMWAVE_INSUFFICIENT_HISTORY": 1
+  },
+  "adapter_event_reasons": {
+    "MMWAVE_WINDOW_NOT_READY": 1306,
+    "MMWAVE_SPECTRAL_PEAK_WEAK": 2,
+    "VALID": 2,
+    "MMWAVE_PRESENCE_NOT_DETECTED": 25,
+    "MMWAVE_WARMUP": 465
+  },
+  "longest_continuous_valid_inference_windows": 2,
+  "longest_continuous_valid_inference_s": 60.0,
+  "tflite_runs": 2,
+  "fallback_count": 0,
+  "prediction_distribution": {
+    "NORMAL": 2
+  },
+  "model_latency_ms": {
+    "count": 2,
+    "mean": 0.13977097114548087,
+    "p50": 0.13977097114548087,
+    "p95": 0.15325205749832094,
+    "max": 0.15474995598196983
+  },
+  "respiration_rate": {
+    "ground_truth_rpm": 20.0,
+    "window_estimates_rpm": [
+      19.90390585353854,
+      18.996271930931336
+    ],
+    "estimated_rpm_mean": 19.450088892234938,
+    "absolute_errors_rpm": [
+      0.09609414646146064,
+      1.0037280690686643
+    ],
+    "mae_rpm": 0.5499111077650625,
+    "max_absolute_error_rpm": 1.0037280690686643,
+    "within_2rpm_count": 2,
+    "within_2rpm_rate": 1.0
+  },
+  "ai_class_ground_truth": null,
+  "classification_accuracy": null,
+  "classification_accuracy_note": "해당 데이터에는 신뢰 가능한 NORMAL/ABNORMAL/APNEA ground truth가 없으므로 분류 정확도를 계산하지 않았습니다.",
+  "model_id": "mmwave_resp_int8",
+  "model_version": "0.1.0",
+  "model_sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158",
+  "model_sha256_matches": true,
+  "benchmark_tool_version": "0.1.0",
+  "benchmark_tool_git_commit": "9058af58f1dfb9f0b4360f7e98d83c0f0db41650",
+  "result": "PARTIAL",
+  "benchmark_elapsed_s": 0.1267859999788925
+}

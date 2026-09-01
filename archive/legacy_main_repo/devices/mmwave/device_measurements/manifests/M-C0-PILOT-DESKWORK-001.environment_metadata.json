@@ -1,0 +1,48 @@
+{
+  "template_version": "m-c0-environment-1.0",
+  "session_id": "M-C0-PILOT-DESKWORK-001",
+  "recorded_at_utc": "2026-08-14T06:23:00.309841Z",
+  "location_class": "office_or_lab",
+  "sensor": {
+    "model": "MR60BHA2",
+    "device_id": "safenest-node-01",
+    "esp_firmware_version": "safenest-mr60-esp/1.2.0",
+    "sensor_firmware_version": "UNKNOWN_NOT_REPORTED",
+    "config_hash": "b817e8bfd5e52b18275626f7b6a9bd60098ea4b108428a5aaf63600dbc987834",
+    "transport": "ESP32_UART_USB"
+  },
+  "geometry": {
+    "distance_cm": 55,
+    "sensor_height_cm": null,
+    "sensor_angle_deg": 0,
+    "orientation": "front",
+    "target_posture": "seated"
+  },
+  "target": {
+    "subject_id": "SUBJ-001",
+    "clothing": "ordinary_unspecified",
+    "bedding": "none",
+    "breathing_mode": "normal_spontaneous",
+    "movement_context": "desk_work_small_arm_movements"
+  },
+  "background": {
+    "other_people_present": true,
+    "other_people_distance_m": 2.0,
+    "other_people_in_sensor_fov": "unknown_behind_target",
+    "other_people_motion": "none_reported",
+    "background_movement": "none_reported",
+    "door_or_fan_or_hvac": "not_reported",
+    "notes": "Sensor aligned horizontally with chest. Distance reported as approximately 50-60cm. Absolute floor height not measured."
+  },
+  "privacy": {
+    "video_collected": false,
+    "face_or_name_recorded": false,
+    "workplace_permission_or_consent": "not_independently_verified_for_technical_pilot"
+  },
+  "capture_checks": {
+    "raw_jsonl_immutable": true,
+    "sha256_recorded_after_capture": true,
+    "timestamp_source_noted": true,
+    "independent_reference_status_noted": true
+  }
+}

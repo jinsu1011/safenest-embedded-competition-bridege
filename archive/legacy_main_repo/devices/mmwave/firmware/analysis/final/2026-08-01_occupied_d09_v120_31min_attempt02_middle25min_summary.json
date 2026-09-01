@@ -1,0 +1,38 @@
+{
+  "source": "firmware/esp_wroom32_mr60_monitor/logs/final/2026-08-01_occupied_d09_v120_31min_attempt02.jsonl",
+  "source_sha256": "7f9e9ac65377c6dc217af92f9dee2401b6162540e2245fce97acf2ed49368a34",
+  "window": "60s <= t < 1560s",
+  "records": 14976,
+  "elapsed_s": 1499.828,
+  "stable_presence": {
+    "true_count": 14755,
+    "false_count": 221,
+    "true_rate": 0.9852430555555556
+  },
+  "vital_presence_true_count": 14755,
+  "vital_presence_rate": 0.9852430555555556,
+  "filtered_breath_valid_count": 3879,
+  "filtered_breath_valid_rate": 0.2590144230769231,
+  "filtered_breath_median_rpm": 17.23,
+  "breath_phase_low_amplitude_count": 10476,
+  "breath_phase_low_amplitude_rate": 0.6995192307692308,
+  "freeze_count": 0,
+  "reboots_detected": 0,
+  "checksum_errors_delta": 0,
+  "parse_errors_delta": 0,
+  "distance_cm_raw": {
+    "median": 97.58,
+    "min": 86.10,
+    "max": 103.32
+  },
+  "stable_presence_false_runs": [
+    {
+      "duration_s": 22.004
+    }
+  ],
+  "assessment": {
+    "presence_gate_95_percent": "PASS",
+    "breath_signal_continuity": "FAIL",
+    "overall": "FAIL"
+  }
+}

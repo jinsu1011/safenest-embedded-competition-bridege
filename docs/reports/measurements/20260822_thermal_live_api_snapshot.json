@@ -1,0 +1,78 @@
+{
+  "captured_at_local_hint": "KST field session 2026-08-22",
+  "api_base": "http://192.168.137.249:8000",
+  "pi_ip_observed": "192.168.137.249",
+  "esp_peer_observed": "192.168.137.107",
+  "system": "ONLINE",
+  "system_health": "DEGRADED",
+  "link": {
+    "tcp_connections": 4,
+    "telemetry_packets": 15987,
+    "thermal_completed_frames": 10074,
+    "thermal_incomplete_frames": 424,
+    "thermal_effective_fps": 5.188422108765246
+  },
+  "storage": {
+    "written": {
+      "mmwave": 15987,
+      "co2": 347,
+      "thermal": 10068
+    },
+    "accepted": {
+      "mmwave": 15987,
+      "co2": 347,
+      "thermal": 10074
+    },
+    "root": "/home/sandi/safenest-team-main/RaspberryPi/Runtime/data",
+    "db_counts": {
+      "snapshots": 2416,
+      "events": 1218
+    }
+  },
+  "thermal_live": {
+    "status": "LIVE",
+    "age_seconds": 0.16705949199990755,
+    "values": {
+      "width": 80,
+      "height": 62,
+      "frame_sequence": 10169,
+      "minimum_raw": 2722,
+      "maximum_raw": 3172,
+      "frame_available": true
+    },
+    "ai_state": "NOT_HUMAN",
+    "confidence": 0.9921875,
+    "probabilities": [
+      0.9921875,
+      0.0078125,
+      0.0
+    ],
+    "temperature_calibrated": false,
+    "preprocessing": "per_frame_minmax",
+    "raw_min": 2722,
+    "raw_max": 3172,
+    "model_id": "thermal_fall_int8",
+    "model_version": "0.1.0"
+  },
+  "mmwave_presence": {
+    "presence": true,
+    "human_detected_raw": true
+  },
+  "risk": {
+    "formula_id": "SAFENEST_RISK_V1",
+    "score": 10.3065,
+    "level": "NORMAL",
+    "reasons": [
+      "PRESENCE_FROM_MMWAVE",
+      "MMWAVE_THERMAL_MISMATCH",
+      "HIGH_CO2_WARNING",
+      "NO_MOTION_DETECTED"
+    ],
+    "component_status": {
+      "mmwave": "RULE_FALLBACK",
+      "co2": "RULE",
+      "pir": "RULE",
+      "thermal": "AI"
+    }
+  }
+}

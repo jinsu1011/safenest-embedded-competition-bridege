@@ -1,0 +1,16 @@
+{"kind": "watch_prompt", "index": 1, "scheduled_elapsed_s": 30.0, "host_monotonic_ns": 603133690532666}
+{"kind": "watch_prompt", "index": 2, "scheduled_elapsed_s": 60.0, "host_monotonic_ns": 603163714324125}
+{"kind": "watch_prompt", "index": 3, "scheduled_elapsed_s": 90.0, "host_monotonic_ns": 603193740383833}
+{"kind": "watch_prompt", "index": 4, "scheduled_elapsed_s": 120.0, "host_monotonic_ns": 603223676678791}
+{"kind": "watch_prompt", "index": 5, "scheduled_elapsed_s": 150.0, "host_monotonic_ns": 603253711151625}
+{"kind": "watch_prompt", "index": 6, "scheduled_elapsed_s": 180.0, "host_monotonic_ns": 603283734578958}
+{"kind": "watch_prompt", "index": 7, "scheduled_elapsed_s": 210.0, "host_monotonic_ns": 603313745313375}
+{"kind": "watch_prompt", "index": 8, "scheduled_elapsed_s": 240.0, "host_monotonic_ns": 603343756745375}
+{"kind": "watch_prompt", "index": 9, "scheduled_elapsed_s": 270.0, "host_monotonic_ns": 603373763746291}
+{"kind": "watch_prompt", "index": 10, "scheduled_elapsed_s": 300.0, "host_monotonic_ns": 603403681174125}
+{"kind": "watch_prompt", "index": 11, "scheduled_elapsed_s": 330.0, "host_monotonic_ns": 603433713084916}
+{"kind": "watch_prompt", "index": 12, "scheduled_elapsed_s": 360.0, "host_monotonic_ns": 603463760467083}
+{"kind": "watch_prompt", "index": 13, "scheduled_elapsed_s": 390.0, "host_monotonic_ns": 603493679776416}
+{"kind": "watch_prompt", "index": 14, "scheduled_elapsed_s": 420.0, "host_monotonic_ns": 603523714924208}
+{"kind": "watch_prompt", "index": 15, "scheduled_elapsed_s": 450.0, "host_monotonic_ns": 603553743358541}
+{"kind": "watch_prompt", "index": 16, "scheduled_elapsed_s": 480.0, "host_monotonic_ns": 603583673318041}

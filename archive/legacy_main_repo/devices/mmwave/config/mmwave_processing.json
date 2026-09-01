@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "expected_esp_schema_version": "1.2",
+  "expected_esp_firmware_version": "safenest-mr60-esp/1.2.0",
+  "expected_esp_config_hash": "b817e8bfd5e52b18275626f7b6a9bd60098ea4b108428a5aaf63600dbc987834",
+  "source": "MR60BHA2 paced trials 2026-07-28",
+  "sample_rate_hz": 10.0,
+  "window_seconds": 30.0,
+  "warmup_seconds": 60.0,
+  "max_gap_seconds": 0.5,
+  "max_phase_age_ms": 500.0,
+  "max_vital_age_ms": 2000.0,
+  "distance_min_cm": 40.0,
+  "distance_max_cm": 150.0,
+  "respiration_band_min_rpm": 5.0,
+  "respiration_band_max_rpm": 40.0,
+  "minimum_phase_std": 0.05,
+  "heart_source": "mr60_vendor_provisional",
+  "heart_verified": false,
+  "heart_confidence_cap": 0.25,
+  "notes": [
+    "Zero, NaN, timeout, absence and gaps remain UNKNOWN and reset the phase window.",
+    "The MR60 vendor breath rate is diagnostic only; no fixed offset correction is used.",
+    "Heart rate is display-only until synchronized external reference validation."
+  ]
+}

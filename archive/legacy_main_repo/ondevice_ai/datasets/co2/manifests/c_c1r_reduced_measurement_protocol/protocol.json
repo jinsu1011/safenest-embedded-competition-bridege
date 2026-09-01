@@ -1,0 +1,378 @@
+{
+  "manifest_version": "1.0",
+  "phase": "C-C1R",
+  "protocol_id": "CO2_C_C1R_REDUCED_MEASUREMENT_PROTOCOL_001",
+  "protocol_version": "1.0.0",
+  "protocol_status": "PROTOCOL_FROZEN_OPERATOR_HANDOFF_HOLD",
+  "phase_result": "C_C1R_BLOCKED",
+  "protocol_frozen": true,
+  "operator_guide_status": "HOLD_PENDING_ACQUISITION_TOOLING_CORRECTION",
+  "physical_acquisition_authorized": false,
+  "operator_handoff_ready": false,
+  "creation_date": "2026-08-15",
+  "creation_commit": "81358008f44ff7b92e1c0997d862777c97497440",
+  "agent": "Codex (CO2 C-C1R Protocol and Operator Handoff Agent)",
+  "owner": "SafeNest CO2 measurement owner",
+  "scope": {
+    "purpose": "Freeze the reduced-feature physical SCD40 acquisition contract for the locked C-B6 candidate and assess whether the current acquisition path can execute it.",
+    "new_physical_data_required": false,
+    "new_physical_measurement_performed": false,
+    "model_development_performed": false,
+    "model_inference_performed": false,
+    "c_c2_started": false,
+    "c_d_authorized": false,
+    "team_repository_modified": false,
+    "team_firmware_modified": false,
+    "c_b6_model_modified": false,
+    "c_b6_scaler_modified": false,
+    "c_b6_threshold_modified": false,
+    "c_b6_tflite_modified": false
+  },
+  "predecessor_lineage": {
+    "c_c0": {
+      "phase": "C-C0",
+      "status": "B5_INFERENCE_BLOCKED_FEATURE_INCOMPLETE",
+      "english_report": "docs/reports/20260814_SafeNest_CO2_C_C0_Legacy_SCD40_Evidence_Audit_01.md",
+      "korean_report": "docs/reports/20260814_SafeNest_CO2_C_C0_팀원_SCD40_실측데이터_평가_01.md"
+    },
+    "historical_c_c1": {
+      "phase": "C-C1",
+      "protocol_id": "CO2_C_C1_MEASUREMENT_PROTOCOL_001",
+      "protocol_version": "1.0.0",
+      "protocol_path": "datasets/co2/manifests/c_c1_measurement_protocol/protocol.json",
+      "report_path": "docs/reports/20260814_SafeNest_CO2_C_C1_SCD40_Measurement_Protocol_01.md",
+      "operator_prompt_path": "docs/prompts/20260814_SafeNest_CO2_C_C1_SCD40_Measurement_Operator_Prompt_01.md",
+      "feature_contract": ["CO2", "Temperature", "Humidity", "CO2_slope"],
+      "relationship": "PRESERVED_HISTORICAL_FOUR_FEATURE_B5_CONTRACT",
+      "rewritten": false
+    },
+    "pr_78": {
+      "number": 78,
+      "title": "docs(co2): assess Temperature/Humidity feature necessity",
+      "state": "MERGED",
+      "merge_commit": "266151d12a1e4b144d5a6f2bae28dda72f939cc5",
+      "url": "https://github.com/sheepmeat/test/pull/78"
+    },
+    "final_model_input_decision": {
+      "path": "datasets/co2/manifests/c_c1_model_input_decision/model_input_decision_result.json",
+      "decision": "ADOPT_REDUCED_FEATURE_DIRECTION",
+      "sha256": "fdb3436ba205f3f47318ac29e67dc5aeb1cad277e80a3de8ed86244cff03755d"
+    },
+    "c_b6": {
+      "phase": "C-B6",
+      "candidate_id": "C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001",
+      "status": "C_B6_PASS_WITH_LIMITATIONS",
+      "merged_pr": 80,
+      "merge_commit": "7c0b2d606b048e07cd2941a2df14d9981faeb735",
+      "candidate_lock_path": "datasets/co2/manifests/c_b6_reduced_feature_candidate/candidate_lock.json",
+      "candidate_lock_sha256": "5f7772ff26ca10ca95aa5216b45f3eebd96c2429b98a7ee66963ec4ea73c6fd2"
+    }
+  },
+  "historical_successor_relationship": {
+    "supersedes_for_new_acquisition": "CO2_C_C1_MEASUREMENT_PROTOCOL_001",
+    "historical_protocol_remains_unchanged": true,
+    "successor_contract": "CO2_C_C1R_REDUCED_MEASUREMENT_PROTOCOL_001",
+    "successor_feature_contract": ["CO2", "CO2_slope"]
+  },
+  "target_candidate": {
+    "candidate_id": "C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001",
+    "candidate_status": "C_B6_PASS_WITH_LIMITATIONS",
+    "feature_order": ["CO2", "CO2_slope"],
+    "lock_profile_id": "CO2_C_B6_REDUCED_FEATURE_CANDIDATE_LOCK_001",
+    "candidate_lock_path": "datasets/co2/manifests/c_b6_reduced_feature_candidate/candidate_lock.json",
+    "candidate_lock_sha256": "5f7772ff26ca10ca95aa5216b45f3eebd96c2429b98a7ee66963ec4ea73c6fd2",
+    "candidate_lock_content_sha256": "7dd6a4c78731465d258e60d2f5e301df2f7b30dbdcc28addb99a0e72a4ec1a90",
+    "scaler_path": "datasets/co2/manifests/c_b6_reduced_feature_candidate/scaler_metadata.json",
+    "scaler_sha256": "54e6c4f5616d4c4e0275c9252654b82dc4957c13a119f6f5439cd21256a547ad",
+    "scaler_fingerprint": "a92123ad37e9b284929ba0fe53179126345d54d487ec4b3a73c910d00490a462",
+    "threshold": 0.43,
+    "threshold_source": "TRAIN_INTERNAL_ONLY",
+    "threshold_path": "models/co2/candidates/c_b6/threshold_contract.json",
+    "threshold_sha256": "db7076b1b9870c67471f049d96c99db7de2d767790e50065010ed0c752d07db0",
+    "reference_model_fingerprint": "ceea97df33b7fa799012cc4ac5baf2a4e7d7cf063b4dbf9726ce6c04737ddd0c",
+    "float_tflite_path": "models/co2/candidates/c_b6/float_reference.tflite",
+    "float_tflite_sha256": "fc1d4150a818473758f1f2a7c3a5f3afe604cf7c59171524f21dac3a22c3a87c",
+    "int8_tflite_path": "models/co2/candidates/c_b6/full_integer_int8.tflite",
+    "int8_tflite_sha256": "c5969b367f5b5e28c4d27f1bdd6220f7d02da92e99604e3f85c9f1291e98dd3b",
+    "b5_threshold_inherited": false,
+    "locked_test_predictive_access": false,
+    "physical_acquisition_started": false,
+    "c_c2_started": false
+  },
+  "model_contract": {
+    "required_model_sensor_fields": ["CO2"],
+    "required_derived_fields": ["CO2_slope"],
+    "temperature_required_for_model": false,
+    "humidity_required_for_model": false,
+    "optional_non_model_fields": ["Temperature", "Humidity"],
+    "optional_fields_do_not_block_model_eligibility": true,
+    "feature_order": ["CO2", "CO2_slope"],
+    "co2_slope_computed_by": "Pi_or_downstream_postprocessing",
+    "operator_computes_co2_slope": false,
+    "sensor_node_computes_co2_slope": false,
+    "additional_model_inputs_forbidden": [
+      "Temperature",
+      "Humidity",
+      "Light",
+      "time_of_day",
+      "previous_predictions",
+      "sensor_metadata",
+      "new_derived_features"
+    ]
+  },
+  "slope_contract": {
+    "profile_id": "CO2_SLOPE_FEATURE_PROFILE_001",
+    "method": "ENDPOINT_H150",
+    "history_sec": 150,
+    "chronology": "PAST_ONLY",
+    "minimum_samples": 2,
+    "gap_reset_rule": ">90 seconds",
+    "gap_reset_sec": 90,
+    "cross_session_or_cross_block_history": "FORBIDDEN",
+    "warmup_or_gap_unavailable_state": "FEATURE_UNAVAILABLE_WARMUP_OR_GAP_OR_INVALID",
+    "redesigned_in_c_c1r": false
+  },
+  "cadence_contract": {
+    "effective_model_input_interval_sec": 60,
+    "effective_model_input_cadence": "NOMINAL",
+    "normal_co2_export_interval_sec": 60,
+    "native_sensor_cadence_separate": true,
+    "native_scd40_cadence_claim": "NOT_CLAIMED_BY_THIS_PROTOCOL",
+    "native_sensor_configured_interval_must_be_recorded": true,
+    "cadence_mismatch_rule": "A nominal 60-second opportunity never licenses stale reuse or synthetic fill.",
+    "missed_nominal_event_example": {
+      "valid_event_times_sec": [60, 180],
+      "observed_gap_sec": 120,
+      "h150_consequence": "RESET_AND_CO2_SLOPE_TEMPORARILY_UNAVAILABLE"
+    }
+  },
+  "freshness_contract": {
+    "fresh_measurement_required": true,
+    "transport_freshness_concept": "TRANSPORT_FRESHNESS",
+    "sensor_measurement_freshness_concept": "SENSOR_MEASUREMENT_FRESHNESS",
+    "transport_freshness_is_sensor_freshness": false,
+    "minimum_fresh_event_evidence": [
+      "data_ready_or_equivalent_sensor_ready_evidence",
+      "successful_fresh_CO2_read_status",
+      "fresh_read_sequence_or_equivalent_fresh_event_marker",
+      "measurement_event_chronology_associated_with_that_fresh_event"
+    ],
+    "stale_reuse": "FORBIDDEN",
+    "synthetic_fill": "FORBIDDEN",
+    "forward_fill": "FORBIDDEN",
+    "interpolation_of_raw_sensor_events": "FORBIDDEN",
+    "missing_event_recording": "REQUIRED_WITH_FAILURE_OR_MISSING_STATUS"
+  },
+  "chronology_contract": {
+    "authority": "VERIFIED_FRESH_MEASUREMENT_CHRONOLOGY",
+    "native_scd40_timestamp_required": false,
+    "preferred_event_marker": "sensor_event_monotonic_ms_or_equivalent_fresh_event_time",
+    "host_side_chronology_allowed": true,
+    "host_side_chronology_condition": "It must be explicitly associated with a verified fresh sensor event; packet receipt time alone cannot establish sensor freshness.",
+    "transport_receipt_time_role": "RECEIPT_CHRONOLOGY_ONLY",
+    "wall_clock_role": "PROVENANCE_AND_GROUND_TRUTH_ALIGNMENT",
+    "monotonic_clock_role": "ELAPSED_TIME_AND_ORDERING",
+    "session_boundary_required": true,
+    "cross_block_history": "FORBIDDEN",
+    "clock_reset_requires_new_session": true
+  },
+  "raw_record_contract": {
+    "format": "JSONL",
+    "append_only_during_acquisition": true,
+    "raw_layer_before_preprocessing": true,
+    "minimum_required_fields": [
+      "protocol_id",
+      "protocol_version",
+      "session_id",
+      "target_candidate_id",
+      "device_id_or_explicit_unknown",
+      "logger_timestamp_utc",
+      "logger_monotonic_ns",
+      "raw_co2_ppm",
+      "co2_unit",
+      "sensor_measurement_freshness",
+      "transport_freshness",
+      "sensor_read_status",
+      "missing_or_error_state",
+      "raw_received_payload_or_lossless_equivalent",
+      "software_or_configuration_identity"
+    ],
+    "recommended_freshness_fields": [
+      "measurement_event_id",
+      "fresh_read_sequence",
+      "sensor_event_monotonic_ms",
+      "data_ready",
+      "telemetry_sequence",
+      "pi_receive_timestamp_utc",
+      "pi_receive_monotonic_ns"
+    ],
+    "optional_non_model_fields": [
+      "temperature_c",
+      "relative_humidity_pct"
+    ],
+    "optional_t_rh_missing_is_model_blocker": false,
+    "failed_and_missing_rows_preserved": true,
+    "raw_values_replaced": false,
+    "raw_rows_deleted": false
+  },
+  "session_contract": {
+    "session_id_required": true,
+    "session_id_format": "CO2C1R-YYYYMMDD-OPCODE-SNNN",
+    "session_manifest_required": true,
+    "manifest_must_bind": [
+      "session_id",
+      "measurement_protocol_id",
+      "measurement_protocol_version",
+      "target_candidate_id",
+      "candidate_lock_identity",
+      "device_identity",
+      "capture_start_end",
+      "scenario_and_ground_truth_references",
+      "capture_software_and_configuration",
+      "raw_filenames",
+      "raw_checksums"
+    ],
+    "restart_or_location_change_requires_new_session": true
+  },
+  "ground_truth_contract": {
+    "independent_ground_truth_required_for_c_c2": true,
+    "allowed_labels": ["VACANT", "OCCUPIED"],
+    "allowed_sources": [
+      "CONTROLLED_EMPTY_ROOM",
+      "CONTROLLED_PERSON_PRESENT",
+      "RECORDED_ENTRY",
+      "RECORDED_EXIT"
+    ],
+    "recording": "Separate time-stamped ground_truth_events.jsonl or equivalent immutable event log.",
+    "required_event_fields": [
+      "ground_truth_event_id",
+      "session_id",
+      "label",
+      "source",
+      "start_timestamp",
+      "end_or_transition_timestamp",
+      "ground_truth_status",
+      "operator_id"
+    ],
+    "transition_handling": "Record the transition marker and do not auto-label ambiguous transition intervals.",
+    "derived_from_co2": false,
+    "derived_from_co2_slope": false,
+    "derived_from_model_output": false,
+    "derived_from_filename": false,
+    "derived_from_threshold_crossing": false
+  },
+  "scenario_contract": {
+    "allowed_scenarios": [
+      "VACANT_STABLE",
+      "OCCUPIED_STABLE",
+      "VACANT_TO_OCCUPIED",
+      "OCCUPIED_TO_VACANT"
+    ],
+    "minimum_verified_fresh_history_after_warmup_sec_per_stable_segment": 150,
+    "minimum_transition_segments": 2,
+    "warmup_records_retained": true,
+    "warmup_is_corruption": false,
+    "desired_accumulated_evidence": "Multiple sessions across stable vacant, stable occupied, and both transition directions under a separately authorized schedule; no statistical power claim is made.",
+    "session_count_is_model_performance_driven": false
+  },
+  "raw_preservation_contract": {
+    "bundle_files": [
+      "raw_measurements.jsonl",
+      "session_manifest.json",
+      "ground_truth_events.jsonl",
+      "failure_events.jsonl",
+      "deviation_events.jsonl",
+      "checksums.sha256",
+      "operator_notes.md"
+    ],
+    "append_only": true,
+    "manual_correction_of_old_rows": false,
+    "failed_rows_deleted": false,
+    "raw_sha256_finalization": "Close files, record counts and sizes, hash every handoff file, then write checksums.sha256 before derived artifacts.",
+    "post_finalization_mutation": "RAW_EVIDENCE_MUTATION_DETECTED",
+    "derived_artifacts_may_overwrite_raw": false
+  },
+  "collection_independence": {
+    "model_output_needed_by_operator": false,
+    "model_output_may_set_ground_truth": false,
+    "model_output_may_change_scenario": false,
+    "model_output_may_change_stopping_rule": false,
+    "retrain_during_accumulation": false,
+    "refit_scaler_during_accumulation": false,
+    "change_threshold_during_accumulation": false,
+    "change_h150_during_accumulation": false,
+    "adaptive_validation_tuning": false
+  },
+  "c_b6_saturation_limitation_review": {
+    "observed": true,
+    "limitation": "CO2_slope INT8 input saturation observed at low frequency during C-B6 representative/validation diagnostics.",
+    "equivalence_gate": "PASS",
+    "disposition": "KNOWN_NONBLOCKING_LIMITATION_FOR_DEVICE_DOMAIN_OBSERVATION",
+    "blocks_protocol_freeze": false,
+    "blocks_operator_handoff_by_itself": false,
+    "solved_in_c_c1r": false,
+    "c_c2_required_observations": [
+      "CO2_slope quantizer saturation rate",
+      "input clipping or range exceedance",
+      "prediction effect when observable",
+      "protocol-compliant versus non-compliant session classification"
+    ]
+  },
+  "team_acquisition_tooling_readiness": {
+    "team_repository": "https://github.com/jinsu1011/safenest-embedded-competition.git",
+    "team_main_sha": "3d86bf2a7a4e527d7aba2dfabcb087201ffeb46e",
+    "observed_capture_path": "devices/co2/firmware/capture_scd40.py",
+    "observed_evidence_paths": [
+      "devices/co2/firmware/logs/",
+      "devices/co2/docs/VERIFICATION_REPORT_2026-08-12.md",
+      "devices/co2/tests/test_co2_evidence_contract.py"
+    ],
+    "fresh_co2": "PARTIAL",
+    "chronology": "PARTIAL",
+    "error_missing_preservation": "PARTIAL",
+    "independent_ground_truth": "PARTIAL",
+    "raw_preservation": "PARTIAL",
+    "protocol_session_identity": "NO",
+    "overall": "HOLD",
+    "blocker": "OPERATOR_HANDOFF_BLOCKED_BY_ACQUISITION_TOOLING",
+    "observed_facts": [
+      "The current capture script polls Pi /health rather than logging a direct SCD40 fresh-read event.",
+      "The current fresh flag describes last-telemetry/transport freshness and cannot by itself prove a new physical SCD40 observation.",
+      "Host wall-clock and monotonic timestamps, sequence, status, and raw API response are preserved, but a sensor-event sequence/timestamp is not exposed.",
+      "The current capture path has no frozen measurement protocol ID/version, candidate identity, session manifest, or finalized checksum bundle.",
+      "Scenario text is collection context, not an independently time-stamped VACANT/OCCUPIED ground-truth event log."
+    ],
+    "minimum_pre_acquisition_correction": [
+      "Provide a declared capture adapter or telemetry revision that exposes a verified fresh CO2 event marker and associated chronology without conflating it with transport receipt freshness.",
+      "Preserve protocol ID/version, session ID, target candidate identity, device/software/configuration provenance, raw payload, failure/missing states, and final SHA-256 bundle evidence.",
+      "Provide an independent time-stamped VACANT/OCCUPIED ground-truth event log and transition handling.",
+      "Run the C-C1R focused precollection compliance validator against the deployed adapter before any physical session."
+    ],
+    "team_repository_change_in_this_phase": false
+  },
+  "future_c_c2_pre_metric_gate": {
+    "c_c2_started": false,
+    "protocol_compliance_before_model_performance": true,
+    "must_verify": [
+      "protocol ID/version",
+      "candidate lock identity",
+      "session provenance",
+      "raw checksums and immutability",
+      "sensor versus transport freshness",
+      "chronology and nominal cadence",
+      "missing/stale handling",
+      "ground-truth independence",
+      "H150 eligibility",
+      "CO2_slope INT8 saturation observations"
+    ],
+    "explicit_authorization_required": true
+  },
+  "authorization_state": {
+    "protocol_state": "PROTOCOL_FROZEN",
+    "operator_guide_state": "HOLD_PENDING_ACQUISITION_TOOLING_CORRECTION",
+    "physical_acquisition_state": "HOLD",
+    "external_accumulation_state": "HOLD",
+    "c_c2_state": "NOT_STARTED",
+    "c_d_state": "NOT_AUTHORIZED"
+  }
+}

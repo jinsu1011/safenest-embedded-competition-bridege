@@ -1,0 +1,3 @@
+{"kind": "watch_prompt", "index": 1, "scheduled_elapsed_s": 30.0, "host_monotonic_ns": 603615789883125}
+{"kind": "watch_prompt", "index": 2, "scheduled_elapsed_s": 60.0, "host_monotonic_ns": 603645812420666}
+{"kind": "watch_prompt", "index": 3, "scheduled_elapsed_s": 90.0, "host_monotonic_ns": 603675840531958}

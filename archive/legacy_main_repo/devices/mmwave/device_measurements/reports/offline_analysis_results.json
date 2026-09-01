@@ -1,0 +1,63 @@
+{
+  "source_commit": "fdf34b804f35e5868356f0ed6f804a248aa69131",
+  "csv_audit": {
+    "files": 9,
+    "sha_matches": 9,
+    "record_count_matches": 9,
+    "timestamp_violations": 0,
+    "columns_consistent": true,
+    "max_gap_s": 0.103,
+    "adapter_windows": 620,
+    "window_shape": [300],
+    "all_windows_finite": true
+  },
+  "mr60_adapter_replay": {
+    "files": 78,
+    "sensor_like_records": 159368,
+    "invalid_json_lines_skipped": 3,
+    "strict_provenance_schema_mismatch": 89618,
+    "schema_1_2_communication_valid": 69750,
+    "output_valid": 31328,
+    "output_breath_valid": 31328,
+    "output_heart_valid": 31311,
+    "output_heart_verified": 0,
+    "apnea_verified": false
+  },
+  "input_contract": {
+    "sample_rate_hz": 10.0,
+    "window_seconds": 30.0,
+    "window_samples": 300,
+    "shape": [1, 300, 1],
+    "locked_profile": "M-B1_D0_B1_Z1",
+    "locked_profile_name": "BPF_ZSCORE",
+    "locked_zscore_mean": 0.0031162832173884064,
+    "locked_zscore_std": 2.955399434649939,
+    "locked_int8_scale": 0.041720833629369736,
+    "locked_int8_zero_point": -3,
+    "bpf_execution": "COMPLETED_SCIPY_1.18.0_TEMPORARY_RUNTIME",
+    "preprocessed_csv_windows": 620,
+    "preprocessed_tensor_shape": [620, 300, 1],
+    "preprocess_clip_ratio": 0.0,
+    "int8_saturation_ratio": 0.0,
+    "int8_dequantization_mae": 0.008656763471662998,
+    "synthetic_edge_cases_passed": 4,
+    "tflite_invoke_status": "COMPLETED_HOST_BENCHMARK",
+    "tflite_invoke_count": 620,
+    "tflite_latency_p95_ms": 0.008333,
+    "tflite_prediction_counts": {"NORMAL": 0, "RAPID_OR_ABNORMAL": 0, "APNEA": 620},
+    "formal_accuracy_status": "NOT_COMPUTED_NO_ALIGNED_GROUND_TRUTH"
+  },
+  "raw_phase_domain": {
+    "final_attempt02_mean": 0.001548,
+    "final_attempt02_std": 0.161531,
+    "csv_combined_mean": -0.001306,
+    "csv_combined_std": 0.286537
+  },
+  "hardware_required_remaining": [
+    "new environment metadata and capture",
+    "independent respiration reference synchronization",
+    "phase unit/scale/reset/missing semantics",
+    "MR60 to ESP32 to USB to Raspberry Pi end-to-end",
+    "final physical raw validation against locked M-B11 preprocessing"
+  ]
+}

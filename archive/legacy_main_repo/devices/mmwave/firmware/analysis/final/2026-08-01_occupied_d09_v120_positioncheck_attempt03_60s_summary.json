@@ -1,0 +1,65 @@
+{
+  "source": "firmware/esp_wroom32_mr60_monitor/logs/final/2026-08-01_occupied_d09_v120_positioncheck_attempt03_60s.jsonl",
+  "skip_seconds": 0.0,
+  "records_skipped": 0,
+  "records": 599,
+  "invalid_json_lines": 0,
+  "elapsed_s": 59.887,
+  "telemetry_rate_hz": 10.002170754921769,
+  "uart_frames": 4483,
+  "uart_frame_rate_hz": 74.85764857147628,
+  "checksum_errors": 0,
+  "checksum_error_rate": 0.0,
+  "parse_errors": 0,
+  "parse_error_rate": 0.0,
+  "reboots_detected": 0,
+  "presence": {
+    "true_count": 599,
+    "false_count": 0,
+    "unknown_count": 0,
+    "true_rate": 1.0
+  },
+  "presence_stable": {
+    "true_count": 599,
+    "false_count": 0,
+    "unknown_count": 0,
+    "true_rate": 1.0
+  },
+  "sensor_states": {
+    "VALID": 599
+  },
+  "uart_frame_not_ok_count": 0,
+  "checksum_not_ok_count": 0,
+  "firmware_versions": [
+    "safenest-mr60-esp/1.2.0"
+  ],
+  "config_hashes": [
+    "b817e8bfd5e52b18275626f7b6a9bd60098ea4b108428a5aaf63600dbc987834"
+  ],
+  "distance_cm_raw": {
+    "count": 599,
+    "mean": 96.1809348914858,
+    "median": 97.58,
+    "stddev": 2.4664562599762143,
+    "min": 91.84,
+    "max": 97.58
+  },
+  "breath_rate_raw": {
+    "count": 599,
+    "mean": 23.293823038397328,
+    "median": 24.0,
+    "stddev": 4.363938408921424,
+    "min": 11.0,
+    "max": 28.0
+  },
+  "heart_rate_raw": {
+    "count": 599,
+    "mean": 95.42570951585977,
+    "median": 92.0,
+    "stddev": 12.859313613530468,
+    "min": 70.0,
+    "max": 119.0
+  },
+  "breath_positive_rate": 1.0,
+  "heart_positive_rate": 1.0
+}

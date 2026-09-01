@@ -1,0 +1,18 @@
+# 실제 측정 원본은 기본적으로 무시한다. PR #18에서 이미 추적 중인 두 Pilot
+# JSONL은 provenance/identity/QA 검토를 거친 좁은 TRACKED_EXCEPTION이며, 이 규칙은
+# 새 scratch·private·unreviewed JSONL을 자동 허용하지 않는다.
+raw/
+*.jsonl
+*.csv
+*.wav
+*.mp4
+*.mov
+!fixtures/*.jsonl
+
+# 개인 식별 정보가 들어갈 수 있는 로컬 메모
+private/
+identifiers/
+
+# Python runtime artifacts
+__pycache__/
+*.py[cod]

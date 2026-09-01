@@ -1,0 +1,70 @@
+{
+  "empty_source": "logs/baseline/2026-07-13_empty_fixed_d06_e0_5min.jsonl",
+  "occupied_source": "logs/baseline/2026-07-13_occupied_front_p0_5min.jsonl",
+  "note": "Occupied log began after presence was already established; transition latency requires a separate entry test.",
+  "candidates": [
+    {
+      "filter": "raw",
+      "empty_false_positive_events": 2,
+      "empty_false_positive_records": 59,
+      "empty_longest_true_records": 33,
+      "occupied_detection_rate": 1.0,
+      "occupied_missed_records": 0,
+      "added_entry_delay_ms_in_occupied_log": 0
+    },
+    {
+      "filter": "two_of_three",
+      "empty_false_positive_events": 2,
+      "empty_false_positive_records": 59,
+      "empty_longest_true_records": 33,
+      "occupied_detection_rate": 0.9993331110370124,
+      "occupied_missed_records": 2,
+      "added_entry_delay_ms_in_occupied_log": 200
+    },
+    {
+      "filter": "true_persistence_1s",
+      "empty_false_positive_events": 2,
+      "empty_false_positive_records": 39,
+      "empty_longest_true_records": 23,
+      "occupied_detection_rate": 0.9966655551850617,
+      "occupied_missed_records": 10,
+      "added_entry_delay_ms_in_occupied_log": 1001
+    },
+    {
+      "filter": "true_persistence_2s",
+      "empty_false_positive_events": 2,
+      "empty_false_positive_records": 19,
+      "empty_longest_true_records": 13,
+      "occupied_detection_rate": 0.9933311103701233,
+      "occupied_missed_records": 20,
+      "added_entry_delay_ms_in_occupied_log": 2001
+    },
+    {
+      "filter": "true_persistence_3s",
+      "empty_false_positive_events": 1,
+      "empty_false_positive_records": 3,
+      "empty_longest_true_records": 3,
+      "occupied_detection_rate": 0.9899966655551851,
+      "occupied_missed_records": 30,
+      "added_entry_delay_ms_in_occupied_log": 3001
+    },
+    {
+      "filter": "true_persistence_3_5s",
+      "empty_false_positive_events": 0,
+      "empty_false_positive_records": 0,
+      "empty_longest_true_records": 0,
+      "occupied_detection_rate": 0.9883294431477159,
+      "occupied_missed_records": 35,
+      "added_entry_delay_ms_in_occupied_log": 3501
+    },
+    {
+      "filter": "presence_and_positive_breath_and_heart",
+      "empty_false_positive_events": 0,
+      "empty_false_positive_records": 0,
+      "empty_longest_true_records": 0,
+      "occupied_detection_rate": 1.0,
+      "occupied_missed_records": 0,
+      "added_entry_delay_ms_in_occupied_log": 0
+    }
+  ]
+}

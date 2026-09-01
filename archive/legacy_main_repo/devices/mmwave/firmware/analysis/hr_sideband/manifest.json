@@ -1,0 +1,72 @@
+{
+  "manifest_version": "1.0",
+  "analysis_id": "mr60_hr_sideband_stage1_s1_20260801",
+  "existing_manifest_modified": false,
+  "artifacts": [
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s1_v120_300s.jsonl",
+      "sha256": "9bf5fbfedb22cfcf17590cd37c6fd2313eddb9af0c48c9a22905d49726841e40",
+      "size_bytes": 3057039
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s1_v120_telemetry_receipts.jsonl",
+      "sha256": "614db96d9d8acd113dfa38af4111017a2e17c9cd098a43a200de930abdc95e6d",
+      "size_bytes": 325404
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s1_v120_watch_prompts.jsonl",
+      "sha256": "b593054c3f7a5006c3f01aeb389ddbdd90ba4c8106b5c694d8d7e9598f9958bb",
+      "size_bytes": 1048
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s1_reference.json",
+      "sha256": "71732ab034b749f6dbfa8cafc9f89299fa5b164d6e245facec2e2302f9e47bd7",
+      "size_bytes": 295
+    },
+    {
+      "path": "analysis/kpi/2026-08-01_heartrate_watch_s1_comparison.json",
+      "sha256": "846715598f2615097d70846a15afc4c7dd434bab8c7744f4b53b4c121be46593",
+      "size_bytes": 2970
+    },
+    {
+      "path": "/Users/kimjinsu/Documents/임베디드 소프트웨어 경진대회/firmware/esp_wroom32_mr60_monitor/analysis_tools/hr_sideband_stage1.py",
+      "sha256": "a477322ff55c42174a29a1cae213e7d688c49319148b669872ee2ec721f6a65c",
+      "size_bytes": 21544
+    },
+    {
+      "path": "analysis/hr_sideband/stage1_results.json",
+      "sha256": "2e19bfd5426ab0d49b08437bcc04e6d53230a6779154c938b53ca462dee2bc9c",
+      "size_bytes": 30389
+    },
+    {
+      "path": "analysis/hr_sideband/s1_cue_sideband_metrics.csv",
+      "sha256": "9d28443fc284f1b65d9c1757d4fb833524576c1e214c67d9088a256269ed56a8",
+      "size_bytes": 2577
+    },
+    {
+      "path": "analysis/hr_sideband/s1_error_vs_respiration.png",
+      "sha256": "e0ac86d6795c61f6f2b0f36d2da30091e73c71a7b9df7192fddb39e6a64163ec",
+      "size_bytes": 88175
+    },
+    {
+      "path": "analysis/hr_sideband/s1_spectrum_cue_03.png",
+      "sha256": "e9373b0ab9a76dfa73823536e27cff8b36a54992317d16c9107d2b687c7645f3",
+      "size_bytes": 188390
+    },
+    {
+      "path": "analysis/hr_sideband/s1_spectrum_cue_05.png",
+      "sha256": "e96ec8ccf2e619f1b283f9725a4172469f85068120c64005f25c0d9194ed8353",
+      "size_bytes": 200492
+    },
+    {
+      "path": "analysis/hr_sideband/s1_spectrum_cue_09.png",
+      "sha256": "491aaf362e2081a09cb532a8e150ab700fa119b904b4151a6a7c52b780b27047",
+      "size_bytes": 207736
+    },
+    {
+      "path": "analysis/hr_sideband/s1_breath_sideband_coupling.png",
+      "sha256": "ae898758085595a12703953df40d8ba7bc3635c1e4d51131641cf12351fe0324",
+      "size_bytes": 124394
+    }
+  ]
+}

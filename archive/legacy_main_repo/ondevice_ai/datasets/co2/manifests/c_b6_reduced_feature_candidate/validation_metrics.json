@@ -1,0 +1,159 @@
+{
+  "float_tflite": {
+    "accuracy": 0.8929376408715252,
+    "balanced_accuracy": 0.9081067127009351,
+    "brier_score": 0.08337587237480236,
+    "confusion_matrix": {
+      "fn": 35,
+      "fp": 250,
+      "label_names": [
+        "VACANT",
+        "OCCUPIED"
+      ],
+      "labels": [
+        0,
+        1
+      ],
+      "matrix": [
+        [
+          1443,
+          250
+        ],
+        [
+          35,
+          934
+        ]
+      ],
+      "tn": 1443,
+      "tp": 934
+    },
+    "decision_threshold": 0.43,
+    "expected_calibration_error": 0.10638773707738292,
+    "f1_occupied": 0.8676265675801208,
+    "f1_vacant": 0.9101229895931883,
+    "false_negative_rate": 0.03611971104231166,
+    "false_positive_rate": 0.14766686355581807,
+    "fn": 35,
+    "fp": 250,
+    "log_loss": 0.30660892122547595,
+    "macro_f1": 0.8888747785866545,
+    "occupied_recall": 0.9638802889576883,
+    "positive_prediction_rule": "occupancy_probability_greater_than_or_equal_to_threshold",
+    "pr_auc": 0.9463656325082189,
+    "pr_auc_average_precision": 0.9463656325082189,
+    "precision_occupied": 0.7888513513513513,
+    "precision_vacant": 0.976319350473613,
+    "recall_occupied": 0.9638802889576883,
+    "recall_vacant": 0.852333136444182,
+    "roc_auc": 0.9660387548559387,
+    "sample_count": 2662,
+    "tn": 1443,
+    "tp": 934
+  },
+  "int8_tflite": {
+    "accuracy": 0.8918106686701728,
+    "balanced_accuracy": 0.9074413736645216,
+    "brier_score": 0.08342595032334417,
+    "confusion_matrix": {
+      "fn": 34,
+      "fp": 254,
+      "label_names": [
+        "VACANT",
+        "OCCUPIED"
+      ],
+      "labels": [
+        0,
+        1
+      ],
+      "matrix": [
+        [
+          1439,
+          254
+        ],
+        [
+          34,
+          935
+        ]
+      ],
+      "tn": 1439,
+      "tp": 935
+    },
+    "decision_threshold": 0.43,
+    "expected_calibration_error": 0.10576663457926369,
+    "f1_occupied": 0.8665430954587581,
+    "f1_vacant": 0.9090334807327859,
+    "false_negative_rate": 0.03508771929824561,
+    "false_positive_rate": 0.15002953337271116,
+    "fn": 34,
+    "fp": 254,
+    "log_loss": 0.30435933924806974,
+    "macro_f1": 0.8877882880957719,
+    "occupied_recall": 0.9649122807017544,
+    "positive_prediction_rule": "occupancy_probability_greater_than_or_equal_to_threshold",
+    "pr_auc": 0.9397290777543224,
+    "pr_auc_average_precision": 0.9397290777543224,
+    "precision_occupied": 0.7863751051303617,
+    "precision_vacant": 0.9769178547182621,
+    "recall_occupied": 0.9649122807017544,
+    "recall_vacant": 0.8499704666272888,
+    "roc_auc": 0.9653481189161709,
+    "sample_count": 2662,
+    "tn": 1439,
+    "tp": 935
+  },
+  "population": "VALIDATION",
+  "population_count": 2662,
+  "population_fingerprint": "19321e57fe72f6482b3c7b5d3714d21e9c13b753173ceb56ea694524ac6529ef",
+  "reference_float": {
+    "accuracy": 0.8929376408715252,
+    "balanced_accuracy": 0.9081067127009351,
+    "brier_score": 0.0833758730162559,
+    "confusion_matrix": {
+      "fn": 35,
+      "fp": 250,
+      "label_names": [
+        "VACANT",
+        "OCCUPIED"
+      ],
+      "labels": [
+        0,
+        1
+      ],
+      "matrix": [
+        [
+          1443,
+          250
+        ],
+        [
+          35,
+          934
+        ]
+      ],
+      "tn": 1443,
+      "tp": 934
+    },
+    "decision_threshold": 0.43,
+    "expected_calibration_error": 0.10638773789353091,
+    "f1_occupied": 0.8676265675801208,
+    "f1_vacant": 0.9101229895931883,
+    "false_negative_rate": 0.03611971104231166,
+    "false_positive_rate": 0.14766686355581807,
+    "fn": 35,
+    "fp": 250,
+    "log_loss": 0.30660893736088785,
+    "macro_f1": 0.8888747785866545,
+    "occupied_recall": 0.9638802889576883,
+    "positive_prediction_rule": "occupancy_probability_greater_than_or_equal_to_threshold",
+    "pr_auc": 0.946365632508219,
+    "pr_auc_average_precision": 0.946365632508219,
+    "precision_occupied": 0.7888513513513513,
+    "precision_vacant": 0.976319350473613,
+    "recall_occupied": 0.9638802889576883,
+    "recall_vacant": 0.852333136444182,
+    "roc_auc": 0.9660387548559388,
+    "sample_count": 2662,
+    "tn": 1443,
+    "tp": 934
+  },
+  "threshold_frozen_before_evaluation": true
+}

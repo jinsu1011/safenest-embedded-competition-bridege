@@ -1,0 +1,122 @@
+{
+  "session_id": "2026-08-01_heartrate_watch_s1_v120",
+  "interpretation": "consumer_wearable_exploratory_reference",
+  "heart_verified": false,
+  "window_seconds": 5.0,
+  "source_files": {
+    "sensor_log": "logs/kpi/2026-08-01_heartrate_watch_s1_v120_300s.jsonl",
+    "receipts": "logs/kpi/2026-08-01_heartrate_watch_s1_v120_telemetry_receipts.jsonl",
+    "prompts": "logs/kpi/2026-08-01_heartrate_watch_s1_v120_watch_prompts.jsonl",
+    "reference": "logs/kpi/2026-08-01_heartrate_watch_s1_reference.json"
+  },
+  "session_quality": {
+    "elapsed_s": 301.813,
+    "sensor_records": 3013,
+    "prompt_count": 10,
+    "missing_sequences": 0,
+    "sequence_gap_rate": 0.0,
+    "checksum_errors_increase": 0,
+    "parse_errors_increase": 0,
+    "stable_presence_rate": 1.0,
+    "heart_valid_rate": 1.0
+  },
+  "paired_points": [
+    {
+      "index": 1,
+      "scheduled_elapsed_s": 30.0,
+      "watch_bpm": 68,
+      "mr60_median_bpm": 86.0,
+      "error_bpm": 18.0,
+      "mr60_samples": 99
+    },
+    {
+      "index": 2,
+      "scheduled_elapsed_s": 60.0,
+      "watch_bpm": 71,
+      "mr60_median_bpm": 88.0,
+      "error_bpm": 17.0,
+      "mr60_samples": 99
+    },
+    {
+      "index": 3,
+      "scheduled_elapsed_s": 90.0,
+      "watch_bpm": 75,
+      "mr60_median_bpm": 84.0,
+      "error_bpm": 9.0,
+      "mr60_samples": 99
+    },
+    {
+      "index": 4,
+      "scheduled_elapsed_s": 120.0,
+      "watch_bpm": 70,
+      "mr60_median_bpm": 83.0,
+      "error_bpm": 13.0,
+      "mr60_samples": 99
+    },
+    {
+      "index": 5,
+      "scheduled_elapsed_s": 150.0,
+      "watch_bpm": 75,
+      "mr60_median_bpm": 64.0,
+      "error_bpm": -11.0,
+      "mr60_samples": 99
+    },
+    {
+      "index": 6,
+      "scheduled_elapsed_s": 180.0,
+      "watch_bpm": 73,
+      "mr60_median_bpm": 89.0,
+      "error_bpm": 16.0,
+      "mr60_samples": 99
+    },
+    {
+      "index": 7,
+      "scheduled_elapsed_s": 210.0,
+      "watch_bpm": 77,
+      "mr60_median_bpm": 96.0,
+      "error_bpm": 19.0,
+      "mr60_samples": 99
+    },
+    {
+      "index": 8,
+      "scheduled_elapsed_s": 240.0,
+      "watch_bpm": 71,
+      "mr60_median_bpm": 96.0,
+      "error_bpm": 25.0,
+      "mr60_samples": 99
+    },
+    {
+      "index": 9,
+      "scheduled_elapsed_s": 270.0,
+      "watch_bpm": 81,
+      "mr60_median_bpm": 109.0,
+      "error_bpm": 28.0,
+      "mr60_samples": 99
+    },
+    {
+      "index": 10,
+      "scheduled_elapsed_s": 300.0,
+      "watch_bpm": 71,
+      "mr60_median_bpm": 81.0,
+      "error_bpm": 10.0,
+      "mr60_samples": 69
+    }
+  ],
+  "metrics": {
+    "paired_points": 10,
+    "mae_bpm": 16.6,
+    "bias_bpm": 14.4,
+    "max_abs_error_bpm": 28.0,
+    "within_5_bpm_count": 0,
+    "within_5_bpm_rate": 0.0,
+    "pearson_r": 0.41253258271125526
+  },
+  "gates": {
+    "1_session_complete": true,
+    "2_transport_integrity": true,
+    "3_stable_presence": true,
+    "4_heart_availability": true,
+    "5_absolute_error": false,
+    "6_recovery_tracking": null
+  }
+}

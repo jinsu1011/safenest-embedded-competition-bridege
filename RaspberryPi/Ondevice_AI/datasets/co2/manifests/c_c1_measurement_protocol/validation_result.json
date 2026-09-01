@@ -1,0 +1,23 @@
+{
+  "b5_inference_performed": false,
+  "c_c1_protocol_frozen": true,
+  "c_c2_started": false,
+  "c_d_started": false,
+  "errors": [],
+  "formal_device_domain_validation": "NO",
+  "model_modified": false,
+  "physical_collection_performed": false,
+  "protocol_id": "CO2_C_C1_MEASUREMENT_PROTOCOL_001",
+  "protocol_version": "1.0.0",
+  "scaler_refit": false,
+  "status": "PASS",
+  "threshold_changed": false,
+  "validated_artifacts": [
+    "datasets/co2/manifests/c_c1_measurement_protocol/protocol.json",
+    "docs/reports/20260814_SafeNest_CO2_C_C1_SCD40_Measurement_Protocol_01.md",
+    "docs/prompts/20260814_SafeNest_CO2_C_C1_SCD40_Measurement_Operator_Prompt_01.md",
+    "scripts/validate_co2_c_c1_measurement_protocol.py"
+  ],
+  "validator_id": "CO2_C_C1_MEASUREMENT_PROTOCOL_VALIDATOR_001",
+  "warnings": []
+}

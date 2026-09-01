@@ -1,0 +1,13 @@
+{
+  "after_snapshot_sha256": "966c3c2cfd5adc4812d4b10c97a86b6810daef3244dd330caffe1004e9689643",
+  "artifact_count_verified": 16,
+  "before_snapshot_sha256": "966c3c2cfd5adc4812d4b10c97a86b6810daef3244dd330caffe1004e9689643",
+  "final_lock_file_sha256": "1030816b298652783b8ccd78cdae330511145db7b1205a980d5a8bb431bde855",
+  "modified": false,
+  "selected_frozen_artifact_hashes": {
+    "datasets/co2/manifests/c_b2_imbalance_calibration/preprocessing_scaler_evidence.json": "732c8d4b57cd27e097aabab12b2fcfb67ed38392afe638e3f7be3a3eb5ad954a",
+    "models/co2/candidates/c_b4/float_reference_parameters.json": "471b85852f661bd787e0bc130ae032bebb69ef0b51cfacb8e87ea04529970fee",
+    "models/co2/candidates/c_b4/full_integer_int8.tflite": "bb2ed28533bca75d4fa3d06348e017c506df47d7c34b29574b77f70b6b386816",
+    "models/co2/candidates/c_b5/final_candidate_metadata.json": "695c475201be2c09b4661757bce8b5102fd04626de72d4e70fcde17b3abf3376"
+  }
+}

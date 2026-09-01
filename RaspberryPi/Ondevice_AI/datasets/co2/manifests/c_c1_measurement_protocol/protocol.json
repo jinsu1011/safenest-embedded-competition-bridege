@@ -1,0 +1,1089 @@
+{
+  "manifest_version": "1.0",
+  "phase": "C-C1",
+  "protocol_id": "CO2_C_C1_MEASUREMENT_PROTOCOL_001",
+  "protocol_version": "1.0.0",
+  "protocol_status": "FROZEN_FOR_EXTERNAL_ACQUISITION_WITH_PRECOLLECTION_COMPLIANCE_GATE",
+  "c_c1_protocol_frozen": true,
+  "creation_commit": "0625603f319b18cd6ad86b33dcca5ce2147ac2af",
+  "owner": "SafeNest CO2 measurement owner",
+  "scope": {
+    "purpose": "Freeze the physical SCD40 measurement and evidence contract for later C-C2 controlled intake.",
+    "data_collection_in_this_phase": false,
+    "new_raw_payload_in_this_phase": false,
+    "model_evaluation_in_this_phase": false,
+    "model_development_in_this_phase": false,
+    "c_c2_started": false,
+    "c_d_authorized": false
+  },
+  "post_c_c1_model_input_decision": {
+    "decision_audit_path": "datasets/co2/manifests/c_c1_model_input_decision/model_input_decision_result.json",
+    "decision": "ADOPT_REDUCED_FEATURE_DIRECTION",
+    "future_model_input_direction": [
+      "CO2",
+      "CO2_slope"
+    ],
+    "current_protocol_semantics": "HISTORICAL_FOUR_FEATURE_B5_COMPATIBILITY_CONTRACT",
+    "physical_acquisition_status": "HOLD_PENDING_REDUCED_FEATURE_CANDIDATE_LOCK",
+    "operator_handoff_status": "HOLD",
+    "revised_protocol_creation": "DEFERRED_UNTIL_REDUCED_FEATURE_CANDIDATE_LOCK",
+    "next_model_phase": {
+      "phase_id": "C-B6",
+      "title": "Reduced-Feature Candidate Development and Lock",
+      "authorization_required": true
+    },
+    "b5_threshold_0_58_inheritance_to_reduced_model": "FORBIDDEN",
+    "b5_modified": false,
+    "c_c2_started": false
+  },
+  "predecessor_c_c0_evidence": {
+    "status": "MERGED_ON_CURRENT_ORIGIN_MAIN",
+    "standalone_origin_main_sha": "0625603f319b18cd6ad86b33dcca5ce2147ac2af",
+    "english_report": {
+      "path": "docs/reports/20260814_SafeNest_CO2_C_C0_Legacy_SCD40_Evidence_Audit_01.md",
+      "sha256": "ad05c52210175f3301fdc558ff40fd5caf671f76de54010a85ac200b97d44b94"
+    },
+    "korean_report": {
+      "path": "docs/reports/20260814_SafeNest_CO2_C_C0_팀원_SCD40_실측데이터_평가_01.md",
+      "sha256": "a8f9b9db3ea7b176d5228f24cf8e8156ae6e1c789b4c8ead49afaa4e1054c6cd"
+    },
+    "c_c0_outcome": "B5_INFERENCE_BLOCKED_FEATURE_INCOMPLETE",
+    "raw_immutability_status": "PARTIAL",
+    "ground_truth_status": "ABSENT"
+  },
+  "team_acquisition_reference": {
+    "repository": "https://github.com/jinsu1011/safenest-embedded-competition.git",
+    "team_origin_main_sha": "5947334d3d0f6c6f7d6100c7ea6af219e5b4c5d5",
+    "legacy_path_c1_status": "NOT_C_C1_COMPLIANT_WITHOUT_PROTOCOL_ADAPTER",
+    "observed_paths": [
+      "devices/co2/firmware/capture_scd40.py",
+      "devices/co2/firmware/logs/",
+      "display-test2/esp32_sensor_node/esp32_sensor_node.ino",
+      "display-test2/raspberry_pi_lcd/server.py",
+      "display-test2/docs/COMMUNICATION_PROTOCOL.md"
+    ],
+    "observed_limitations": [
+      "The current capture script polls Pi /health and is not a direct SCD40 I2C event logger.",
+      "The current ESP32 telemetry exposes CO2 but drops Temperature and Humidity after readMeasurement.",
+      "The current transport freshness flag describes last-packet age, not a new SCD40 conversion.",
+      "The current telemetry contract has no fresh-read sequence or sensor-event timestamp."
+    ],
+    "precollection_rule": "Do not collect a C-C1 session with the legacy capture path unchanged. A declared adapter revision must pass the precollection compliance checklist first."
+  },
+  "frozen_b5_reference": {
+    "candidate_profile_id": "CO2_B5_FINAL_OFFLINE_UCI_CANDIDATE_001",
+    "candidate_status": "FINAL_OFFLINE_UCI_CANDIDATE_LOCKED",
+    "device_domain_validation_status": "NOT_YET_COMPLETE",
+    "feature_order": [
+      "CO2",
+      "Temperature",
+      "Humidity",
+      "CO2_slope"
+    ],
+    "slope_profile": "ENDPOINT_H150",
+    "threshold": 0.58,
+    "architecture": "LINEAR_LOGISTIC",
+    "input_dtype": "int8",
+    "input_quantization": {
+      "scale": 0.03529411926865578,
+      "zero_point": 0
+    },
+    "output_dtype": "int8",
+    "output_quantization": {
+      "scale": 0.00390625,
+      "zero_point": -128
+    },
+    "model_path": "models/co2/candidates/c_b4/full_integer_int8.tflite",
+    "model_sha256": "bb2ed28533bca75d4fa3d06348e017c506df47d7c34b29574b77f70b6b386816",
+    "scaler_path": "datasets/co2/manifests/c_b2_imbalance_calibration/preprocessing_scaler_evidence.json",
+    "scaler_fingerprint": "d0cf83558fb0de9dcdc97f0d94781a5a475a6f68e8d818121aee929030e5dc89",
+    "candidate_metadata_path": "models/co2/candidates/c_b5/final_candidate_metadata.json",
+    "candidate_metadata_sha256": "695c475201be2c09b4661757bce8b5102fd04626de72d4e70fcde17b3abf3376",
+    "final_lock_path": "datasets/co2/manifests/c_b5_robustness_final_lock/final_candidate_lock.json",
+    "final_lock_sha256": "a020d462e0d359e0c9faa9bb680387119f095cb102243d7e6c223d76a801b627",
+    "safety_risk_semantic_status": "ROOM_OCCUPANCY_ONLY_NO_SAFETY_SEMANTIC",
+    "model_modification_authorized": false,
+    "scaler_refit_authorized": false,
+    "threshold_change_authorized": false
+  },
+  "required_features": [
+    {
+      "name": "CO2",
+      "unit": "ppm",
+      "capture_role": "RAW_SOURCE_FEATURE",
+      "source": "CO2 value from the same verified fresh SCD40 read event as Temperature and Relative Humidity",
+      "required": true,
+      "allowed_missing_state": "NULL_WITH_READ_FAILURE_STATUS",
+      "formal_c2_blocker_if_missing": true
+    },
+    {
+      "name": "Temperature",
+      "unit": "degC",
+      "capture_role": "RAW_SOURCE_FEATURE",
+      "source": "Temperature returned by the same SCD40 readMeasurement call as CO2 and Relative Humidity",
+      "required": true,
+      "allowed_missing_state": "NULL_WITH_READ_FAILURE_STATUS",
+      "formal_c2_blocker_if_missing": true
+    },
+    {
+      "name": "Humidity",
+      "unit": "%RH",
+      "capture_role": "RAW_SOURCE_FEATURE",
+      "source": "Relative Humidity returned by the same SCD40 readMeasurement call as CO2 and Temperature",
+      "required": true,
+      "allowed_missing_state": "NULL_WITH_READ_FAILURE_STATUS",
+      "formal_c2_blocker_if_missing": true
+    },
+    {
+      "name": "CO2_slope",
+      "unit": "ppm/min",
+      "capture_role": "DERIVED_C2_FEATURE",
+      "source": "C-C2 reconstruction from verified fresh-event chronology using the frozen ENDPOINT_H150 contract",
+      "required": true,
+      "allowed_missing_state": "FEATURE_UNAVAILABLE_WARMUP_OR_GAP_OR_INVALID",
+      "formal_c2_blocker_if_missing": true
+    }
+  ],
+  "field_contract": [
+    {
+      "field": "protocol_id",
+      "status": "REQUIRED",
+      "type": "string",
+      "unit": null,
+      "source": "frozen protocol manifest",
+      "capture_timing": "session manifest before first measurement event",
+      "allowed_missing_state": "NONE",
+      "reason": "Prevents sessions from silently switching protocol.",
+      "validation_rule": "Must equal CO2_C_C1_MEASUREMENT_PROTOCOL_001."
+    },
+    {
+      "field": "protocol_version",
+      "status": "REQUIRED",
+      "type": "string",
+      "unit": null,
+      "source": "frozen protocol manifest",
+      "capture_timing": "session manifest before first measurement event",
+      "allowed_missing_state": "NONE",
+      "reason": "Binds every session to one immutable contract.",
+      "validation_rule": "Must equal 1.0.0 for this protocol."
+    },
+    {
+      "field": "session_id",
+      "status": "REQUIRED",
+      "type": "string",
+      "unit": null,
+      "source": "operator-generated session manifest",
+      "capture_timing": "before precheck and repeated on every raw event",
+      "allowed_missing_state": "NONE",
+      "reason": "Prevents temporal history from crossing session boundaries.",
+      "validation_rule": "Must be unique and match CO2C1-YYYYMMDD-OPCODE-SNNN."
+    },
+    {
+      "field": "scenario_id",
+      "status": "REQUIRED",
+      "type": "enum",
+      "unit": null,
+      "source": "operator session plan",
+      "capture_timing": "before session start",
+      "allowed_missing_state": "NONE",
+      "reason": "Separates controlled occupancy state and transition sessions.",
+      "validation_rule": "Must be one of VACANT_STABLE, OCCUPIED_STABLE, VACANT_TO_OCCUPIED, OCCUPIED_TO_VACANT."
+    },
+    {
+      "field": "location_id",
+      "status": "REQUIRED",
+      "type": "string",
+      "unit": null,
+      "source": "operator/session manifest",
+      "capture_timing": "before session start",
+      "allowed_missing_state": "UNKNOWN_WITH_REASON",
+      "reason": "Identifies the room or space whose ventilation context affects CO2.",
+      "validation_rule": "Unknown requires a written reason and is a C-C2 limitation."
+    },
+    {
+      "field": "operator_id",
+      "status": "REQUIRED",
+      "type": "string",
+      "unit": null,
+      "source": "operator/session manifest",
+      "capture_timing": "before session start",
+      "allowed_missing_state": "NONE",
+      "reason": "Provides session ownership and annotation provenance.",
+      "validation_rule": "Use a stable operator code; do not store unnecessary personal data."
+    },
+    {
+      "field": "measurement_event_id",
+      "status": "REQUIRED",
+      "type": "string",
+      "unit": null,
+      "source": "protocol acquisition adapter",
+      "capture_timing": "created once for each successful SCD40 read event",
+      "allowed_missing_state": "NULL_ON_READ_FAILURE",
+      "reason": "Binds CO2, Temperature, and Humidity to one sensor event.",
+      "validation_rule": "The same event ID must identify all three raw sensor values; no cross-event assembly."
+    },
+    {
+      "field": "fresh_read_sequence",
+      "status": "REQUIRED",
+      "type": "integer",
+      "unit": "count",
+      "source": "ESP-side protocol acquisition adapter",
+      "capture_timing": "incremented exactly once after a successful readMeasurement call",
+      "allowed_missing_state": "NULL_ON_READ_FAILURE",
+      "reason": "Separates fresh sensor reads from repeated telemetry packets.",
+      "validation_rule": "Strictly increases within a session only on successful fresh reads."
+    },
+    {
+      "field": "sensor_event_monotonic_ms",
+      "status": "REQUIRED",
+      "type": "integer",
+      "unit": "ms",
+      "source": "ESP monotonic clock captured immediately after successful sensor read",
+      "capture_timing": "same firmware event as fresh_read_sequence increment",
+      "allowed_missing_state": "NULL_ON_READ_FAILURE",
+      "reason": "Supports causal elapsed-time reconstruction without claiming a native SCD40 timestamp.",
+      "validation_rule": "Strictly increasing for fresh events within a session; reset requires a new session."
+    },
+    {
+      "field": "data_ready",
+      "status": "REQUIRED",
+      "type": "boolean",
+      "unit": null,
+      "source": "SCD40 library data-ready status",
+      "capture_timing": "immediately before readMeasurement",
+      "allowed_missing_state": "UNKNOWN_WITH_READ_STATUS",
+      "reason": "Provides evidence that the conversion was ready before reading.",
+      "validation_rule": "A fresh measurement event requires true; false is preserved as DATA_NOT_READY."
+    },
+    {
+      "field": "sensor_read_status",
+      "status": "REQUIRED",
+      "type": "enum",
+      "unit": null,
+      "source": "SCD40 read path",
+      "capture_timing": "for every poll/read attempt",
+      "allowed_missing_state": "NONE",
+      "reason": "Preserves readiness, read failure, and successful-read boundaries.",
+      "validation_rule": "Must use a declared status such as FRESH_READ, DATA_NOT_READY, SENSOR_READ_FAILED, or SENSOR_INVALID."
+    },
+    {
+      "field": "co2_ppm",
+      "status": "REQUIRED",
+      "type": "number|null",
+      "unit": "ppm",
+      "source": "SCD40 readMeasurement output",
+      "capture_timing": "same measurement_event_id as Temperature and Humidity",
+      "allowed_missing_state": "NULL_ON_READ_FAILURE",
+      "reason": "Frozen B5 CO2 source feature.",
+      "validation_rule": "Finite numeric value only when sensor_read_status is FRESH_READ."
+    },
+    {
+      "field": "temperature_c",
+      "status": "REQUIRED",
+      "type": "number|null",
+      "unit": "degC",
+      "source": "SCD40 readMeasurement output",
+      "capture_timing": "same measurement_event_id as CO2 and Relative Humidity",
+      "allowed_missing_state": "NULL_ON_READ_FAILURE",
+      "reason": "Closes the C-C0 T/RH telemetry-loss gap and supplies frozen B5 Temperature.",
+      "validation_rule": "Finite numeric value only when sensor_read_status is FRESH_READ."
+    },
+    {
+      "field": "relative_humidity_pct",
+      "status": "REQUIRED",
+      "type": "number|null",
+      "unit": "%RH",
+      "source": "SCD40 readMeasurement output",
+      "capture_timing": "same measurement_event_id as CO2 and Temperature",
+      "allowed_missing_state": "NULL_ON_READ_FAILURE",
+      "reason": "Closes the C-C0 T/RH telemetry-loss gap and supplies frozen B5 Humidity.",
+      "validation_rule": "Finite numeric value only when sensor_read_status is FRESH_READ."
+    },
+    {
+      "field": "per_feature_valid",
+      "status": "REQUIRED",
+      "type": "object<boolean>",
+      "unit": null,
+      "source": "protocol acquisition adapter",
+      "capture_timing": "same raw event as the three sensor values",
+      "allowed_missing_state": "NONE",
+      "reason": "Prevents a numeric cached value from being mistaken for a valid fresh feature.",
+      "validation_rule": "Must include co2, temperature, and humidity booleans."
+    },
+    {
+      "field": "raw_sensor_payload",
+      "status": "REQUIRED",
+      "type": "object",
+      "unit": null,
+      "source": "protocol acquisition adapter",
+      "capture_timing": "written in the immutable raw JSONL event",
+      "allowed_missing_state": "EMPTY_OBJECT_ONLY_ON_READ_FAILURE",
+      "reason": "Preserves the source event without derived cleanup.",
+      "validation_rule": "Raw payload is never overwritten, relabeled, or interpolated."
+    },
+    {
+      "field": "esp_device_id",
+      "status": "REQUIRED",
+      "type": "string",
+      "unit": null,
+      "source": "ESP telemetry",
+      "capture_timing": "session manifest and every raw event",
+      "allowed_missing_state": "NONE",
+      "reason": "Identifies the controller separately from the SCD40.",
+      "validation_rule": "Must remain constant within a session."
+    },
+    {
+      "field": "scd40_serial",
+      "status": "CONDITIONAL",
+      "type": "string|null",
+      "unit": null,
+      "source": "SCD40/library identity query",
+      "capture_timing": "precheck/session manifest",
+      "allowed_missing_state": "UNIQUE_SENSOR_IDENTITY_NOT_AVAILABLE",
+      "reason": "Separates physical sensor identity from ESP/controller identity.",
+      "validation_rule": "If inaccessible, record the explicit status; never fabricate a serial."
+    },
+    {
+      "field": "firmware_revision",
+      "status": "REQUIRED",
+      "type": "string",
+      "unit": null,
+      "source": "ESP build/repository manifest",
+      "capture_timing": "precheck/session manifest",
+      "allowed_missing_state": "UNKNOWN_WITH_REASON",
+      "reason": "Makes the fresh-event and telemetry implementation reproducible.",
+      "validation_rule": "Record a Git commit or immutable build identifier."
+    },
+    {
+      "field": "sensor_library_revision",
+      "status": "REQUIRED",
+      "type": "string",
+      "unit": null,
+      "source": "embedded dependency manifest",
+      "capture_timing": "precheck/session manifest",
+      "allowed_missing_state": "UNKNOWN_WITH_REASON",
+      "reason": "SCD40 data-ready/read behavior depends on the library implementation.",
+      "validation_rule": "Record a version, commit, or explicit unavailable status."
+    },
+    {
+      "field": "esp_uptime_ms",
+      "status": "REQUIRED",
+      "type": "integer",
+      "unit": "ms",
+      "source": "ESP telemetry",
+      "capture_timing": "every raw event",
+      "allowed_missing_state": "NULL_ON_PACKET_FAILURE",
+      "reason": "Detects restart and separates uptime from sensor-event chronology.",
+      "validation_rule": "A decrease requires a new session and DEVICE_RESTART event."
+    },
+    {
+      "field": "telemetry_sequence",
+      "status": "REQUIRED",
+      "type": "integer",
+      "unit": "count",
+      "source": "ESP telemetry",
+      "capture_timing": "every packet event",
+      "allowed_missing_state": "NULL_ON_PACKET_FAILURE",
+      "reason": "Identifies packet chronology without treating packets as fresh reads.",
+      "validation_rule": "Gaps and resets are preserved and classified."
+    },
+    {
+      "field": "pi_receive_timestamp_utc",
+      "status": "REQUIRED",
+      "type": "RFC3339 string",
+      "unit": "UTC",
+      "source": "Raspberry Pi receive process",
+      "capture_timing": "at packet receipt",
+      "allowed_missing_state": "NULL_ON_PACKET_FAILURE",
+      "reason": "Separates transport receipt time from sensor-event time.",
+      "validation_rule": "Use UTC with milliseconds or better declared precision."
+    },
+    {
+      "field": "pi_receive_monotonic_ns",
+      "status": "REQUIRED",
+      "type": "integer",
+      "unit": "ns",
+      "source": "Raspberry Pi monotonic clock",
+      "capture_timing": "at packet receipt",
+      "allowed_missing_state": "NULL_ON_PACKET_FAILURE",
+      "reason": "Supports host-local packet chronology without wall-clock adjustments.",
+      "validation_rule": "Strictly increasing for received packets within a session."
+    },
+    {
+      "field": "transport_connected",
+      "status": "REQUIRED",
+      "type": "boolean",
+      "unit": null,
+      "source": "Pi receiver",
+      "capture_timing": "every packet/poll event",
+      "allowed_missing_state": "UNKNOWN_ON_RECEIVER_FAILURE",
+      "reason": "Preserves connection state separately from sensor validity.",
+      "validation_rule": "False never becomes a valid feature row."
+    },
+    {
+      "field": "transport_fresh",
+      "status": "REQUIRED",
+      "type": "boolean",
+      "unit": null,
+      "source": "Pi receiver freshness calculation",
+      "capture_timing": "every packet/poll event",
+      "allowed_missing_state": "UNKNOWN_ON_RECEIVER_FAILURE",
+      "reason": "Preserves transport freshness without equating it to sensor freshness.",
+      "validation_rule": "Must not be used as the fresh SCD40 event marker."
+    },
+    {
+      "field": "transport_age_seconds",
+      "status": "REQUIRED",
+      "type": "number|null",
+      "unit": "s",
+      "source": "Pi receiver",
+      "capture_timing": "every packet/poll event",
+      "allowed_missing_state": "NULL_BEFORE_FIRST_PACKET",
+      "reason": "Makes stale boundaries auditable.",
+      "validation_rule": "Nonnegative when present; retain stale/disconnect rows."
+    },
+    {
+      "field": "transport_status",
+      "status": "REQUIRED",
+      "type": "enum",
+      "unit": null,
+      "source": "Pi receiver",
+      "capture_timing": "every packet/poll event",
+      "allowed_missing_state": "UNKNOWN_ON_RECEIVER_FAILURE",
+      "reason": "Preserves live, stale, waiting, and error states.",
+      "validation_rule": "A non-live state is not a valid fresh measurement event."
+    },
+    {
+      "field": "logger_timestamp_utc",
+      "status": "REQUIRED",
+      "type": "RFC3339 string",
+      "unit": "UTC",
+      "source": "logger host",
+      "capture_timing": "every raw event and every GT marker",
+      "allowed_missing_state": "NONE",
+      "reason": "Provides a host wall-clock reference for handoff and GT alignment.",
+      "validation_rule": "UTC timezone required; edits after capture are forbidden."
+    },
+    {
+      "field": "logger_monotonic_ns",
+      "status": "REQUIRED",
+      "type": "integer",
+      "unit": "ns",
+      "source": "logger host",
+      "capture_timing": "every raw event and every GT marker",
+      "allowed_missing_state": "NONE",
+      "reason": "Provides host-local elapsed chronology independent of wall-clock corrections.",
+      "validation_rule": "Strictly increasing within a session."
+    },
+    {
+      "field": "logger_row_index",
+      "status": "REQUIRED",
+      "type": "integer",
+      "unit": "count",
+      "source": "logger",
+      "capture_timing": "on raw event write",
+      "allowed_missing_state": "NONE",
+      "reason": "Supports loss/gap accounting without deleting rows.",
+      "validation_rule": "Unique within a raw file; gaps are recorded, not renumbered later."
+    },
+    {
+      "field": "measurement_mode",
+      "status": "REQUIRED",
+      "type": "enum",
+      "unit": null,
+      "source": "SCD40 configuration",
+      "capture_timing": "precheck and session manifest",
+      "allowed_missing_state": "UNKNOWN_WITH_REASON",
+      "reason": "Periodic mode and warm-up affect fresh-event chronology.",
+      "validation_rule": "Record the actual mode; do not assume the library default."
+    },
+    {
+      "field": "configured_measurement_interval_ms",
+      "status": "REQUIRED",
+      "type": "number",
+      "unit": "ms",
+      "source": "SCD40 configuration/firmware",
+      "capture_timing": "precheck and session manifest",
+      "allowed_missing_state": "UNKNOWN_WITH_REASON",
+      "reason": "Explains the relation between data-ready events and logger polls.",
+      "validation_rule": "Record configured value and source; it is not a substitute for observed event times."
+    },
+    {
+      "field": "effective_model_input_cadence_sec",
+      "status": "REQUIRED",
+      "type": "number",
+      "unit": "s",
+      "source": "frozen SafeNest downstream model-input contract",
+      "capture_timing": "precheck and session manifest",
+      "allowed_missing_state": "NONE",
+      "reason": "Records the downstream SafeNest model-input cadence separately from native SCD40 measurement configuration.",
+      "validation_rule": "Must equal 60.0 seconds nominally; configured_measurement_interval_ms is not a substitute."
+    },
+    {
+      "field": "normal_co2_export_cadence_sec",
+      "status": "REQUIRED",
+      "type": "number",
+      "unit": "s",
+      "source": "frozen SafeNest downstream normal-export contract",
+      "capture_timing": "precheck and session manifest",
+      "allowed_missing_state": "NONE",
+      "reason": "Records the nominal normal CO2 export cadence when the same event is transmitted as the model-input record.",
+      "validation_rule": "Must equal 60.0 seconds nominally and must not be satisfied by stale reuse."
+    },
+    {
+      "field": "asc_enabled",
+      "status": "REQUIRED",
+      "type": "boolean|UNKNOWN",
+      "unit": null,
+      "source": "SCD40 configuration query",
+      "capture_timing": "precheck and session manifest",
+      "allowed_missing_state": "UNKNOWN_NOT_ACCESSIBLE",
+      "reason": "ASC affects long-duration environmental interpretation.",
+      "validation_rule": "Unknown is explicit and creates a C-C2 limitation; never fill a default."
+    },
+    {
+      "field": "temperature_offset_c",
+      "status": "CONDITIONAL",
+      "type": "number|NOT_ACCESSIBLE",
+      "unit": "degC",
+      "source": "SCD40 configuration query",
+      "capture_timing": "precheck and session manifest",
+      "allowed_missing_state": "NOT_ACCESSIBLE_WITH_REASON",
+      "reason": "Offset can alter T/RH feature interpretation.",
+      "validation_rule": "Record value, unavailable status, or explicit configuration read failure."
+    },
+    {
+      "field": "altitude_compensation_m",
+      "status": "CONDITIONAL",
+      "type": "number|NOT_ACCESSIBLE",
+      "unit": "m",
+      "source": "SCD40 configuration query",
+      "capture_timing": "precheck and session manifest",
+      "allowed_missing_state": "NOT_ACCESSIBLE_WITH_REASON",
+      "reason": "Compensation changes sensor output behavior.",
+      "validation_rule": "Do not infer from room location without recording the source."
+    },
+    {
+      "field": "ambient_pressure_pa",
+      "status": "CONDITIONAL",
+      "type": "number|NOT_ACCESSIBLE",
+      "unit": "Pa",
+      "source": "SCD40 configuration query or declared pressure source",
+      "capture_timing": "precheck and session manifest",
+      "allowed_missing_state": "NOT_ACCESSIBLE_WITH_REASON",
+      "reason": "Pressure compensation can affect CO2/T/RH output.",
+      "validation_rule": "Record source and time if present; do not invent a nominal pressure."
+    },
+    {
+      "field": "frc_history",
+      "status": "CONDITIONAL",
+      "type": "object|UNKNOWN",
+      "unit": null,
+      "source": "device/operator calibration history",
+      "capture_timing": "precheck and session manifest",
+      "allowed_missing_state": "UNKNOWN_IF_NOT_AVAILABLE",
+      "reason": "FRC history affects provenance even when exact calibration state is unavailable.",
+      "validation_rule": "Record known events; do not reconstruct unknown history."
+    },
+    {
+      "field": "power_cycle_state",
+      "status": "REQUIRED",
+      "type": "enum",
+      "unit": null,
+      "source": "operator/device precheck",
+      "capture_timing": "precheck and every restart event",
+      "allowed_missing_state": "UNKNOWN_WITH_REASON",
+      "reason": "Power cycles reset clocks and may change sensor warm-up state.",
+      "validation_rule": "A restart or power cycle requires a new session."
+    },
+    {
+      "field": "ground_truth_ref",
+      "status": "REQUIRED",
+      "type": "string",
+      "unit": null,
+      "source": "independent operator GT log",
+      "capture_timing": "every measurement event or contiguous GT segment",
+      "allowed_missing_state": "GROUND_TRUTH_MISSING",
+      "reason": "Links raw measurements to an independent occupancy label without using CO2 or B5 output.",
+      "validation_rule": "Reference must resolve to a GT event with start/end or transition time."
+    },
+    {
+      "field": "ground_truth_label",
+      "status": "REQUIRED",
+      "type": "enum",
+      "unit": null,
+      "source": "controlled session knowledge/operator event log",
+      "capture_timing": "before label segment and at entry/exit transition",
+      "allowed_missing_state": "GROUND_TRUTH_MISSING",
+      "reason": "Formal C-C2 occupancy metrics require independent VACANT/OCCUPIED truth.",
+      "validation_rule": "Only VACANT or OCCUPIED; never infer from CO2, PIR, slope, or B5."
+    },
+    {
+      "field": "ground_truth_source",
+      "status": "REQUIRED",
+      "type": "enum",
+      "unit": null,
+      "source": "operator GT log",
+      "capture_timing": "at each GT event",
+      "allowed_missing_state": "GROUND_TRUTH_MISSING",
+      "reason": "Documents that the label is controlled and independent.",
+      "validation_rule": "Use CONTROLLED_EMPTY_ROOM, CONTROLLED_PERSON_PRESENT, RECORDED_ENTRY, or RECORDED_EXIT."
+    },
+    {
+      "field": "ground_truth_event_timestamp_utc",
+      "status": "REQUIRED",
+      "type": "RFC3339 string",
+      "unit": "UTC",
+      "source": "same logger clock as the event marker",
+      "capture_timing": "at entry/exit or segment start/end",
+      "allowed_missing_state": "GROUND_TRUTH_MISSING",
+      "reason": "Allows later temporal alignment without post-hoc label editing.",
+      "validation_rule": "Record at event time; handwritten reconstruction after B5 inspection is forbidden."
+    },
+    {
+      "field": "environment_context",
+      "status": "CONDITIONAL",
+      "type": "object",
+      "unit": null,
+      "source": "operator/session log",
+      "capture_timing": "precheck and whenever door/window/ventilation state changes",
+      "allowed_missing_state": "UNKNOWN_WITH_REASON",
+      "reason": "Records material CO2 confounders without an unnecessary maximal checklist.",
+      "validation_rule": "Include location, door, window, ventilation, and HVAC state when relevant."
+    },
+    {
+      "field": "failure_event",
+      "status": "REQUIRED_IF_OCCURS",
+      "type": "object",
+      "unit": null,
+      "source": "adapter/logger/operator failure registry",
+      "capture_timing": "immediately when detected",
+      "allowed_missing_state": "EMPTY_REGISTRY_IF_NONE",
+      "reason": "Preserves abnormal events and explains missing or invalid rows.",
+      "validation_rule": "Use declared failure statuses; never delete or silently repair the affected raw event."
+    },
+    {
+      "field": "deviation_event",
+      "status": "REQUIRED_IF_OCCURS",
+      "type": "object",
+      "unit": null,
+      "source": "operator deviation log",
+      "capture_timing": "immediately when protocol deviation occurs",
+      "allowed_missing_state": "EMPTY_REGISTRY_IF_NONE",
+      "reason": "Keeps external accumulation independent and auditable.",
+      "validation_rule": "Record reason, timestamp, affected session, and compliance consequence."
+    }
+  ],
+  "measurement_event_contract": {
+    "fresh_event_definition": [
+      "SCD40 data-ready status is true.",
+      "readMeasurement returns success.",
+      "CO2, Temperature, and Relative Humidity are finite values from that same read call.",
+      "fresh_read_sequence increments exactly once.",
+      "sensor_event_monotonic_ms is captured at the successful read boundary.",
+      "The three feature values share one measurement_event_id."
+    ],
+    "allowed_event_markers": [
+      "SCD40 data-ready status",
+      "successful readMeasurement result",
+      "ESP fresh-read sequence increment",
+      "ESP monotonic timestamp captured at read completion"
+    ],
+    "unsupported_assumption_prohibited": "Do not treat a logger poll, a new telemetry sequence, Pi revision, or transport fresh flag as proof of a new SCD40 conversion.",
+    "event_coherence_rule": "CO2, Temperature, and Relative Humidity must never be assembled from different cached or packet events.",
+    "implementation_gate": "The deployed acquisition adapter must demonstrate these fields in a precollection fixture/replay check. If it cannot, stop before physical collection."
+  },
+  "effective_model_input_cadence": {
+    "nominal_interval_sec": 60.0,
+    "role": "SAFENEST_MODEL_INPUT_AND_NORMAL_EXPORT_CADENCE",
+    "native_sensor_measurement_cadence_is_separate": true,
+    "native_sensor_measurement_cadence_contract": "Record configured_measurement_interval_ms and verified fresh-event chronology separately; this contract does not require or assert a 60000 ms native SCD40 measurement interval.",
+    "requires_verified_fresh_scd40_event": true,
+    "stale_reuse_for_schedule_compliance": "FORBIDDEN",
+    "required_coherent_fields": [
+      "CO2",
+      "Temperature",
+      "Humidity"
+    ],
+    "chronology_basis": "VERIFIED_FRESH_MEASUREMENT_CHRONOLOGY",
+    "normal_export": {
+      "nominal_interval_sec": 60.0,
+      "role": "SAFENEST_NORMAL_CO2_EXPORT_CADENCE",
+      "same_event_as_model_input": true,
+      "valid_record_requires_same_fresh_event": true,
+      "missing_fresh_event_policy": "PRESERVE_MISSING_OR_FAILURE; DO_NOT_EMIT_VALID_NORMAL_RECORD",
+      "timestamp_policy": "Preserve observed chronology; do not edit timestamps to force 60-second spacing."
+    },
+    "failure_observability": {
+      "independent_of_normal_valid_record": true,
+      "preserve_when_observed": true,
+      "must_wait_for_next_normal_export": false,
+      "policy": "Preserve sensor, transport, logger, and deviation evidence when observed; a 60-second normal-data cadence must not hide failure evidence."
+    },
+    "one_missed_sample_consequence": {
+      "example_chronology": [
+        {
+          "time_sec": 0.0,
+          "status": "VALID"
+        },
+        {
+          "time_sec": 60.0,
+          "status": "VALID"
+        },
+        {
+          "time_sec": 120.0,
+          "status": "MISSING_OR_INVALID"
+        },
+        {
+          "time_sec": 180.0,
+          "status": "VALID"
+        }
+      ],
+      "resulting_valid_event_gap_sec": 120.0,
+      "gap_exceeds_h150_max_internal_gap": true,
+      "h150_history_reset": true,
+      "slope_status_until_rebuilt": "FEATURE_UNAVAILABLE_GAP_RESTART",
+      "gap_rule_relaxation_allowed": false,
+      "statement": "At nominal 60-second effective cadence, one missed valid sample can create an approximately 120-second valid-event gap; because 120 seconds is greater than the frozen 90-second H150 gap limit, history resets and CO2_slope remains unavailable until causal history is rebuilt."
+    }
+  },
+  "freshness_contract": {
+    "logger_poll_event_distinct": true,
+    "transport_packet_event_distinct": true,
+    "fresh_scd40_measurement_event_distinct": true,
+    "transport_freshness_is_not_sensor_freshness": true,
+    "fresh_event_qualifier": "Use measurement_event_contract.fresh_event_definition.",
+    "stale_or_disconnect_policy": "Preserve the event/row and failure status; do not use it as a fresh feature row.",
+    "freshness_clock": "Use sensor_event_monotonic_ms for sensor chronology and logger/pi monotonic clocks for host chronology.",
+    "h150_contract": {
+      "profile": "ENDPOINT_H150",
+      "method": "ENDPOINT_DIFFERENCE",
+      "history_duration_seconds": 150.0,
+      "causality": "PAST_ONLY",
+      "actual_elapsed_time": true,
+      "max_internal_gap_seconds": 90.0,
+      "interpolation_allowed": false,
+      "future_samples_allowed": false,
+      "centered_window_allowed": false,
+      "history_reset_on": [
+        "session boundary",
+        "device restart or power cycle",
+        "fresh-event chronology gap greater than 90 seconds",
+        "transport disconnect or stale interval that prevents verified fresh events"
+      ],
+      "missing_slope_status": "FEATURE_UNAVAILABLE_WARMUP_OR_GAP_OR_INVALID",
+      "c_c1_claim": "C-C1 freezes the evidence needed for future reconstruction; it does not claim that H150 has already been reconstructed on a physical device."
+    }
+  },
+  "timestamp_contract": {
+    "required_clocks": [
+      {
+        "field": "sensor_event_monotonic_ms",
+        "clock_source": "ESP monotonic clock captured at successful SCD40 read",
+        "precision": "implementation-declared millisecond or better",
+        "timezone": null,
+        "restart_behavior": "resets or discontinuity requires a new session",
+        "synchronization_claim": "monotonic within session only"
+      },
+      {
+        "field": "logger_monotonic_ns",
+        "clock_source": "logger host monotonic clock",
+        "precision": "implementation-declared nanosecond counter",
+        "timezone": null,
+        "restart_behavior": "new logger process/session must be recorded",
+        "synchronization_claim": "host-local ordering only"
+      },
+      {
+        "field": "logger_timestamp_utc",
+        "clock_source": "logger host wall clock",
+        "precision": "milliseconds or better",
+        "timezone": "UTC",
+        "restart_behavior": "wall-clock correction is recorded as a deviation if observed",
+        "synchronization_claim": "wall-clock provenance; no cross-host precision claim"
+      },
+      {
+        "field": "pi_receive_timestamp_utc",
+        "clock_source": "Pi receive process",
+        "precision": "milliseconds or better",
+        "timezone": "UTC",
+        "restart_behavior": "receiver restart is a failure/restart event",
+        "synchronization_claim": "packet receipt time, not sensor event time"
+      },
+      {
+        "field": "ground_truth_event_timestamp_utc",
+        "clock_source": "same logger clock as the GT marker",
+        "precision": "operator/logger precision declared in session manifest",
+        "timezone": "UTC",
+        "restart_behavior": "GT logger restart requires a new GT segment and deviation record",
+        "synchronization_claim": "same-host event alignment only"
+      }
+    ],
+    "ordering_rule": "Use monotonic clocks for elapsed chronology; use UTC fields for provenance and same-logger GT alignment.",
+    "no_stronger_sync_claim": true
+  },
+  "session_contract": {
+    "session_id_format": "CO2C1-YYYYMMDD-OPCODE-SNNN",
+    "session_id_immutable": true,
+    "allowed_scenarios": [
+      "VACANT_STABLE",
+      "OCCUPIED_STABLE",
+      "VACANT_TO_OCCUPIED",
+      "OCCUPIED_TO_VACANT"
+    ],
+    "new_session_required_on": [
+      "device reboot",
+      "power cycle",
+      "location change",
+      "measurement configuration change",
+      "occupancy scenario reset",
+      "operator restart",
+      "logger restart",
+      "interruption greater than 90 seconds without verified fresh chronology"
+    ],
+    "history_crossing_sessions_allowed": false,
+    "warmup_rule": "Start periodic measurement, record all warm-up/failure events, and mark WARMUP_COMPLETE only at the first verified fresh SCD40 event.",
+    "h150_history_rule": "A session is H150-eligible only after at least 150 seconds of verified same-session fresh-event chronology with no forbidden internal gap.",
+    "scenario_completion_rules": {
+      "VACANT_STABLE": "Known VACANT ground truth, WARMUP_COMPLETE, then at least 150 seconds of verified fresh chronology before session end.",
+      "OCCUPIED_STABLE": "Known OCCUPIED ground truth, WARMUP_COMPLETE, then at least 150 seconds of verified fresh chronology before session end.",
+      "VACANT_TO_OCCUPIED": "At least 150 seconds of verified fresh chronology in the VACANT segment, a logger-time entry marker, then at least 150 seconds of verified fresh chronology in the OCCUPIED segment.",
+      "OCCUPIED_TO_VACANT": "At least 150 seconds of verified fresh chronology in the OCCUPIED segment, a logger-time exit marker, then at least 150 seconds of verified fresh chronology in the VACANT segment."
+    },
+    "aggregate_session_count": "NOT_FROZEN_BY_C_C1; requires a separately authorized acquisition schedule and must never be adapted from B5 results.",
+    "session_failure_policy": "Preserve incomplete sessions and classify them; do not discard them from the handoff."
+  },
+  "device_identity_contract": {
+    "scd40_model": "SCD40",
+    "scd40_i2c_address": "0x62_IF_USED_BY_DEPLOYED_HARDWARE",
+    "unique_scd40_serial": "REQUIRED_IF_ACCESSIBLE_ELSE_UNIQUE_SENSOR_IDENTITY_NOT_AVAILABLE",
+    "esp_device_id": "REQUIRED",
+    "pi_logger_id": "REQUIRED",
+    "firmware_revision": "REQUIRED",
+    "sensor_library_revision": "REQUIRED",
+    "identity_separation_rule": "SCD40 physical identity, ESP/controller identity, and Pi/logger identity are separate fields.",
+    "fabrication_policy": "Never fabricate a sensor serial or infer one from esp_device_id."
+  },
+  "configuration_metadata_contract": {
+    "measurement_mode": "REQUIRED",
+    "configured_measurement_interval_ms": "REQUIRED",
+    "effective_model_input_cadence_sec": 60.0,
+    "normal_co2_export_cadence_sec": 60.0,
+    "asc_enabled": "REQUIRED_OR_UNKNOWN_NOT_ACCESSIBLE_WITH_REASON",
+    "temperature_offset_c": "CONDITIONAL_OR_NOT_ACCESSIBLE_WITH_REASON",
+    "altitude_compensation_m": "CONDITIONAL_OR_NOT_ACCESSIBLE_WITH_REASON",
+    "ambient_pressure_pa": "CONDITIONAL_OR_NOT_ACCESSIBLE_WITH_REASON",
+    "frc_history_if_known": "CONDITIONAL_OR_UNKNOWN_IF_NOT_AVAILABLE",
+    "power_cycle_state": "REQUIRED",
+    "warmup_behavior": "REQUIRED",
+    "configuration_change_policy": "Any configuration change closes the current session and starts a new session with a new manifest."
+  },
+  "environment_context_contract": {
+    "required": [
+      "location_id",
+      "scenario_id"
+    ],
+    "conditional_when_material": [
+      "door_state",
+      "window_state",
+      "ventilation_state",
+      "hvac_state",
+      "other_CO2_relevant_environment_change"
+    ],
+    "unknown_policy": "Record UNKNOWN_WITH_REASON; do not create a maximal checklist unrelated to CO2 interpretation."
+  },
+  "ground_truth_contract": {
+    "labels": [
+      "VACANT",
+      "OCCUPIED"
+    ],
+    "independent_sources": [
+      "CONTROLLED_EMPTY_ROOM",
+      "CONTROLLED_PERSON_PRESENT",
+      "RECORDED_ENTRY",
+      "RECORDED_EXIT"
+    ],
+    "prohibited_sources": [
+      "CO2",
+      "CO2_slope",
+      "PIR",
+      "B5 prediction",
+      "B5 probability"
+    ],
+    "required_fields": [
+      "ground_truth_event_id",
+      "ground_truth_label",
+      "ground_truth_source",
+      "ground_truth_start_timestamp_utc",
+      "ground_truth_end_timestamp_utc_or_transition_timestamp",
+      "ground_truth_status",
+      "operator_id"
+    ],
+    "valid_statuses": [
+      "CONFIRMED_OPERATOR_CONTROLLED",
+      "UNCERTAIN",
+      "CONFLICTED",
+      "MISSING"
+    ],
+    "formal_metrics_rule": "Only CONFIRMED_OPERATOR_CONTROLLED segments with explicit timing may enter formal C-C2 occupancy metrics."
+  },
+  "failure_state_contract": {
+    "required_statuses": [
+      "SENSOR_READ_FAILED",
+      "SENSOR_DATA_NOT_READY",
+      "SENSOR_INVALID",
+      "TRANSPORT_DISCONNECTED",
+      "TRANSPORT_STALE",
+      "LOGGER_ERROR",
+      "DEVICE_RESTART",
+      "SESSION_INTERRUPTED",
+      "GROUND_TRUTH_MISSING",
+      "CONFIGURATION_UNKNOWN",
+      "PROTOCOL_DEVIATION"
+    ],
+    "row_policy": "Preserve raw rows/events and failure registry entries. Never forward-fill, interpolate, zero-fill, delete, or silently relabel.",
+    "normal_cadence_missing_sample_policy": "At a scheduled nominal 60-second point with no verified fresh SCD40 event, preserve the missing/failure state and do not emit a valid normal model-input/export record.",
+    "failure_observability_policy": "Failure and deviation evidence is preserved when observed and is not held until the next nominal 60-second valid record.",
+    "restart_policy": "Close the affected session, record the restart, and start a new session before fresh chronology resumes."
+  },
+  "raw_immutability_contract": {
+    "canonical_raw_format": "JSONL one event per line, UTF-8, newline-delimited, no post-capture edits",
+    "required_handoff_files": [
+      "raw_measurements.jsonl",
+      "session_manifest.json",
+      "ground_truth_events.jsonl",
+      "failure_events.jsonl",
+      "deviation_events.jsonl",
+      "checksums.sha256",
+      "operator_notes.md"
+    ],
+    "capture_finalization_order": [
+      "stop session capture",
+      "close raw files",
+      "record byte size and event/line counts",
+      "compute SHA-256 for every handoff file except the checksum file itself",
+      "write the checksum manifest with repository-relative or bundle-relative paths",
+      "mark the bundle frozen",
+      "generate derived summaries only from the frozen raw bundle"
+    ],
+    "checksum_algorithm": "SHA-256",
+    "mutation_status": "Any later hash mismatch must be classified as RAW_EVIDENCE_MUTATION_DETECTED.",
+    "derived_data_rule": "Derived summaries, plots, and reports never replace or overwrite raw evidence."
+  },
+  "external_accumulation_contract": {
+    "required_invariant": "COLLECT_ACCORDING_TO_FROZEN_PROTOCOL",
+    "adaptive_tuning_prohibited": true,
+    "b5_inspection_during_accumulation_prohibited": true,
+    "prohibited_adaptations": [
+      "session selection",
+      "duration",
+      "condition",
+      "class balance",
+      "threshold",
+      "feature definition",
+      "stopping rule"
+    ],
+    "deviation_policy": "Every unavoidable deviation receives a reason, timestamp, affected session, and protocol compliance classification."
+  },
+  "protocol_compliance_classification": {
+    "statuses": [
+      "PROTOCOL_COMPLIANT",
+      "PROTOCOL_COMPLIANT_WITH_LIMITATIONS",
+      "PROTOCOL_NONCOMPLIANT",
+      "PROTOCOL_STATUS_UNKNOWN"
+    ],
+    "blocking_violations": [
+      "missing any required raw B5 source feature",
+      "CO2/Temperature/Humidity not linked to one measurement_event_id",
+      "fresh-measurement chronology unavailable",
+      "missing session_id or unknown session boundary",
+      "raw checksum absent or mismatched",
+      "silent timestamp, label, or raw-value edit",
+      "configuration changed without a new session and record",
+      "stale or cached data reused to satisfy the nominal 60-second cadence",
+      "normal export record lacks same-fresh-event CO2/Temperature/Humidity coherence",
+      "independent ground truth missing for a claimed formal metric segment",
+      "B5 candidate identity drift",
+      "adaptive collection based on B5 output"
+    ],
+    "noncompliant_data_policy": "Preserve and classify noncompliant sessions; do not silently discard them."
+  },
+  "c_c2_intake_requirements": {
+    "entry_conditions": [
+      "C-C1 protocol is frozen",
+      "protocol-controlled measurements have accumulated",
+      "the user explicitly authorizes C-C2"
+    ],
+    "pre_metric_checks": [
+      "protocol ID/version",
+      "session/source provenance",
+      "raw checksums and byte stability",
+      "all four frozen feature fields",
+      "fresh-event chronology",
+      "effective 60-second model-input and normal-export cadence compliance",
+      "timestamp and session boundaries",
+      "SCD40 configuration and device identity",
+      "failure/deviation accounting",
+      "independent synchronized VACANT/OCCUPIED ground truth"
+    ],
+    "formal_validation_status_before_c2": "NO",
+    "metrics_authorized_in_c1": false,
+    "b5_inference_authorized_in_c1": false
+  },
+  "operator_handoff": {
+    "technical_protocol_path": "docs/reports/20260814_SafeNest_CO2_C_C1_SCD40_Measurement_Protocol_01.md",
+    "operator_prompt_path": "docs/prompts/20260814_SafeNest_CO2_C_C1_SCD40_Measurement_Operator_Prompt_01.md",
+    "validator_path": "scripts/validate_co2_c_c1_measurement_protocol.py",
+    "validation_result_path": "datasets/co2/manifests/c_c1_measurement_protocol/validation_result.json",
+    "checksums_path": "datasets/co2/manifests/c_c1_measurement_protocol/checksums.sha256",
+    "physical_collection_performed_in_c1": false
+  },
+  "validation": {
+    "validator_must_check": [
+      "manifest schema and protocol identity",
+      "merged C-C0 report references",
+      "frozen B5 identity and artifact hashes",
+      "four source-feature requirements",
+      "fresh-measurement chronology contract",
+      "independent ground-truth contract",
+      "raw checksum contract",
+      "no model/scaler/threshold retuning authorization",
+      "formal device-domain validation remains NO",
+      "one missed 60-second sample resets H150 after an approximately 120-second valid-event gap",
+      "operator prompt and technical protocol exist"
+    ],
+    "validator_result_status": "PASS"
+  },
+  "non_authorizations": {
+    "physical_measurement": false,
+    "new_raw_payload": false,
+    "b5_inference": false,
+    "formal_metrics": false,
+    "model_retraining": false,
+    "scaler_refit": false,
+    "threshold_change": false,
+    "c_c2_start": false,
+    "c_d_start": false
+  },
+  "unresolved_precollection_items": [
+    {
+      "item": "protocol_adapter_revision",
+      "status": "UNRESOLVED_REQUIRES_JUSTIFICATION_BEFORE_ACQUISITION",
+      "resolution_rule": "The operator must record the deployed firmware/adapter/library revisions and pass a fixture/replay check for T/RH same-event coherence and fresh_read_sequence before collecting any session."
+    },
+    {
+      "item": "scd40_serial_accessibility",
+      "status": "CONDITIONAL",
+      "resolution_rule": "Query the device/library. If unavailable, record UNIQUE_SENSOR_IDENTITY_NOT_AVAILABLE rather than fabricating an ID."
+    },
+    {
+      "item": "effective_model_input_and_export_cadence_support",
+      "status": "UNRESOLVED_REQUIRES_JUSTIFICATION_BEFORE_ACQUISITION",
+      "resolution_rule": "The deployed adapter/receiver must record the downstream 60-second nominal model-input and normal-export cadence separately from native SCD40 configuration, prove same-fresh-event CO2/Temperature/Humidity coherence, and preserve missing/failure status without stale reuse."
+    },
+    {
+      "item": "aggregate_session_schedule",
+      "status": "NOT_FROZEN_BY_C_C1",
+      "resolution_rule": "A separately authorized measurement owner defines the safe session schedule; it must not be selected adaptively from B5 output."
+    }
+  ]
+}

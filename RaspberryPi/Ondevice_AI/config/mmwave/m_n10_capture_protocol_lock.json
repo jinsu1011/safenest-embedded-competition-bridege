@@ -1,0 +1,189 @@
+{
+  "protocol_id": "MMWAVE_M_N10_CAPTURE_PROTOCOL_V1",
+  "phase": "M-N10",
+  "status": "LOCKED_BEFORE_HUMAN_CAPTURE",
+  "check_type": "TARGETED_MULTI_SUBJECT_REAL_MR60_CAPTURE",
+  "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1",
+  "label_profile_id": "MMWAVE_LABEL_MAPPING_PROFILE_001",
+  "label_mapper": "scripts/mmwave_label_mapper.py",
+  "source_float": {
+    "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+    "path": "models/mmwave/m_n6/MMWAVE_M_N6_SELECTED_FLOAT_V1.keras",
+    "sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab"
+  },
+  "source_int8": {
+    "artifact_id": "MMWAVE_M_N9_FULL_INT8_V1",
+    "path": "models/mmwave/m_n9/MMWAVE_M_N9_FULL_INT8_V1.tflite",
+    "sha256": "3b008af4be0facc4037c2afd3fe39292fb794208eb4370dbe6916b2d15aa38a4",
+    "input": {"shape": [1, 240, 1], "dtype": "int8"},
+    "output": {"shape": [1, 3], "dtype": "int8"}
+  },
+  "m_n8_status": "SKIPPED_NOT_JUSTIFIED",
+  "presence_gate_required": true,
+  "presence_gate_redesigned": false,
+  "presence_threshold_invented": false,
+  "empty_treated_as_apnea_gt": false,
+  "device_validated": false,
+  "subjects": {
+    "previous_team_subject_reused": false,
+    "id_scheme": "MN10-S001",
+    "de_identified": true,
+    "directly_identifying_data_in_git": false,
+    "target_new_subjects": 8,
+    "minimum_new_subjects": 6,
+    "minimum_m_n11_reserved_subjects": 4,
+    "one_physical_human_equals_one_subject": true
+  },
+  "subject_partition": {
+    "rule_id": "MMWAVE_M_N10_SUBJECT_PARTITION_V1",
+    "split_unit": "SUBJECT",
+    "roles": ["M_N10_DEVELOPMENT_REFERENCE", "M_N11_FORMAL_VALIDATION_RESERVED"],
+    "physical_subject_overlap_allowed": false,
+    "algorithm": "SHA256(namespace:seed:subject_id) then approximately 1/3 DEV and 2/3 RESERVED, with RESERVED >= 4 when N >= 6",
+    "namespace": "MMWAVE_M_N10_SUBJECT_PARTITION_V1",
+    "seed": 20260818,
+    "target_dev_fraction": 0.333333,
+    "assignment_after_predictions_forbidden": true,
+    "reclassify_after_inspection_forbidden": true,
+    "manifest": "datasets/mmwave/manifests/m_n10_subject_partition.json"
+  },
+  "independent_respiratory_reference": {
+    "required": true,
+    "preferred_type": "MOVESENSE_CHEST_ACC",
+    "independent_from_mr60": true,
+    "allowed_alternatives": [
+      "respiratory_belt",
+      "chest_motion_sensor",
+      "independently_timestamped_respiratory_waveform"
+    ],
+    "forbidden_as_ground_truth": [
+      "MR60 breath_rate_raw",
+      "MR60 vendor respiration estimate",
+      "paced-breathing cue alone",
+      "human_detected_raw",
+      "model prediction"
+    ],
+    "paced_target_is_not_ground_truth": true,
+    "raw_or_near_raw_required": true,
+    "bpm_only_reduction_forbidden": true,
+    "label_semantics_modified": false,
+    "new_rr_thresholds_invented": false
+  },
+  "required_mr60_fields": [
+    "breath_phase",
+    "ts_monotonic_ms",
+    "phase_age_ms",
+    "seq",
+    "human_detected_raw",
+    "firmware_version",
+    "device_id",
+    "boot_id",
+    "session_id",
+    "subject_id",
+    "trial_id"
+  ],
+  "required_mr60_fields_where_available": [
+    "presence",
+    "distance",
+    "motion",
+    "lock_state",
+    "error_status",
+    "config_hash",
+    "telemetry_schema_version"
+  ],
+  "model_domain_source": "MR60BHA2 0x0A13 breath_phase",
+  "breath_rate_raw_not_model_input": true,
+  "required_reference_fields": [
+    "reference_device_id",
+    "reference_type",
+    "reference_sample_rate",
+    "reference_clock",
+    "reference_start_time",
+    "reference_end_time",
+    "reference_quality_status",
+    "reference_waveform_or_near_raw",
+    "reference_timestamps"
+  ],
+  "clock_synchronization": {
+    "preferred": "same_host_common_clock",
+    "otherwise": "explicit_sync_marker_on_both_timelines",
+    "store": ["wall_time", "monotonic_time", "sync_markers", "estimated_alignment_uncertainty"],
+    "visual_guess_alignment_forbidden": true,
+    "unverified_session_class": "REFERENCE_ALIGNMENT_UNVERIFIED",
+    "unverified_excluded_from_m_n11_scoring": true
+  },
+  "capture_conditions": {
+    "A_quiet_rest_breathing": {
+      "intent": "stationary comfortable posture",
+      "min_usable_seconds": 120,
+      "intent_is_not_label": true
+    },
+    "B_elevated_or_faster_breathing": {
+      "intent": "guided faster breathing or brief light movement then recovery",
+      "min_usable_seconds": 120,
+      "intent_is_not_label": true,
+      "cue_is_not_ground_truth": true
+    },
+    "C_repeat_after_reposition": {
+      "intent": "subject leaves/repositions and/or geometry reset; repeat at least one condition",
+      "min_usable_seconds": 120,
+      "intent_is_not_label": true
+    },
+    "optional_short_breath_pause": {
+      "forced_prolonged_breath_hold": false,
+      "seated_stationary_required": true,
+      "stop_on_discomfort": true,
+      "must_be_confirmed_by_independent_reference": true,
+      "cue_alone_is_not_target": true,
+      "class_redefined": false
+    }
+  },
+  "session_identity_required": [
+    "subject_id",
+    "session_id",
+    "trial_id",
+    "boot_id",
+    "condition_intent",
+    "actual_reference_availability"
+  ],
+  "window_may_not_cross": ["subject", "session", "boot", "large_gap"],
+  "large_gap_invalid_session_policy": "fail closed; do not interpolate across large gaps; do not concatenate unrelated recordings",
+  "canonical_preprocessing_in_m_n10": "structural eligibility only; no model correctness inspection",
+  "m_n11_reserved_access": {
+    "float_inference_allowed_in_m_n10": false,
+    "int8_inference_allowed_in_m_n10": false,
+    "prediction_inspection_allowed_in_m_n10": false,
+    "reserved_model_inference_count": 0,
+    "protocol_or_threshold_tuning_from_reserved": false
+  },
+  "raw_evidence_storage": {
+    "local_root": "datasets/mmwave/raw/m_n10/",
+    "git_tracks": ["manifest", "sha256", "provenance", "subject_session_structure", "protocol"],
+    "large_raw_payload_forced_into_git": false,
+    "in_place_raw_edits_forbidden": true,
+    "derived_files_must_cite_raw_sha256": true
+  },
+  "pi_preflight": {
+    "m_n9_isolated_smoke": "NOT_PERFORMED_ENVIRONMENT_UNAVAILABLE",
+    "required_before_human_capture_if_pi_is_the_logger": true,
+    "if_pi_not_used_as_logger": "PI_SMOKE_REMAINS_UNVERIFIED",
+    "pass_not_invented": true
+  },
+  "m_n11_authorization_requires": [
+    "new_physical_subjects >= 6",
+    "m_n11_reserved_physical_subjects >= 4",
+    "dev_reserved_overlap == 0",
+    "independent_respiratory_reference_available",
+    "reference_alignment_verified",
+    "raw_mr60_lineage_locked",
+    "raw_reference_lineage_locked",
+    "canonical_preprocessing_structurally_feasible",
+    "reserved_model_inference_count == 0"
+  ],
+  "formal_model_accuracy_computed": false,
+  "formal_macro_f1_computed": false,
+  "model_retrained": false,
+  "m_n4_preprocessing_modified": false,
+  "m_n6_float_modified": false,
+  "m_n9_int8_modified": false
+}

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark light" />
+  <title>SafeNest 통합 안전관제 콘솔</title>
+  <link rel="stylesheet" href="assets/theme.css" />
+</head>
+<body>
+  <div class="shell">
+
+    <!-- ================= 좌측 레일 ================= -->
+    <aside class="rail">
+      <div class="brand">
+        <span class="brand-mark" id="brandIcon"></span>
+        <span class="brand-text"><strong>SafeNest</strong><span>SAFETY CONSOLE v2</span></span>
+      </div>
+
+      <nav class="rail-nav" aria-label="주요 메뉴">
+        <div class="rail-label">감시</div>
+        <button type="button" data-view="dashboard" class="active"><span id="navDashIcon"></span>통합 관제</button>
+        <button type="button" data-view="spaces"><span id="navSpaceIcon"></span>공간 관리</button>
+        <div class="rail-label">기록 · 관리</div>
+        <button type="button" data-view="events"><span id="navEventIcon"></span>이벤트 로그<span class="count" id="navEventCount">0</span></button>
+        <button type="button" data-view="settings"><span id="navSetIcon"></span>설정</button>
+      </nav>
+
+      <div class="rail-foot">
+        <div class="sys-card">
+          <div class="row"><span class="k">데이터 소스</span><span class="v" id="railSource">—</span></div>
+          <div class="row"><span class="k">등록 공간</span><span class="v" id="railSpaces">—</span></div>
+          <div class="row"><span class="k">미확인 경보</span><span class="v" id="railOpen">—</span></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ================= 메인 ================= -->
+    <main>
+      <header class="topbar">
+        <div class="space-picker">
+          <button type="button" id="pickerBtn" aria-haspopup="menu">
+            <span class="pick-main">
+              <strong id="pickName">—</strong>
+              <span id="pickAddr">—</span>
+            </span>
+            <span class="chev" id="pickChev"></span>
+          </button>
+          <div class="picker-menu" id="pickerMenu" role="menu"></div>
+        </div>
+
+        <span class="topbar-spacer"></span>
+
+        <span class="age-readout" id="ageReadout">수신 대기</span>
+        <span class="live-chip demo" id="liveChip"><span class="dot"></span>데모 데이터</span>
+        <button class="icon-btn" id="themeBtn" type="button" title="테마 전환" aria-label="테마 전환"></button>
+        <button class="icon-btn" id="fullBtn" type="button" title="관제 모드 (Esc로 해제)" aria-label="관제 모드"></button>
+      </header>
+
+      <!-- ---------- 통합 관제 ---------- -->
+      <section class="view active" data-view-panel="dashboard">
+        <div class="page">
+
+          <div class="alert-bar" id="alertBar" role="alert">
+            <span class="icon" id="alertIcon"></span>
+            <span class="txt">
+              <strong id="alertTitle">—</strong>
+              <span id="alertDetail">—</span>
+            </span>
+            <button class="act" id="alertAck" type="button"><span>경보 확인</span></button>
+          </div>
+
+          <div class="demo-console" id="demoConsole">
+            <span class="lb"><span id="demoIcon"></span>데모 시나리오</span>
+            <div class="scenarios" id="scenarioBtns"></div>
+            <span style="color:var(--muted);font-size:11.5px;margin-left:auto">
+              설정 → 연결 모드에서 실시간 게이트웨이로 전환할 수 있습니다.
+            </span>
+          </div>
+
+          <!-- 상태 히어로 -->
+          <article class="card hero">
+            <div class="hero-gauge">
+              <div class="ring">
+                <svg viewBox="0 0 176 176" aria-hidden="true">
+                  <circle class="track" cx="88" cy="88" r="76"></circle>
+                  <circle class="prog" id="ringProg" cx="88" cy="88" r="76"></circle>
+                </svg>
+                <div class="inner">
+                  <b id="ringValue">—</b>
+                  <small>위험도 / 100</small>
+                </div>
+              </div>
+              <span class="level-tag" id="levelTag">—</span>
+            </div>
+
+            <div class="hero-detail">
+              <div class="hero-title">
+                <h2 id="heroHeadline">—</h2>
+                <span class="sub" id="heroSub">—</span>
+              </div>
+
+              <div class="action-line" id="actionLine"></div>
+
+              <div>
+                <div style="color:var(--muted);font-size:11.5px;font-weight:750;margin-bottom:7px">위험도 판단 근거</div>
+                <div class="reasons" id="reasonList"></div>
+              </div>
+
+              <div class="hero-facts">
+                <div class="fact"><span>심박수</span><strong id="factHeart">—</strong></div>
+                <div class="fact"><span>센서 신뢰도</span><strong id="factConf">—</strong></div>
+                <div class="fact"><span>CO₂ 변화율</span><strong id="factSlope">—</strong></div>
+                <div class="fact"><span>시스템 상태</span><strong id="factSystem">—</strong></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 측정 타일 -->
+          <div class="metrics">
+            <article class="card metric">
+              <div class="metric-top"><span class="ic" id="breathIcon"></span><span class="nm">호흡수 · mmWave</span><span class="q-dot bad" id="breathQ"></span></div>
+              <div class="metric-val"><b id="breathValue">—</b><i id="breathUnit">rpm</i></div>
+              <div id="breathGauge"></div>
+              <div class="metric-foot" id="breathFoot">—</div>
+            </article>
+
+            <article class="card metric">
+              <div class="metric-top"><span class="ic" id="tempIcon"></span><span class="nm">최고 체표온 · 열화상</span><span class="q-dot bad" id="tempQ"></span></div>
+              <div class="metric-val"><b id="tempValue">—</b><i id="tempUnit">℃</i></div>
+              <div id="tempGauge"></div>
+              <div class="metric-foot" id="tempFoot">—</div>
+            </article>
+
+            <article class="card metric">
+              <div class="metric-top"><span class="ic" id="co2Icon"></span><span class="nm">CO₂ 농도 · SCD40</span><span class="q-dot bad" id="co2Q"></span></div>
+              <div class="metric-val"><b id="co2Value">—</b><i id="co2Unit">ppm</i></div>
+              <div id="co2Gauge"></div>
+              <div class="metric-foot" id="co2Foot">—</div>
+            </article>
+
+            <article class="card metric">
+              <div class="metric-top"><span class="ic" id="motionIcon"></span><span class="nm">움직임 · PIR</span><span class="q-dot bad" id="motionQ"></span></div>
+              <div class="metric-val"><b id="motionValue">—</b><i id="motionUnit"></i></div>
+              <div id="motionGauge"></div>
+              <div class="metric-foot" id="motionFoot">—</div>
+            </article>
+          </div>
+
+          <!-- 열화상 + 센서 상태 -->
+          <div class="grid-2">
+            <article class="card">
+              <div class="card-head">
+                <div><h3>실시간 열화상</h3><p>비식별 온도 배열만 처리하며 영상은 저장하지 않습니다.</p></div>
+                <strong id="thermalPeak" style="font-size:13px">—</strong>
+              </div>
+              <div class="card-body">
+                <div class="thermal-wrap" id="thermalWrap">
+                  <canvas id="thermalCanvas"></canvas>
+                </div>
+                <div class="colorbar">
+                  <span id="thermalRes">80×62</span>
+                  <span class="strip"></span>
+                  <span id="thermalRange">—</span>
+                </div>
+                <div class="privacy-note"><span id="privacyIcon"></span>얼굴·형상 식별이 불가능한 저해상도 열 데이터만 전송됩니다.</div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head"><div><h3>센서 융합 상태</h3><p>품질 게이트 q값 (0.00 = 판단 제외)</p></div></div>
+              <div class="card-body">
+                <div class="sensor-list" id="sensorList"></div>
+                <div class="conf-box">
+                  <small>센서 종합 신뢰도</small>
+                  <strong id="confValue">—</strong>
+                  <p id="confText">—</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- 추세 + 최근 이벤트 -->
+          <div class="grid-2b">
+            <article class="card">
+              <div class="card-head"><div><h3>센서 추세</h3><p>수신된 최근 표본 · 점선은 위험도 60 / 85 경계</p></div></div>
+              <div class="card-body">
+                <div class="chart-box">
+                  <canvas id="trendCanvas"></canvas>
+                  <div class="chart-empty" id="chartEmpty">표본을 수집하는 중입니다…</div>
+                </div>
+                <div class="chart-legend" id="chartLegend"></div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <div><h3>최근 이벤트</h3><p>상태 전이 기준 최근 5건</p></div>
+                <button class="btn sm" data-go="events" type="button">전체 보기</button>
+              </div>
+              <div class="card-body">
+                <div class="table-scroll">
+                  <table>
+                    <thead><tr><th>시각</th><th>등급</th><th>내용</th></tr></thead>
+                    <tbody id="recentEvents"></tbody>
+                  </table>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 공간 관리 ---------- -->
+      <section class="view" data-view-panel="spaces">
+        <div class="page">
+          <div class="page-head">
+            <div><h2>공간 관리</h2><p>등록된 모든 공간의 위험도와 핵심 지표를 한 화면에서 비교합니다.</p></div>
+            <button class="btn primary" data-go="settings" type="button">새 공간 연결</button>
+          </div>
+          <div class="kpi-grid" id="kpiGrid"></div>
+          <div class="space-grid" id="spaceGrid"></div>
+        </div>
+      </section>
+
+      <!-- ---------- 이벤트 로그 ---------- -->
+      <section class="view" data-view-panel="events">
+        <div class="page">
+          <div class="page-head">
+            <div><h2>이벤트 로그</h2><p>등급이 바뀌는 순간과 관리자 조치를 기록합니다.</p></div>
+            <div class="btn-row">
+              <button class="btn" id="exportCsv" type="button">CSV 내보내기</button>
+              <button class="btn danger" id="clearEvents" type="button">기록 초기화</button>
+            </div>
+          </div>
+
+          <div class="card filters">
+            <div class="field">
+              <label for="filterSpace">공간</label>
+              <select id="filterSpace"><option value="all">전체 공간</option></select>
+            </div>
+            <div class="field">
+              <label for="filterLevel">등급</label>
+              <select id="filterLevel">
+                <option value="all">전체 등급</option>
+                <option value="normal">정상</option>
+                <option value="info">정보</option>
+                <option value="caution">주의</option>
+                <option value="danger">위험</option>
+                <option value="emergency">긴급</option>
+                <option value="fault">센서 이상</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="filterSearch">내용 검색</label>
+              <input id="filterSearch" type="search" placeholder="예: CO₂, 무움직임, 무호흡" />
+            </div>
+            <button class="btn" id="filterReset" type="button">필터 초기화</button>
+          </div>
+
+          <article class="card">
+            <div class="card-head"><div><h3>저장된 이벤트</h3><p id="eventCount">전체 0건</p></div></div>
+            <div class="card-body" style="padding-top:6px">
+              <div class="table-scroll">
+                <table>
+                  <thead><tr><th>일시</th><th>공간</th><th>등급</th><th>위험도</th><th>내용</th><th>상세</th><th>조치</th></tr></thead>
+                  <tbody id="eventTable"></tbody>
+                </table>
+                <div class="empty-state" id="eventEmpty" hidden>조건에 맞는 이벤트가 없습니다.</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ---------- 설정 ---------- -->
+      <section class="view" data-view-panel="settings">
+        <div class="page">
+          <div class="page-head">
+            <div><h2>설정</h2><p>게이트웨이 연결, 위험 판단 기준, 알림 방식을 관리합니다.</p></div>
+          </div>
+
+          <div class="settings-grid">
+
+            <article class="card">
+              <div class="card-head"><div><h3>연결 모드</h3><p>데모 데이터와 실제 라즈베리파이 게이트웨이를 전환합니다.</p></div></div>
+              <div class="card-body">
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="prefMode">데이터 소스</label>
+                    <select id="prefMode">
+                      <option value="demo">데모 (내장 시나리오)</option>
+                      <option value="live">실시간 (게이트웨이)</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="prefPoll">갱신 주기</label>
+                    <select id="prefPoll">
+                      <option value="1000">1초</option>
+                      <option value="2000">2초</option>
+                      <option value="5000">5초</option>
+                      <option value="10000">10초</option>
+                    </select>
+                  </div>
+                  <div class="field wide">
+                    <label for="prefBaseUrl">게이트웨이 주소</label>
+                    <input id="prefBaseUrl" inputmode="url" placeholder="http://192.168.1.44:8000" />
+                    <span class="hint">FastAPI 게이트웨이의 origin. SSE(<code>/stream</code>) 미지원 시 자동으로 폴링합니다.</span>
+                  </div>
+                </div>
+
+                <div class="check-list" style="display:grid;gap:10px;margin-top:12px">
+                  <div class="switch-row">
+                    <div><div class="t">현장 경보음</div><div class="d">위험·긴급 등급에서 브라우저 경보음 재생</div></div>
+                    <label class="switch"><input type="checkbox" id="prefSound" /><span class="slider"></span></label>
+                  </div>
+                  <div class="switch-row">
+                    <div><div class="t">상태 전이 자동 기록</div><div class="d">등급이 바뀌는 순간만 이벤트로 저장</div></div>
+                    <label class="switch"><input type="checkbox" id="prefAutoLog" checked /><span class="slider"></span></label>
+                  </div>
+                </div>
+
+                <div class="btn-row" style="margin-top:14px"><button class="btn primary" id="savePrefs" type="button">연결·알림 설정 저장</button></div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head"><div><h3>위험 판단 기준</h3><p>현장 시험 결과에 맞춰 임계값을 조정하면 게이지 구간이 함께 바뀝니다.</p></div></div>
+              <div class="card-body">
+                <div class="form-grid">
+                  <div class="field"><label for="thBreathLow">저호흡 기준 (rpm 미만)</label><input id="thBreathLow" type="number" min="1" max="30" step="0.5" /></div>
+                  <div class="field"><label for="thBreathHigh">과호흡 기준 (rpm 초과)</label><input id="thBreathHigh" type="number" min="10" max="60" step="0.5" /></div>
+                  <div class="field"><label for="thCo2Caution">CO₂ 주의 (ppm)</label><input id="thCo2Caution" type="number" min="400" step="50" /></div>
+                  <div class="field"><label for="thCo2Danger">CO₂ 위험 (ppm)</label><input id="thCo2Danger" type="number" min="800" step="50" /></div>
+                  <div class="field"><label for="thTempHigh">고체온 의심 (℃)</label><input id="thTempHigh" type="number" min="30" max="45" step="0.1" /></div>
+                  <div class="field"><label for="thMotion">무움직임 위험 (초)</label><input id="thMotion" type="number" min="5" step="1" /></div>
+                </div>
+                <div class="btn-row" style="margin-top:14px"><button class="btn primary" id="saveThresholds" type="button">판단 기준 저장</button></div>
+                <div class="result-line">실시간 모드에서는 저장 시 게이트웨이 <code>PUT /api/v1/config/thresholds</code> 로 함께 전송됩니다.</div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head"><div><h3>새 공간 연결</h3><p>같은 네트워크의 SafeNest 게이트웨이를 등록합니다.</p></div></div>
+              <div class="card-body">
+                <form id="connectForm">
+                  <div class="form-grid">
+                    <div class="field"><label for="newName">공간 이름</label><input id="newName" required placeholder="예: 정화조 B-02" /></div>
+                    <div class="field"><label for="newNodeId">노드 ID</label><input id="newNodeId" required placeholder="예: SN-B02" /></div>
+                    <div class="field"><label for="newHost">게이트웨이 주소</label><input id="newHost" required inputmode="url" placeholder="192.168.1.44" /></div>
+                    <div class="field"><label for="newPort">포트</label><input id="newPort" inputmode="numeric" value="8000" /></div>
+                  </div>
+                  <div class="btn-row" style="margin-top:14px">
+                    <button class="btn" id="testConnBtn" type="button">연결 테스트</button>
+                    <button class="btn primary" type="submit">공간 등록</button>
+                  </div>
+                  <div class="result-line" id="connResult">연결 테스트는 <code>GET /health</code> 응답을 확인합니다.</div>
+                </form>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head"><div><h3>공간 이름 · 대상 변경</h3><p>관제 화면에 표시할 공간을 선택합니다.</p></div></div>
+              <div class="card-body">
+                <div class="form-grid">
+                  <div class="field wide"><label for="renameSelect">대상 공간</label><select id="renameSelect"></select></div>
+                  <div class="field wide"><label for="renameInput">새 이름</label><input id="renameInput" maxlength="32" /></div>
+                </div>
+                <div class="btn-row" style="margin-top:14px">
+                  <button class="btn primary" id="renameBtn" type="button">이름 저장</button>
+                  <button class="btn" id="setCurrentBtn" type="button">관제 화면에 표시</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="card full">
+              <div class="card-head"><div><h3>등록된 공간</h3><p>게이트웨이 주소와 최근 판정 등급</p></div></div>
+              <div class="card-body">
+                <div class="table-scroll">
+                  <table>
+                    <thead><tr><th>공간</th><th>노드 ID</th><th>주소</th><th>최근 등급</th><th>관리</th></tr></thead>
+                    <tbody id="registeredTable"></tbody>
+                  </table>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-stack" id="toastStack" role="status" aria-live="polite"></div>
+
+  <script src="assets/api.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "validation_id": "safenest_mr60_schema_1_2_final_20260801",
+  "git_baseline": "41af82b89ef8b47a15e380583ea0eac37384406e",
+  "firmware_version": "safenest-mr60-esp/1.2.0",
+  "config_sha256": "b817e8bfd5e52b18275626f7b6a9bd60098ea4b108428a5aaf63600dbc987834",
+  "sensor_firmware_version": "UNKNOWN",
+  "artifacts": [
+    {
+      "role": "schema_1_2_healthcheck",
+      "path": "firmware/esp_wroom32_mr60_monitor/logs/final/2026-08-01_healthcheck_v120_75s.jsonl",
+      "sha256": "eb4c57a16ea00d6b4314364f298cac2420a0f9cf3023eed15d02dcdd95835382",
+      "assessment": "PASS"
+    },
+    {
+      "role": "empty_preflight",
+      "path": "firmware/esp_wroom32_mr60_monitor/logs/final/2026-08-01_empty_v120_preflight_60s.jsonl",
+      "sha256": "2f3d0b6657381f697f50dab396cb0dfb8a44354f6e86c30ab0ccde5ee7a95dfd",
+      "assessment": "PASS"
+    },
+    {
+      "role": "empty_preflight_summary",
+      "path": "firmware/esp_wroom32_mr60_monitor/analysis/final/2026-08-01_empty_v120_preflight_60s_summary.json",
+      "sha256": "463ac5558ba5e41a3b047dd0bedc1be7cab61838da77f9e5e3aeb788867833d6",
+      "assessment": "PASS"
+    },
+    {
+      "role": "empty_30min",
+      "path": "firmware/esp_wroom32_mr60_monitor/logs/final/2026-08-01_empty_v120_30min.jsonl",
+      "sha256": "32ee3ae455ccf46029840f71268fdda37a88a963eed7ac7c7f9dfb269d00b3b2",
+      "assessment": "PASS"
+    },
+    {
+      "role": "empty_30min_summary",
+      "path": "firmware/esp_wroom32_mr60_monitor/analysis/final/2026-08-01_empty_v120_30min_summary.json",
+      "sha256": "25580233dc304ae6f2e0a5942f893bd62cfade53a3d6d025b08d2f66439da022",
+      "assessment": "PASS"
+    },
+    {
+      "role": "occupied_31min_final",
+      "path": "firmware/esp_wroom32_mr60_monitor/logs/final/2026-08-01_occupied_d09_v120_31min_attempt02.jsonl",
+      "sha256": "7f9e9ac65377c6dc217af92f9dee2401b6162540e2245fce97acf2ed49368a34",
+      "assessment": "PRESENCE_PASS_BREATH_CONTINUITY_FAIL"
+    },
+    {
+      "role": "occupied_30min_summary",
+      "path": "firmware/esp_wroom32_mr60_monitor/analysis/final/2026-08-01_occupied_d09_v120_31min_attempt02_after60s_summary.json",
+      "sha256": "b8c6fb33436bd2999861b591607c99a8435a3c958a37042f84adc06789b10942",
+      "assessment": "PRESENCE_PASS_BREATH_CONTINUITY_FAIL"
+    },
+    {
+      "role": "occupied_middle_25min_summary",
+      "path": "firmware/esp_wroom32_mr60_monitor/analysis/final/2026-08-01_occupied_d09_v120_31min_attempt02_middle25min_summary.json",
+      "sha256": "7814d3a96dd76159bc800f3174c07f5e75c684817f4c56eed4f8dc58f9f99292",
+      "assessment": "PRESENCE_PASS_BREATH_CONTINUITY_FAIL"
+    },
+    {
+      "role": "accepted_integration_dataset_manifest",
+      "path": "datasets/mmwave/mr60_20260728_manifest.json",
+      "sha256": "204bdc0221d311610fbfc15037c21d9217c3dfcdcdead73dab0ecc82a48371fd",
+      "assessment": "PASS"
+    },
+    {
+      "role": "csv_delivery_v2_manifest",
+      "path": "firmware/esp_wroom32_mr60_monitor/csv/2026-07-26_han_junwoo_delivery_v2/manifest.json",
+      "sha256": "56352d855facb07f9bde06fd9828f24928b0ccccbc5cf5f4bda66cc46befe70b",
+      "assessment": "PASS"
+    }
+  ],
+  "verified_existing_trials": {
+    "distance_matrix": {
+      "distances_m": [0.6, 0.9, 1.2, 1.5],
+      "status": "COMPLETE_DO_NOT_RECOLLECT"
+    },
+    "entry_exit_20": {
+      "path": "firmware/esp_wroom32_mr60_monitor/logs/kpi/2026-07-28_entry_exit_20_v2.jsonl",
+      "sha256": "f28c41166a0da3104c74b207014aae4ff7be508876175f4881eb72bdb94d5164",
+      "status": "COMPLETE_DO_NOT_RECOLLECT"
+    },
+    "paced_breathing_12_15_20rpm": {
+      "status": "COMPLETE_DO_NOT_RECOLLECT",
+      "phase_estimates_rpm": [12.34, 15.01, 20.01]
+    }
+  },
+  "file_audit": {
+    "jsonl_files": 68,
+    "total_lines": 154413,
+    "empty_files": 0,
+    "invalid_json_lines": [
+      {
+        "path": "firmware/esp_wroom32_mr60_monitor/logs/baseline/2026-07-13_empty_desk_collector_v1_30s.jsonl",
+        "line": 1,
+        "reason": "initial partial serial line missing opening brace"
+      },
+      {
+        "path": "firmware/esp_wroom32_mr60_monitor/logs/final/2026-08-01_occupied_d09_v120_31min.jsonl",
+        "line": 9000,
+        "reason": "known corrupted serial line; original preserved and excluded from analysis"
+      }
+    ],
+    "analysis_and_csv_json_files": 46,
+    "analysis_and_csv_invalid_json_files": 0,
+    "csv_delivery_v2_manifest_entries_checked": 27,
+    "csv_delivery_v2_issues": 0
+  },
+  "limitations": {
+    "heart_rate": "UNVERIFIED because no simultaneous external reference device is available",
+    "apnea": "UNVERIFIED and must not be inferred from zero, null, absence, or timeout",
+    "natural_breath_continuity": "FAIL; 25-minute filtered valid rate 25.90 percent and low-amplitude rate 69.95 percent",
+    "exit_release": "MR60 vendor hysteresis is about 15 seconds; Pi Thermal/PIR fusion is required"
+  }
+}

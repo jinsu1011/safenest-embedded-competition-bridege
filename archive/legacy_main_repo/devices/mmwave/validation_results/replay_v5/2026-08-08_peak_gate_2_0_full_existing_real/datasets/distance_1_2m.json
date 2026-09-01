@@ -1,0 +1,140 @@
+{
+  "dataset_id": "distance_1_2m",
+  "scenario": "stationary_normal_1.2m_range_limit",
+  "classification": "REAL_REPLAY_READY",
+  "real_hardware": true,
+  "source_file": "devices/mmwave/firmware/logs/matrix/2026-07-25_occupied_d12_v1_360s.jsonl",
+  "source_sha256": "58442d57e381c9e8187d9d9e7bb3445f83d17af3d7a04f2bd772e9b78f0d8e27",
+  "source_git_commit": "38274c084544af6f26b1377e593b012628a7eb05",
+  "source_total_lines": 3598,
+  "valid_json_lines": 3598,
+  "invalid_json_lines": 0,
+  "strict_provenance": false,
+  "analysis_start_s": 60.0,
+  "analysis_duration_requested_s": 300.0,
+  "raw_quality": {
+    "sensor_records": 3598,
+    "schema_versions": {
+      "1.0": 3598
+    },
+    "duration_s": 359.85199999999895,
+    "effective_sample_rate_hz": 9.995776041261436,
+    "sample_interval_s": {
+      "count": 3597,
+      "mean": 0.10004225743675256,
+      "p50": 0.1000000000003638,
+      "p95": 0.1000000000003638,
+      "max": 0.10200000000077125
+    },
+    "sequence_drops": 0,
+    "nonmonotonic_sequences": 0,
+    "uart_bad_records": 0,
+    "checksum_bad_records": 0,
+    "checksum_error_increase": 0,
+    "parser_error_increase": 0,
+    "presence_true": 3041,
+    "presence_false": 557,
+    "presence_unknown": 0,
+    "distance_valid": 3041,
+    "breath_phase_finite": 3598,
+    "breath_phase_usable": 3041,
+    "invalid_or_nonfinite_phase": 0,
+    "stale_phase_records": 0,
+    "stream_gap_count": 0,
+    "maximum_gap_s": 0.10200000000077125
+  },
+  "analysis_quality": {
+    "sensor_records": 2998,
+    "schema_versions": {
+      "1.0": 2998
+    },
+    "duration_s": 299.8259999999991,
+    "effective_sample_rate_hz": 9.99579756258633,
+    "sample_interval_s": {
+      "count": 2997,
+      "mean": 0.10004204204204174,
+      "p50": 0.1000000000003638,
+      "p95": 0.1000000000003638,
+      "max": 0.10200000000077125
+    },
+    "sequence_drops": 0,
+    "nonmonotonic_sequences": 0,
+    "uart_bad_records": 0,
+    "checksum_bad_records": 0,
+    "checksum_error_increase": 0,
+    "parser_error_increase": 0,
+    "presence_true": 2441,
+    "presence_false": 557,
+    "presence_unknown": 0,
+    "distance_valid": 2441,
+    "breath_phase_finite": 2998,
+    "breath_phase_usable": 2441,
+    "invalid_or_nonfinite_phase": 0,
+    "stale_phase_records": 0,
+    "stream_gap_count": 0,
+    "maximum_gap_s": 0.10200000000077125
+  },
+  "presence": {
+    "ground_truth": "PRESENT",
+    "detection_rate": 0.814209472981988,
+    "false_presence_rate": null
+  },
+  "entry_exit": null,
+  "attempted_windows": 9,
+  "completed_windows": 7,
+  "rejected_windows": 2,
+  "window_success_rate": 0.7777777777777778,
+  "reset_reasons": {
+    "MMWAVE_PRESENCE_NOT_DETECTED": 1,
+    "MMWAVE_INSUFFICIENT_HISTORY": 1
+  },
+  "adapter_event_reasons": {
+    "MMWAVE_WINDOW_NOT_READY": 1834,
+    "VALID": 7,
+    "MMWAVE_PRESENCE_NOT_DETECTED": 557,
+    "MMWAVE_WARMUP": 600
+  },
+  "longest_continuous_valid_inference_windows": 5,
+  "longest_continuous_valid_inference_s": 150.0,
+  "tflite_runs": 7,
+  "fallback_count": 0,
+  "prediction_distribution": {
+    "NORMAL": 7
+  },
+  "model_latency_ms": {
+    "count": 7,
+    "mean": 0.12072613130190543,
+    "p50": 0.10979198850691319,
+    "p95": 0.17562507418915624,
+    "max": 0.2002499531954527
+  },
+  "respiration_rate": {
+    "ground_truth_rpm": null,
+    "window_estimates_rpm": [
+      16.073520854039383,
+      18.57801532721586,
+      22.760724500375783,
+      19.648803065276635,
+      11.427622740389655,
+      22.937198723312584,
+      18.39763952616969
+    ],
+    "estimated_rpm_mean": 18.54621781953994,
+    "absolute_errors_rpm": [],
+    "mae_rpm": null,
+    "max_absolute_error_rpm": null,
+    "within_2rpm_count": null,
+    "within_2rpm_rate": null
+  },
+  "ai_class_ground_truth": "NORMAL",
+  "classification_accuracy": 1.0,
+  "classification_accuracy_note": null,
+  "model_id": "mmwave_resp_int8",
+  "model_version": "0.1.0",
+  "model_sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158",
+  "model_sha256_matches": true,
+  "benchmark_tool_version": "0.1.0",
+  "benchmark_tool_git_commit": "9058af58f1dfb9f0b4360f7e98d83c0f0db41650",
+  "result": "PARTIAL",
+  "benchmark_elapsed_s": 0.150318791042082
+}

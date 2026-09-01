@@ -1,0 +1,127 @@
+{
+  "manifest_version": "1.0",
+  "analysis_id": "mr60_hr_sideband_phase2c_20260801",
+  "existing_manifests_modified": false,
+  "artifacts": [
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s2_recovery_entry_event.json",
+      "sha256": "17e96f0db27d1373365d83bd8a010214492b7392cfeba388881bb161830947c1",
+      "size_bytes": 479
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s2_recovery_reference.json",
+      "sha256": "d5fdcdf35c2cf2149f0f49fa9aeae6b962c32ec5d463ed272449b32ccc409ef7",
+      "size_bytes": 1706
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s2_recovery_v120_480s.jsonl",
+      "sha256": "c7518086111a4d9c6aef1b6ad517115f3cbb491f368364e07abdf6bb41a0dfc6",
+      "size_bytes": 4854744
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s2_recovery_v120_telemetry_receipts.jsonl",
+      "sha256": "0c65eed2181c2b140219482c790e9a48bd0b0bd050ec8a274f2be651cf508b3c",
+      "size_bytes": 520014
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s2_recovery_v120_watch_prompts.jsonl",
+      "sha256": "7302cbef19066fdaeb35a0ea288ccbcaad8a26f2ea9e580cf9c95b06b31ce45f",
+      "size_bytes": 1684
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s2_recovery_attempt02_v120_360s.jsonl",
+      "sha256": "5036ea6200dfd1fd291567ef226b7247da189888a572d76690b061900e2083cb",
+      "size_bytes": 1084032
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s2_recovery_attempt02_v120_telemetry_receipts.jsonl",
+      "sha256": "9d3076e3d5c10682b4e01f45c8c2337c0861fc044f5f8d742603de8add27b0ed",
+      "size_bytes": 115668
+    },
+    {
+      "path": "logs/kpi/2026-08-01_heartrate_watch_s2_recovery_attempt02_v120_watch_prompts.jsonl",
+      "sha256": "d2ca16d856c92a9fff34a8119668c2e8c72a1b6e7b5bf56c88b25ef025956bfa",
+      "size_bytes": 312
+    },
+    {
+      "path": "analysis_tools/hr_sideband_stage2.py",
+      "sha256": "cae293a886af37e9b973e9d9753a8b8c5d1d4b539d67ffb20a3ae272e4f143c9",
+      "size_bytes": 15071
+    },
+    {
+      "path": "analysis_tools/hr_time_sync_audit.py",
+      "sha256": "92011884e6544f6e08410e72c6d9bad84961d8e4d5c4c9ed8f7694604446ee81",
+      "size_bytes": 6048
+    },
+    {
+      "path": "analysis_tools/build_hr_sideband_manifest.py",
+      "sha256": "d5ad0c578f96026c56f6d7d189c3e7546db78a6b4b64d6fedaf39b25bc5ae70a",
+      "size_bytes": 1601
+    },
+    {
+      "path": "analysis/hr_sideband/stage2_results.json",
+      "sha256": "34a97614153f05f178d382be4191df74d28793f6ceaefa9a3d4d1e026bd1a54b",
+      "size_bytes": 18023
+    },
+    {
+      "path": "analysis/hr_sideband/stage2_manifest.json",
+      "sha256": "5ead1e16f3de8e1a8fc338b9764384fdbea8f9ba5b00ccb2933112b0ea71f496",
+      "size_bytes": 2556
+    },
+    {
+      "path": "analysis/hr_sideband/s2_pair_sideband_metrics.csv",
+      "sha256": "696ac396d0151c30c7548a2f724b74e87b09921dafdc464156fb7e0ae245725b",
+      "size_bytes": 1937
+    },
+    {
+      "path": "analysis/hr_sideband/s2_recovery_trace.png",
+      "sha256": "7c6941b614aa117b9f166a40a20abda779decd59b9db79c4cffe7a2af92e81c0",
+      "size_bytes": 101575
+    },
+    {
+      "path": "analysis/hr_sideband/s1_s2_error_vs_respiration.png",
+      "sha256": "88cc11003ccb9b0d2897f607c390521e375ca215bace573f50e8a518180b5f84",
+      "size_bytes": 102000
+    },
+    {
+      "path": "analysis/hr_sideband/s2_spectrum_sample_02.png",
+      "sha256": "a070b21eb291907188214ab1d8614bcff082ca79ec349cac41dc3bf2f8731efd",
+      "size_bytes": 177866
+    },
+    {
+      "path": "analysis/hr_sideband/s2_spectrum_sample_04.png",
+      "sha256": "fd33b0004caa337853a265fc9d83d27b546188201fbd0b05358a15973a759546",
+      "size_bytes": 186806
+    },
+    {
+      "path": "analysis/hr_sideband/s2_spectrum_sample_07.png",
+      "sha256": "03caa66889f56ac02938768b6bbc6377be2f4cf20e2a4bf96404a288c7dfa6ee",
+      "size_bytes": 196279
+    },
+    {
+      "path": "analysis/hr_sideband/s2_time_sync_audit.json",
+      "sha256": "3c0b75041a8371499e83d4a8a9991bb33a03df9c50631e9bc796fe424be230b6",
+      "size_bytes": 5007
+    },
+    {
+      "path": "analysis/hr_sideband/s2_time_sync_manifest.json",
+      "sha256": "e3db9d6a028ba7950d7d8000155b9c60a6ad7b5525460865c274f82712e6323e",
+      "size_bytes": 1999
+    },
+    {
+      "path": "analysis/hr_sideband/s2_time_sync_scan.csv",
+      "sha256": "77526261df07be9bd8179a2ad2b911905ff2f4d8200889cf7034d49f9d04ba15",
+      "size_bytes": 1516
+    },
+    {
+      "path": "analysis/hr_sideband/s2_time_sync_scan.png",
+      "sha256": "bc8104cd3fe502ce86c68d92fc42ff64865ea2c283763d2636e128b6c4f7fe28",
+      "size_bytes": 70912
+    },
+    {
+      "path": "analysis/hr_sideband/STAGE2_REPORT.md",
+      "sha256": "28033ed1fb1776ccce48cbcd6010e4d0d90676f0ca1ee061ff738fdd929029cd",
+      "size_bytes": 3409
+    }
+  ]
+}

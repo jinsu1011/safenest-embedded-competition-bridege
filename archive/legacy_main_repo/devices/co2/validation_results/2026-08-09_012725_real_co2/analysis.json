@@ -1,0 +1,312 @@
+{
+  "note": "REAL SENSOR EVIDENCE — qualified window only (post-stabilization)",
+  "reads_total": 91,
+  "reads_qualified": 74,
+  "reads_valid": 64,
+  "reads_invalid": 10,
+  "invalid_error_histogram": {
+    "CO2_NO_NEW_PHYSICAL_SAMPLE": 4,
+    "CO2_MALFORMED_JSON": 6
+  },
+  "distinct_physical_samples_inferred": 64,
+  "physical_sample_interval_sec": {
+    "count": 63,
+    "mean": 4.777571428571429,
+    "p50": 4.75,
+    "p95": 5.0,
+    "max": 5.0,
+    "min": 4.744
+  },
+  "physical_timestamp_monotonic": true,
+  "tflite_invocations_total": 77,
+  "fallback_count": 0,
+  "tflite_invoke_latency_ms": {
+    "count": 64,
+    "mean": 0.06633662087551784,
+    "p50": 0.07483398076146841,
+    "p95": 0.08508400060236454,
+    "max": 0.09666697587817907,
+    "min": 0.023416941985487938
+  },
+  "provider_read_latency_ms": {
+    "count": 64,
+    "mean": 4091.7297676514863,
+    "p50": 4995.836041984148,
+    "p95": 5008.424166939221,
+    "max": 5016.4342920761555,
+    "min": 983.2436250289902
+  },
+  "node_end_to_end_ms": {
+    "count": 64,
+    "mean": 4092.200916029469,
+    "p50": 4996.344625018537,
+    "p95": 5008.682584040798,
+    "max": 5016.7918329825625,
+    "min": 983.7417079834267
+  },
+  "co2_ppm": {
+    "count": 64,
+    "mean": 1286.484375,
+    "p50": 1289.0,
+    "p95": 1306.0,
+    "max": 1307.0,
+    "min": 1242.0
+  },
+  "humidity_pct": {
+    "count": 64,
+    "mean": 61.47609375,
+    "p50": 61.5,
+    "p95": 61.96,
+    "max": 62.01,
+    "min": 60.39
+  },
+  "temperature_c": {
+    "count": 64,
+    "mean": 27.31640625,
+    "p50": 27.33,
+    "p95": 27.52,
+    "max": 27.53,
+    "min": 27.04
+  },
+  "co2_slope_ppm_min": {
+    "count": 64,
+    "mean": 5.942652084773492,
+    "p50": 7.7972709551656925,
+    "p95": 25.995970624553202,
+    "max": 27.243046896959296,
+    "min": -14.702808668891311
+  },
+  "v5_contract_failures": [],
+  "sample_feature_vectors": [
+    {
+      "host_elapsed_sec": 70.8604,
+      "co2_sample_seq": 60,
+      "co2_sample_ts_ms": 288644,
+      "feature_order": [
+        "co2_slope",
+        "humidity",
+        "co2_ppm"
+      ],
+      "feature_vector": [
+        -9.196939927260566,
+        60.39,
+        1243.0
+      ],
+      "model_class": "VACANT",
+      "model_confidence": 0.95703125,
+      "probabilities": [
+        0.95703125,
+        0.04296875
+      ],
+      "provider_score": 0.0,
+      "provider_state": "VACANT"
+    },
+    {
+      "host_elapsed_sec": 75.8604,
+      "co2_sample_seq": 61,
+      "co2_sample_ts_ms": 293391,
+      "feature_order": [
+        "co2_slope",
+        "humidity",
+        "co2_ppm"
+      ],
+      "feature_vector": [
+        -9.410534570644359,
+        60.5,
+        1242.0
+      ],
+      "model_class": "VACANT",
+      "model_confidence": 0.95703125,
+      "probabilities": [
+        0.95703125,
+        0.04296875
+      ],
+      "provider_score": 0.0,
+      "provider_state": "VACANT"
+    },
+    {
+      "host_elapsed_sec": 80.8618,
+      "co2_sample_seq": 62,
+      "co2_sample_ts_ms": 298141,
+      "feature_order": [
+        "co2_slope",
+        "humidity",
+        "co2_ppm"
+      ],
+      "feature_vector": [
+        -5.168594634506521,
+        60.65,
+        1247.0
+      ],
+      "model_class": "VACANT",
+      "model_confidence": 0.95703125,
+      "probabilities": [
+        0.95703125,
+        0.04296875
+      ],
+      "provider_score": 0.0,
+      "provider_state": "VACANT"
+    },
+    {
+      "host_elapsed_sec": 84.8608,
+      "co2_sample_seq": 63,
+      "co2_sample_ts_ms": 302885,
+      "feature_order": [
+        "co2_slope",
+        "humidity",
+        "co2_ppm"
+      ],
+      "feature_vector": [
+        -1.3952839402818475,
+        60.89,
+        1252.0
+      ],
+      "model_class": "VACANT",
+      "model_confidence": 0.875,
+      "probabilities": [
+        0.875,
+        0.125
+      ],
+      "provider_score": 0.0,
+      "provider_state": "VACANT"
+    },
+    {
+      "host_elapsed_sec": 89.8609,
+      "co2_sample_seq": 64,
+      "co2_sample_ts_ms": 307633,
+      "feature_order": [
+        "co2_slope",
+        "humidity",
+        "co2_ppm"
+      ],
+      "feature_vector": [
+        0.66114245416079,
+        60.86,
+        1255.0
+      ],
+      "model_class": "VACANT",
+      "model_confidence": 0.62890625,
+      "probabilities": [
+        0.62890625,
+        0.37109375
+      ],
+      "provider_score": 0.0,
+      "provider_state": "VACANT"
+    },
+    {
+      "host_elapsed_sec": 94.8698,
+      "co2_sample_seq": 65,
+      "co2_sample_ts_ms": 312381,
+      "feature_order": [
+        "co2_slope",
+        "humidity",
+        "co2_ppm"
+      ],
+      "feature_vector": [
+        10.680628272251312,
+        60.92,
+        1271.0
+      ],
+      "model_class": "OCCUPIED",
+      "model_confidence": 0.66796875,
+      "probabilities": [
+        0.33203125,
+        0.66796875
+      ],
+      "provider_score": 1.0,
+      "provider_state": "OCCUPIED_ELEVATED"
+    },
+    {
+      "host_elapsed_sec": 99.8619,
+      "co2_sample_seq": 66,
+      "co2_sample_ts_ms": 317132,
+      "feature_order": [
+        "co2_slope",
+        "humidity",
+        "co2_ppm"
+      ],
+      "feature_vector": [
+        11.96995541191609,
+        60.94,
+        1274.0
+      ],
+      "model_class": "OCCUPIED",
+      "model_confidence": 0.66796875,
+      "probabilities": [
+        0.33203125,
+        0.66796875
+      ],
+      "provider_score": 1.0,
+      "provider_state": "OCCUPIED_ELEVATED"
+    },
+    {
+      "host_elapsed_sec": 104.862,
+      "co2_sample_seq": 67,
+      "co2_sample_ts_ms": 322132,
+      "feature_order": [
+        "co2_slope",
+        "humidity",
+        "co2_ppm"
+      ],
+      "feature_vector": [
+        13.11151437991088,
+        60.98,
+        1277.0
+      ],
+      "model_class": "OCCUPIED",
+      "model_confidence": 0.66796875,
+      "probabilities": [
+        0.33203125,
+        0.66796875
+      ],
+      "provider_score": 1.0,
+      "provider_state": "OCCUPIED_ELEVATED"
+    },
+    {
+      "host_elapsed_sec": 108.8626,
+      "co2_sample_seq": 68,
+      "co2_sample_ts_ms": 326881,
+      "feature_order": [
+        "co2_slope",
+        "humidity",
+        "co2_ppm"
+      ],
+      "feature_vector": [
+        16.909090909090914,
+        61.03,
+        1285.0
+      ],
+      "model_class": "OCCUPIED",
+      "model_confidence": 0.66796875,
+      "probabilities": [
+        0.33203125,
+        0.66796875
+      ],
+      "provider_score": 1.0,
+      "provider_state": "OCCUPIED_ELEVATED"
+    },
+    {
+      "host_elapsed_sec": 113.8621,
+      "co2_sample_seq": 69,
+      "co2_sample_ts_ms": 331631,
+      "feature_order": [
+        "co2_slope",
+        "humidity",
+        "co2_ppm"
+      ],
+      "feature_vector": [
+        17.777777777777782,
+        61.13,
+        1288.0
+      ],
+      "model_class": "OCCUPIED",
+      "model_confidence": 0.66796875,
+      "probabilities": [
+        0.33203125,
+        0.66796875
+      ],
+      "provider_score": 1.0,
+      "provider_state": "OCCUPIED_ELEVATED"
+    }
+  ]
+}

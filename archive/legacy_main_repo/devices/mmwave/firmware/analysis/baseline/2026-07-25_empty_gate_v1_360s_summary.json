@@ -1,0 +1,48 @@
+{
+  "source": "firmware/esp_wroom32_mr60_monitor/logs/baseline/2026-07-25_empty_gate_v1_360s.jsonl",
+  "skip_seconds": 0.0,
+  "records_skipped": 0,
+  "records": 3598,
+  "invalid_json_lines": 0,
+  "elapsed_s": 359.837,
+  "telemetry_rate_hz": 9.998971756656486,
+  "uart_frames": 21735,
+  "uart_frame_rate_hz": 60.40234884128092,
+  "checksum_errors": 0,
+  "checksum_error_rate": 0.0,
+  "parse_errors": 0,
+  "parse_error_rate": 0.0,
+  "reboots_detected": 0,
+  "presence": {
+    "true_count": 0,
+    "false_count": 3598,
+    "unknown_count": 0,
+    "true_rate": 0.0
+  },
+  "distance_cm_raw": {
+    "count": 0,
+    "mean": null,
+    "median": null,
+    "stddev": null,
+    "min": null,
+    "max": null
+  },
+  "breath_rate_raw": {
+    "count": 0,
+    "mean": null,
+    "median": null,
+    "stddev": null,
+    "min": null,
+    "max": null
+  },
+  "heart_rate_raw": {
+    "count": 0,
+    "mean": null,
+    "median": null,
+    "stddev": null,
+    "min": null,
+    "max": null
+  },
+  "breath_positive_rate": 0.0,
+  "heart_positive_rate": 0.0
+}

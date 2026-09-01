@@ -1,0 +1,552 @@
+{
+  "arms": {
+    "A": {
+      "arm_id": "A",
+      "description": "CO2 + Temperature + Humidity + CO2_slope",
+      "feature_count": 4,
+      "feature_order": [
+        "CO2",
+        "Temperature",
+        "Humidity",
+        "CO2_slope"
+      ],
+      "model": {
+        "architecture": "B2_FIXED_LOGISTIC_PROBE_001",
+        "class_imbalance_strategy": "BALANCED_RANDOM_OVERSAMPLE",
+        "coefficients": [
+          3.783859817624365,
+          0.38186075609151626,
+          -1.0730061861380122,
+          2.076063956518759
+        ],
+        "fit_population": "TRAIN_ONLY",
+        "fit_row_count": 12828,
+        "fit_unique_original_row_count": 8140,
+        "intercept": [
+          -1.2668080904569734
+        ],
+        "n_iter": [
+          11
+        ],
+        "seed": 20260810,
+        "threshold": 0.58
+      },
+      "scaler": {
+        "classification": "C_B2_EXPERIMENT_REFERENCE_ONLY",
+        "existing_production_scaler_status": "SCALER_FIT_LINEAGE_UNVERIFIED",
+        "feature_order": [
+          "CO2",
+          "Temperature",
+          "Humidity",
+          "CO2_slope"
+        ],
+        "fit_once": true,
+        "fit_population": "ORIGINAL_NATURALLY_DISTRIBUTED_TRAIN_ONLY",
+        "fit_population_fingerprint": "492ca1f67e44b4a2018b743ec0fc3d20b418f7823d5f2643d8c90b0d39de8fab",
+        "fit_sample_count": 8140,
+        "implementation": "sklearn.preprocessing.StandardScaler",
+        "locked_test_fit_rows": 0,
+        "manifest_version": "1.0",
+        "mean": [
+          606.5058118345612,
+          20.618147184685405,
+          25.730943407044055,
+          0.011527303414630624
+        ],
+        "n_samples_seen": 8140,
+        "oversampled_fit_rows": 0,
+        "per_arm_scaler_fingerprint": {
+          "BALANCED_RANDOM_OVERSAMPLE": "d0cf83558fb0de9dcdc97f0d94781a5a475a6f68e8d818121aee929030e5dc89",
+          "CLASS_WEIGHT_BALANCED": "d0cf83558fb0de9dcdc97f0d94781a5a475a6f68e8d818121aee929030e5dc89",
+          "NATURAL_DISTRIBUTION": "d0cf83558fb0de9dcdc97f0d94781a5a475a6f68e8d818121aee929030e5dc89"
+        },
+        "phase": "C-B2",
+        "production_scaler_modified": false,
+        "reused_for_every_imbalance_arm": true,
+        "scale": [
+          314.3524240597083,
+          1.0158704274304289,
+          5.531812455878631,
+          5.661675596121919
+        ],
+        "scaler_fingerprint": "d0cf83558fb0de9dcdc97f0d94781a5a475a6f68e8d818121aee929030e5dc89",
+        "scaler_profile_id": "CO2_B2_TRAIN_ONLY_STANDARD_SCALER_001",
+        "validation_fit_rows": 0,
+        "variance": [
+          98817.44651221468,
+          1.0319927253276822,
+          30.600949047013973,
+          32.054570555722485
+        ]
+      },
+      "validation": {
+        "confusion_matrix": {
+          "fn": 78,
+          "fp": 152,
+          "label_names": [
+            "VACANT",
+            "OCCUPIED"
+          ],
+          "labels": [
+            0,
+            1
+          ],
+          "matrix": [
+            [
+              1541,
+              152
+            ],
+            [
+              78,
+              891
+            ]
+          ],
+          "tn": 1541,
+          "tp": 891
+        },
+        "expected_calibration_error": 0.08366406330260243,
+        "metrics": {
+          "accuracy": 0.9135987978963186,
+          "balanced_accuracy": 0.9148615954604554,
+          "f1_occupied": 0.885685884691849,
+          "f1_vacant": 0.9305555555555555,
+          "macro_f1": 0.9081207201237023,
+          "precision_occupied": 0.8542665388302972,
+          "precision_vacant": 0.9518221124150711,
+          "recall_occupied": 0.9195046439628483,
+          "recall_vacant": 0.9102185469580626
+        },
+        "population_fingerprint": "19321e57fe72f6482b3c7b5d3714d21e9c13b753173ceb56ea694524ac6529ef",
+        "probability_quality_metrics": {
+          "brier_score": 0.07187688240462474,
+          "log_loss": 0.26865810832271075,
+          "pr_auc_average_precision": 0.9520216330221128,
+          "roc_auc": 0.9696650507126716
+        },
+        "probability_vector_sha256": "a765b1d8f44fe1f6e5e65bfd943302f0b095cf62a4850a7dec6bc6492a99d419",
+        "sample_count": 2662,
+        "threshold": 0.58
+      }
+    },
+    "B": {
+      "arm_id": "B",
+      "description": "CO2 + CO2_slope",
+      "feature_count": 2,
+      "feature_order": [
+        "CO2",
+        "CO2_slope"
+      ],
+      "model": {
+        "architecture": "B2_FIXED_LOGISTIC_PROBE_001",
+        "class_imbalance_strategy": "BALANCED_RANDOM_OVERSAMPLE",
+        "coefficients": [
+          3.753746964786834,
+          1.8542290025432075
+        ],
+        "fit_population": "TRAIN_ONLY",
+        "fit_row_count": 12828,
+        "fit_unique_original_row_count": 8140,
+        "intercept": [
+          -0.6543106248288225
+        ],
+        "n_iter": [
+          9
+        ],
+        "seed": 20260810,
+        "threshold": 0.58
+      },
+      "scaler": {
+        "feature_order": [
+          "CO2",
+          "CO2_slope"
+        ],
+        "fit_once": true,
+        "fit_population": "ORIGINAL_NATURALLY_DISTRIBUTED_TRAIN_ONLY",
+        "fit_population_fingerprint": "492ca1f67e44b4a2018b743ec0fc3d20b418f7823d5f2643d8c90b0d39de8fab",
+        "fit_sample_count": 8140,
+        "implementation": "sklearn.preprocessing.StandardScaler",
+        "locked_test_fit_rows": 0,
+        "mean": [
+          606.5058118345612,
+          0.011527303414630624
+        ],
+        "n_samples_seen": 8140,
+        "oversampled_fit_rows": 0,
+        "reused_for_arm": true,
+        "scale": [
+          314.3524240597083,
+          5.661675596121919
+        ],
+        "scaler_fingerprint": "d4f5cb92907d302659676062b53e3b623fcd95f5769278eaa93641b61b766706",
+        "validation_fit_rows": 0,
+        "variance": [
+          98817.44651221468,
+          32.054570555722485
+        ]
+      },
+      "validation": {
+        "confusion_matrix": {
+          "fn": 67,
+          "fp": 188,
+          "label_names": [
+            "VACANT",
+            "OCCUPIED"
+          ],
+          "labels": [
+            0,
+            1
+          ],
+          "matrix": [
+            [
+              1505,
+              188
+            ],
+            [
+              67,
+              902
+            ]
+          ],
+          "tn": 1505,
+          "tp": 902
+        },
+        "expected_calibration_error": 0.10638773789353091,
+        "metrics": {
+          "accuracy": 0.9042073628850489,
+          "balanced_accuracy": 0.9099055358767998,
+          "f1_occupied": 0.8761534725594948,
+          "f1_vacant": 0.9218989280245022,
+          "macro_f1": 0.8990262002919985,
+          "precision_occupied": 0.8275229357798165,
+          "precision_vacant": 0.9573791348600509,
+          "recall_occupied": 0.9308565531475749,
+          "recall_vacant": 0.8889545186060248
+        },
+        "population_fingerprint": "19321e57fe72f6482b3c7b5d3714d21e9c13b753173ceb56ea694524ac6529ef",
+        "probability_quality_metrics": {
+          "brier_score": 0.0833758730162559,
+          "log_loss": 0.30660893736088785,
+          "pr_auc_average_precision": 0.946365632508219,
+          "roc_auc": 0.9660387548559388
+        },
+        "probability_vector_sha256": "5a7a4dab7c5858aafcbf8afbdd223f6740bdfdaf5eebffd0654bae5fab024c6f",
+        "sample_count": 2662,
+        "threshold": 0.58
+      }
+    },
+    "C": {
+      "arm_id": "C",
+      "description": "CO2 only",
+      "feature_count": 1,
+      "feature_order": [
+        "CO2"
+      ],
+      "model": {
+        "architecture": "B2_FIXED_LOGISTIC_PROBE_001",
+        "class_imbalance_strategy": "BALANCED_RANDOM_OVERSAMPLE",
+        "coefficients": [
+          3.2617917111656953
+        ],
+        "fit_population": "TRAIN_ONLY",
+        "fit_row_count": 12828,
+        "fit_unique_original_row_count": 8140,
+        "intercept": [
+          -0.5838595211569134
+        ],
+        "n_iter": [
+          7
+        ],
+        "seed": 20260810,
+        "threshold": 0.58
+      },
+      "scaler": {
+        "feature_order": [
+          "CO2"
+        ],
+        "fit_once": true,
+        "fit_population": "ORIGINAL_NATURALLY_DISTRIBUTED_TRAIN_ONLY",
+        "fit_population_fingerprint": "492ca1f67e44b4a2018b743ec0fc3d20b418f7823d5f2643d8c90b0d39de8fab",
+        "fit_sample_count": 8140,
+        "implementation": "sklearn.preprocessing.StandardScaler",
+        "locked_test_fit_rows": 0,
+        "mean": [
+          606.5058118345619
+        ],
+        "n_samples_seen": 8140,
+        "oversampled_fit_rows": 0,
+        "reused_for_arm": true,
+        "scale": [
+          314.35242405970814
+        ],
+        "scaler_fingerprint": "2bb81690c0ca8744b537c30a62990274d8c05fc9646968ae13fdc295d2e87ea6",
+        "validation_fit_rows": 0,
+        "variance": [
+          98817.44651221456
+        ]
+      },
+      "validation": {
+        "confusion_matrix": {
+          "fn": 109,
+          "fp": 244,
+          "label_names": [
+            "VACANT",
+            "OCCUPIED"
+          ],
+          "labels": [
+            0,
+            1
+          ],
+          "matrix": [
+            [
+              1449,
+              244
+            ],
+            [
+              109,
+              860
+            ]
+          ],
+          "tn": 1449,
+          "tp": 860
+        },
+        "expected_calibration_error": 0.12132242686432383,
+        "metrics": {
+          "accuracy": 0.8673929376408716,
+          "balanced_accuracy": 0.8716950205331612,
+          "f1_occupied": 0.8297153883260975,
+          "f1_vacant": 0.8914180252230084,
+          "macro_f1": 0.8605667067745529,
+          "precision_occupied": 0.7789855072463768,
+          "precision_vacant": 0.9300385109114249,
+          "recall_occupied": 0.8875128998968008,
+          "recall_vacant": 0.8558771411695215
+        },
+        "population_fingerprint": "19321e57fe72f6482b3c7b5d3714d21e9c13b753173ceb56ea694524ac6529ef",
+        "probability_quality_metrics": {
+          "brier_score": 0.10947607055722564,
+          "log_loss": 0.3887363270728907,
+          "pr_auc_average_precision": 0.9040515758806723,
+          "roc_auc": 0.9423108690735907
+        },
+        "probability_vector_sha256": "7f458f3d14bf022e7f020bae0894be300ad6d2ba4d67de263c34dbf6435c2df9",
+        "sample_count": 2662,
+        "threshold": 0.58
+      }
+    },
+    "D": {
+      "arm_id": "D",
+      "description": "CO2 + Temperature + Humidity",
+      "feature_count": 3,
+      "feature_order": [
+        "CO2",
+        "Temperature",
+        "Humidity"
+      ],
+      "model": {
+        "architecture": "B2_FIXED_LOGISTIC_PROBE_001",
+        "class_imbalance_strategy": "BALANCED_RANDOM_OVERSAMPLE",
+        "coefficients": [
+          3.175040827810709,
+          0.21459220199458334,
+          -0.7392868118380179
+        ],
+        "fit_population": "TRAIN_ONLY",
+        "fit_row_count": 12828,
+        "fit_unique_original_row_count": 8140,
+        "intercept": [
+          -0.9187242979995357
+        ],
+        "n_iter": [
+          10
+        ],
+        "seed": 20260810,
+        "threshold": 0.58
+      },
+      "scaler": {
+        "feature_order": [
+          "CO2",
+          "Temperature",
+          "Humidity"
+        ],
+        "fit_once": true,
+        "fit_population": "ORIGINAL_NATURALLY_DISTRIBUTED_TRAIN_ONLY",
+        "fit_population_fingerprint": "492ca1f67e44b4a2018b743ec0fc3d20b418f7823d5f2643d8c90b0d39de8fab",
+        "fit_sample_count": 8140,
+        "implementation": "sklearn.preprocessing.StandardScaler",
+        "locked_test_fit_rows": 0,
+        "mean": [
+          606.5058118345612,
+          20.618147184685405,
+          25.730943407044055
+        ],
+        "n_samples_seen": 8140,
+        "oversampled_fit_rows": 0,
+        "reused_for_arm": true,
+        "scale": [
+          314.3524240597083,
+          1.0158704274304289,
+          5.531812455878631
+        ],
+        "scaler_fingerprint": "5b4ab1e24a09269405296730f7bb6cea5cb6b2c4c9fc85a2b7d46ccc9fd8b881",
+        "validation_fit_rows": 0,
+        "variance": [
+          98817.44651221468,
+          1.0319927253276822,
+          30.600949047013973
+        ]
+      },
+      "validation": {
+        "confusion_matrix": {
+          "fn": 126,
+          "fp": 224,
+          "label_names": [
+            "VACANT",
+            "OCCUPIED"
+          ],
+          "labels": [
+            0,
+            1
+          ],
+          "matrix": [
+            [
+              1469,
+              224
+            ],
+            [
+              126,
+              843
+            ]
+          ],
+          "tn": 1469,
+          "tp": 843
+        },
+        "expected_calibration_error": 0.11146344715530888,
+        "metrics": {
+          "accuracy": 0.8685199098422239,
+          "balanced_accuracy": 0.8688297652508326,
+          "f1_occupied": 0.8280943025540275,
+          "f1_vacant": 0.8935523114355232,
+          "macro_f1": 0.8608233069947753,
+          "precision_occupied": 0.7900656044985942,
+          "precision_vacant": 0.9210031347962383,
+          "recall_occupied": 0.8699690402476781,
+          "recall_vacant": 0.867690490253987
+        },
+        "population_fingerprint": "19321e57fe72f6482b3c7b5d3714d21e9c13b753173ceb56ea694524ac6529ef",
+        "probability_quality_metrics": {
+          "brier_score": 0.10442124288788542,
+          "log_loss": 0.36508735149627136,
+          "pr_auc_average_precision": 0.9129039297680114,
+          "roc_auc": 0.9448070333925219
+        },
+        "probability_vector_sha256": "3253b8e3946603b84d76670dd382a9faddb8776891d462b7abbff3bcaa2cb384",
+        "sample_count": 2662,
+        "threshold": 0.58
+      }
+    }
+  },
+  "audit_id": "CO2_TRH_FEATURE_NECESSITY_AUDIT_001",
+  "b5_frozen_unchanged": {
+    "b5_metadata_modified": false,
+    "feature_order": [
+      "CO2",
+      "Temperature",
+      "Humidity",
+      "CO2_slope"
+    ],
+    "model_sha256": "bb2ed28533bca75d4fa3d06348e017c506df47d7c34b29574b77f70b6b386816",
+    "production_model_modified": false,
+    "production_scaler_modified": false,
+    "scaler_fingerprint": "d0cf83558fb0de9dcdc97f0d94781a5a475a6f68e8d818121aee929030e5dc89",
+    "threshold": 0.58
+  },
+  "classification": "T_RH_FEATURE_DEPENDENCE_INCONCLUSIVE",
+  "classification_basis": "Arms A and B have mixed directional results across macro F1, occupied precision, and occupied recall; no equivalence margin was imposed.",
+  "dataset_lineage": {
+    "canonical_source_sha256": "d157290a6ddcb7ff14f99f37331b713d897f64ca480e91912acde40f11d229f7",
+    "locked_test_count": 9749,
+    "locked_test_fingerprint": "0bac8dc1affae1de48ea68f01e866508ea19f31e194a7c0dccbf617e529344e7",
+    "random_row_split_used": false,
+    "source_archive_sha256_values": [
+      "4ae3f46aa98eedff564a9f6924d1635173e2fd2c816004342a9be93076d3a81a"
+    ],
+    "synthetic_fixture_used": false,
+    "train_count": 8140,
+    "train_fingerprint": "492ca1f67e44b4a2018b743ec0fc3d20b418f7823d5f2643d8c90b0d39de8fab",
+    "validation_count": 2662,
+    "validation_fingerprint": "19321e57fe72f6482b3c7b5d3714d21e9c13b753173ceb56ea694524ac6529ef"
+  },
+  "fixed_procedure": {
+    "decision_threshold": 0.58,
+    "feature_arms": {
+      "A": [
+        "CO2",
+        "Temperature",
+        "Humidity",
+        "CO2_slope"
+      ],
+      "B": [
+        "CO2",
+        "CO2_slope"
+      ],
+      "C": [
+        "CO2"
+      ],
+      "D": [
+        "CO2",
+        "Temperature",
+        "Humidity"
+      ]
+    },
+    "imbalance_strategy": "BALANCED_RANDOM_OVERSAMPLE",
+    "model_family": "B2_FIXED_LOGISTIC_PROBE_001",
+    "model_parameters": {
+      "C": 1.0,
+      "fit_intercept": true,
+      "max_iter": 2000,
+      "penalty": "l2",
+      "random_state": 20260810,
+      "solver": "lbfgs"
+    },
+    "oversampling_seed": 20260810,
+    "scaler_fit_population": "ORIGINAL_TRAIN_ONLY",
+    "slope_profile": "ENDPOINT_H150",
+    "threshold_policy": "INHERITED_FROZEN_B5_REFERENCE_THRESHOLD; NOT_RETUNED_FOR_THIS_AUDIT",
+    "validation_only_for_comparison": true
+  },
+  "locked_test_policy": {
+    "canonical_rows_seen_for_membership_accounting": 9752,
+    "eligible_rows_seen_for_membership_accounting": 9749,
+    "feature_rows_decoded": 0,
+    "predictive_metrics": 0,
+    "sealed": true,
+    "target_rows_decoded": 0,
+    "used_for_feature_selection": false,
+    "used_for_model_fit": false,
+    "used_for_predictive_metrics": false,
+    "used_for_scaler_fit": false,
+    "used_for_threshold_selection": false
+  },
+  "manifest_version": "1.0",
+  "metric_deltas_A_minus_B": {
+    "accuracy": 0.009391435011269711,
+    "balanced_accuracy": 0.0049560595836556365,
+    "macro_f1": 0.009094519831703729,
+    "precision_occupied": 0.026743603050480735,
+    "precision_vacant": -0.005557022444979798,
+    "recall_occupied": -0.011351909184726616,
+    "recall_vacant": 0.021264028352037778
+  },
+  "phase_boundary": "C-C1_FOLLOW_UP_OFFLINE_EVIDENCE_ONLY",
+  "repo_relative_source_paths": {
+    "b0_contract": "datasets/co2/manifests/c_b0_offline_experiment_contract/experiment_contract.json",
+    "b2_scaler_evidence": "datasets/co2/manifests/c_b2_imbalance_calibration/preprocessing_scaler_evidence.json",
+    "b5_metadata": "models/co2/candidates/c_b5/final_candidate_metadata.json",
+    "canonical_samples": "datasets/co2/manifests/c_a5_canonical_samples/canonical_source_samples.jsonl",
+    "eligible_ids": "datasets/co2/manifests/c_a5_canonical_samples/model_eligible_sample_ids.jsonl"
+  },
+  "runtime": {
+    "numpy": "1.26.4",
+    "python": "3.12.13",
+    "scikit_learn": "1.6.1"
+  }
+}

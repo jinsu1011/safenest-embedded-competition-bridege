@@ -1,0 +1,14 @@
+{
+  "event": "s2_recovery_entry_t0",
+  "host_wall_time_kst": "2026-08-01T17:39:00+09:00",
+  "host_wall_time_utc_observed": "2026-08-01T08:39:00.3Z",
+  "nearest_receipt_before_event": {
+    "host_monotonic_ns": 603398075344583,
+    "seq": 177721,
+    "esp_ts_monotonic_ms": 17785921
+  },
+  "watch_bpm": 135,
+  "position": "seated approximately 0.9 m in front of MR60",
+  "source": "user chat message; host timestamp sampled immediately after receipt",
+  "heart_verified": false
+}

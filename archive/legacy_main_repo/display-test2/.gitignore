@@ -1,0 +1,15 @@
+# Local credentials
+secrets.h
+**/secrets.h
+
+# Raspberry Pi runtime files
+state.json
+*.pid
+.server.pid
+.browser.pid
+logs/
+.chromium-kiosk/
+
+# Python cache
+__pycache__/
+*.py[cod]

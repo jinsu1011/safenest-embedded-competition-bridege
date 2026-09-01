@@ -1,0 +1,118 @@
+{
+  "protocol_id": "M-C0-MR60-DEVICE-EVIDENCE",
+  "protocol_version": "1.0",
+  "status": "PRE_MEASUREMENT_CONTRACT",
+  "sensor": {
+    "model": "MR60BHA2",
+    "transport": "ESP32_UART_USB",
+    "baud_rate": 115200,
+    "firmware_version": "PENDING_CAPTURE",
+    "sensor_firmware_version": "PENDING_CAPTURE",
+    "config_hash": "PENDING_CAPTURE"
+  },
+  "acquisition": {
+    "program": "devices/mmwave/device_measurements/tools/live_mr60_monitor.py",
+    "timestamp_policy": [
+      "preserve ts_monotonic_ms from every received observation",
+      "preserve wall-clock capture time in the session manifest",
+      "preserve seq when exposed by the current firmware",
+      "do not fabricate evenly spaced timestamps"
+    ],
+    "raw_format": "JSONL",
+    "raw_immutable": true
+  },
+  "signals": {
+    "source_contract": "devices/mmwave/device_measurements/schemas/raw_record.schema.json",
+    "fields": [
+      "device_id",
+      "seq",
+      "ts_monotonic_ms",
+      "uart_frame_ok",
+      "checksum_ok",
+      "human_detected_raw",
+      "human_detected_stable",
+      "distance_cm_raw",
+      "breath_rate_raw",
+      "breath_rate_filtered",
+      "breath_filtered_valid",
+      "breath_phase_std",
+      "breath_window_ready",
+      "heart_rate_raw",
+      "heart_raw_valid",
+      "heart_verified",
+      "total_phase",
+      "breath_phase",
+      "heart_phase",
+      "distance_std_cm",
+      "firmware_version",
+      "sensor_firmware_version",
+      "config_hash",
+      "sensor_state",
+      "error_code"
+    ],
+    "semantic_status": "Field names are taken from the current firmware/JSONL contract. Physical units, phase scale, reset behavior, and low-level-vs-derived taxonomy remain UNKNOWN until device capture.",
+    "low_level_phase_exposed": "UNKNOWN"
+  },
+  "timing": {
+    "offline_nominal_cadence_hz": 10.0,
+    "offline_window_seconds": 30.0,
+    "offline_window_samples": 300,
+    "effective_cadence_hz": null,
+    "jitter_ms": null,
+    "maximum_gap_ms": null,
+    "packet_loss": null,
+    "resampling_during_raw_capture": false
+  },
+  "trial": {
+    "pilot_label": "PILOT_NOT_FORMAL_EVALUATION",
+    "formal_label": "FORMAL_DEVICE_EVIDENCE",
+    "duration_seconds": null,
+    "minimum_complete_windows": 2,
+    "breathing_mode": "normal_spontaneous",
+    "posture": "PENDING_CAPTURE",
+    "distance_cm": null,
+    "sensor_height_cm": null,
+    "sensor_angle_deg": null,
+    "orientation": "PENDING_CAPTURE",
+    "movement_restriction": "stationary baseline; vary one physical factor at a time",
+    "other_people": "record presence, approximate distance, field-of-view and movement; do not collect identifying video"
+  },
+  "reference": {
+    "method": "PENDING_CAPTURE",
+    "synchronization": "PENDING_CAPTURE",
+    "required_for_accuracy_claim": true
+  },
+  "artifacts": {
+    "protocol_human_readable": "docs/mmwave/MR60BHA2_DEVICE_MEASUREMENT_PROTOCOL_M-C0.md",
+    "manifest_schema": "devices/mmwave/device_measurements/schemas/session_manifest.schema.json",
+    "raw_schema": "devices/mmwave/device_measurements/schemas/raw_record.schema.json",
+    "raw_paths": [
+      "devices/mmwave/device_measurements/pilot/",
+      "devices/mmwave/device_measurements/formal_raw/"
+    ],
+    "manifest_path": "devices/mmwave/device_measurements/manifests/",
+    "qa_path": "devices/mmwave/device_measurements/qa/",
+    "reference_path": "devices/mmwave/device_measurements/references/",
+    "derived_path": "devices/mmwave/device_measurements/derived/"
+  },
+  "claims": {
+    "mr60bha2_device_validated": false,
+    "raspberry_pi_validated": false,
+    "deployment_ready": false,
+    "clinical_apnea_validated": false
+  },
+  "exclusion_rules": [
+    "sensor disconnected or corrupted packet stream",
+    "reference unavailable when the planned comparison requires one",
+    "subject leaves the measurement geometry",
+    "severe unintended movement in a stationary protocol",
+    "timestamp or acquisition failure"
+  ],
+  "forbidden_during_collection": [
+    "retrain model",
+    "change weights, labels, thresholds, BPF_ZSCORE, seed, or window semantics",
+    "modify locked TFLite artifact",
+    "reopen locked test or recovery data",
+    "silently duplicate, discard, interpolate, or resample raw observations"
+  ]
+}
