@@ -24,7 +24,7 @@ SafeNest 외함의 3D 프린팅용 CAD/STL 자산을 보관한다.
 입력은 센서 치수·배치 제약과 mmWave 시야각 요구사항이며, 출력은 슬라이서가 소비하는 STL이다.
 
 ## 7. 다른 기능 영역과의 관계
-`devices/mmwave/`의 센서 설치 각도·거리 기준, `devices/pir/`의 감지 범위, `docs/operations/HARDWARE_RUNBOOK.md`의 조립 절차와 일치해야 한다.
+`ESP32/docs/ARDUINO_ENVIRONMENT_SETUP_KO.md`의 배선·핀 구성 및 `ESP32/docs/COMMUNICATION_PROTOCOL.md`의 센서 배치 전제와 일치해야 한다.
 
 ## 8. 실행·학습·추론 또는 활용 방법
 검증된 슬라이서로 STL을 열고, 출력 전 단위(mm)와 실제 센서 보드 치수를 대조한다. 시험 출력 없이 최종 출력을 진행하지 않는다.

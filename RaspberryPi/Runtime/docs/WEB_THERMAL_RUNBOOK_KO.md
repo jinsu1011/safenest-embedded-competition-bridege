@@ -11,10 +11,10 @@ ESP32 Thermal → UDP 5005 → Pi runtime → HTTP 8000 → Browser
 
 ## 2. ESP32 설정과 플래시
 
-1. `ESP32/secret.h.example`을 Arduino sketch 폴더의 `secrets.h`로 복사한다.
+1. `ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/secrets.example.h`를 같은 폴더의 `secrets.h`로 복사한다.
 2. `WIFI_SSID`, `WIFI_PASSWORD`, `RPI_HOST`를 실제 환경에 맞춘다.
 3. `RPI_PORT`는 `9000`으로 유지한다.
-4. `ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino`의 `THERMAL_UDP_PORT`와 Pi 설정을 동일한 `5005`로 유지한다.
+4. `ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino`의 `THERMAL_UDP_PORT`와 Pi 설정을 동일한 `5005`로 유지한다.
 5. Arduino IDE에서 `ESP32 Dev Module`을 선택해 업로드하고 Serial Monitor를 `115200` baud로 연다.
 
 ## 3. Raspberry Pi 최초 설치

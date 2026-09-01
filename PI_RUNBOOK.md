@@ -47,7 +47,7 @@ Pi에 손대기 전에 **로컬 worktree 브랜치 → GitHub PR → merge → P
 | `/home/sandi/safenest-runtime` | 예전 클론. 참고용. **기동하지 말 것** |
 | `/home/sandi/integration` 등 | 옛 진단/통합 클론. **기동하지 말 것** |
 
-한 번에 하나만 띄운다. 예전 LCD 단독 `RaspberryPi/LCD/server.py` / 옛 `run_backend`를 따로 켜지 않는다.
+한 번에 하나만 띄운다. LCD 패널은 이 백엔드가 `:8000/display` 로 직접 서빙하므로 별도 LCD 서버를 따로 켜지 않는다.
 `:8000`은 **팀 런타임 백엔드만** 소유한다.
 
 **중요:** `./run_safenest.sh`는 백엔드·센서 수신·웹 서빙까지다.

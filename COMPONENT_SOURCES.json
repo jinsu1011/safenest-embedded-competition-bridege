@@ -1,267 +1,186 @@
 {
-  "schema_version": "2.0",
-  "generated_at": "2026-08-28",
-  "canonical_repository": "https://github.com/jinsu1011/safenest-embedded-competition",
-  "canonical_runtime_entrypoint": "./run_safenest.sh -> RaspberryPi/Runtime/deployment/run_pi.sh -> RaspberryPi/Runtime/backend/run_backend.py",
-  "upstream_repositories": {
-    "main": {
-      "url": "https://github.com/jinsu1011/safenest-embedded-competition",
-      "default_branch": "main",
-      "head_commit": "339eb4f5a13ff68940e127836375bec6f11dff3d"
-    },
-    "integration": {
-      "url": "https://github.com/yuname121/integration",
-      "default_branch": "main",
-      "head_commit": "66b52312fc8e3350773909b6be9cd90fc2051150"
-    },
-    "ondevice_ai": {
-      "url": "https://github.com/sheepmeat/test",
-      "default_branch": "main",
-      "head_commit": "ccdb2b16ddbbec82d1a4d53cef6b23314ebf366b"
-    },
-    "thermal_ai": {
-      "url": "https://github.com/yuname121/safenest-thermal-ai",
-      "default_branch": "main",
-      "head_commit": "db51112bfd02cdda2d41e99cf11acde75f771ecf"
-    },
-    "co2": {
-      "url": "https://github.com/yuseungha/Sandi-2026_summer",
-      "default_branch": "main",
-      "head_commit": "145deac4cbec12ce6459cf5a6858cb0d0b1d06da"
-    }
+  "schema_version": "3.0",
+  "description": "SafeNest 제출본의 구성요소 지도. 각 항목은 이 저장소 안의 실제 경로와 그 역할, 외부 출처 여부를 기록한다. 특정 GitHub 저장소를 최종 공식 저장소로 선언하지 않는다.",
+  "runtime_entrypoint": "./run_safenest.sh -> RaspberryPi/Runtime/deployment/run_pi.sh -> RaspberryPi/Runtime/backend/run_backend.py",
+  "external_attribution_document": "THIRD_PARTY_NOTICES.md",
+  "classification_legend": {
+    "TEAM_AUTHORED": "SafeNest 팀이 직접 작성한 소스",
+    "TEAM_TRAINED_ARTIFACT": "팀이 학습/변환한 모델 아티팩트. 학습 데이터 출처는 THIRD_PARTY_NOTICES.md 참조",
+    "EXTERNAL_DEPENDENCY": "저장소에 포함하지 않고 설치 시 조달하는 외부 구성요소"
   },
   "components": {
     "esp32_firmware": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "9e4ddfe770d505266f33b39dfe9ba8ec86099f82",
-      "source_path": "sources/display-test2/esp32_sensor_node/esp32_sensor_node.ino",
-      "integration_path": "ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "none (relocated only)",
-      "notes": "Unified ESP-WROOM-32 node: MR60BHA2 mmWave + SCD4x CO2 + PIR over SafeNest TCP v1 :9000, MI48xx thermal over SafeNest Thermal UDP v1 :5005. ESP32 firmware left unchanged in this forward-port because team PR #29 is already open."
-    },
-    "esp32_secret_template": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "9e4ddfe770d505266f33b39dfe9ba8ec86099f82",
-      "source_path": "sources/display-test2/esp32_sensor_node/secrets.example.h",
-      "integration_path": "ESP32/secret.h.example",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "renamed only; no credential values present"
-    },
-    "esp32_protocol_doc": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "9e4ddfe770d505266f33b39dfe9ba8ec86099f82",
-      "source_path": "sources/display-test2/docs/COMMUNICATION_PROTOCOL.md",
-      "integration_path": "ESP32/docs/COMMUNICATION_PROTOCOL.md",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "none (relocated only)"
-    },
-    "mmwave_reference_firmware": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "9e4ddfe770d505266f33b39dfe9ba8ec86099f82",
-      "source_path": "sources/devices/mmwave/firmware/",
-      "integration_path": "ESP32/reference/mmwave_platformio/",
-      "classification": "SUPERSEDED",
-      "integration_modifications": "none (relocated only)",
-      "notes": "Standalone PlatformIO mmWave-only node. Superseded by the unified Arduino node for flashing; retained because the mmWave scalar contract test reads it."
-    },
-    "ondevice_ai": {
-      "upstream_repository": "https://github.com/sheepmeat/test",
-      "upstream_commit": "4129753e64e0f18a3491e5b6cc0454b0d36f1610",
-      "source_path": "/",
-      "integration_path": "RaspberryPi/Ondevice_AI",
-      "classification": "UPSTREAM_AUTHORITATIVE",
-      "integration_modifications": "upstream archive/ moved to archive/ondevice_ai_upstream_history/; upstream .gitignore and .github removed",
-      "runtime_critical_parity": "inference/ still uses the frozen 300-sample mmwave_interpreter.py. models/model_manifest.json models.mmwave is now MMWAVE_M_N9_FULL_INT8_V1 to match integration 66b5231. LazyModel adapter rewire is not included.",
-      "overlays": [
-        {
-          "name": "mmwave_m_n9_full_int8",
-          "upstream_repository": "https://github.com/sheepmeat/test",
-          "upstream_commit": "390f3be3d75987a79a0e0438ba8a9d5e9e19dc97",
-          "classification": "UPSTREAM_AUTHORITATIVE_OVERLAY",
-          "runtime_promoted": false,
-          "paths": [
-            "RaspberryPi/Ondevice_AI/models/mmwave/m_n9/MMWAVE_M_N9_FULL_INT8_V1.tflite",
-            "RaspberryPi/Ondevice_AI/config/mmwave/m_n9_full_int8_artifact_lock.json",
-            "RaspberryPi/Ondevice_AI/config/mmwave/m_n4_canonical_input_dataset_contract.json",
-            "RaspberryPi/Ondevice_AI/scripts/mmwave_m_n4_canonical.py"
-          ],
-          "team_authored_paths": [
-            "RaspberryPi/Ondevice_AI/models/mmwave/m_n9/team_import_inventory.json",
-            "RaspberryPi/Ondevice_AI/docs/reports/20260818_SafeNest_mmWave_M-N9_Team_Import_Handoff_KO_01.md",
-            "RaspberryPi/Ondevice_AI/models/model_manifest.json"
-          ],
-          "notes": "Artifact remains 390f3be. Manifest selector now matches integration 66b5231. Live Runtime adapter is still mmwave_interpreter.py; not [1,240,1] wired.",
-          "selector_synced_to_integration_main": true
-        },
-        {
-          "name": "thermal_b6r_public_sdt_fp32_active_runtime",
-          "upstream_repository": "https://github.com/sheepmeat/test",
-          "upstream_commit": "ccdb2b16ddbbec82d1a4d53cef6b23314ebf366b",
-          "classification": "UPSTREAM_AUTHORITATIVE_OVERLAY",
-          "runtime_promoted": true,
-          "source_paths": [
-            "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite"
-          ],
-          "integration_paths": [
-            "RaspberryPi/Ondevice_AI/models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite"
-          ],
-          "team_authored_paths": [
-            "RaspberryPi/Ondevice_AI/models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.metadata.json",
-            "RaspberryPi/Ondevice_AI/models/model_manifest.json",
-            "RaspberryPi/Ondevice_AI/inference/thermal_interpreter.py",
-            "RaspberryPi/Ondevice_AI/tests/test_thermal_public_sdt_shadow_model.py",
-            "RaspberryPi/Runtime/ai/runtime.py",
-            "RaspberryPi/Runtime/ai/pipeline.py",
-            "RaspberryPi/Runtime/risk/formula_v1.py",
-            "RaspberryPi/Runtime/risk/risk_formula_v1.json",
-            "RaspberryPi/Ondevice_AI/docs/reports/20260828_SafeNest_Thermal_B6R_Public_SDT_FP32_Active_Runtime_Handoff_KO_01.md"
-          ],
-          "notes": "Exact FP32 artifact is the FINAL_RUNTIME_MODEL and active thermal selector. HUMAN_FALL_PROXY contributes bounded risk score 0.4 but cannot trigger a real-fall emergency. Public SDT software evidence is not Raspberry Pi, MI48, Thermal-90, or real-fall validation."
-        }
+      "path": "ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino",
+      "role": "실제 플래싱되는 정본 센서 노드 펌웨어. MR60BHA2 mmWave + MH-Z19B CO2 + PIR 을 SafeNest TCP v1 :9000 으로, MI48xx 80x62 열화상을 SafeNest Thermal UDP v1 :5005 로 전송",
+      "classification": "TEAM_AUTHORED",
+      "external_libraries": [
+        "Seeed Arduino mmWave",
+        "Arduino ESP32 core"
       ]
     },
-    "gateway": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "66b52312fc8e3350773909b6be9cd90fc2051150",
-      "source_path": "gateway/",
-      "integration_path": "RaspberryPi/Runtime/gateway",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "none",
-      "notes": "Forward-ported from integration 66b5231 into canonical RaspberryPi/Runtime|Web paths."
+    "esp32_secret_template": {
+      "path": "ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/secrets.example.h",
+      "role": "Wi-Fi/Pi 접속 정보 템플릿. 사용자가 같은 폴더에 secrets.h 로 복사한다",
+      "classification": "TEAM_AUTHORED",
+      "contains_credentials": false
     },
-    "thermal_udp_gateway": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "66b52312fc8e3350773909b6be9cd90fc2051150",
-      "source_path": "gateway/thermal_udp.py",
-      "integration_path": "RaspberryPi/Runtime/gateway/thermal_udp.py",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "none",
-      "notes": "Forward-ported from integration 66b5231 into canonical RaspberryPi/Runtime|Web paths."
+    "esp32_protocol_doc": {
+      "path": "ESP32/docs/COMMUNICATION_PROTOCOL.md",
+      "role": "SafeNest TCP v1 / Thermal UDP v1 와이어 포맷 명세",
+      "classification": "TEAM_AUTHORED"
+    },
+    "esp32_build_guide": {
+      "path": "ESP32/docs/ARDUINO_ENVIRONMENT_SETUP_KO.md",
+      "role": "Arduino IDE / arduino-cli 보드·라이브러리 설치 및 플래싱 절차",
+      "classification": "TEAM_AUTHORED"
+    },
+    "gateway": {
+      "path": "RaspberryPi/Runtime/gateway/",
+      "role": "TCP telemetry 수신·검증(protocol.py, receiver.py)과 Thermal UDP 청크 재조립(thermal_udp.py)",
+      "classification": "TEAM_AUTHORED"
     },
     "sensor_state_manager": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "66b52312fc8e3350773909b6be9cd90fc2051150",
-      "source_path": "state/manager.py",
-      "integration_path": "RaspberryPi/Runtime/state/manager.py",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "none",
-      "notes": "Forward-ported from integration 66b5231 into canonical RaspberryPi/Runtime|Web paths."
+      "path": "RaspberryPi/Runtime/state/manager.py",
+      "role": "센서별 freshness/유효성/기기 건강 상태와 publication revision 관리",
+      "classification": "TEAM_AUTHORED"
     },
     "ai_pipeline": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "66b52312fc8e3350773909b6be9cd90fc2051150",
-      "source_path": "ai/",
-      "integration_path": "RaspberryPi/Runtime/ai",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "ai/runtime.py VENDOR_ROOT now resolves through paths.ONDEVICE_AI_ROOT",
-      "notes": "Forward-ported from integration 66b5231 into canonical RaspberryPi/Runtime|Web paths."
+      "path": "RaspberryPi/Runtime/ai/",
+      "role": "센서 상태를 모델별로 격리 평가. thermal/co2 는 TFLite 어댑터, mmWave 는 B23 PyTorch 런타임",
+      "classification": "TEAM_AUTHORED"
+    },
+    "inference_adapters": {
+      "path": "RaspberryPi/Ondevice_AI/inference/",
+      "role": "런타임이 파일 경로로 로드하는 동결 추론 어댑터 3종 (thermal_interpreter.py, co2_c_b6_interpreter.py, mmwave_m_n9_interpreter.py)",
+      "classification": "TEAM_AUTHORED"
+    },
+    "model_manifest": {
+      "path": "RaspberryPi/Ondevice_AI/models/model_manifest.json",
+      "role": "활성 selector, 모델 경로, SHA256, 배포 허용 여부를 고정한 계약. Raspberry Pi 기동 시 preflight 가 전 항목 SHA 를 검증한다",
+      "classification": "TEAM_AUTHORED"
+    },
+    "model_thermal_active": {
+      "path": "RaspberryPi/Ondevice_AI/models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite",
+      "selector": "thermal_public_sdt_fp32_active",
+      "role": "활성 Thermal 자세 proxy 분류기 (TFLite float32, 3-class)",
+      "classification": "TEAM_TRAINED_ARTIFACT",
+      "training_data": "SDT Dataset — THIRD_PARTY_NOTICES.md 5.1",
+      "claim_boundary": "PUBLIC_DATA_SOFTWARE_ONLY / LIMITED_POSTURE_PROXY / 비상 권한 없음"
+    },
+    "model_co2_active": {
+      "path": "RaspberryPi/Ondevice_AI/models/rp_x0_b_complete/co2/C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001_full_integer_int8.tflite",
+      "selector": "co2_occupancy_c_b6",
+      "role": "활성 CO2 재실 판정기 (TFLite full-integer INT8). 동일 폴더의 input/threshold/scaler 계약과 함께 로드",
+      "classification": "TEAM_TRAINED_ARTIFACT",
+      "training_data": "UCI Occupancy Detection — THIRD_PARTY_NOTICES.md 5.2",
+      "claim_boundary": "실내 재실 판정 전용. 질식/유해가스 ground truth 아님"
+    },
+    "model_mmwave_active": {
+      "path": "RaspberryPi/Ondevice_AI/models/mmwave/m_prot_b23/candidate_seed_23.pt",
+      "selector": "mmwave",
+      "role": "활성 mmWave 호흡 파형 모델 (PyTorch float32 state_dict, 621차원 입력). scaler_statistics.json 과 함께 로드",
+      "classification": "TEAM_TRAINED_ARTIFACT",
+      "training_data": "팀 자체 MR60BHA2 breath_phase 캡처 — THIRD_PARTY_NOTICES.md 5.3",
+      "claim_boundary": "prototype integration freeze. risk_contribution_deferred=true"
+    },
+    "models_nonactive": {
+      "path": "RaspberryPi/Ondevice_AI/models/",
+      "role": "manifest 에 deployment_allowed=false 또는 controlled_test_allowed 로 등재된 비활성 아티팩트. 기동 시 SHA 검증 대상이므로 저장소에 유지한다",
+      "classification": "TEAM_TRAINED_ARTIFACT"
     },
     "rule_risk_engine": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "66b52312fc8e3350773909b6be9cd90fc2051150",
-      "source_path": "risk/engine.py",
-      "integration_path": "RaspberryPi/Runtime/risk/engine.py",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "CONFIG_PATH now resolves through paths.RISK_CONFIG; no weight, threshold, or scoring change",
-      "risk_config_source": "RaspberryPi/Ondevice_AI/risk/risk_config.json (frozen V4 contract)",
-      "notes": "Forward-ported from integration 66b5231 into canonical RaspberryPi/Runtime|Web paths."
+      "path": "RaspberryPi/Runtime/risk/",
+      "role": "V4 위험도 계약. engine.py + formula_v1.py + risk_formula_v1.json",
+      "classification": "TEAM_AUTHORED",
+      "config": "RaspberryPi/Ondevice_AI/risk/risk_config.json"
     },
     "fastapi_backend": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "66b52312fc8e3350773909b6be9cd90fc2051150",
-      "source_path": "backend/",
-      "integration_path": "RaspberryPi/Runtime/backend",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "dashboard mount and default database path now resolve through paths.py",
-      "notes": "Forward-ported from integration 66b5231 into canonical RaspberryPi/Runtime|Web paths."
+      "path": "RaspberryPi/Runtime/backend/",
+      "role": "REST API, WebSocket /ws, 관리자/게스트/LCD 화면 서빙, 공간 포털",
+      "classification": "TEAM_AUTHORED",
+      "listen_port": 8000
     },
     "sqlite": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "66b52312fc8e3350773909b6be9cd90fc2051150",
-      "source_path": "database/",
-      "integration_path": "RaspberryPi/Runtime/database",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "none; schema unchanged",
-      "notes": "Forward-ported from integration 66b5231 into canonical RaspberryPi/Runtime|Web paths."
+      "path": "RaspberryPi/Runtime/database/",
+      "role": "이벤트/스냅샷 영속화. 스키마는 schema.sql, DB 파일은 Git 미추적",
+      "classification": "TEAM_AUTHORED"
     },
-    "web_dashboard": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "66b52312fc8e3350773909b6be9cd90fc2051150",
-      "source_path": "web/dashboard/",
-      "integration_path": "RaspberryPi/Web",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "none (relocated only); already consumes the real backend via /api/* and /ws",
-      "notes": "Forward-ported from integration 66b5231 into canonical RaspberryPi/Runtime|Web paths."
+    "sensor_logger": {
+      "path": "RaspberryPi/Runtime/storage/sensor_logger.py",
+      "role": "디스크 쿼터를 지키는 원시 센서 데이터 적재",
+      "classification": "TEAM_AUTHORED"
+    },
+    "emergency_services": {
+      "path": "RaspberryPi/Runtime/services/",
+      "role": "TTS 음성 안내, 부저, 담당자 SMS, 비상 상태 래치",
+      "classification": "TEAM_AUTHORED",
+      "external_dependency": "piper-tts + ko_KR-kss-medium 음성 (CC BY-NC-SA 4.0, Git 미추적)"
+    },
+    "web": {
+      "path": "RaspberryPi/Web/",
+      "role": "관리자 포털(portal/preview.html), 관제 대시보드(index_final.html / demo index.html), 게스트 QR 화면(guest/index.html)",
+      "classification": "TEAM_AUTHORED",
+      "external_asset": "Chart.js (CDN) — THIRD_PARTY_NOTICES.md 6"
     },
     "lcd": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "9e4ddfe770d505266f33b39dfe9ba8ec86099f82",
-      "source_path": "sources/display-test2/raspberry_pi_lcd/",
-      "integration_path": "RaspberryPi/LCD",
-      "classification": "SUPERSEDED",
-      "integration_modifications": "none (relocated only)",
-      "notes": "Standalone LCD kiosk with its own TCP :9000 receiver and its own state.json. It conflicts with the canonical gateway on port 9000 and is NOT started by run_safenest.sh. The Pi LCD should display http://localhost:8000/dashboard instead."
+      "path": "RaspberryPi/LCD/static/",
+      "role": "Raspberry Pi 로컬 LCD 패널. display.html + common.css 가 정본, control.html 은 데모 모드 전용",
+      "classification": "TEAM_AUTHORED"
     },
     "deployment": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "66b52312fc8e3350773909b6be9cd90fc2051150",
-      "source_path": "deployment/run_pi.sh",
-      "integration_path": "RaspberryPi/Runtime/deployment/run_pi.sh",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "paths rewritten for the canonical tree; root ./run_safenest.sh added as the documented single command",
-      "notes": "Forward-ported from integration 66b5231 into canonical RaspberryPi/Runtime|Web paths."
+      "path": "run_safenest.sh, RaspberryPi/Runtime/deployment/",
+      "role": "단일 실행 진입점, venv/의존성 설치, 기동 전 preflight, 제출본 무결성 검사(verify_bundle.py)",
+      "classification": "TEAM_AUTHORED"
     },
-    "hil_and_e2e": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "66b52312fc8e3350773909b6be9cd90fc2051150",
-      "source_path": "hil/, e2e/, tests/",
-      "integration_path": "RaspberryPi/Runtime/{hil,e2e,tests}",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "path assertions retargeted to the canonical tree",
-      "notes": "Forward-ported from integration 66b5231 into canonical RaspberryPi/Runtime|Web paths."
+    "hil_and_tests": {
+      "path": "RaspberryPi/Runtime/hil/, RaspberryPi/Runtime/tests/, RaspberryPi/Ondevice_AI/tests/",
+      "role": "기동 preflight, HIL 수집/판정 도구, 소프트웨어 테스트",
+      "classification": "TEAM_AUTHORED"
     },
-    "thermal_offline_research": {
-      "upstream_repository": "https://github.com/yuname121/safenest-thermal-ai",
-      "upstream_commit": "db51112bfd02cdda2d41e99cf11acde75f771ecf",
-      "source_path": "/",
-      "integration_path": "research/thermal_ai",
-      "classification": "UPSTREAM_AUTHORITATIVE",
-      "integration_modifications": "upstream .gitignore removed",
-      "notes": "Offline dataset/model workspace. Upstream explicitly excludes TCP/UDP, firmware integration, and risk decisions. Its selected offline candidate binary is not in Git and is NOT promoted to runtime."
-    },
-    "co2_measurement_validation": {
-      "upstream_repository": "https://github.com/yuseungha/Sandi-2026_summer",
-      "upstream_commit": "145deac4cbec12ce6459cf5a6858cb0d0b1d06da",
-      "source_path": "/",
-      "integration_path": "research/co2_validation",
-      "classification": "UPSTREAM_AUTHORITATIVE",
-      "integration_modifications": "upstream .gitignore removed",
-      "notes": "CO2 capture tooling, C-B6 offline verifier, session fixtures, and the SCD40 node reference. Its pi/safenest_pi_service.py is a CO2-only receiver on :9000 and is NOT part of the active runtime. The C-B6 TFLite binary is absent upstream, so C-B6 is not promoted."
-    },
-    "pir": {
-      "upstream_repository": "https://github.com/yuname121/integration",
-      "upstream_commit": "66b52312fc8e3350773909b6be9cd90fc2051150",
-      "source_path": "ai/pipeline.py, risk/engine.py",
-      "integration_path": "RaspberryPi/Runtime/{ai,risk}",
-      "classification": "INTEGRATION_OWNED",
-      "integration_modifications": "none",
-      "notes": "PIR has no deployed AI model. It is a rule-only sensor evaluated directly by the pipeline and the risk engine. Forward-ported from integration 66b5231 into canonical RaspberryPi/Runtime|Web paths."
+    "hardware_enclosure": {
+      "path": "hardware/3d_models/",
+      "role": "센서·LCD 하우징 STL 과 설계 사양",
+      "classification": "TEAM_AUTHORED"
     }
   },
-  "model_promotion_policy": {
-    "automatic_promotion_performed": false,
-    "runtime_models_source": "RaspberryPi/Ondevice_AI/models/model_manifest.json",
-    "mmwave_v0_1_0": "deployment_allowed=false, block_reason=CLASS_COLLAPSE_ON_REPOSITORY_NPZ (unchanged)",
-    "mmwave_v0_2_0_candidate": "candidate, SYNTHETIC_SMOKE_ONLY, hardware validation BLOCKED_HARDWARE (not promoted to runtime default)",
-    "thermal_v0_1_0": "preserved legacy, deployment_allowed=false, active_runtime_selector=false",
-    "thermal_public_sdt_fp32": "FINAL_RUNTIME_MODEL, active selector, bounded HUMAN_FALL_PROXY risk score 0.4, no emergency authority, Pi/real-fall validation not performed",
-    "co2_v0_1_0": "candidate, CONFIRMED_SYNTHETIC_ONLY",
-    "co2_c_b6_candidate": "binary unavailable upstream; not promoted",
-    "mmwave_m_n9_full_int8": "artifact imported from sheepmeat/test 390f3be; SHA 3b008af4be0facc4037c2afd3fe39292fb794208eb4370dbe6916b2d15aa38a4; models.mmwave selector is ACTIVE_M_N9 to match integration 66b5231; DEVICE_VALIDATED=NO; PI_SMOKE=NOT_PERFORMED; PRESENCE_GATE_REQUIRED=YES; LazyModel still loads inference/mmwave_interpreter.py so runtime_wired=false"
+  "external_components": {
+    "note": "저장소에 포함하지 않고 설치 시 조달한다. 상세는 THIRD_PARTY_NOTICES.md",
+    "arduino_libraries": [
+      "Seeed Arduino mmWave",
+      "Adafruit NeoPixel",
+      "hp_BH1750",
+      "Arduino ESP32 core"
+    ],
+    "python_packages": [
+      "fastapi",
+      "uvicorn[standard]",
+      "qrcode[pil]",
+      "piper-tts",
+      "ai-edge-litert",
+      "torch",
+      "numpy",
+      "scipy",
+      "pandas",
+      "scikit-learn",
+      "joblib",
+      "matplotlib",
+      "Pillow",
+      "spidev",
+      "smbus2"
+    ],
+    "datasets": [
+      "SDT Dataset (doi:10.5281/zenodo.4124309)",
+      "UCI Occupancy Detection Dataset"
+    ],
+    "web_cdn": [
+      "Chart.js"
+    ]
   },
   "hardware_validation_status": {
-    "real_hardware_e2e": "NOT_PERFORMED",
-    "software_e2e": "see RaspberryPi/Runtime/tests and RaspberryPi/Runtime/e2e"
+    "raspberry_pi_backend_start": "OWNER_CONFIRMED (Raspberry Pi 5 / aarch64 / torch 2.13.0+cpu)",
+    "live_esp32_mr60_end_to_end": "NOT_VERIFIED",
+    "real_fall_event_validation": "NOT_VERIFIED",
+    "mi48_thermal_model_validation": "NOT_VERIFIED",
+    "note": "근거와 범위는 RaspberryPi/Runtime/docs/mmwave/20260828_SafeNest_mmWave_B23_First_Integrated_Model_Handoff_KO_01.md 15장 참조"
   }
 }

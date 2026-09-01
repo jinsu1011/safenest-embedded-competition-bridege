@@ -43,7 +43,7 @@ Copy-Item -LiteralPath $source -Destination $sketch -Recurse
 Copy-Item -LiteralPath (Join-Path $sketch "secrets.example.h") -Destination (Join-Path $sketch "secrets.h")
 ```
 
-`secrets.h`에 실제 SSID, 비밀번호, Raspberry Pi IP를 입력한 뒤 Arduino IDE에서 `esp32_sensor_node.ino`를 **ESP-WROOM-32/ESP32 Dev Module**에 flash한다. Serial Monitor의 sensor freshness, TCP connect/disconnect, send failure 로그를 각 시나리오 증거와 함께 보존한다.
+`secrets.h`에 실제 SSID, 비밀번호, Raspberry Pi IP를 입력한 뒤 Arduino IDE에서 `ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino`를 **ESP-WROOM-32/ESP32 Dev Module**에 flash한다. Serial Monitor의 sensor freshness, TCP connect/disconnect, send failure 로그를 각 시나리오 증거와 함께 보존한다.
 
 현재 통합 firmware의 GPIO/UART/SPI 설정은 XIAO ESP32-C6 핀맵과 호환되지 않는다. XIAO C6에는 별도 포팅과 compile/HIL 검증 전 업로드하지 않는다.
 

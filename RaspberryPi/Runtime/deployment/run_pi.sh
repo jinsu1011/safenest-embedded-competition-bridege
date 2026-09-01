@@ -29,7 +29,7 @@ if [[ "${1:-}" == "--install" ]]; then
   "${VENV_PATH}/bin/python" -m pip install \
     -r "${RUNTIME_ROOT}/requirements-backend.txt" \
     -r "${RASPBERRY_PI_ROOT}/Ondevice_AI/requirements-pi.txt"
-  "${VENV_PATH}/bin/python" -c "import fastapi, piper, qrcode, uvicorn"
+  "${VENV_PATH}/bin/python" -c "import fastapi, piper, qrcode, torch, uvicorn"
 
   # Voice dataset license: CC BY-NC-SA 4.0 (model stays local and untracked).
   TTS_VOICE_NAME="ko_KR-kss-medium"

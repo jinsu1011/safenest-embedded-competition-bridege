@@ -5,21 +5,21 @@
 대상 스케치:
 
 ```text
-ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino
-ESP32/Arduino/esp32_sensor_node_260828_v2/esp32_sensor_node_260828_v2.ino
-ESP32/Arduino/esp32_sensor_node_mhz19b_v2/esp32_sensor_node_mhz19b_v2.ino
+ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino
 ```
+
+이 스케치가 실제 ESP32에 올라가는 **정본(canonical) 펌웨어**입니다. 저장소에는 이 스케치 하나만 있습니다.
 
 > 이 프로젝트의 기준 보드는 일반적인 ESP32-WROOM 계열의 `ESP32 Dev Module`입니다. XIAO ESP32C6용 보드 설정이 아닙니다. 소스의 핀 번호도 `ESP32 Dev Module` 기준이므로 다른 보드로 바꾸면 배선과 핀 정의를 함께 수정해야 합니다.
 
-`esp32_sensor_node_mhz19b_v2`는 v2 노드의 CO₂ 경로만 MH-Z19B UART로 바꾼 형제 스케치입니다. Sensirion SCD4x 라이브러리가 필요 없고, MR60은 계속 UART2(GPIO 16/17), MH-Z19B는 UART1(GPIO 32/33)을 씁니다. 모듈 전원은 4.5–5.5 V이며 ESP32 3.3 V 레일로 켜지 않습니다. 자세한 배선은 `ESP32/Arduino/esp32_sensor_node_mhz19b_v2/ESP32_UPDATE_CHANGELOG_KO.md`를 봅니다.
+CO₂는 Sensirion SCD4x가 아니라 **Winsen MH-Z19B UART**를 사용합니다. 따라서 SCD4x 라이브러리가 필요 없습니다. MR60은 UART2(GPIO 16/17), MH-Z19B는 UART1(GPIO 32/33)을 씁니다. MH-Z19B 모듈 전원은 4.5–5.5 V이며 ESP32 3.3 V 레일로 켜지 않습니다. 변경 이력과 배선 상세는 `ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/ESP32_UPDATE_CHANGELOG_KO_20260901-2130-junwoo.md`를 봅니다.
 
 ## 1. 준비물
 
 - ESP32 Dev Module(ESP32-WROOM 계열)
 - 데이터 통신이 가능한 USB 케이블
 - MR60BHA2 60 GHz mmWave 센서
-- Sensirion SCD40/SCD4x CO₂ 센서
+- Winsen MH-Z19B NDIR CO₂ 센서 (별도 4.5–5.5 V 전원 필요)
 - PIR 센서
 - Waveshare Thermal Camera HAT / MI48xx(80 × 62) 열화상 센서
 - Raspberry Pi와 ESP32가 함께 접속할 수 있는 **2.4 GHz Wi-Fi**
@@ -63,32 +63,27 @@ https://espressif.github.io/arduino-esp32/package_esp32_index.json
 
 ### 2.3 외부 Arduino 라이브러리
 
-다음 두 라이브러리가 스케치의 직접 의존성입니다.
+정본 스케치의 직접 외부 의존성은 하나입니다. CO₂는 MH-Z19B UART를 스케치 안에서 직접 처리하므로 별도 라이브러리가 없습니다.
 
 | Library Manager 검색 이름 | 제공자 | 필요한 헤더 | 권장 버전/주의 사항 |
 |---|---|---|---|
-| `Sensirion I2C SCD4x` | Sensirion | `SensirionI2cScd4x.h` | `1.0.0` 이상. 현재 소스는 새 `SensirionI2cScd4x` API를 사용함 |
 | `Seeed Arduino mmWave` | Seeed Studio | `Seeed_Arduino_mmWave.h` | 검증 기준 안정 계열 `1.0.0`; MR60BHA2 지원 필요 |
 
 함께 설치되는 의존성:
 
 | 상위 라이브러리 | 하위 의존성 | 처리 방법 |
 |---|---|---|
-| Sensirion I2C SCD4x | `Sensirion Core` | 설치 창에서 `Install all` 선택 |
 | Seeed Arduino mmWave | `Adafruit NeoPixel`, `hp_BH1750` | 설치 창에서 `Install all` 선택 |
 
 Arduino IDE에서 설치하는 방법:
 
 1. 왼쪽의 `Library Manager` 아이콘을 누르거나 `Sketch > Include Library > Manage Libraries...`를 엽니다.
-2. `Sensirion I2C SCD4x`를 검색해 Sensirion 제공 라이브러리를 설치합니다.
+2. `Seeed Arduino mmWave`를 검색해 Seeed Studio 제공 라이브러리를 설치합니다.
 3. 의존성 설치 여부를 물으면 `Install all`을 선택합니다.
-4. `Seeed Arduino mmWave`를 검색해 Seeed Studio 제공 라이브러리를 설치합니다.
-5. 역시 `Install all`을 선택합니다.
-6. 설치가 끝나면 Arduino IDE를 한 번 재시작합니다.
+4. 설치가 끝나면 Arduino IDE를 한 번 재시작합니다.
 
 Seeed 라이브러리가 Library Manager에서 검색되지 않으면 [Seeed mmWave 공식 저장소](https://github.com/Seeed-Projects/Seeed-mmWave-library)의 안정 릴리스 ZIP을 내려받아 `Sketch > Include Library > Add .ZIP Library...`로 설치합니다. ZIP으로 수동 설치할 때는 위 표의 하위 의존성도 Library Manager에서 따로 설치합니다. 프리릴리스나 개발 브랜치는 API 호환성을 다시 확인하기 전까지 사용하지 않는 것이 안전합니다.
 
-Sensirion 라이브러리의 공식 설치 및 의존성 정보는 [Sensirion I2C SCD4x 저장소](https://github.com/Sensirion/arduino-i2c-scd4x)를 참고합니다.
 
 ## 3. 프로젝트 받기
 
@@ -102,16 +97,16 @@ cd safenest-embedded-competition
 Git을 사용하지 않으면 GitHub의 `Code > Download ZIP`으로 받은 뒤 압축을 풉니다. `.ino` 파일 하나만 전달하지 말고 최소한 다음 구조를 유지해야 합니다.
 
 ```text
-safenest-embedded-competition/
+<repository>/
 └── ESP32/
-    ├── secret.h.example
     └── Arduino/
-        └── esp32_sensor_node/
-            ├── esp32_sensor_node.ino
+        └── esp32_sensor_node_mhz19b_20260901-2130-junwoo/
+            ├── esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino
+            ├── secrets.example.h
             └── secrets.h            # 사용자가 생성, Git에 올리지 않음
 ```
 
-Arduino 스케치 폴더 이름과 `.ino` 파일의 기본 이름은 모두 `esp32_sensor_node`로 같아야 합니다.
+Arduino 스케치 폴더 이름과 `.ino` 파일의 기본 이름은 모두 `esp32_sensor_node_mhz19b_20260901-2130-junwoo`로 같아야 합니다.
 
 ## 4. 개인 설정 파일 만들기
 
@@ -120,13 +115,13 @@ Wi-Fi 비밀번호 같은 개인정보는 소스에 직접 적지 않고 스케�
 Windows PowerShell:
 
 ```powershell
-Copy-Item .\ESP32\secret.h.example .\ESP32\Arduino\esp32_sensor_node\secrets.h
+Copy-Item .\ESP32\Arduino\esp32_sensor_node_mhz19b_20260901-2130-junwoo\secrets.example.h .\ESP32\Arduino\esp32_sensor_node_mhz19b_20260901-2130-junwoo\secrets.h
 ```
 
 macOS/Linux:
 
 ```bash
-cp ESP32/secret.h.example ESP32/Arduino/esp32_sensor_node/secrets.h
+cp ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/secrets.example.h ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/secrets.h
 ```
 
 생성한 `secrets.h`를 다음과 같이 수정합니다.
@@ -154,9 +149,11 @@ constexpr uint16_t RPI_PORT = 9000;
 
 | 장치/신호 | ESP32 핀 | 연결 방향 또는 설명 |
 |---|---:|---|
-| 공통 I²C SDA | GPIO 21 | SCD4x 및 Thermal 제어 버스 |
-| 공통 I²C SCL | GPIO 22 | SCD4x 및 Thermal 제어 버스 |
+| 공통 I²C SDA | GPIO 21 | Thermal 제어 버스 |
+| 공통 I²C SCL | GPIO 22 | Thermal 제어 버스 |
 | PIR OUT | GPIO 13 | ESP32 디지털 입력 |
+| MH-Z19B TX | GPIO 32 | 센서 TX → ESP32 RX (UART1) |
+| MH-Z19B RX | GPIO 33 | 센서 RX ← ESP32 TX (UART1) |
 | MR60BHA2 TX | GPIO 16 | 센서 TX → ESP32 RX |
 | MR60BHA2 RX | GPIO 17 | 센서 RX ← ESP32 TX |
 | Thermal SCLK | GPIO 18 | SPI clock |
@@ -170,7 +167,7 @@ constexpr uint16_t RPI_PORT = 9000;
 
 ## 6. 컴파일 및 업로드
 
-1. Arduino IDE에서 `ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino`를 엽니다.
+1. Arduino IDE에서 `ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino`를 엽니다.
 2. `Tools > Board`에서 `ESP32 Dev Module`을 선택합니다.
 3. `Tools > Port`에서 ESP32가 연결된 포트를 선택합니다.
 4. 먼저 `Sketch > Verify/Compile`로 컴파일합니다.
@@ -201,7 +198,7 @@ SafeNest ESP32 sensor node starting
 |---|---|---|
 | `wifi` | `up` | Wi-Fi 연결 성공 |
 | `rpi` | 설정한 Raspberry Pi IP | 전송 목적지 |
-| `co2` | 0이 아닌 측정값 | SCD4x 측정 수신 |
+| `co2` | 0이 아닌 측정값 | MH-Z19B 측정 수신 |
 | `resp`, `heart` | 사람이 감지될 때 값 출력 | MR60BHA2 데이터 수신 |
 | `thermal_frames` | 계속 증가 | 열화상 프레임 캡처 진행 |
 | `udp_sent` | 계속 증가 | Raspberry Pi로 UDP 전송 진행 |
@@ -218,21 +215,19 @@ arduino-cli config init
 arduino-cli config add board_manager.additional_urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
 arduino-cli core update-index
 arduino-cli core install esp32:esp32
-arduino-cli lib install "Sensirion I2C SCD4x"
 arduino-cli lib install "Seeed Arduino mmWave"
 ```
 
 컴파일:
 
 ```bash
-arduino-cli compile --fqbn esp32:esp32:esp32 ESP32/Arduino/esp32_sensor_node
-arduino-cli compile --fqbn esp32:esp32:esp32 ESP32/Arduino/esp32_sensor_node_mhz19b_v2
+arduino-cli compile --fqbn esp32:esp32:esp32 ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo
 ```
 
 업로드 예시:
 
 ```bash
-arduino-cli upload --fqbn esp32:esp32:esp32 --port COM5 ESP32/Arduino/esp32_sensor_node
+arduino-cli upload --fqbn esp32:esp32:esp32 --port COM5 ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo
 ```
 
 macOS/Linux에서는 `COM5` 대신 실제 포트(예: `/dev/cu.usbserial-...`, `/dev/ttyUSB0`)를 넣습니다. 포트는 다음 명령으로 확인할 수 있습니다.
@@ -257,8 +252,6 @@ arduino-cli lib list
 |---|---|---|
 | Arduino IDE 또는 CLI | IDE 2.x 또는 호환 CLI | `____________` |
 | ESP32 by Espressif Systems | 안정 버전, `ESP32 Dev Module` 지원 | `____________` |
-| Sensirion I2C SCD4x | `1.0.0` 이상 | `____________` |
-| Sensirion Core | SCD4x가 요구하는 버전 | `____________` |
 | Seeed Arduino mmWave | 안정 계열 `1.0.0` | `____________` |
 | Adafruit NeoPixel | Seeed 라이브러리가 요구하는 버전 | `____________` |
 | hp_BH1750 | Seeed 라이브러리가 요구하는 버전 | `____________` |
@@ -267,7 +260,6 @@ arduino-cli lib list
 
 ```bash
 arduino-cli core install esp32:esp32@<검증한_버전>
-arduino-cli lib install "Sensirion I2C SCD4x@<검증한_버전>"
 arduino-cli lib install "Seeed Arduino mmWave@1.0.0"
 ```
 
@@ -275,10 +267,8 @@ arduino-cli lib install "Seeed Arduino mmWave@1.0.0"
 
 | 오류/증상 | 원인 | 해결 방법 |
 |---|---|---|
-| `SensirionI2cScd4x.h: No such file or directory` | SCD4x 라이브러리가 없거나 구형 라이브러리 설치 | `Sensirion I2C SCD4x` 1.0.0 이상과 `Sensirion Core` 설치 |
 | `Seeed_Arduino_mmWave.h: No such file or directory` | 다른 24 GHz radar 라이브러리를 설치했거나 라이브러리 누락 | 정확히 `Seeed Arduino mmWave` 설치 |
 | `secrets.h: No such file or directory` | 개인 설정 파일 미생성 | 4절의 명령으로 예제 파일을 복사 |
-| `SCD41_I2C_ADDR_62` 또는 `getDataReadyStatus` 관련 오류 | Sensirion 구형 API 사용 | 구형 SCD4x 라이브러리를 제거하고 1.0.0 이상 설치 |
 | 여러 라이브러리가 발견되었다는 메시지 | 이름이 비슷한 구형/복제 라이브러리가 함께 설치됨 | Arduino libraries 폴더에서 중복을 제거하고 정확한 제공자 버전만 유지 |
 | 포트가 보이지 않음 | USB 케이블 또는 USB-UART 드라이버 문제 | 데이터 케이블, CP210x/CH340 드라이버, 다른 USB 포트 확인 |
 | 업로드 중 연결 실패 | 자동 부트 진입 실패 또는 포트 점유 | Serial Monitor를 닫고 재시도, 필요하면 `BOOT` 버튼 사용 |
@@ -289,9 +279,9 @@ arduino-cli lib install "Seeed Arduino mmWave@1.0.0"
 ## 11. 다른 사람에게 전달할 때 체크리스트
 
 - [ ] 저장소 전체 또는 최소 ESP32 폴더 구조를 전달했다.
-- [ ] 실제 `secrets.h`가 아니라 `secret.h.example`만 전달했다.
+- [ ] 실제 `secrets.h`가 아니라 `secrets.example.h`만 전달했다.
 - [ ] 사용 보드가 `ESP32 Dev Module`임을 알렸다.
-- [ ] ESP32 보드 패키지와 두 직접 라이브러리의 설치를 안내했다.
+- [ ] ESP32 보드 패키지와 `Seeed Arduino mmWave` 라이브러리의 설치를 안내했다.
 - [ ] 라이브러리 설치 시 `Install all`로 하위 의존성을 설치했다.
 - [ ] 검증에 사용한 IDE, ESP32 core, 라이브러리 버전을 기록했다.
 - [ ] 2.4 GHz Wi-Fi 및 Raspberry Pi IP를 각 사용자 환경에 맞게 설정했다.
@@ -301,7 +291,6 @@ arduino-cli lib install "Seeed Arduino mmWave@1.0.0"
 ## 공식 참고 자료
 
 - [Espressif Arduino-ESP32 설치 문서](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html)
-- [Sensirion I2C SCD4x Arduino 라이브러리](https://github.com/Sensirion/arduino-i2c-scd4x)
 - [Seeed Arduino mmWave 라이브러리](https://github.com/Seeed-Projects/Seeed-mmWave-library)
 - [Seeed MR60BHA2 시작 가이드](https://wiki.seeedstudio.com/getting_started_with_mr60bha2_mmwave_kit/)
 - [SafeNest ESP32 통신 규약](./COMMUNICATION_PROTOCOL.md)

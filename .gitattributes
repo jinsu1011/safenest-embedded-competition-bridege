@@ -1,13 +1,11 @@
-# Raw ESP serial captures are immutable byte evidence and may use device CRLF.
-firmware/esp_wroom32_mr60_monitor/logs/final/*.jsonl binary
-firmware/esp_wroom32_mr60_monitor/logs/diagnostics/*.jsonl binary
-firmware/esp_wroom32_mr60_monitor/logs/kpi/*.jsonl binary
+# Thermal contract manifests and the runtime adapters that read them are
+# checksum-sensitive; the SHA256 values in models/model_manifest.json are
+# validated at every Raspberry Pi start, so these must stay LF on all hosts.
+RaspberryPi/Ondevice_AI/models/** text eol=lf
+RaspberryPi/Ondevice_AI/models/**/*.tflite binary
+RaspberryPi/Ondevice_AI/models/**/*.pt binary
+RaspberryPi/Ondevice_AI/inference/*.py text eol=lf
 
-# Thermal contract manifests are checksum-sensitive and must remain LF on all hosts.
-ondevice_ai/datasets/thermal/** text eol=lf
-ondevice_ai/datasets/thermal/**/*.bin binary
-ondevice_ai/scripts/*thermal*.py text eol=lf
-ondevice_ai/tests/test_thermal*.py text eol=lf
-ondevice_ai/docs/*Thermal*.md text eol=lf
-ondevice_ai/docs/THERMAL*.md text eol=lf
-devices/thermal/xiao_esp32c6_thermal90_udp_capture/** text eol=lf
+# Web and LCD assets are served byte-for-byte by the FastAPI backend.
+RaspberryPi/Web/** text eol=lf
+RaspberryPi/LCD/static/** text eol=lf

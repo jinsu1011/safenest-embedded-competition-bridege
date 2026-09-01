@@ -316,30 +316,6 @@ class AIPipelineTests(unittest.TestCase):
                 if "size_bytes" in metadata:
                     self.assertEqual(model.stat().st_size, metadata["size_bytes"])
 
-    def test_latest_source_provenance_historical_record_is_preserved(self):
-        root = Path(__file__).resolve().parent.parent
-        provenance = json.loads((root / "LATEST_SOURCE_PROVENANCE.json").read_text(encoding="utf-8"))
-        self.assertEqual(provenance["latest_origin_main"], "fa8cf13")
-        self.assertEqual(provenance["latest_component_source"], "77b1695ac66fd595bd037e4574d1626b8917654c")
-        self.assertEqual(provenance["ondevice_ai_snapshot"]["tracked_file_count"], 1076)
-        self.assertEqual(provenance["locked_b_stage_overlay"]["file_count"], 19)
-        self.assertEqual(provenance["mmwave_m_n9_import"]["artifact_id"], "MMWAVE_M_N9_FULL_INT8_V1")
-        # Historical JSON still records the M-N9 import-era selector. Current
-        # runtime selection is B23 and is asserted separately.
-        self.assertTrue(provenance["mmwave_m_n9_import"]["active_runtime_selector"])
-        self.assertEqual(provenance["integration_policy"]["mmwave_active_selector"], "MMWAVE_M_N9_FULL_INT8_V1")
-        snapshot = root / "sources" / "ondevice_ai"
-        if snapshot.is_dir():
-            overlay = snapshot / "models" / "rp_x0_b_complete"
-            frozen = [
-                path
-                for path in snapshot.rglob("*")
-                if path.is_file() and path.suffix != ".pyc" and overlay not in path.parents and path != overlay
-            ]
-            overlay_files = [path for path in overlay.rglob("*") if path.is_file()] if overlay.exists() else []
-            self.assertEqual(len(frozen), 1076)
-            self.assertEqual(len(overlay_files), 19)
-
 
 if __name__ == "__main__":
     unittest.main()

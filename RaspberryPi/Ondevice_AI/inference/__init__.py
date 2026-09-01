@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Lazy public imports for the SafeNest inference package."""
+"""Frozen inference adapters loaded by the SafeNest Raspberry Pi runtime.
+
+``RaspberryPi/Runtime/ai/runtime.py`` loads each adapter by file path, so this
+package only needs to expose the classes for direct imports (tests, tooling).
+"""
 
 from __future__ import annotations
 
@@ -8,21 +12,15 @@ from importlib import import_module
 __all__ = [
     "ThermalInterpreter",
     "ThermalPrediction",
-    "CO2Interpreter",
-    "CO2Prediction",
-    "MMWaveInterpreter",
-    "MMWavePrediction",
-    "ModelRegistry",
+    "CB6Interpreter",
+    "MN9Interpreter",
 ]
 
 _EXPORT_MODULES = {
     "ThermalInterpreter": ".thermal_interpreter",
     "ThermalPrediction": ".thermal_interpreter",
-    "CO2Interpreter": ".co2_interpreter",
-    "CO2Prediction": ".co2_interpreter",
-    "MMWaveInterpreter": ".mmwave_interpreter",
-    "MMWavePrediction": ".mmwave_interpreter",
-    "ModelRegistry": ".model_registry",
+    "CB6Interpreter": ".co2_c_b6_interpreter",
+    "MN9Interpreter": ".mmwave_m_n9_interpreter",
 }
 
 

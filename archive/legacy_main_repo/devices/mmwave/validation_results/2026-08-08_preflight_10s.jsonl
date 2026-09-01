@@ -1,1 +1,0 @@
-{"kind": "connection_failure", "port": "/dev/cu.usbserial-110", "error": "MMWAVE_SERIAL_CONNECT_FAILED:SerialException"}

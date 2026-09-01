@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  if (location.protocol === "file:" || new URLSearchParams(location.search).has("standalone")) return;
+  if (location.protocol === "file:") return;
   const canvas = document.getElementById("thermalCanvas");
   if (!canvas) return;
 
@@ -17,7 +17,7 @@
 
   function currentId() {
     if (document.body.dataset.spaceId) return document.body.dataset.spaceId;
-    try { return typeof currentSpaceId === "string" ? currentSpaceId : "A01"; } catch { return "A01"; }
+    try { return typeof currentSpaceId === "string" ? currentSpaceId : ""; } catch { return ""; }
   }
   function colour(value) {
     const x = Math.max(0, Math.min(1, value));
@@ -36,7 +36,7 @@
   function unavailable(reason) {
     panel.classList.remove("live"); panel.classList.add("no-data");
     context.clearRect(0,0,canvas.width,canvas.height);
-    text("thermalMax","수신 대기"); text("thermalAverage","-"); text("thermalFps","0 FPS");
+    text("thermalMax","수신 대기"); text("thermalAverage","No Data"); text("thermalFps","No Data");
     text("thermalMatch",reason); text("guestThermalStatus",reason);
   }
   function draw(buffer) {
@@ -60,7 +60,7 @@
   async function update() {
     if(fetching)return; fetching=true;
     try {
-      const id=currentId(); if(id!==lastSpace){lastSpace=id;etag=null;scaleMin=null;scaleMax=null;lastFrameAt=0;lastSequence=null;unavailable("열화상 프레임 대기");}
+      const id=currentId(); if (!id) { unavailable("열화상 프레임 대기"); return; } if(id!==lastSpace){lastSpace=id;etag=null;scaleMin=null;scaleMax=null;lastFrameAt=0;lastSequence=null;unavailable("열화상 프레임 대기");}
       const response=await fetch(`/api/thermal/${encodeURIComponent(id)}`,{cache:"no-store",headers:etag?{"If-None-Match":etag}:{}});
       if(response.status===204){unavailable("열화상 프레임 대기");return;}
       if(response.status===304){if(!lastFrameAt||performance.now()-lastFrameAt>FREEZE_MS)unavailable("열화상 수신 중단");return;}

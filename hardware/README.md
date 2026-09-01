@@ -19,7 +19,7 @@ SafeNest 외함, 조립, 회로 및 핀맵 같은 물리 하드웨어 설계 자
 입력은 CAD·치수·센서 배치 제약이며 출력은 슬라이서가 소비하는 STL과 조립 자료다.
 
 ## 7. 다른 기능 영역과의 관계
-`devices/<device>/`의 보드·핀 구성 및 `docs/operations/`의 설치 지침과 일치해야 한다.
+`ESP32/docs/ARDUINO_ENVIRONMENT_SETUP_KO.md`의 보드·핀 구성과 일치해야 한다.
 
 ## 8. 실행·학습·추론 또는 활용 방법
 `hardware/3d_models/*.stl`을 검증된 슬라이서로 열고 실제 출력 전 치수와 단위를 확인한다.
