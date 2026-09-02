@@ -139,7 +139,7 @@ UDP를 꺼도 TCP가 `wrote=97/808 errno=11`로 세션을 닫고, 실패 로그�
 - 시리얼 `t`는 디버그 강제 재init일 뿐이고, 복구 조건이 아니다.
 - `c`/`u`로 끈 상태는 죽은 카메라로 보지 않는다.
 - 펌웨어 id: `safenest-esp32-sensor-node/1.7.10-mhz19b.1`
-- 스케치 폴더: `ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/`
+- 스케치 폴더: `ESP32/Arduino/esp32_sensor_node/`
 
 ## 1.7.9 — C-B6 H150 예열 극성
 

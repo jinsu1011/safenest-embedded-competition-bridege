@@ -180,4 +180,3 @@ Pi Runtime은 아래 필드를 `safenest.telemetry.v1`의 **optional** 확장으
 
 H150(`CO2_slope`, 150 s endpoint difference)은 `co2_measurement_event_id`만 이력 키로 씁니다. Pi는 `seq`, `/health`의 `fresh`, `age_seconds`로 event id를 만들지 않습니다. `co2_preheat_complete`가 true가 아니면 C-B6 입력에 넣지 않습니다. 수식·scaler·threshold 0.43은 그대로입니다.
 
-자세한 ingest 계약: `RaspberryPi/Runtime/docs/20260831_MHZ19B_H150_INGEST_CONTRACT.md`

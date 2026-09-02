@@ -72,9 +72,8 @@ REQUIRED_FILES = (
     "RaspberryPi/Ondevice_AI/inference/mmwave_m_n9_interpreter.py",
     "RaspberryPi/Ondevice_AI/risk/risk_config.json",
     # ESP32 canonical firmware.
-    "ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/"
-    "esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino",
-    "ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/secrets.example.h",
+    "ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino",
+    "ESP32/Arduino/esp32_sensor_node/secrets.example.h",
     "ESP32/docs/COMMUNICATION_PROTOCOL.md",
 )
 FORBIDDEN_NAMES = {"secrets.h"}

@@ -11,7 +11,7 @@ SafeNest가 사용하는 외부 라이브러리·모델·데이터셋의 출처�
 ## 1. ESP32 펌웨어가 사용하는 Arduino 라이브러리
 
 정본 스케치
-`ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino`
+`ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino`
 가 `#include` 하는 외부 라이브러리다. 소스는 저장소에 포함하지 않으며,
 Arduino IDE / `arduino-cli` 로 각자 설치한다.
 

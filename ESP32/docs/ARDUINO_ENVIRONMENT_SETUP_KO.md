@@ -5,14 +5,14 @@
 대상 스케치:
 
 ```text
-ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino
+ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino
 ```
 
 이 스케치가 실제 ESP32에 올라가는 **정본(canonical) 펌웨어**입니다. 저장소에는 이 스케치 하나만 있습니다.
 
 > 이 프로젝트의 기준 보드는 일반적인 ESP32-WROOM 계열의 `ESP32 Dev Module`입니다. XIAO ESP32C6용 보드 설정이 아닙니다. 소스의 핀 번호도 `ESP32 Dev Module` 기준이므로 다른 보드로 바꾸면 배선과 핀 정의를 함께 수정해야 합니다.
 
-CO₂는 Sensirion SCD4x가 아니라 **Winsen MH-Z19B UART**를 사용합니다. 따라서 SCD4x 라이브러리가 필요 없습니다. MR60은 UART2(GPIO 16/17), MH-Z19B는 UART1(GPIO 32/33)을 씁니다. MH-Z19B 모듈 전원은 4.5–5.5 V이며 ESP32 3.3 V 레일로 켜지 않습니다. 변경 이력과 배선 상세는 `ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/ESP32_UPDATE_CHANGELOG_KO_20260901-2130-junwoo.md`를 봅니다.
+CO₂는 Sensirion SCD4x가 아니라 **Winsen MH-Z19B UART**를 사용합니다. 따라서 SCD4x 라이브러리가 필요 없습니다. MR60은 UART2(GPIO 16/17), MH-Z19B는 UART1(GPIO 32/33)을 씁니다. MH-Z19B 모듈 전원은 4.5–5.5 V이며 ESP32 3.3 V 레일로 켜지 않습니다. 변경 이력과 배선 상세는 `ESP32/Arduino/esp32_sensor_node/ESP32.md`를 봅니다.
 
 ## 1. 준비물
 
@@ -100,13 +100,13 @@ Git을 사용하지 않으면 GitHub의 `Code > Download ZIP`으로 받은 뒤 �
 <repository>/
 └── ESP32/
     └── Arduino/
-        └── esp32_sensor_node_mhz19b_20260901-2130-junwoo/
-            ├── esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino
+        └── esp32_sensor_node/
+            ├── esp32_sensor_node.ino
             ├── secrets.example.h
             └── secrets.h            # 사용자가 생성, Git에 올리지 않음
 ```
 
-Arduino 스케치 폴더 이름과 `.ino` 파일의 기본 이름은 모두 `esp32_sensor_node_mhz19b_20260901-2130-junwoo`로 같아야 합니다.
+Arduino 스케치 폴더 이름과 `.ino` 파일의 기본 이름은 모두 `esp32_sensor_node`로 같아야 합니다.
 
 ## 4. 개인 설정 파일 만들기
 
@@ -115,13 +115,13 @@ Wi-Fi 비밀번호 같은 개인정보는 소스에 직접 적지 않고 스케�
 Windows PowerShell:
 
 ```powershell
-Copy-Item .\ESP32\Arduino\esp32_sensor_node_mhz19b_20260901-2130-junwoo\secrets.example.h .\ESP32\Arduino\esp32_sensor_node_mhz19b_20260901-2130-junwoo\secrets.h
+Copy-Item .\ESP32\Arduino\esp32_sensor_node\secrets.example.h .\ESP32\Arduino\esp32_sensor_node\secrets.h
 ```
 
 macOS/Linux:
 
 ```bash
-cp ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/secrets.example.h ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/secrets.h
+cp ESP32/Arduino/esp32_sensor_node/secrets.example.h ESP32/Arduino/esp32_sensor_node/secrets.h
 ```
 
 생성한 `secrets.h`를 다음과 같이 수정합니다.
@@ -167,7 +167,7 @@ constexpr uint16_t RPI_PORT = 9000;
 
 ## 6. 컴파일 및 업로드
 
-1. Arduino IDE에서 `ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino`를 엽니다.
+1. Arduino IDE에서 `ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino`를 엽니다.
 2. `Tools > Board`에서 `ESP32 Dev Module`을 선택합니다.
 3. `Tools > Port`에서 ESP32가 연결된 포트를 선택합니다.
 4. 먼저 `Sketch > Verify/Compile`로 컴파일합니다.
@@ -221,13 +221,13 @@ arduino-cli lib install "Seeed Arduino mmWave"
 컴파일:
 
 ```bash
-arduino-cli compile --fqbn esp32:esp32:esp32 ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo
+arduino-cli compile --fqbn esp32:esp32:esp32 ESP32/Arduino/esp32_sensor_node
 ```
 
 업로드 예시:
 
 ```bash
-arduino-cli upload --fqbn esp32:esp32:esp32 --port COM5 ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo
+arduino-cli upload --fqbn esp32:esp32:esp32 --port COM5 ESP32/Arduino/esp32_sensor_node
 ```
 
 macOS/Linux에서는 `COM5` 대신 실제 포트(예: `/dev/cu.usbserial-...`, `/dev/ttyUSB0`)를 넣습니다. 포트는 다음 명령으로 확인할 수 있습니다.

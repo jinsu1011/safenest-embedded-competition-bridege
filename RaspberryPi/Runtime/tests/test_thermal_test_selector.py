@@ -1,17 +1,16 @@
-"""Fail-closed Thermal controlled-test selector and launcher checks."""
+"""Fail-closed Thermal controlled-test selector checks."""
 
 from __future__ import annotations
 
 import importlib.util
 import json
 import os
-import subprocess
 import sys
 import unittest
 from unittest.mock import patch
 
 from backend.runtime_status import runtime_status_document
-from paths import MODEL_MANIFEST, REPOSITORY_ROOT, RUNTIME_ROOT
+from paths import MODEL_MANIFEST, RUNTIME_ROOT
 from tests.test_runtime_status import ai_result, sensor, state
 from thermal_test_selector import (
     SELECTOR_ENV,
@@ -24,7 +23,6 @@ from thermal_test_selector import (
 BASELINE = "thermal_public_sdt_fp32_active"
 CANDIDATE_A = "thermal_tv2_candidate_a_a0_fp32_v1"
 CANDIDATE_B = "thermal_tv2_candidate_b_seed42_fp32_test_v1"
-LAUNCHER = REPOSITORY_ROOT / "scripts" / "validation" / "run_safenest_thermal_test.sh"
 
 
 def load_runtime_module():
@@ -106,42 +104,6 @@ class ThermalTestSelectorTests(unittest.TestCase):
         )["sensors"]["thermal"]
         self.assertEqual(thermal["model_selector"], CANDIDATE_A)
         self.assertEqual(thermal["preprocessing_id"], "FRAME_ROBUST_P2_P98_V1")
-
-
-class ThermalTestLauncherTests(unittest.TestCase):
-    def _run(self, *args: str) -> subprocess.CompletedProcess[str]:
-        return subprocess.run(
-            [str(LAUNCHER), *args],
-            cwd=REPOSITORY_ROOT,
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-
-    def test_missing_choice_prints_usage(self) -> None:
-        completed = self._run()
-        self.assertNotEqual(completed.returncode, 0)
-        self.assertIn("Usage:", completed.stderr)
-
-    def test_nonsense_fails_closed(self) -> None:
-        completed = self._run("nonsense")
-        self.assertEqual(completed.returncode, 2)
-        self.assertIn("Usage:", completed.stderr)
-
-    def test_dry_run_maps_choices(self) -> None:
-        mapping = {
-            "baseline": BASELINE,
-            "a": CANDIDATE_A,
-            "b": CANDIDATE_B,
-        }
-        for choice, selector in mapping.items():
-            with self.subTest(choice=choice):
-                completed = self._run(choice, "--dry-run")
-                self.assertEqual(completed.returncode, 0, completed.stderr)
-                self.assertIn(f"choice: {choice}", completed.stdout)
-                self.assertIn(f"selector: {selector}", completed.stdout)
-                self.assertIn("controlled-test", completed.stdout)
-                self.assertIn("dry-run: not starting SafeNest", completed.stdout)
 
 
 if __name__ == "__main__":

@@ -17,7 +17,7 @@ smbus2>=0.4.3
 #
 # 일반 PyPI 의 ARM64 torch 는 CUDA/NVIDIA 의존성을 함께 끌어온다(Pi 에는 CUDA 없음).
 # 반드시 공식 CPU wheel index 를 함께 사용한다. Raspberry Pi 5 / aarch64 에서
-# torch 2.13.0+cpu 로 import·모델 load·backend 기동이 확인된 기록은
-# RaspberryPi/Runtime/docs/mmwave/20260828_SafeNest_mmWave_B23_First_Integrated_Model_Handoff_KO_01.md 15.2 참조.
+# torch 2.13.0+cpu 로 import·모델 load·backend 기동이 확인되었다. 해당 실행 기록은
+# 소유자가 보유하며 제출 저장소에는 포함하지 않는다.
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch>=2.1.0

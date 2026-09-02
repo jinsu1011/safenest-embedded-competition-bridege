@@ -2,7 +2,7 @@
 
 The three sources must agree byte-for-byte on the SafeNest v1 wire format:
 
-  ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/  (sender)
+  ESP32/Arduino/esp32_sensor_node/  (sender)
   RaspberryPi/Runtime/gateway/protocol.py                       (receiver)
   ESP32/docs/COMMUNICATION_PROTOCOL.md                          (specification)
 

@@ -25,10 +25,8 @@ LCD_STATIC = LCD_ROOT / "static"
 ESP32_ROOT = REPOSITORY_ROOT / "ESP32"
 # Canonical firmware actually flashed to the sensor node. Keep this path in sync
 # with the sketch directory name; the Arduino IDE requires .ino == folder name.
-ESP32_SKETCH_DIR = (
-    ESP32_ROOT / "Arduino" / "esp32_sensor_node_mhz19b_20260901-2130-junwoo"
-)
-ESP32_SKETCH = ESP32_SKETCH_DIR / "esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino"
+ESP32_SKETCH_DIR = ESP32_ROOT / "Arduino" / "esp32_sensor_node"
+ESP32_SKETCH = ESP32_SKETCH_DIR / "esp32_sensor_node.ino"
 ESP32_SECRET_TEMPLATE = ESP32_SKETCH_DIR / "secrets.example.h"
 
 DATA_ROOT = RUNTIME_ROOT / "data"

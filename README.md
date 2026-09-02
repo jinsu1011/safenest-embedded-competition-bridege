@@ -98,10 +98,10 @@ MI48xx    (열화상)   ┘                 │
 ├── README.md · THIRD_PARTY_NOTICES.md · COMPONENT_SOURCES.json
 │
 ├── ESP32/
-│   ├── Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/
-│   │   ├── esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino   ★ 정본 펌웨어
+│   ├── Arduino/esp32_sensor_node/
+│   │   ├── esp32_sensor_node.ino   ★ 정본 펌웨어
 │   │   ├── secrets.example.h
-│   │   └── ESP32_UPDATE_CHANGELOG_KO_20260901-2130-junwoo.md
+│   │   └── ESP32.md
 │   └── docs/            빌드 환경 가이드 · 통신 프로토콜 명세
 │
 ├── RaspberryPi/
@@ -116,8 +116,7 @@ MI48xx    (열화상)   ┘                 │
 │   │   ├── services/    tts.py · buzzer.py · sms_service.py · emergency.py
 │   │   ├── storage/     sensor_logger.py
 │   │   ├── hil/         preflight.py(기동 필수) · 현장 수집/판정 도구
-│   │   ├── tests/       소프트웨어 테스트
-│   │   └── docs/        런타임 기술 문서
+│   │   └── tests/       소프트웨어 테스트
 │   ├── Ondevice_AI/
 │   │   ├── inference/   ★ Thermal·CO₂ 활성 어댑터 (+ 비활성 M-N9)
 │   │   ├── models/      ★ model_manifest.json + 모델 아티팩트
@@ -127,12 +126,6 @@ MI48xx    (열화상)   ┘                 │
 │   │   └── vendor/      외부 라이브러리 로컬 포함 (Chart.js)
 │   └── LCD/static/      ★ display.html · common.css
 │
-├── scripts/validation/  검증용 실행 도구 (production 진입점 아님)
-├── docs/
-│   ├── operations/      Raspberry Pi 현장 운영 절차
-│   ├── validation/      Thermal 모델 A/B 비교 절차
-│   ├── reports/         Thermal 실측 기록
-│   └── thermal/         모델 비교 문서
 ├── hardware/            3D 하우징 STL 및 설계 사양
 └── final-report/        대회 개발완료보고서 PDF/PPTX 및 이미지 자산
 ```
@@ -145,7 +138,7 @@ MI48xx    (열화상)   ┘                 │
 
 | 구성 | 경로 |
 |---|---|
-| **ESP32 펌웨어** | [`ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino`](ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino) |
+| **ESP32 펌웨어** | [`ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino`](ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino) |
 | **Runtime 진입점** | [`run_safenest.sh`](run_safenest.sh) → [`RaspberryPi/Runtime/deployment/run_pi.sh`](RaspberryPi/Runtime/deployment/run_pi.sh) → [`RaspberryPi/Runtime/backend/run_backend.py`](RaspberryPi/Runtime/backend/run_backend.py) |
 | **Web 관리자** | [`RaspberryPi/Web/portal/preview.html`](RaspberryPi/Web/portal/preview.html) + `portal/admin-api.js` + `portal/thermal-client.js` |
 | **Web 대시보드** | [`RaspberryPi/Web/index_final.html`](RaspberryPi/Web/index_final.html) + `app_final.js` + `styles_final.css` |
@@ -160,7 +153,7 @@ MI48xx    (열화상)   ┘                 │
 
 | # | 파일 | 역할 |
 |---|---|---|
-| 1 | [ESP32 정본 펌웨어](ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino) | 4센서 수집, `delay()` 없는 millis 스케줄링, TCP/UDP 를 각각 FreeRTOS 태스크로 분리, 1-슬롯 열화상 큐로 최신 프레임 우선 |
+| 1 | [ESP32 정본 펌웨어](ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino) | 4센서 수집, `delay()` 없는 millis 스케줄링, TCP/UDP 를 각각 FreeRTOS 태스크로 분리, 1-슬롯 열화상 큐로 최신 프레임 우선 |
 | 2 | [`gateway/protocol.py`](RaspberryPi/Runtime/gateway/protocol.py) | `SNST` v1 16바이트 헤더 파싱과 페이로드 검증, 9,936바이트 열화상 계약 |
 | 3 | [`gateway/thermal_udp.py`](RaspberryPi/Runtime/gateway/thermal_udp.py) | 청크 UDP 순서 무관 재조립, CRC32·형상·범위 검증, 프레임 타임아웃 |
 | 4 | [`state/manager.py`](RaspberryPi/Runtime/state/manager.py) | 센서별 freshness/유효성/기기 건강을 값과 분리해 관리, publication revision 발행 |
@@ -222,12 +215,17 @@ cd safenest
 <summary>선택: Thermal 모델 A/B 비교 실행</summary>
 
 ```bash
-scripts/validation/run_safenest_thermal_test.sh baseline   # 현재 활성 모델
-scripts/validation/run_safenest_thermal_test.sh a          # TV2 Candidate A
-scripts/validation/run_safenest_thermal_test.sh b          # TV2 Candidate B
+# 현재 활성 모델 — 환경변수 없이 그대로 기동
+./run_safenest.sh
+
+# TV2 Candidate A
+SAFENEST_THERMAL_TEST_MODE=1 SAFENEST_THERMAL_MODEL_SELECTOR=thermal_tv2_candidate_a_a0_fp32_v1 ./run_safenest.sh
+
+# TV2 Candidate B
+SAFENEST_THERMAL_TEST_MODE=1 SAFENEST_THERMAL_MODEL_SELECTOR=thermal_tv2_candidate_b_seed42_fp32_test_v1 ./run_safenest.sh
 ```
 
-manifest 에서 `controlled_test_allowed: true` 인 모델만 선택되며, 평시 운영 경로(`./run_safenest.sh`)는 영향을 받지 않는다. Candidate A/B 는 비교 대상이지 배포 모델이 아니다. 절차는 [`docs/validation/PI_RUNBOOK_THERMAL.md`](docs/validation/PI_RUNBOOK_THERMAL.md).
+`SAFENEST_THERMAL_TEST_MODE=1` 이 없으면 selector 지정은 fail-closed 로 거부되고, manifest 에서 `controlled_test_allowed: true` 인 모델만 선택된다. 평시 운영 경로(`./run_safenest.sh`)는 영향을 받지 않는다. Candidate A/B 는 비교 대상이지 배포 모델이 아니다.
 </details>
 
 ---
@@ -239,12 +237,12 @@ manifest 에서 `controlled_test_allowed: true` 인 모델만 선택되며, 평�
 3. 자격증명 파일 생성 — 실제 값은 커밋되지 않는다
 
    ```bash
-   cd ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo
+   cd ESP32/Arduino/esp32_sensor_node
    cp secrets.example.h secrets.h
    ```
 
    `secrets.h` 에 2.4 GHz Wi-Fi SSID/비밀번호, Raspberry Pi 의 WLAN IPv4(`RPI_HOST`), TCP 포트(`RPI_PORT`, 기본 9000)를 입력한다. 열화상 UDP 도 같은 호스트의 5005 로 전송된다.
-4. `esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino` 를 열어 컴파일 후 업로드
+4. `esp32_sensor_node.ino` 를 열어 컴파일 후 업로드
 5. Serial Monitor `115200 baud` 에서 `[health]` 로그의 `wifi=up`, `rpi=<Pi IP>`, `udp_sent` 증가 확인
 
 상세 절차·배선표·오류 대응은 [`ESP32/docs/ARDUINO_ENVIRONMENT_SETUP_KO.md`](ESP32/docs/ARDUINO_ENVIRONMENT_SETUP_KO.md), 와이어 포맷은 [`ESP32/docs/COMMUNICATION_PROTOCOL.md`](ESP32/docs/COMMUNICATION_PROTOCOL.md).
@@ -374,7 +372,7 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 | 항목 | 결과 | 비고 |
 |---|---|---|
 | Python 구문 검사 (전체 추적 `.py`) | **PASS** | 오류 0 |
-| Shell 구문 검사 (`bash -n`) | **PASS** | `run_safenest.sh`, `run_pi.sh`, 검증 런처 |
+| Shell 구문 검사 (`bash -n`) | **PASS** | `run_safenest.sh`, `run_pi.sh` |
 | Runtime 테스트 (`RaspberryPi/Runtime/tests`) | **417 passed · 21 failed · 1 skipped** | Risk 1.3.3 / 재실 게이팅 / CO₂ 주의 산식 / TTS 우선순위 테스트 포함. 실패 21건은 아래 Known Limitations 참조 |
 | On-device AI 테스트 (`RaspberryPi/Ondevice_AI/tests`) | **25 passed · 2 skipped** | 활성 Thermal 모델 SHA/selector 계약 + bbox 종횡비 자세 오버레이 |
 | 모델 SHA256 계약 (preflight) | **PASS** | manifest 등재 10개 아티팩트 전부 일치 |
@@ -385,8 +383,8 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 | Chart.js 오프라인 동작 | **PASS** | 브라우저에서 `window.Chart` 4.5.1 로드·차트 인스턴스 생성 확인, 배포본 SHA-256 일치 |
 | 관리자 인증 fail-closed | **PASS** | 미설정 시 로그인 거부(503)·보호 API 401, 설정 후 정상 로그인·토큰 인가 |
 | LCD 자산 참조 | **PASS** | `display.html` → `common.css`, `GET /api/state` |
-| 문서 링크 · 파일 참조 | **PASS** | 29개 문서 56개 상대 링크, 깨짐 0 |
-| `COMPONENT_SOURCES.json` 경로 | **PASS** | 29개 구성요소 경로 전부 실재 |
+| 문서 링크 · 파일 참조 | **PASS** | 4개 문서 47개 상대 링크, 깨짐 0 |
+| `COMPONENT_SOURCES.json` 경로 | **PASS** | 30개 구성요소 경로 전부 실재 |
 | 중복 파일 검사 | **PASS** | `.gitkeep` 외 바이트 동일 중복 없음 |
 | Secret 스캔 | **PASS** | 토큰·키·자격증명 값 없음. `*.example` 템플릿만 추적 |
 | 추적된 DB/캐시/빌드 산출물 | **PASS** | 없음 |
@@ -395,7 +393,7 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 | **Raspberry Pi 라이브 센서 구동** | **PASS** | - |
 | **실제 낙상 이벤트 검증** | **NOT VERIFIED** | — |
 
-> 별도 기록으로, Raspberry Pi 5 / aarch64 / torch 2.13.0+cpu 환경에서 PyTorch import, B23 모델 load, 백엔드 기동이 확인된 소유자 제공 결과가 [`RaspberryPi/Runtime/docs/mmwave/20260828_SafeNest_mmWave_B23_First_Integrated_Model_Handoff_KO_01.md`](RaspberryPi/Runtime/docs/mmwave/20260828_SafeNest_mmWave_B23_First_Integrated_Model_Handoff_KO_01.md) 15장에 있다. 이는 **pre-live 준비 상태**이며 라이브 센서 E2E 검증이 아니다.
+> 별도 기록으로, Raspberry Pi 5 / aarch64 / torch 2.13.0+cpu 환경에서 PyTorch import, B23 모델 load, 백엔드 기동이 확인된 소유자 제공 결과가 있다. 해당 실행 기록은 소유자가 보유하며 제출 저장소에는 포함하지 않았다. 이는 **pre-live 준비 상태**이며 라이브 센서 E2E 검증이 아니다.
 
 제출본 구성 완전성은 다음으로 확인할 수 있다.
 

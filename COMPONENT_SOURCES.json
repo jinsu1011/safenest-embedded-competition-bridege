@@ -10,7 +10,7 @@
   },
   "components": {
     "esp32_firmware": {
-      "path": "ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/esp32_sensor_node_mhz19b_20260901-2130-junwoo.ino",
+      "path": "ESP32/Arduino/esp32_sensor_node/esp32_sensor_node.ino",
       "role": "실제 플래싱되는 정본 센서 노드 펌웨어. MR60BHA2 mmWave + MH-Z19B CO2 + PIR 을 SafeNest TCP v1 :9000 으로, MI48xx 80x62 열화상을 SafeNest Thermal UDP v1 :5005 로 전송",
       "classification": "TEAM_AUTHORED",
       "external_libraries": [
@@ -19,7 +19,7 @@
       ]
     },
     "esp32_secret_template": {
-      "path": "ESP32/Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/secrets.example.h",
+      "path": "ESP32/Arduino/esp32_sensor_node/secrets.example.h",
       "role": "Wi-Fi/Pi 접속 정보 템플릿. 사용자가 같은 폴더에 secrets.h 로 복사한다",
       "classification": "TEAM_AUTHORED",
       "contains_credentials": false
@@ -168,17 +168,6 @@
       "runtime_role": "ACTIVE_RUNTIME",
       "supporting_modules": "RaspberryPi/Runtime/ai/mmwave_prototype/ (PROTOTYPE_SUPPORT)"
     },
-    "validation_tooling": {
-      "path": "scripts/validation/run_safenest_thermal_test.sh",
-      "role": "Thermal baseline / Candidate A / Candidate B 비교 실행 런처. production 진입점이 아니며, manifest 가 controlled_test_allowed 로 허용한 selector 만 선택한다. 절차는 docs/validation/PI_RUNBOOK_THERMAL.md",
-      "classification": "TEAM_AUTHORED",
-      "runtime_role": "CONTROLLED_TEST"
-    },
-    "operations_docs": {
-      "path": "docs/operations/, docs/validation/",
-      "role": "Raspberry Pi 현장 운영 절차와 Thermal 모델 비교 검증 절차",
-      "classification": "TEAM_AUTHORED"
-    },
     "web_vendor": {
       "path": "RaspberryPi/Web/vendor/chart.js",
       "role": "관리자 화면 추이 그래프용 Chart.js 4.5.1 UMD 배포본. 백엔드가 /vendor 로 same-origin 서빙하므로 외부 인터넷 없이 동작한다. 배포본은 수정하지 않았다",
@@ -226,7 +215,7 @@
     "live_esp32_mr60_end_to_end": "NOT_VERIFIED",
     "real_fall_event_validation": "NOT_VERIFIED",
     "mi48_thermal_model_validation": "NOT_VERIFIED",
-    "note": "근거와 범위는 RaspberryPi/Runtime/docs/mmwave/20260828_SafeNest_mmWave_B23_First_Integrated_Model_Handoff_KO_01.md 15장 참조"
+    "note": "raspberry_pi_backend_start 의 근거는 소유자가 보유한 실행 기록이며, 해당 문서는 제출 저장소에 포함하지 않는다"
   },
   "runtime_role_legend": {
     "ACTIVE_RUNTIME": "production 실행 경로에서 실제로 호출되는 구성요소",
