@@ -106,18 +106,35 @@ SDT 자세 라벨에서 파생한 **proxy** 매핑이며, 실제 낙상 이벤�
 | 외부 데이터셋 | 사용하지 않음 |
 | 저장소 포함 여부 | 원 캡처 로그 미포함 (모델 아티팩트 + scaler 통계만 포함) |
 
-## 6. 웹 프론트엔드 외부 자산
+## 6. 웹 프론트엔드에 포함한 외부 자산
 
-| 자산 | 사용 위치 | 조달 방식 | 라이선스 |
+관리자 화면의 추이 그래프에 사용하는 Chart.js 를 저장소에 포함(vendoring)했다.
+외부 인터넷이 없는 현장에서도 동작해야 하기 때문이다.
+
+| 항목 | 값 |
+|---|---|
+| 구성요소 | **Chart.js** |
+| 버전 | **4.5.1** (고정) |
+| 포함 경로 | `RaspberryPi/Web/vendor/chart.js/chart.umd.min.js` |
+| 서빙 경로 | `/vendor/chart.js/chart.umd.min.js` (백엔드 same-origin) |
+| 크기 · SHA-256 | 208,522 bytes · `48444a82d4edcb5bec0f1965faacdde18d9c17db3063d042abada2f705c9f54a` |
+| 취득처 | `https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js` (공식 npm 배포본) |
+| 저작권 | (c) Chart.js Contributors — https://www.chartjs.org |
+| **라이선스** | **MIT** — 전문은 `RaspberryPi/Web/vendor/chart.js/LICENSE.md` |
+
+번들에 포함된 의존성:
+
+| 구성요소 | 버전 | 저작권 | 라이선스 |
 |---|---|---|---|
-| Chart.js | `RaspberryPi/Web/portal/preview.html` | `https://cdn.jsdelivr.net/npm/chart.js` CDN `<script>` | 확인 필요 — https://www.chartjs.org/ 참조 |
+| @kurkle/color | 0.3.2 | (c) 2023 Jukka Kurkela | MIT (배포본 배너에 명시) |
 
-> 이 CDN 스크립트는 저장소에 포함되지 않으며, 관리자 화면의 추이 그래프에만
-> 쓰인다. 인터넷이 없는 Raspberry Pi 에서는 로드되지 않고 그래프만 표시되지
-> 않는다 (나머지 화면과 API/WebSocket 은 정상 동작).
+배포본은 수정하지 않고 원본 바이트 그대로 포함했다. 위 SHA-256 은 취득 시점의
+공식 배포본과 일치하며, `.gitattributes` 에서 줄바꿈 정규화를 제외해 바이트
+동일성을 유지한다.
 
 그 외 웹·LCD 자산(HTML/CSS/JS, 아이콘, 폰트)은 모두 SafeNest 팀이 작성했고
-외부 호스트를 참조하지 않는다.
+외부 호스트를 참조하지 않는다. 현재 제출본의 웹·LCD 화면은 **외부 네트워크
+자산을 하나도 참조하지 않는다.**
 
 ## 7. 이 저장소 자체의 라이선스
 

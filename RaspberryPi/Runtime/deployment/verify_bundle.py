@@ -58,6 +58,8 @@ REQUIRED_FILES = (
     "RaspberryPi/Web/portal/admin-api.js",
     "RaspberryPi/Web/portal/thermal-client.js",
     "RaspberryPi/Web/guest/index.html",
+    "RaspberryPi/Web/vendor/chart.js/chart.umd.min.js",
+    "RaspberryPi/Web/vendor/chart.js/LICENSE.md",
     # LCD canonical panel.
     "RaspberryPi/LCD/static/display.html",
     "RaspberryPi/LCD/static/common.css",

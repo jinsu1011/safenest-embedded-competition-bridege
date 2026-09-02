@@ -8,7 +8,9 @@
 
 **문제.** 맨홀·정화조·탱크 같은 밀폐공간 질식 재해는 쓰러진 뒤에는 본인이 도움을 요청할 수 없다. 사고의 대부분은 "감지가 늦어서"가 아니라 "아무도 보고 있지 않아서" 커진다. 반대로 CO₂ 센서만 두면 사람이 이미 무호흡 상태여도 공기질이 기준 이하면 정상으로 표시된다.
 
-**접근.** SafeNest는 한 가지 신호에 의존하지 않는다. mmWave 레이더로 **호흡**을, 열화상으로 **자세**를, PIR로 **움직임**을, NDIR 센서로 **CO₂**를 각각 독립적으로 관측하고, 네 결과를 하나의 위험도로 융합한다. 추론은 전부 Raspberry Pi 위에서 수행되어 네트워크가 끊겨도 판단과 경보가 계속된다.
+**접근.** SafeNest는 한 가지 신호에 의존하지 않는다. mmWave 레이더로 **호흡**을, 열화상으로 **자세**를, PIR로 **움직임**을, NDIR 센서로 **CO₂**를 각각 독립적으로 관측하고, 네 결과를 하나의 위험도로 융합한다.
+
+추론은 전부 Raspberry Pi 위에서 수행된다. **외부 인터넷 연결이나 클라우드 서버 없이** 센서 데이터 처리, AI 추론, 위험도 판단, 경보, 화면 표시가 현장에서 완결된다. 단, ESP32 센서 노드와 Raspberry Pi 사이는 현장 Wi-Fi 의 TCP/UDP 로 연결되므로 이 구간이 끊기면 해당 센서는 데이터 없음(`INDETERMINATE`) 으로 처리된다.
 
 **적용 환경.** 밀폐공간 단독·소수 작업, 상시 관제 인력이 없는 현장.
 
@@ -88,9 +90,8 @@ MI48xx    (열화상)   ┘                 │
 
 ```
 .
-├── run_safenest.sh                  ★ 공식 실행 진입점
+├── run_safenest.sh                  ★ 공식 실행 진입점 (유일)
 ├── README.md · THIRD_PARTY_NOTICES.md · COMPONENT_SOURCES.json
-├── PI_RUNBOOK.md · PI_RUNBOOK_THERMAL.md      운영 런북
 │
 ├── ESP32/
 │   ├── Arduino/esp32_sensor_node_mhz19b_20260901-2130-junwoo/
@@ -114,14 +115,20 @@ MI48xx    (열화상)   ┘                 │
 │   │   ├── tests/       소프트웨어 테스트
 │   │   └── docs/        런타임 기술 문서
 │   ├── Ondevice_AI/
-│   │   ├── inference/   ★ 동결 추론 어댑터 3종
+│   │   ├── inference/   ★ Thermal·CO₂ 활성 어댑터 (+ 비활성 M-N9)
 │   │   ├── models/      ★ model_manifest.json + 모델 아티팩트
 │   │   ├── risk/        risk_config.json
 │   │   └── tests/       활성 Thermal 모델 계약 테스트
 │   ├── Web/             ★ 관리자 포털 · 대시보드 · 게스트 화면
+│   │   └── vendor/      외부 라이브러리 로컬 포함 (Chart.js)
 │   └── LCD/static/      ★ display.html · common.css
 │
-├── docs/                Thermal 실측 기록 · 모델 비교 문서
+├── scripts/validation/  검증용 실행 도구 (production 진입점 아님)
+├── docs/
+│   ├── operations/      Raspberry Pi 현장 운영 절차
+│   ├── validation/      Thermal 모델 A/B 비교 절차
+│   ├── reports/         Thermal 실측 기록
+│   └── thermal/         모델 비교 문서
 ├── hardware/            3D 하우징 STL 및 설계 사양
 └── final-report/        대회 개발완료보고서 PDF/PPTX 및 이미지 자산
 ```
@@ -211,12 +218,12 @@ cd safenest
 <summary>선택: Thermal 모델 A/B 비교 실행</summary>
 
 ```bash
-./run_safenest_thermal_test.sh baseline   # 현재 활성 모델
-./run_safenest_thermal_test.sh a          # TV2 Candidate A
-./run_safenest_thermal_test.sh b          # TV2 Candidate B
+scripts/validation/run_safenest_thermal_test.sh baseline   # 현재 활성 모델
+scripts/validation/run_safenest_thermal_test.sh a          # TV2 Candidate A
+scripts/validation/run_safenest_thermal_test.sh b          # TV2 Candidate B
 ```
 
-manifest 에서 `controlled_test_allowed: true` 인 모델만 선택되며, 평시 운영 경로(`./run_safenest.sh`)는 영향을 받지 않는다.
+manifest 에서 `controlled_test_allowed: true` 인 모델만 선택되며, 평시 운영 경로(`./run_safenest.sh`)는 영향을 받지 않는다. Candidate A/B 는 비교 대상이지 배포 모델이 아니다. 절차는 [`docs/validation/PI_RUNBOOK_THERMAL.md`](docs/validation/PI_RUNBOOK_THERMAL.md).
 </details>
 
 ---
@@ -254,6 +261,8 @@ manifest 에서 `controlled_test_allowed: true` 인 모델만 선택되며, 평�
 
 `http://<pi>:8000/` 은 `/admin` 으로 리다이렉트된다.
 
+**모든 화면은 외부 네트워크 자산을 참조하지 않는다.** 그래프 라이브러리(Chart.js 4.5.1)까지 저장소에 포함해 `/vendor/chart.js/chart.umd.min.js` 로 같은 서버가 서빙하므로, 인터넷이 없는 현장에서도 관리자·대시보드·게스트·LCD 화면이 모두 완전하게 동작한다. 출처와 라이선스는 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) 6장 참고.
+
 **API / WebSocket** — 전체 계약은 [`backend/views.py`](RaspberryPi/Runtime/backend/views.py) 의 `ROUTE_CONTRACTS` 에 정의되어 있다.
 
 | 종류 | 경로 |
@@ -265,7 +274,15 @@ manifest 에서 `controlled_test_allowed: true` 인 모델만 선택되며, 평�
 | 비상 대응 | `POST /api/emergency/contact` · `/acknowledge` · `/recovery/acknowledge` · `/voice` |
 | 실시간 | `WS /ws` — publication revision 이 바뀔 때만 상태 문서 전송 |
 
-관리자 로그인 기본 계정은 `admin` / `SafeNest123!` 이며, `SAFENEST_ADMIN_ID` · `SAFENEST_ADMIN_PASSWORD` 환경변수로 반드시 교체해 운용한다.
+**관리자 계정은 저장소에 없다.** `/admin` 로그인은 환경변수로만 설정한다.
+
+```bash
+export SAFENEST_ADMIN_ID=...
+export SAFENEST_ADMIN_PASSWORD=...
+export SAFENEST_AUTH_SECRET=...        # 선택. 없으면 프로세스마다 무작위 서명 키
+```
+
+두 값을 모두 설정하기 전까지 로그인은 **항상 거부**된다(fail-closed). 빈 값끼리 일치해 통과하는 경로도 없다. 나머지 런타임·API·LCD·게스트 화면은 계정 설정과 무관하게 정상 동작하며, 현재 설정 여부는 `GET /health` 의 `admin_auth_configured` 로 확인한다.
 
 `SAFENEST_DEMO_MODE=1` 로 실행하면 데모 전용 화면(`/control`, `/dashboard` 의 데모판)과 119 신고 시뮬레이션 API 가 추가로 열린다. 평시 운영에서는 사용하지 않는다.
 
@@ -294,10 +311,26 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 | CO₂ | `co2_occupancy_c_b6` | `models/rp_x0_b_complete/co2/C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001_full_integer_int8.tflite` | TFLite full-int8 | 실내 재실 여부 |
 | mmWave | `mmwave` (M-PROT-B23) | `models/mmwave/m_prot_b23/candidate_seed_23.pt` | PyTorch fp32 | 호흡 파형 판정 + 품질 |
 
+**실행 경로.** [`ai/pipeline.py`](RaspberryPi/Runtime/ai/pipeline.py) 가 세 모델을 서로 격리해 평가한다.
+
+| 센서 | 호출되는 코드 |
+|---|---|
+| Thermal | `ai/runtime.py` 의 `LazyModel` → `Ondevice_AI/inference/thermal_interpreter.py` |
+| CO₂ | `ai/runtime.py` 의 `LazyModel` → `Ondevice_AI/inference/co2_c_b6_interpreter.py` |
+| mmWave | [`ai/mmwave_b23_runtime.py`](RaspberryPi/Runtime/ai/mmwave_b23_runtime.py) 의 `B23TeamRuntime` (PyTorch 직접 실행) |
+
+> **M-N9 은 활성 경로가 아니다.** `Ondevice_AI/inference/mmwave_m_n9_interpreter.py` 와
+> `models/mmwave/m_n9/MMWAVE_M_N9_FULL_INT8_V1.tflite` 가 저장소에 남아 있지만,
+> `ai/pipeline.py` 의 mmWave 경로는 항상 `B23TeamRuntime` 을 호출하므로 이 어댑터는
+> 실행되지 않는다. manifest 에서도 `deployment_allowed: false`,
+> `runtime_role: LEGACY_M_N9_NONACTIVE` 이며 강제 로드 시 `MODEL_RELEASE_BLOCKED` 로
+> 차단된다. 파일이 남아 있는 이유는 기동 preflight 가 manifest 에 등재된 모든
+> 아티팩트의 SHA256 을 검증하기 때문이다.
+
 **주장 범위를 명시한다.**
 
 - Thermal 모델은 공개 데이터(SDT)로 학습한 **자세 proxy** 이며, 실제 낙상 이벤트를 검증하지 않았다. 위험도에 제한된 가중치로만 기여하고 단독으로 비상을 선언하지 못한다.
-- CO₂ 모델의 의미는 **실내 재실 판정**이며 질식·유해가스 ground truth 가 아니다. 안전 임계값(경고 1,000 ppm / 위험 2,500 ppm)은 모델이 아니라 규칙이 담당한다.
+- CO₂ 모델의 의미는 **실내 재실 판정**이며 질식·유해가스 ground truth 가 아니다. 안전 판정은 모델이 아니라 규칙이 담당한다. 주의(`WARNING`)는 로컬라이징 기준값 대비 상대 상승(+500 ppm 진입 / +350 ppm 해제)과 CO₂ 기울기(50 ppm/min)로만 발생하고, 남아 있는 절대 ppm 트립은 비상 오버라이드 5,000 ppm 하나뿐이다.
 - mmWave B23 은 prototype integration freeze 단계로, 위험도 기여가 유보(`risk_contribution_deferred`)되어 있다.
 
 학습 데이터 출처와 이용 조건은 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) 5장 참고. 원본 데이터셋은 저장소에 포함하지 않는다.
@@ -306,12 +339,14 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 
 ## Risk Engine
 
-활성 엔진은 [`RaspberryPi/Runtime/risk/formula_v1.py`](RaspberryPi/Runtime/risk/formula_v1.py) (`SAFENEST_RISK_V1` v1.2.0), 설정은 [`risk/risk_formula_v1.json`](RaspberryPi/Runtime/risk/risk_formula_v1.json).
+활성 엔진은 [`RaspberryPi/Runtime/risk/formula_v1.py`](RaspberryPi/Runtime/risk/formula_v1.py) (`SAFENEST_RISK_V1` v1.3.0), 설정은 [`risk/risk_formula_v1.json`](RaspberryPi/Runtime/risk/risk_formula_v1.json).
 
 | 항목 | 값 |
 |---|---|
 | 가중치 | CO₂ 0.30 · Thermal 0.30 · mmWave 0.25 · PIR 0.15 |
-| 임계값 | `WARNING` ≥ 30 · `DANGER` ≥ 65 |
+| 종합 위험도 임계값 | `DANGER` ≥ 65 (종합 산식은 `WARNING` 을 게시하지 않는다) |
+| 주의 산식 | `SAFENEST_CAUTION_CO2_V1` — CO₂ 단독. 기준값 대비 +500 ppm 진입 · +350 ppm 해제 · 기울기 50 ppm/min |
+| 비상 절대 트립 | CO₂ 5,000 ppm (유일한 절대 ppm 트립) |
 | 증거 게이트 | 사용 가능한 구성요소의 가중치 합이 0.5 미만이면 `INDETERMINATE` |
 
 단순 가중합이 갖지 못한 세 가지 성질을 갖는다.
@@ -319,6 +354,7 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 1. **Escalation floor** — 심각한 신호 하나가 평온한 신호 셋에 희석되어 NORMAL 로 떨어지지 않는다.
 2. **Evidence sufficiency** — 근거가 부족하면 NORMAL 을 게시하지 않고 `INDETERMINATE` 를 게시한다. "센서가 죽어서 조용한 것"과 "실제로 안전한 것"을 구분한다.
 3. **Decisiveness gating** — 상위 두 확률의 차가 기준 미만인 분류 결과는 점수화하지 않고 "판단 없음"으로 처리한다.
+4. **Caution 분리** — `WARNING` 은 가중합 점수 구간이 아니라 CO₂ 전용 주의 산식이 만든다. mmWave·PIR·Thermal 은 점수와 `DANGER`/`EMERGENCY` 에는 기여하지만 주의를 올리지 못한다. 밀폐 공간이 상시 1,500 ppm 근처에 머물러 종일 `WARNING` 을 만들던 절대 임계값(1,500 ppm)과 `danger_ppm` 2,500 ppm 은 제거했다.
 
 규칙 임계값(호흡수 정상범위, 무호흡 확정 시간, PIR 무움직임 시간, CO₂ 경고/위험 ppm)은 [`RaspberryPi/Ondevice_AI/risk/risk_config.json`](RaspberryPi/Ondevice_AI/risk/risk_config.json) 에 있다.
 
@@ -331,14 +367,20 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 | 항목 | 결과 | 비고 |
 |---|---|---|
 | Python 구문 검사 (전체 추적 `.py`) | **PASS** | 오류 0 |
-| Shell 구문 검사 (`bash -n`) | **PASS** | `run_safenest.sh`, `run_safenest_thermal_test.sh`, `run_pi.sh` |
-| Runtime 테스트 (`RaspberryPi/Runtime/tests`) | **391 passed · 22 failed · 1 skipped** | 실패 22건은 아래 Known Limitations 참조 |
+| Shell 구문 검사 (`bash -n`) | **PASS** | `run_safenest.sh`, `run_pi.sh`, 검증 런처 |
+| Runtime 테스트 (`RaspberryPi/Runtime/tests`) | **405 passed · 22 failed · 1 skipped** | Risk 1.3.0 / CO₂ 주의 산식 테스트 포함. 실패 22건은 아래 Known Limitations 참조 |
 | On-device AI 테스트 (`RaspberryPi/Ondevice_AI/tests`) | **18 passed · 2 skipped** | 활성 Thermal 모델 SHA/selector 계약 |
 | 모델 SHA256 계약 (preflight) | **PASS** | manifest 등재 10개 아티팩트 전부 일치 |
+| 제출본 무결성 (`verify_bundle.py`) | **PASS** | 필수 파일 누락 0, 금지 산출물 0 |
 | Web 정적 참조 정합성 | **PASS** | `/admin` HTML → JS(58개 DOM id) → API/WS 전 경로 연결 확인 |
+| HTTP smoke (19개 route + `WS /ws`) | **PASS** | 실제 앱 부팅 후 응답 확인 |
+| 외부 네트워크 자산 참조 | **0건** | 웹·LCD 전체에 외부 CDN/호스트 참조 없음 |
+| Chart.js 오프라인 동작 | **PASS** | 브라우저에서 `window.Chart` 4.5.1 로드·차트 인스턴스 생성 확인, 배포본 SHA-256 일치 |
+| 관리자 인증 fail-closed | **PASS** | 미설정 시 로그인 거부(503)·보호 API 401, 설정 후 정상 로그인·토큰 인가 |
 | LCD 자산 참조 | **PASS** | `display.html` → `common.css`, `GET /api/state` |
-| 문서 링크 · 파일 참조 | **PASS** | 깨진 상대 경로 없음 |
-| 중복 파일 검사 | **PASS** | 바이트 동일 중복 없음 |
+| 문서 링크 · 파일 참조 | **PASS** | 29개 문서 56개 상대 링크, 깨짐 0 |
+| `COMPONENT_SOURCES.json` 경로 | **PASS** | 29개 구성요소 경로 전부 실재 |
+| 중복 파일 검사 | **PASS** | `.gitkeep` 외 바이트 동일 중복 없음 |
 | Secret 스캔 | **PASS** | 토큰·키·자격증명 값 없음. `*.example` 템플릿만 추적 |
 | 추적된 DB/캐시/빌드 산출물 | **PASS** | 없음 |
 | **ESP32 펌웨어 빌드** | **NOT RUN** | Arduino 빌드 환경 없음 |
@@ -358,14 +400,13 @@ python3 RaspberryPi/Runtime/deployment/verify_bundle.py
 
 ## Known Limitations
 
-- **O4 대시보드 런타임 상태 UI 미구현** — `hil/preflight.py --offline-preflight` 의 `dashboard_runtime_badge`, `dashboard_thermal_sensor_ai_split`, `dashboard_consumes_backend_runtime_status` 3개 검사와 관련 UI 테스트가 실패한다. 백엔드는 해당 필드를 게시하지만 대시보드 HTML/JS 가 아직 표시하지 않는다. 이 검사는 **오프라인 검사 전용**이며 Raspberry Pi 기동 경로(`pi_start_document`)에는 포함되지 않아 실행을 막지 않는다.
+- **웹 대시보드에 런타임 상태(O4) 표시 미구현** — 백엔드는 `runtime_status`(센서 가용성과 AI 가용성을 분리한 판정)를 `/api/status`·`/api/sensors`·`/api/state` 로 이미 게시하고 **LCD 화면은 이를 소비**한다. 반면 웹 대시보드(`Web/app.js`·`app_final.js`)는 이 필드를 읽지 않고, 요구되는 DOM 요소(`runtimeBadge`, `thermalSensor`, `thermalAiStatus`, `co2Ai`, `pirAi`)도 없다. 해당 UI 는 과거 대시보드 세대에 구현되었으나 이후 웹 화면을 새로 작성해 교체하는 과정에서 유실되었고, 백엔드·LCD·검사 계약만 남았다. `--offline-preflight` 의 관련 검사 3건과 UI 테스트 9건이 이 때문에 실패한다. 이 검사는 **오프라인 검사 전용**이라 Raspberry Pi 기동 경로(`pi_start_document`)에는 포함되지 않아 실행을 막지 않는다.
 - **stage9 스모크 도구 테스트 실패** — 현장 수집 판정 도구(`hil/stage9_*`)의 테스트 6건이 실패 상태다. 평가 도구 자체의 문제이며 런타임 판단 경로와 무관하다.
 - **preflight 모델 해시 검사 개수 불일치** — `test_hil_criteria` 가 6개를 기대하지만 manifest 에 10개 항목이 있어 실패한다. 실제 해시 검증은 10개 모두 통과한다.
 - **Thermal 모델의 낙상 판정은 proxy** — 공개 데이터 기반 자세 분류이며, 실제 낙상 이벤트와 MI48xx 하드웨어 도메인에서 검증되지 않았다. 단독 비상 선언 권한이 없다.
 - **mmWave B23 위험도 기여 유보** — prototype freeze 단계로 위험도 산출에 정식 반영되지 않는다.
-- **관리자 화면 추이 그래프는 CDN 의존** — `preview.html` 이 Chart.js 를 CDN 에서 불러오므로, 인터넷이 없는 Pi 에서는 그래프만 표시되지 않는다. 나머지 화면과 API/WebSocket 은 정상 동작한다.
 - **119 신고는 시뮬레이션** — 실제 긴급 서비스와 연결되지 않으며, 데모 모드에서만 열린다.
-- **관리자 기본 계정이 소스에 존재** — 운용 전 `SAFENEST_ADMIN_ID` / `SAFENEST_ADMIN_PASSWORD` 로 반드시 교체해야 한다.
+- **관리자 계정 미설정 시 `/admin` 사용 불가** — 저장소에 기본 계정이 없으므로 `SAFENEST_ADMIN_ID` / `SAFENEST_ADMIN_PASSWORD` 를 설정해야 관리자 화면을 쓸 수 있다. 의도된 fail-closed 동작이다.
 - **TTS 음성 모델 미포함** — `ko_KR-kss-medium` 은 CC BY-NC-SA 4.0 이므로 저장소에 포함하지 않고 설치 시 내려받는다.
 
 ---

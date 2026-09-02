@@ -9,3 +9,7 @@ RaspberryPi/Ondevice_AI/inference/*.py text eol=lf
 # Web and LCD assets are served byte-for-byte by the FastAPI backend.
 RaspberryPi/Web/** text eol=lf
 RaspberryPi/LCD/static/** text eol=lf
+
+# Vendored third-party distributions stay byte-identical to the official
+# release so the recorded SHA-256 keeps verifying.
+RaspberryPi/Web/vendor/** -text

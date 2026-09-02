@@ -10,14 +10,19 @@ can actually prove today:
   risk fusion with a bounded score, but cannot assert a real fall or emergency
   until Raspberry Pi and real-fall validation establish that authority.
 * mmWave M-N9 is ``DEVICE_VALIDATED: NO`` and emits an ``APNEA-proxy`` class, so
-  it carries a reduced share and can raise WARNING but never DANGER by itself.
+  it carries a reduced share. Unverified proxy cannot raise caution and never
+  raises DANGER by itself.
 * PIR is corroborating only, and becomes *unavailable* rather than 0.0 when
   presence is unconfirmed - scoring it 0.0 would silently lower the total.
+* WARNING is not a band of R. It is a separate CO2-only caution formula: after
+  the room baseline locks, a plus-only rise of 500 ppm from that first value,
+  or a slope of 50 ppm/min, publishes WARNING. Other sensors cannot do that.
 
 Three properties the legacy weighted sum lacked and this one has:
 
 1. ``escalation floors`` - one severe signal cannot be diluted to NORMAL by
-   three calm ones.
+   three calm ones. DANGER/EMERGENCY floors stay on the overall formula;
+   WARNING floors belong only to the CO2 caution formula.
 2. ``evidence sufficiency`` - NORMAL is only published when the available
    components carry at least ``minimum_effective_weight`` of the total weight;
    otherwise the level is ``INDETERMINATE``.
@@ -44,6 +49,7 @@ from risk.engine import RiskComponent, _ensure_json_safe, _finite_number, _times
 CONFIG_PATH = Path(__file__).resolve().parent / "risk_formula_v1.json"
 SENSOR_ORDER = ("mmwave", "co2", "pir", "thermal")
 LEVEL_ORDER = ("NORMAL", "WARNING", "DANGER")
+CAUTION_FLOOR_LABELS = frozenset({"co2_relative_warning", "co2_fast_rise"})
 
 
 @dataclass(frozen=True)
@@ -71,13 +77,16 @@ class RiskEvaluationV1:
     effective_weight: float
     evidence_sufficient: bool
     escalation_floors: tuple[str, ...] = ()
+    caution_formula_id: str = ""
+    caution_active: bool = False
+    caution_reasons: tuple[str, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 
 
 class SafeNestRiskFormulaV1:
-    """Weighted fusion with escalation floors and an evidence-sufficiency gate."""
+    """Overall fusion (NORMAL/DANGER/EMERGENCY) plus a CO2-only caution formula."""
 
     def __init__(self, config_path: str | Path = CONFIG_PATH) -> None:
         config = json.loads(Path(config_path).read_text(encoding="utf-8"))
@@ -103,9 +112,31 @@ class SafeNestRiskFormulaV1:
         self._thermal = config["thermal"]
         self._mmwave = config["mmwave"]
         self._co2 = config["co2"]
+        self._caution = config.get("caution_formula") or {}
         self._pir = config["pir"]
         self._floors = config["escalation_floors"]
         self._emergency = config["emergency_overrides"]
+        self.caution_formula_id = str(
+            self._caution.get("formula_id", "SAFENEST_CAUTION_CO2_V1")
+        )
+        self.caution_delta_enter = float(
+            self._caution.get(
+                "baseline_delta_enter_ppm",
+                self._co2["baseline_delta_warning_ppm"],
+            )
+        )
+        self.caution_slope_ppm_per_min = float(
+            self._caution.get(
+                "slope_caution_ppm_per_min",
+                self._co2["slope_danger_ppm_per_min"],
+            )
+        )
+        caution_sensors = tuple(self._caution.get("sensors", ("co2",)))
+        if caution_sensors != ("co2",):
+            raise ValueError("caution formula may only use CO2")
+        warning_floors = {name for name, level in self._floors.items() if level == "WARNING"}
+        if warning_floors - CAUTION_FLOOR_LABELS:
+            raise ValueError("WARNING floors must belong to the CO2 caution formula")
 
         self._co2_curve: list[tuple[float, float]] = [
             (float(ppm), float(score)) for ppm, score in self._co2["curve_ppm_to_score"]
@@ -194,11 +225,17 @@ class SafeNestRiskFormulaV1:
         effective_weight = sum(self.weights[name] for name in available)
         evidence_sufficient = effective_weight >= self.minimum_effective_weight
 
-        floor_level = None
+        overall_floor = None
+        caution_level = None
+        caution_reasons: list[str] = []
         for label in floors:
             candidate = self._floors.get(label)
-            if candidate in LEVEL_ORDER:
-                floor_level = _max_level(floor_level, candidate)
+            if candidate == "WARNING":
+                caution_level = "WARNING"
+                caution_reasons.append(label)
+                reasons.append(f"FLOOR_{label.upper()}")
+            elif candidate in LEVEL_ORDER:
+                overall_floor = _max_level(overall_floor, candidate)
                 reasons.append(f"FLOOR_{label.upper()}")
 
         emergency = bool(emergencies)
@@ -208,8 +245,14 @@ class SafeNestRiskFormulaV1:
         if not available:
             score: float | None = None
             score_level: str | None = None
-            level: str | None = floor_level
-            level_source = "FLOOR" if floor_level else "NO_COMPONENTS"
+            overall_level = overall_floor
+            level = _max_level(overall_level, caution_level)
+            if overall_floor:
+                level_source = "FLOOR"
+            elif caution_level:
+                level_source = "CAUTION"
+            else:
+                level_source = "NO_COMPONENTS"
             health = "FAILED"
             reasons.insert(0, "ALL_RISK_COMPONENTS_UNAVAILABLE")
         else:
@@ -219,8 +262,14 @@ class SafeNestRiskFormulaV1:
             )
             score = round(min(100.0, max(0.0, score)), 4)
             score_level = self.classify(score)
-            level = _max_level(score_level, floor_level)
-            level_source = "FLOOR" if floor_level and floor_level == level and floor_level != score_level else "SCORE"
+            overall_level = _max_level(score_level, overall_floor)
+            level = _max_level(overall_level, caution_level)
+            if overall_floor and overall_floor == level and overall_floor != score_level:
+                level_source = "FLOOR"
+            elif caution_level and caution_level == level and overall_level != "DANGER":
+                level_source = "CAUTION"
+            else:
+                level_source = "SCORE"
             health = "DEGRADED" if unavailable or fallback else "HEALTHY"
 
         if emergency:
@@ -263,16 +312,19 @@ class SafeNestRiskFormulaV1:
             effective_weight=round(effective_weight, 4),
             evidence_sufficient=evidence_sufficient,
             escalation_floors=tuple(dict.fromkeys(floors)),
+            caution_formula_id=self.caution_formula_id,
+            caution_active=caution_level == "WARNING",
+            caution_reasons=tuple(dict.fromkeys(caution_reasons)),
         )
 
     def classify(self, score: float) -> str:
+        """Overall score bands: NORMAL or DANGER. WARNING is not a band of R."""
+
         value = float(score)
         if not math.isfinite(value):
             raise ValueError("risk score must be finite")
         if value >= self.danger_min:
             return "DANGER"
-        if value >= self.warning_min:
-            return "WARNING"
         return "NORMAL"
 
     # ------------------------------------------------------------- components
@@ -493,25 +545,22 @@ class SafeNestRiskFormulaV1:
         score = _piecewise(self._co2_curve, ppm)
         reasons: list[str] = []
         baseline = _baseline_metadata(ai)
+        locked = baseline.get("co2_baseline_status") == "CO2_BASELINE_LOCKED"
+        delta = baseline.get("co2_delta_plus_ppm")
         if ppm >= float(self._co2["immediate_danger_ppm"]):
             reasons.append("CO2_IMMEDIATE_DANGER")
             floors.append("co2_immediate_danger")
             if self._emergency.get("co2_immediate_danger"):
                 emergencies.append("co2_immediate_danger")
             state = "CO2_IMMEDIATE_DANGER"
-        elif ppm >= float(self._co2["danger_ppm"]):
-            reasons.append("HIGH_CO2_DANGER")
-            floors.append("co2_danger")
-            state = "CO2_DANGER"
-        elif ppm >= float(self._co2["warning_ppm"]):
-            reasons.append("HIGH_CO2_WARNING")
-            floors.append("co2_warning")
-            state = "CO2_WARNING"
-        elif baseline.get("co2_relative_warning") is True:
+        elif locked and (
+            baseline.get("co2_relative_warning") is True
+            or (_finite_number(delta) and float(delta) >= self.caution_delta_enter)
+        ):
             reasons.append("CO2_RELATIVE_RISE")
             floors.append("co2_relative_warning")
             state = "CO2_RELATIVE_WARNING"
-        elif baseline.get("co2_baseline_status") == "CO2_BASELINE_LOCKED":
+        elif locked:
             state = "CO2_NORMAL"
         elif baseline.get("co2_baseline_status"):
             reasons.append("CO2_BASELINE_UNLOCKED")
@@ -520,7 +569,7 @@ class SafeNestRiskFormulaV1:
             state = "CO2_NORMAL"
 
         if slope is not None:
-            if slope >= float(self._co2["slope_danger_ppm_per_min"]):
+            if slope >= self.caution_slope_ppm_per_min:
                 score += float(self._co2["slope_danger_bonus"])
                 reasons.append("VERY_FAST_CO2_RISE")
                 floors.append("co2_fast_rise")

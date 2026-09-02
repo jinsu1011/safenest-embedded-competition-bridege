@@ -1,12 +1,18 @@
-# SafeNest Pi 실행 절차 (필드용)
+# SafeNest Pi 운영 절차 (현장용)
 
-이 문서는 **실제 프로토타입 Pi**에서 SafeNest 런타임을 켜고 확인하는 절차만 정리한다.
-기준 경로: `/home/sandi/safenest-team-main`
-기준 커밋: 팀 `main` (`jinsu1011/safenest-embedded-competition`, Risk V1 / M-N9 포함본)
+이 문서는 Raspberry Pi 에서 SafeNest 런타임을 켜고 상태를 확인하는 절차를 정리한다.
+설치와 공식 실행 방법 자체는 저장소 루트 [`README.md`](../../README.md) 를 따른다.
 
-> Pi IP가 바뀌면 아래 `PI_IP`만 바꿔 읽으면 된다.
-> 현재 필드 IP: **`192.168.0.3`**
-> USB 이더넷으로 붙는 세션은 **`192.168.137.x`** 일 수 있다. ESP 목표 주소와 모니터 `--base`를 같은 IP로 맞춘다.
+이 문서의 표기 규약:
+
+| 표기 | 의미 |
+|---|---|
+| `<REPO_ROOT>` | Raspberry Pi 에 clone 한 이 저장소의 루트 경로 |
+| `<PI_IP>` | Raspberry Pi 의 WLAN IPv4 주소 |
+
+Pi 의 IP 는 네트워크에 따라 달라진다. ESP32 의 `secrets.h` 안 `RPI_HOST` 와
+현장 모니터의 `--base` 를 **항상 같은 주소**로 맞춘다. USB 이더넷 등 별도
+서브넷으로 접속하는 세션에서는 그 인터페이스의 주소를 쓴다.
 
 ---
 
@@ -15,7 +21,7 @@
 `--once`를 **빼면** 계속 갱신, 넣으면 한 번만 보고 종료.
 
 ```bash
-cd /home/sandi/safenest-team-main/RaspberryPi/Runtime
+cd <REPO_ROOT>/RaspberryPi/Runtime
 python3 hil/pi_field_monitor.py                 # 계속 보기 (기본 4초)
 python3 hil/pi_field_monitor.py --once          # 한 번만
 python3 hil/pi_field_monitor.py --interval 2    # 2초 간격 계속
@@ -25,30 +31,18 @@ python3 hil/pi_field_monitor.py --raw-labels    # 짧은 라벨 대신 원문 �
 ```
 
 맨 위 `Thermal:` 줄은 지금 기동된 프로세스의 Thermal selector다 (`BASELINE` / `A` / `B`). 표 읽는 법 → **3-B**. 짧은 라벨(`PHYS_OK` 등) 의미 → **3-C**.
-Thermal baseline/A/B 현장 비교는 `PI_RUNBOOK_THERMAL.md` 참조.
+Thermal baseline/A/B 비교는 [`docs/validation/PI_RUNBOOK_THERMAL.md`](../validation/PI_RUNBOOK_THERMAL.md) 참조.
 
 ---
 
-## 개발 규칙 (필수)
+## 0. 실행 원칙
 
-Pi에 손대기 전에 **로컬 worktree 브랜치 → GitHub PR → merge → Pi pull** 순서로 한다.
-
-- `main` 체크아웃을 직접 수정하지 않는다.
-- 팀원과 `main`을 공유하므로 **git worktree**로 작업 트리를 분리한다.
-- Pi에서 `app.py` 등을 SSH로 핫패치하지 않는다 (긴급 복구 후 반드시 브랜치에 반영·PR).
-- 배포 권한 레포: `jinsu1011/safenest-embedded-competition` (`/home/sandi/safenest-team-main`).
-
-
-## 0. 이것만 쓴다
-
-| 경로 | 용도 |
-|---|---|
-| `/home/sandi/safenest-team-main` | **정식 배포** (여기만 실행) |
-| `/home/sandi/safenest-runtime` | 예전 클론. 참고용. **기동하지 말 것** |
-| `/home/sandi/integration` 등 | 옛 진단/통합 클론. **기동하지 말 것** |
+- Pi 에는 이 저장소의 clone **하나만** 두고 그 안에서만 실행한다. 예전 clone 이
+  남아 있다면 기동하지 않는다.
+- Pi 위에서 소스를 직접 고치지 않는다. 변경은 저장소에 반영한 뒤 Pi 에서 pull 한다.
 
 한 번에 하나만 띄운다. LCD 패널은 이 백엔드가 `:8000/display` 로 직접 서빙하므로 별도 LCD 서버를 따로 켜지 않는다.
-`:8000`은 **팀 런타임 백엔드만** 소유한다.
+`:8000` 은 SafeNest 백엔드가 단독으로 사용한다.
 
 **중요:** `./run_safenest.sh`는 백엔드·센서 수신·웹 서빙까지다.
 LCD에 Chromium을 **자동으로 띄우지는 않는다** → 아래 **2-B**를 따로 실행한다.
@@ -58,7 +52,7 @@ LCD에 Chromium을 **자동으로 띄우지는 않는다** → 아래 **2-B**를
 ## 1. 최초 1회 (이미 끝났으면 생략)
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 git fetch origin
 git checkout main
 git pull --ff-only origin main
@@ -78,26 +72,29 @@ bash ./run_safenest.sh --install
 
 기본 mmWave AI는 **B23 PyTorch 프로토타입** (`M_PROT_B23`)이다. M-N9 INT8 호흡 분류(`NORMAL`/`APNEA`)는 기본 경로가 아니다.
 
-이 Pi에는 추론이 실제로 돌도록 **런타임 어댑터**(재실 래치 + 10Hz 샘플 인덱스)가 들어가 있을 수 있다. 팀 `main` 원본만 있으면 ESP `human_detected_raw=null`에서 `NO_OCC`로 멈추고, 센서 시계가 들쭉날쭉하면 `R1_TIME`으로 막힌다.
+B23 런타임에는 재실 래치와 10 Hz 샘플 인덱스 처리가 포함되어 있다. ESP 가
+`human_detected_raw` 를 계속 `null` 로만 보내면 `NO_OCC` 에서 멈추고, 센서 시계
+간격이 크게 흔들리면 `R1_TIME` 에서 막힌다.
 
 - B23 가중치/스케일러는 동결. 다시 학습·TFLite 변환하지 않는다.
 - `PHYSIOLOGY_ELIGIBLE`(`PHYS_OK`)는 **병원 진단이 아니다.** 무호흡 판정도 아니다.
 - Risk 점수(`RR_OK`/`RR_ABN`)는 아직 **벤더 BPM 룰**이 주이고, B23 RR은 화면에 보이더라도 위험도 공식의 주입력이 아니다.
 
-### `/display` 라우트 (필드 필수)
+### `/display` 라우트 확인
 
-팀 `main` 원본 `backend/app.py`에는 `/display`가 없을 수 있다.
-필드 Pi에는 LCD 정적 파일(`RaspberryPi/LCD/static`)을 `:8000`에서 서빙하도록 **로컬 패치**가 들어가 있다.
+LCD 정적 파일(`RaspberryPi/LCD/static`)은 백엔드(`backend/app.py`)가 `:8000` 에서
+직접 서빙한다. 별도 LCD 서버나 로컬 패치는 필요하지 않다.
 
-기동 후 반드시:
+기동 후 확인:
 
 ```bash
 curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:8000/display
-# 기대: 200
+curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:8000/common.css
+# 기대: 각각 200
 ```
 
-`404`면 LCD HTML이 안 나온다. `app.py`에 `/display`, `/common.css` 라우트가 있는지 확인하고 백엔드를 재기동한다.
-`git pull` / `git reset` 하면 이 패치가 날아갈 수 있으니, pull 후 `/display`가 **200**인지 다시 확인한다.
+`404` 라면 `RaspberryPi/LCD/static/display.html` 과 `common.css` 가 존재하는지
+확인하고 백엔드를 재기동한다.
 
 ---
 
@@ -106,7 +103,7 @@ curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:8000/display
 ### 2-A. 백엔드 (런타임)
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 
 # 이미 떠 있으면 중복 기동하지 말 것
 pgrep -af run_backend.py || true
@@ -122,19 +119,19 @@ echo $! > .runtime.pid
 포그라운드로 보려면:
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 bash ./run_safenest.sh
 ```
 
 Thermal V2 후보를 같은 스택에서 바꿔 보려면 (기본 `./run_safenest.sh`는 기존 baseline 유지):
 
 ```bash
-bash ./run_safenest_thermal_test.sh baseline
-bash ./run_safenest_thermal_test.sh a
-bash ./run_safenest_thermal_test.sh b
+bash scripts/validation/run_safenest_thermal_test.sh baseline
+bash scripts/validation/run_safenest_thermal_test.sh a
+bash scripts/validation/run_safenest_thermal_test.sh b
 ```
 
-Thermal baseline/A/B 현장 비교·LCD·필드 모니터 모델 확인은 **`PI_RUNBOOK_THERMAL.md`** 를 본다. 핫 스위칭 없음. Team default는 바뀌지 않는다.
+Thermal baseline/A/B 비교 절차는 [`docs/validation/PI_RUNBOOK_THERMAL.md`](../validation/PI_RUNBOOK_THERMAL.md) 를 본다. 핫 스위칭은 없고, 활성 모델 기본값도 바뀌지 않는다.
 
 기동 직후 확인:
 
@@ -155,12 +152,12 @@ ss -lunp | grep 5005
 
 URL:
 
-- LCD / display: `http://192.168.0.3:8000/display`
-- Admin: `http://192.168.0.3:8000/admin`
-- Dashboard: `http://192.168.0.3:8000/dashboard`
-- Health: `http://192.168.0.3:8000/health`
-- Status: `http://192.168.0.3:8000/api/status`
-- LCD state API: `http://192.168.0.3:8000/api/state`
+- LCD / display: `http://<PI_IP>:8000/display`
+- Admin: `http://<PI_IP>:8000/admin`
+- Dashboard: `http://<PI_IP>:8000/dashboard`
+- Health: `http://<PI_IP>:8000/health`
+- Status: `http://<PI_IP>:8000/api/status`
+- LCD state API: `http://<PI_IP>:8000/api/state`
 
 ### 2-B. LCD에 화면 띄우기 (Chromium 키오스크)
 
@@ -203,7 +200,7 @@ SSH만으로는 LCD가 안 바뀐다. Chromium은 **Pi의 그래픽 세션(`DISP
 ## 3. 중지 / 재시작
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 
 # Chromium LCD
 pkill -f "chromium.*8000/display" 2>/dev/null || true
@@ -225,7 +222,7 @@ ss -lunp | grep 5005 || echo "udp free"
 
 파일: `RaspberryPi/Runtime/hil/pi_field_monitor.py`
 실행(계속): `cd …/RaspberryPi/Runtime && python3 hil/pi_field_monitor.py`
-실행(한 번): 같은 명령 + `--once` / 종료: `Ctrl+C` / 맥 원격: `--base http://192.168.0.3:8000`
+실행(한 번): 같은 명령 + `--once` / 종료: `Ctrl+C` / 맥 원격: `--base http://<PI_IP>:8000`
 
 헤더 `Thermal:` 줄은 GET `/api/status`의 `runtime_status.model_selector`다. A/B 전용 모니터 스크립트는 없다.
 
@@ -629,8 +626,8 @@ python3 hil/pi_field_monitor.py --raw-labels
 ESP 펌웨어 / 설정의 Pi 주소를 **현재 Pi IP**로 맞춘다.
 
 ```text
-TCP  → 192.168.0.3:9000
-UDP  → 192.168.0.3:5005
+TCP  → <PI_IP>:9000
+UDP  → <PI_IP>:5005
 ```
 
 IP가 또 바뀌면 ESP 쪽도 같이 갱신한다.
@@ -698,7 +695,7 @@ B23 `PHYS_OK`는 프로토타입 PASS의 **가산 증거**이지, 임상 PASS가
 런타임이 떠 있으면 먼저 중지한 뒤:
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 git fetch origin
 git pull --ff-only origin main
 # 의존성이 바뀌었을 때만
@@ -735,7 +732,7 @@ bash ./run_safenest.sh --install
 | `/display` → **404** | `app.py`에 LCD 라우트 없음 / pull로 패치 소실 → 패치 후 재기동 |
 | Chromium은 떴는데 LCD 검정/빈 화면 | `curl`로 `/display`·`/common.css`·`/api/state`가 200인지 확인 |
 | Chromium이 안 뜸 / 즉시 종료 | `DISPLAY=:0`, `XDG_RUNTIME_DIR=/run/user/1000`, `/tmp/chromium-display.log` |
-| ESP 연결 0 | ESP 목표 IP가 옛 주소(`192.168.137.x` 등)인지 확인 |
+| ESP 연결 0 | ESP 목표 IP가 옛 주소(`<대체 서브넷>` 등)인지 확인 |
 | 센서 NO_DATA / `NONE` | ESP 전원/와이파이, `:9000` established, warm-up 3~4분 |
 | Risk UNAVAILABLE | 센서 유입 없음 → 수신부터 해결 |
 | mmWave `ai=WARMUP` | 기동 후 30초 대기. seq가 늘면 정상 |
@@ -750,7 +747,7 @@ bash ./run_safenest.sh --install
 ## 9. 한 줄 요약
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 bash ./run_safenest.sh --install   # 최초만
 bash ./run_safenest.sh             # 2-A 백엔드
 curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:8000/display   # 200이어야 함
@@ -759,5 +756,5 @@ DISPLAY=:0 XDG_RUNTIME_DIR=/run/user/1000 \
   chromium --kiosk --ozone-platform=x11 \
   --user-data-dir=/tmp/safenest-chromium-display \
   http://127.0.0.1:8000/display &
-# ESP → 192.168.0.3:9000 / :5005
+# ESP → <PI_IP>:9000 / :5005
 ```

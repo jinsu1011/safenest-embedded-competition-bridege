@@ -1,20 +1,25 @@
-# SafeNest Thermal V2 Pi 필드 실행 가이드
+# Thermal 모델 A/B 비교 실행 가이드 (validation)
 
-Raspberry Pi 옆에서 Thermal baseline / Candidate A / Candidate B를 바꿔 켜고 확인하는 **현장 운영 매뉴얼**이다.
-일반 SafeNest 기동은 `PI_RUNBOOK.md`. 이 문서는 Thermal 비교만 다룬다.
+Raspberry Pi 에서 Thermal baseline / Candidate A / Candidate B 를 바꿔 켜고
+비교하는 **검증용 절차**다. 제출 시스템의 공식 실행 방법이 아니다.
 
-기준 경로: `/home/sandi/safenest-team-main`
-기준 저장소: `jinsu1011/safenest-embedded-competition`
-필드 IP(바뀔 수 있음): `192.168.0.3`
+- 공식 production 실행: 저장소 루트 `./run_safenest.sh` — [`README.md`](../../README.md)
+- 일반 Pi 운영 절차: [`docs/operations/PI_RUNBOOK.md`](../operations/PI_RUNBOOK.md)
+- 이 문서는 Thermal 모델 비교만 다룬다.
 
-**팀 기본 Thermal은 바뀌지 않았다.** `./run_safenest.sh`는 계속 `thermal_public_sdt_fp32_active`다. A를 켠다고 Team default가 바뀌는 것이 아니다.
+표기: `<REPO_ROOT>` = Pi 에 clone 한 저장소 루트, `<PI_IP>` = Pi 의 WLAN IPv4 주소.
+
+**활성 Thermal 모델은 이 런처로 바뀌지 않는다.** `./run_safenest.sh` 는 항상
+`thermal_public_sdt_fp32_active` 를 사용한다. Candidate A/B 는 manifest 에서
+`controlled_test_allowed` 로 허용된 비교 전용 selector 이며, 기본값을 바꾸려면
+코드와 manifest 를 함께 바꿔야 한다.
 
 ---
 
 ## 0. 가장 빠른 실행 요약
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 git fetch origin
 git switch main
 git pull --ff-only origin main
@@ -33,19 +38,19 @@ ss -ltnp | grep -E ":8000|:9000" || echo "tcp free"
 
 ```bash
 # 기존 Team baseline (비교용 런처. 기본 모델과 동일 selector)
-bash ./run_safenest_thermal_test.sh baseline
+bash scripts/validation/run_safenest_thermal_test.sh baseline
 
 # Candidate A  (offline A_PREFERRED, CONTROLLED_TEAM_TEST, 기본값 아님)
-bash ./run_safenest_thermal_test.sh a
+bash scripts/validation/run_safenest_thermal_test.sh a
 
 # Candidate B  (offline B_NOT_COMPETITIVE, 비교 전용)
-bash ./run_safenest_thermal_test.sh b
+bash scripts/validation/run_safenest_thermal_test.sh b
 ```
 
 다른 터미널에서 필드 모니터 (스크립트는 하나뿐):
 
 ```bash
-cd /home/sandi/safenest-team-main/RaspberryPi/Runtime
+cd <REPO_ROOT>/RaspberryPi/Runtime
 python3 hil/pi_field_monitor.py
 ```
 
@@ -66,15 +71,15 @@ LCD는 백엔드와 별개다. `/display`가 200인 뒤 Chromium을 Pi 그래픽
 ## 1. Pi 최신화
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 git fetch origin
 git switch main
 git pull --ff-only origin main
 git rev-parse HEAD
 ```
 
-- 실행은 **이 클론만**. `/home/sandi/integration`, `/home/sandi/safenest-runtime` 등 옛 클론은 기동하지 말 것.
-- `main`을 Pi에서 직접 고치지 말 것. 변경은 worktree → PR → merge → 여기 `git pull --ff-only`.
+- Pi 에는 이 저장소의 clone 하나만 두고 그 안에서만 실행한다.
+- Pi 위에서 소스를 직접 고치지 않는다. 변경은 저장소에 반영한 뒤 Pi 에서 pull 한다.
 - 의존성이 비어 있으면 최초 1회: `bash ./run_safenest.sh --install`
 
 ---
@@ -86,16 +91,16 @@ git rev-parse HEAD
 | 상황 | 명령 | selector | 의미 |
 |---|---|---|---|
 | 평소 SafeNest | `bash ./run_safenest.sh` | `thermal_public_sdt_fp32_active` | Team 기본. 테스트 모드 아님 |
-| 비교 baseline | `bash ./run_safenest_thermal_test.sh baseline` | 같은 selector | 비교 런처로 baseline 고정 |
-| Candidate A | `bash ./run_safenest_thermal_test.sh a` | `thermal_tv2_candidate_a_a0_fp32_v1` | A_PREFERRED offline / 기본값 아님 |
-| Candidate B | `bash ./run_safenest_thermal_test.sh b` | `thermal_tv2_candidate_b_seed42_fp32_test_v1` | B_NOT_COMPETITIVE / 비교만 |
+| 비교 baseline | `bash scripts/validation/run_safenest_thermal_test.sh baseline` | 같은 selector | 비교 런처로 baseline 고정 |
+| Candidate A | `bash scripts/validation/run_safenest_thermal_test.sh a` | `thermal_tv2_candidate_a_a0_fp32_v1` | A_PREFERRED offline / 기본값 아님 |
+| Candidate B | `bash scripts/validation/run_safenest_thermal_test.sh b` | `thermal_tv2_candidate_b_seed42_fp32_test_v1` | B_NOT_COMPETITIVE / 비교만 |
 
 런처는 기존 `run_safenest.sh`를 `exec`한다. 새 런타임 프로그램이 아니다.
 
 기동 전 중복 확인:
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 pgrep -af run_backend.py || true
 ss -ltnp | grep -E ":8000|:9000" || true
 ss -lunp | grep 5005 || true
@@ -106,16 +111,16 @@ ss -lunp | grep 5005 || true
 포그라운드 (디버그용, 로그가 바로 보임):
 
 ```bash
-cd /home/sandi/safenest-team-main
-bash ./run_safenest_thermal_test.sh baseline
+cd <REPO_ROOT>
+bash scripts/validation/run_safenest_thermal_test.sh baseline
 ```
 
 백그라운드 (LCD / 모니터를 다른 터미널에서 쓸 때):
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 mkdir -p logs
-nohup bash ./run_safenest_thermal_test.sh baseline \
+nohup bash scripts/validation/run_safenest_thermal_test.sh baseline \
   > logs/runtime-thermal-baseline.log 2>&1 &
 echo $! > .runtime.pid
 ```
@@ -124,11 +129,11 @@ echo $! > .runtime.pid
 
 ```bash
 # foreground
-bash ./run_safenest_thermal_test.sh a
+bash scripts/validation/run_safenest_thermal_test.sh a
 
 # background
 mkdir -p logs
-nohup bash ./run_safenest_thermal_test.sh a \
+nohup bash scripts/validation/run_safenest_thermal_test.sh a \
   > logs/runtime-thermal-a.log 2>&1 &
 echo $! > .runtime.pid
 ```
@@ -137,11 +142,11 @@ echo $! > .runtime.pid
 
 ```bash
 # foreground
-bash ./run_safenest_thermal_test.sh b
+bash scripts/validation/run_safenest_thermal_test.sh b
 
 # background
 mkdir -p logs
-nohup bash ./run_safenest_thermal_test.sh b \
+nohup bash scripts/validation/run_safenest_thermal_test.sh b \
   > logs/runtime-thermal-b.log 2>&1 &
 echo $! > .runtime.pid
 ```
@@ -158,7 +163,7 @@ nohup bash ./run_safenest.sh > logs/runtime.log 2>&1 &
 echo $! > .runtime.pid
 ```
 
-`./run_safenest.sh`와 `./run_safenest_thermal_test.sh baseline`은 **같은 Thermal selector**다. 차이는 비교 런처가 `SAFENEST_THERMAL_TEST_MODE=1`을 켠다는 점뿐이다. Team default를 바꾸려면 코드/매니페스트를 바꿔야 하며, 이 런처로는 바뀌지 않는다.
+`./run_safenest.sh`와 `scripts/validation/run_safenest_thermal_test.sh baseline`은 **같은 Thermal selector**다. 차이는 비교 런처가 `SAFENEST_THERMAL_TEST_MODE=1`을 켠다는 점뿐이다. Team default를 바꾸려면 코드/매니페스트를 바꿔야 하며, 이 런처로는 바뀌지 않는다.
 
 포그라운드 = 즉시 로그 확인. 백그라운드 = LCD·모니터용. 둘 다 같은 런처다.
 
@@ -248,7 +253,7 @@ DISPLAY=:0 chromium http://127.0.0.1:8000/display &
 모니터는 **하나**다. baseline / A / B용 별도 스크립트 없음. 실행 중인 프로세스의 `/api/status`를 읽는다.
 
 ```bash
-cd /home/sandi/safenest-team-main/RaspberryPi/Runtime
+cd <REPO_ROOT>/RaspberryPi/Runtime
 python3 hil/pi_field_monitor.py
 python3 hil/pi_field_monitor.py --once
 python3 hil/pi_field_monitor.py --interval 2
@@ -315,7 +320,7 @@ Thermal: A | thermal_tv2_candidate_a_a0_fp32_v1 | FRAME_ROBUST_P2_P98_V1
 핫 스위칭 없음. 반드시 종료 후 다른 선택으로 다시 기동.
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 
 # LCD Chromium (백엔드와 별개)
 pkill -f "chromium.*8000/display" 2>/dev/null || true

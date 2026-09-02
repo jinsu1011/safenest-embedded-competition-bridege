@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SafeNest 통합 안전관제</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/vendor/chart.js/chart.umd.min.js"></script>
   <style>
     :root {
       --bg: #f2f5f9;
@@ -473,7 +473,6 @@
     .login-card input { width:100%; }
     .login-card .primary-button { width:100%; margin-top:24px; padding:13px; }
     .login-error { min-height:20px; margin-top:12px; color:var(--red); font-size:13px; }
-    .login-hint { margin-top:14px; padding:11px; color:var(--muted); background:var(--surface-2); border-radius:9px; font-size:12px; }
 
     @media (max-width: 1180px) {
       .overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -518,7 +517,6 @@
       <div class="field"><label for="adminLoginPassword">비밀번호</label><input id="adminLoginPassword" type="password" autocomplete="current-password" required /></div>
       <button class="primary-button" id="adminLoginButton" type="submit">로그인</button>
       <div class="login-error" id="adminLoginError" role="alert"></div>
-      <div class="login-hint">개발용 초기 계정: admin / SafeNest123!</div>
     </form>
   </section>
   <div class="layout">

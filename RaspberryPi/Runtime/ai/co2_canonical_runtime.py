@@ -284,8 +284,8 @@ class CO2BaselineLock:
         lock_seconds: float = 180.0,
         minimum_samples: int = 3,
         max_internal_gap_seconds: float = 90.0,
-        delta_enter_ppm: float = 700.0,
-        delta_exit_ppm: float = 500.0,
+        delta_enter_ppm: float = 500.0,
+        delta_exit_ppm: float = 350.0,
     ) -> None:
         if lock_seconds <= 0 or minimum_samples < 1:
             raise ValueError("invalid CO2 baseline lock window")
@@ -311,13 +311,19 @@ class CO2BaselineLock:
         config_path = path or (
             Path(__file__).resolve().parent.parent / "risk" / "risk_formula_v1.json"
         )
-        co2 = json.loads(config_path.read_text(encoding="utf-8"))["co2"]
+        payload = json.loads(config_path.read_text(encoding="utf-8"))
+        co2 = payload["co2"]
+        caution = payload.get("caution_formula") or {}
         return cls(
             lock_seconds=float(co2["baseline_lock_seconds"]),
             minimum_samples=int(co2["baseline_minimum_samples"]),
             max_internal_gap_seconds=float(co2["baseline_max_internal_gap_seconds"]),
-            delta_enter_ppm=float(co2["baseline_delta_warning_ppm"]),
-            delta_exit_ppm=float(co2["baseline_delta_clear_ppm"]),
+            delta_enter_ppm=float(
+                caution.get("baseline_delta_enter_ppm", co2["baseline_delta_warning_ppm"])
+            ),
+            delta_exit_ppm=float(
+                caution.get("baseline_delta_clear_ppm", co2["baseline_delta_clear_ppm"])
+            ),
         )
 
     def reset(self, reason: str) -> None:

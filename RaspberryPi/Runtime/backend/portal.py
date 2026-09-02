@@ -99,15 +99,29 @@ class PortalStore:
 
 
 class PortalAuth:
-    """HMAC-signed short-lived admin tokens; no database dependency required."""
+    """HMAC-signed short-lived admin tokens; no database dependency required.
+
+    Fail-closed by design: the administrator credential exists only in the
+    environment. There is no built-in default account, so a deployment that
+    forgets ``SAFENEST_ADMIN_ID`` / ``SAFENEST_ADMIN_PASSWORD`` cannot be signed
+    into with a publicly known password, and an empty submission cannot match an
+    empty configured value either. The rest of the runtime keeps serving.
+    """
 
     def __init__(self, *, admin_id: str | None = None, password: str | None = None, secret: str | None = None) -> None:
-        self.admin_id = admin_id or os.getenv("SAFENEST_ADMIN_ID", "admin")
-        self.password = password or os.getenv("SAFENEST_ADMIN_PASSWORD", "SafeNest123!")
-        configured = secret or os.getenv("SAFENEST_AUTH_SECRET")
-        self.secret = (configured.encode("utf-8") if configured else secrets.token_bytes(32))
+        self.admin_id = (admin_id if admin_id is not None else os.getenv("SAFENEST_ADMIN_ID", "")).strip()
+        self.password = password if password is not None else os.getenv("SAFENEST_ADMIN_PASSWORD", "")
+        auth_secret = secret or os.getenv("SAFENEST_AUTH_SECRET")
+        self.secret = (auth_secret.encode("utf-8") if auth_secret else secrets.token_bytes(32))
+
+    @property
+    def configured(self) -> bool:
+        """True only when both the administrator id and password are set."""
+        return bool(self.admin_id) and bool(self.password)
 
     def login(self, admin_id: object, password: object) -> str | None:
+        if not self.configured:
+            return None
         if not isinstance(admin_id, str) or not isinstance(password, str):
             return None
         if not (hmac.compare_digest(admin_id, self.admin_id) and hmac.compare_digest(password, self.password)):
@@ -118,6 +132,8 @@ class PortalAuth:
         return _b64(body + b"." + signature)
 
     def verify(self, token: str) -> bool:
+        if not self.configured:
+            return False
         try:
             decoded = base64.urlsafe_b64decode(token + "=" * (-len(token) % 4))
             if len(decoded) < 34 or decoded[-33:-32] != b".":

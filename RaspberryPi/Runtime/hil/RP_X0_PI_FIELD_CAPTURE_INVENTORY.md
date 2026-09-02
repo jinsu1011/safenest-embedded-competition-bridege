@@ -1,7 +1,7 @@
 # RP-X0 Pi field capture inventory
 
 - Date copied: 2026-08-17 (KST)
-- Pi host at copy: `sandi@172.20.10.3:/home/sandi/integration`
+- Pi host at copy: `<PI_USER>@<PI_IP>:<REPO_ROOT>`
 - Pi git: `diagnostic/rp-x0-b-runtime-wiring` @ `1ffbc7d`
 - Classification: `RP_X0_PI_FIELD_CAPTURE_SNAPSHOT`
 

@@ -13,7 +13,7 @@ Examples (on Pi):
   python3 hil/pi_field_monitor.py --raw-labels
 
 Examples (from Mac):
-  python3 hil/pi_field_monitor.py --base http://192.168.1.44:8000
+  python3 hil/pi_field_monitor.py --base http://<PI_IP>:8000
 """
 
 from __future__ import annotations
@@ -30,7 +30,7 @@ from typing import Any
 
 SENSORS = ("mmwave", "thermal", "co2", "pir")
 
-# Short labels for the table. Full names live in PI_RUNBOOK.md §3-B.
+# Short labels for the table. Full names live in docs/operations/PI_RUNBOOK.md 3-B.
 AI_STATE_SHORT = {
     "PHYSIOLOGY_ELIGIBLE": "PHYS_OK",
     "ABSENT": "ABSENT",
@@ -453,7 +453,7 @@ def render(
         )
     )
     lines.append("shorts: PHYS_OK=B23추론가능  WARMUP=창모으는중  NO_OCC=재실모름  EMPTY=빈방  Q_LOW=품질낮음")
-    lines.append("mmwave values: occ=ESP재실 latch=유지 br=숨확률 rr=B23호흡수 q=품질 vRR=벤더BPM  |  상세 PI_RUNBOOK.md")
+    lines.append("mmwave values: occ=ESP재실 latch=유지 br=숨확률 rr=B23호흡수 q=품질 vRR=벤더BPM  |  상세 docs/operations/PI_RUNBOOK.md")
     lines.append("")
 
     lines.append("## Risk / LCD (display)")

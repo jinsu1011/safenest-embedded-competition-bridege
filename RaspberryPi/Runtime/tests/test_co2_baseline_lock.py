@@ -62,14 +62,14 @@ class BaselineLockTests(unittest.TestCase):
         drop = feed(lock, [(240_000, 200.0)], start_id=5)
         self.assertEqual(drop.delta_plus_ppm, 0.0)
         self.assertFalse(drop.relative_warning)
-        rise = feed(lock, [(300_000, 1100.0)], start_id=6)
-        self.assertAlmostEqual(rise.delta_plus_ppm, 700.0)
+        rise = feed(lock, [(300_000, 900.0)], start_id=6)
+        self.assertAlmostEqual(rise.delta_plus_ppm, 500.0)
         self.assertTrue(rise.relative_warning)
-        hold = feed(lock, [(360_000, 950.0)], start_id=7)
-        self.assertAlmostEqual(hold.delta_plus_ppm, 550.0)
+        hold = feed(lock, [(360_000, 780.0)], start_id=7)
+        self.assertAlmostEqual(hold.delta_plus_ppm, 380.0)
         self.assertTrue(hold.relative_warning)
-        clear = feed(lock, [(420_000, 850.0)], start_id=8)
-        self.assertAlmostEqual(clear.delta_plus_ppm, 450.0)
+        clear = feed(lock, [(420_000, 740.0)], start_id=8)
+        self.assertAlmostEqual(clear.delta_plus_ppm, 340.0)
         self.assertFalse(clear.relative_warning)
 
     def test_gap_unlocks_the_room_baseline(self):
@@ -91,8 +91,8 @@ class BaselineLockTests(unittest.TestCase):
     def test_from_risk_config_matches_json(self):
         lock = CO2BaselineLock.from_risk_config()
         self.assertEqual(lock.lock_seconds, 180.0)
-        self.assertEqual(lock.delta_enter_ppm, 700.0)
-        self.assertEqual(lock.delta_exit_ppm, 500.0)
+        self.assertEqual(lock.delta_enter_ppm, 500.0)
+        self.assertEqual(lock.delta_exit_ppm, 350.0)
         self.assertEqual(lock.minimum_samples, 3)
         self.assertEqual(lock.max_internal_gap_seconds, 90.0)
 

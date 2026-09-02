@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
-# Controlled Thermal model comparison launcher.
+# Controlled Thermal model comparison launcher (validation tooling).
 #
-# Does not replace ./run_safenest.sh. Ordinary startup remains the Team baseline.
+# This is NOT the production entry point. Ordinary startup is always
+# ./run_safenest.sh at the repository root, which keeps the active Thermal
+# model. This launcher only opts into a manifest-approved controlled test.
 #
-#   ./run_safenest_thermal_test.sh baseline
-#   ./run_safenest_thermal_test.sh a
-#   ./run_safenest_thermal_test.sh b
-#   ./run_safenest_thermal_test.sh a --api-port 8080
-#   ./run_safenest_thermal_test.sh a --dry-run
+#   scripts/validation/run_safenest_thermal_test.sh baseline
+#   scripts/validation/run_safenest_thermal_test.sh a
+#   scripts/validation/run_safenest_thermal_test.sh b
+#   scripts/validation/run_safenest_thermal_test.sh a --api-port 8080
+#   scripts/validation/run_safenest_thermal_test.sh a --dry-run
 set -euo pipefail
 
-REPOSITORY_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPOSITORY_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
 CHOICE="${1:-}"
 
 case "${CHOICE}" in
@@ -53,7 +55,7 @@ echo "choice: ${CHOICE}"
 echo "selector: ${SELECTOR}"
 echo "SAFENEST_THERMAL_TEST_MODE=1"
 echo "SAFENEST_THERMAL_MODEL_SELECTOR=${SELECTOR}"
-echo "ordinary ./run_safenest.sh is unchanged; this launcher is opt-in only"
+echo "production ./run_safenest.sh is unchanged; this launcher is opt-in validation tooling"
 
 if [[ "${DRY_RUN}" -eq 1 ]]; then
   echo "dry-run: not starting SafeNest"

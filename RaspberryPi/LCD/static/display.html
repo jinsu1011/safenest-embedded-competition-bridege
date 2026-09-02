@@ -105,6 +105,9 @@
     let previousDisplayState = null;
     let latestPayload = {};
     let recoveryHideTimer = null;
+    let preparedWarningEpisodeActive = false;
+    let preparedWarningConsumed = false;
+    let previousPreparedWarningAlert = false;
 
     const LCD_SENSOR_SHORT = {
       AVAILABLE: "OK",
@@ -342,6 +345,33 @@
       }).format(new Date(numeric * 1000));
     }
 
+    // The runtime owns alert generation.  Treat its one-shot CO2 alert as an
+    // edge-triggered event so repeated state polling cannot show it again.
+    // Older payloads without this field keep the existing state-based behavior.
+    function preparedWarningAlert(payload) {
+      const candidates = [
+        payload?.co2_warning_alert,
+        payload?.co2?.warning_alert,
+        payload?.co2?.metadata?.warning_alert,
+        payload?.co2?.metadata?.co2_warning_alert,
+        payload?.ai?.co2?.metadata?.co2_warning_alert,
+        payload?.ai?.co2?.warning_alert,
+        payload?.ai?.co2?.metadata?.warning_alert,
+        payload?.ai_results?.co2?.warning_alert,
+        payload?.ai_results?.co2?.metadata?.warning_alert,
+        payload?.ai?.ai?.co2?.metadata?.co2_warning_alert,
+        payload?.ai?.ai?.co2?.warning_alert,
+        payload?.ai?.ai?.co2?.metadata?.warning_alert,
+        payload?.risk?.components?.co2?.warning_alert,
+        payload?.risk?.components?.co2?.metadata?.co2_warning_alert,
+        payload?.risk?.components?.co2?.metadata?.warning_alert
+      ];
+      for (const value of candidates) {
+        if (typeof value === "boolean") return value;
+      }
+      return false;
+    }
+
     function renderEmergencyBanner(payload, stateName) {
       if (recoveryHideTimer !== null) {
         clearTimeout(recoveryHideTimer);
@@ -352,7 +382,9 @@
         : {};
       const active = (stateName === "emergency" || emergency.active === true)
         && emergency.acknowledged !== true;
-      const warning = stateName === "warning" && !warningAcknowledged;
+      const warning = stateName === "warning"
+        && !warningAcknowledged
+        && !(preparedWarningEpisodeActive && preparedWarningConsumed);
       const recoveryClearedAt = Number(emergency.cleared_at);
       const recoveryRemainingMs = Number.isFinite(recoveryClearedAt)
         ? Math.max(0, 5000 - (Date.now() - recoveryClearedAt * 1000))
@@ -403,10 +435,31 @@
       const safePayload = payload && typeof payload === "object" ? payload : {};
       const stateName = typeof safePayload.state === "string" ? safePayload.state : "offline";
       const scenario = scenarios[stateName] || scenarios.offline;
+      const currentPreparedWarningAlert = preparedWarningAlert(safePayload);
       if (stateName === "warning" && previousDisplayState !== "warning") {
         warningAcknowledged = false;
+        preparedWarningEpisodeActive = false;
+        preparedWarningConsumed = false;
+        previousPreparedWarningAlert = false;
       }
-      if (stateName !== "warning") warningAcknowledged = false;
+      if (stateName !== "warning") {
+        warningAcknowledged = false;
+        preparedWarningEpisodeActive = false;
+        preparedWarningConsumed = false;
+        previousPreparedWarningAlert = false;
+      }
+      if (stateName === "warning") {
+        if (currentPreparedWarningAlert && !previousPreparedWarningAlert) {
+          preparedWarningEpisodeActive = true;
+          preparedWarningConsumed = false;
+          warningAcknowledged = false;
+        } else if (preparedWarningEpisodeActive
+          && previousPreparedWarningAlert
+          && !currentPreparedWarningAlert) {
+          preparedWarningConsumed = true;
+        }
+      }
+      previousPreparedWarningAlert = currentPreparedWarningAlert;
       previousDisplayState = stateName;
       latestPayload = safePayload;
       lcd.dataset.state = stateName in scenarios ? stateName : "offline";

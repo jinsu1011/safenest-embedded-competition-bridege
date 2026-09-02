@@ -1,6 +1,6 @@
 metric,value,unit_or_note
-pi_ip,192.168.137.249,SafeNest :8000 host
-esp_peer,192.168.137.107,thermal.state.peer
+pi_ip,<PI_IP>,SafeNest :8000 host
+esp_peer,<ESP_PEER_IP>,thermal.state.peer
 system,ONLINE/DEGRADED,
 tcp_connections,4,
 telemetry_packets,15987,cumulative at snapshot

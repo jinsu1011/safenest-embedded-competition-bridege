@@ -25,15 +25,15 @@ C1 is not in this selector. It is a matched control, not a user-facing prototype
 ## Commands
 
 ```bash
-./run_safenest_thermal_test.sh baseline
-./run_safenest_thermal_test.sh a
-./run_safenest_thermal_test.sh b
+scripts/validation/run_safenest_thermal_test.sh baseline
+scripts/validation/run_safenest_thermal_test.sh a
+scripts/validation/run_safenest_thermal_test.sh b
 ```
 
 Remaining SafeNest arguments are forwarded:
 
 ```bash
-./run_safenest_thermal_test.sh a --api-port 8080
+scripts/validation/run_safenest_thermal_test.sh a --api-port 8080
 ```
 
 The launcher only sets:

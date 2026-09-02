@@ -146,6 +146,12 @@ def create_app(
         os.getenv("SAFENEST_SPACES_FILE", str(DATA_ROOT / "web" / "spaces.json"))
     )
     portal_auth = PortalAuth()
+    if not portal_auth.configured:
+        print(
+            "[SafeNest] 관리자 계정이 설정되지 않았습니다. "
+            "SAFENEST_ADMIN_ID / SAFENEST_ADMIN_PASSWORD 를 설정하기 전까지 "
+            "/admin 로그인은 항상 거부됩니다. (그 외 런타임은 정상 동작)"
+        )
     offline_grace = _float_env("SAFENEST_PORTAL_OFFLINE_SECONDS", 30.0)
     app.state.safenest_portal_store = portal_store
     app.state.safenest_portal_auth = portal_auth
@@ -157,6 +163,11 @@ def create_app(
         StaticFiles(directory=str(dashboard_dir)),
         name="dashboard-assets",
     )
+    # Vendored third-party front-end libraries, served same-origin so the
+    # administrator UI needs no internet access. See RaspberryPi/Web/vendor/.
+    vendor_dir = WEB_ROOT / "vendor"
+    if vendor_dir.is_dir():
+        app.mount("/vendor", StaticFiles(directory=str(vendor_dir)), name="web-vendor")
     lcd_override: dict[str, str | None] = {"state": None, "room": room}
 
     @app.get("/dashboard", include_in_schema=False)
@@ -271,6 +282,14 @@ def create_app(
         payload = await json_payload(request)
         token = portal_auth.login(payload.get("id"), payload.get("password"))
         if token is None:
+            if not portal_auth.configured:
+                return JSONResponse(
+                    status_code=503,
+                    content={
+                        "error": "관리자 계정이 설정되지 않았습니다. "
+                                 "SAFENEST_ADMIN_ID / SAFENEST_ADMIN_PASSWORD 를 설정하세요."
+                    },
+                )
             return JSONResponse(status_code=401, content={"error": "아이디 또는 비밀번호가 올바르지 않습니다."})
         return {"token": token, "expiresIn": 12 * 60 * 60}
 
@@ -515,7 +534,11 @@ def create_app(
 
     @app.get("/health")
     def health() -> dict[str, Any]:
-        return health_document(selected_store.diagnostics(), selected_runtime.receiver_stats())
+        document = health_document(selected_store.diagnostics(), selected_runtime.receiver_stats())
+        # Deployment hygiene, not a credential: only whether the admin account
+        # was supplied through the environment.
+        document["admin_auth_configured"] = portal_auth.configured
+        return document
 
     @app.websocket("/ws")
     async def websocket_status(websocket: WebSocket) -> None:

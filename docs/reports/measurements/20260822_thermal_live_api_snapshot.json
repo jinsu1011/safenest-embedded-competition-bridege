@@ -1,8 +1,8 @@
 {
   "captured_at_local_hint": "KST field session 2026-08-22",
-  "api_base": "http://192.168.137.249:8000",
-  "pi_ip_observed": "192.168.137.249",
-  "esp_peer_observed": "192.168.137.107",
+  "api_base": "http://<PI_IP>:8000",
+  "pi_ip_observed": "<PI_IP>",
+  "esp_peer_observed": "<ESP_PEER_IP>",
   "system": "ONLINE",
   "system_health": "DEGRADED",
   "link": {
@@ -23,7 +23,7 @@
       "co2": 347,
       "thermal": 10074
     },
-    "root": "/home/sandi/safenest-team-main/RaspberryPi/Runtime/data",
+    "root": "<REPO_ROOT>/RaspberryPi/Runtime/data",
     "db_counts": {
       "snapshots": 2416,
       "events": 1218

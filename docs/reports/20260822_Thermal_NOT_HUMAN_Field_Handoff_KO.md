@@ -19,9 +19,9 @@
 
 | 역할 | 관측 주소 | 비고 |
 |---|---|---|
-| Raspberry Pi (SafeNest `:8000`) | **`192.168.137.249`** | health/status 응답. 사용자가 “와바튼 IP”로 부른 주소는 **Pi** |
-| ESP peer (thermal/telemetry) | **`192.168.137.107`** | `thermal.state.peer` |
-| 이전 필드 Wi‑Fi IP (참고) | `192.168.0.3` (`EELabO3 2G`) | 이후 `192.168.137.x` 망으로 이동 |
+| Raspberry Pi (SafeNest `:8000`) | **`<PI_IP>`** | health/status 응답. 사용자가 “와바튼 IP”로 부른 주소는 **Pi** |
+| ESP peer (thermal/telemetry) | **`<ESP_PEER_IP>`** | `thermal.state.peer` |
+| 이전 필드 Wi‑Fi IP (참고) | `<PREV_PI_IP>` (`<REDACTED_SSID>`) | 이후 `<PI_SUBNET>` 망으로 이동 |
 
 ---
 
@@ -46,7 +46,7 @@
 
 | 항목 | 값 |
 |---|---|
-| Pi | `192.168.137.249:8000` |
+| Pi | `<PI_IP>:8000` |
 | system | `ONLINE` / `DEGRADED` |
 | TCP connections | 4 |
 | telemetry_packets | 15987 |
@@ -70,7 +70,7 @@
 
 ### 4.2 누적 NPZ 집계 (디스크)
 
-경로(파이): `/home/sandi/safenest-team-main/RaspberryPi/Runtime/data/thermal/`  
+- 경로(파이): `<REPO_ROOT>/RaspberryPi/Runtime/data/thermal/`
 포맷: `frames (N,62,80) uint16` + `analysis_json`(프레임별 AI 스냅샷)
 
 | 항목 | 값 |
@@ -149,7 +149,7 @@ UI `heatmap_preview`도 동일 min-max로 대비를 키워 **형체가 잘 보�
 | TFLite wrapper | `RaspberryPi/Ondevice_AI/inference/thermal_interpreter.py` (`_prepare_float_frame` min-max) |
 | 클래스맵 | `NOT_HUMAN` / `HUMAN_NORMAL` / `HUMAN_FALL` |
 | 필드 모니터 | `RaspberryPi/Runtime/hil/pi_field_monitor.py` (표3 thermal `ai_state`) |
-| Pi 런북 | `PI_RUNBOOK.md` |
+| Pi 런북 | `docs/operations/PI_RUNBOOK.md` |
 | O2 °C 리플레이 | `RaspberryPi/Runtime/hil/thermal_o2_real_snapshot_replay.py` |
 
 ---
@@ -158,10 +158,10 @@ UI `heatmap_preview`도 동일 min-max로 대비를 키워 **형체가 잘 보�
 
 ```bash
 # 라이브
-curl -s http://192.168.137.249:8000/api/status | python3 -m json.tool | less
+curl -s http://<PI_IP>:8000/api/status | python3 -m json.tool | less
 
 # 필드 모니터
-cd /home/sandi/safenest-team-main/RaspberryPi/Runtime
+cd <REPO_ROOT>/RaspberryPi/Runtime
 python3 hil/pi_field_monitor.py --once
 
 # 누적 npz (파이 로컬)

@@ -23,8 +23,10 @@ const reasonLabels = {
   EMERGENCY_VERIFIED_APNEA: "검증된 무호흡 신호가 감지되었습니다.",
   APNEA_UNVERIFIED_NO_OVERRIDE: "무호흡 후보가 있으나 검증되지 않아 긴급 승격하지 않았습니다.",
   ABNORMAL_RESPIRATION_RPM: "호흡수가 정상 범위(12–20 rpm)를 벗어났습니다.",
-  HIGH_CO2_WARNING: "CO₂ 농도가 주의 기준 이상입니다.",
+  HIGH_CO2_WARNING: "CO₂가 로컬라이징 기준값 대비 주의 상승 구간에 있습니다.",
   HIGH_CO2_DANGER: "CO₂ 농도가 위험 기준 이상입니다.",
+  CO2_RELATIVE_RISE: "로컬라이징 이후 CO₂가 기준값보다 약 500 ppm 올랐습니다.",
+  VERY_FAST_CO2_RISE: "CO₂ 기울기가 주의 산식 기준(50 ppm/min) 이상입니다.",
   FAST_CO2_RISE: "CO₂ 농도가 빠르게 상승하고 있습니다.",
   LONG_NO_MOTION: "사람이 확인된 상태에서 15초 이상 움직임이 없습니다.",
   NO_MOTION_DETECTED: "사람이 확인되었지만 현재 움직임이 없습니다.",
@@ -200,7 +202,7 @@ function renderSensors(payload) {
   setText("co2Risk", riskComponentText(co2));
   const co2Progress = typeof ppm === "number" ? Math.max(0, Math.min(100, ppm / 3000 * 100)) : 0;
   $("co2Track").style.width = `${co2Progress}%`;
-  $("co2Track").style.background = ppm >= 2500 ? "var(--red)" : ppm >= 1000 ? "var(--yellow)" : "var(--cyan)";
+  $("co2Track").style.background = ppm >= 5000 ? "var(--red)" : ppm >= 1000 ? "var(--yellow)" : "var(--cyan)";
 
   const pir = payload.pir || {};
   const motion = valueAt(pir, "motion");

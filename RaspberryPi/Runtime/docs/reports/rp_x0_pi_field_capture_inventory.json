@@ -1,8 +1,8 @@
 {
   "classification": "RP_X0_PI_FIELD_CAPTURE_SNAPSHOT",
   "copied_at_kst": "2026-08-17",
-  "pi_host": "sandi@172.20.10.3",
-  "pi_path": "/home/sandi/integration",
+  "pi_host": "<PI_USER>@<PI_IP>",
+  "pi_path": "<REPO_ROOT>",
   "pi_branch": "diagnostic/rp-x0-b-runtime-wiring",
   "pi_sha": "1ffbc7d39792e68edc552fbe08359732b0dcbefd",
   "tracked_jsonl": [

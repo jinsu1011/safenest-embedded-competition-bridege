@@ -24,7 +24,7 @@ from thermal_test_selector import (
 BASELINE = "thermal_public_sdt_fp32_active"
 CANDIDATE_A = "thermal_tv2_candidate_a_a0_fp32_v1"
 CANDIDATE_B = "thermal_tv2_candidate_b_seed42_fp32_test_v1"
-LAUNCHER = REPOSITORY_ROOT / "run_safenest_thermal_test.sh"
+LAUNCHER = REPOSITORY_ROOT / "scripts" / "validation" / "run_safenest_thermal_test.sh"
 
 
 def load_runtime_module():

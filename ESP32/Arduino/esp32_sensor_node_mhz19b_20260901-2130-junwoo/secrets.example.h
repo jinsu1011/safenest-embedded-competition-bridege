@@ -2,6 +2,7 @@
 
 constexpr char WIFI_SSID[] = "YOUR_2_4_GHZ_WIFI_SSID";
 constexpr char WIFI_PASSWORD[] = "YOUR_WIFI_PASSWORD";
+// RPI_HOST 는 예시 값이다. 반드시 실제 Raspberry Pi 의 WLAN IPv4 주소로 바꾼다.
 constexpr char RPI_HOST[] = "192.168.1.44";
 constexpr uint16_t RPI_PORT = 9000;
 

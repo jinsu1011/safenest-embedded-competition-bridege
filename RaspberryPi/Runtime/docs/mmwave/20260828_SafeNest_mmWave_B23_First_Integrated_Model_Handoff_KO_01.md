@@ -541,7 +541,7 @@ REPOSITORY RECEIPT ON CURRENT MAIN = NOT PRESENT
 | 보드 | Raspberry Pi 5 Model B |
 | architecture / OS | aarch64 / Debian 13 |
 | Python | 3.13.5 |
-| virtual environment | `/home/sandi/safenest-team-main/.venv` |
+| virtual environment | `<REPO_ROOT>/.venv` |
 | PyTorch | `2.13.0+cpu` |
 | wheel source | official PyTorch CPU index, `download.pytorch.org/whl/cpu` |
 | CUDA | 사용하지 않음 |
@@ -624,13 +624,13 @@ LIVE ESP/MR60 VALIDATION = PENDING
 ### 18.1 알려진 deployment clone
 
 ```text
-/home/sandi/safenest-team-main
+<REPO_ROOT>
 ```
 
 현재 저장소 runbook에 맞춘 일반 시작 절차는 다음과 같다. `git pull` 전에는 운영자가 배포 branch와 local 변경 상태를 확인해야 한다.
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 git pull --ff-only origin main
 source .venv/bin/activate
 mkdir -p logs
@@ -665,7 +665,7 @@ resolver가 CUDA/NVIDIA dependency를 선택하는지 확인해야 한다. 현�
 확인이 끝난 경우의 명령 패턴은 다음과 같다. 아래 버전을 현재 검증 없이 복사하지 않는다.
 
 ```bash
-cd /home/sandi/safenest-team-main
+cd <REPO_ROOT>
 source .venv/bin/activate
 python -V
 python -m pip install --index-url https://download.pytorch.org/whl/cpu 'torch==2.13.0'
