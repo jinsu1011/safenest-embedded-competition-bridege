@@ -413,7 +413,7 @@ python3 RaspberryPi/Runtime/deployment/verify_bundle.py
 - **LCD legacy state 매핑 테스트 실패** — `test_legacy_lcd_state_mapping` 1건이 `runtime_status` 를 기대해 실패한다. 팀 운영 저장소 동일 리비전에서도 같은 실패가 재현되는 상류 기존 이슈이며, 위 O4 미구현과 같은 원인이다.
 - **preflight 모델 해시 검사 개수 불일치** — `test_hil_criteria` 가 6개를 기대하지만 manifest 에 10개 항목이 있어 실패한다. 실제 해시 검증은 10개 모두 통과한다.
 - **Thermal 모델의 낙상 판정은 proxy** — 공개 데이터 기반 자세 분류이며, 실제 낙상 이벤트와 MI48xx 하드웨어 도메인에서 검증되지 않았다. 단독 비상 선언 권한이 없다.
-- **mmWave B23 위험도 기여 유보** — prototype freeze 단계로 위험도 산출에 정식 반영되지 않는다.
+- **mmWave B23 위험도 기여 유보** — mmWave 센서의 관찰 범위가 최대 1.5m인 점을 감안하여 prototype freeze 단계로 위험도 산출에 정식 반영되지 않는다.
 - **119 신고는 시뮬레이션** — 실제 긴급 서비스와 연결되지 않으며, 데모 모드에서만 열린다.
 - **관리자 계정 미설정 시 `/admin` 사용 불가** — 저장소에 기본 계정이 없으므로 `SAFENEST_ADMIN_ID` / `SAFENEST_ADMIN_PASSWORD` 를 설정해야 관리자 화면을 쓸 수 있다. 의도된 fail-closed 동작이다.
 - **TTS 음성 모델 미포함** — `ko_KR-kss-medium` 은 CC BY-NC-SA 4.0 이므로 저장소에 포함하지 않고 설치 시 내려받는다.
