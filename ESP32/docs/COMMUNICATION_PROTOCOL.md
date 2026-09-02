@@ -6,7 +6,7 @@
 |---|---|---:|---|
 | 센서 데이터 | TCP | 9000 | ESP32 → Raspberry Pi |
 | Thermal frame | UDP | 5005 | ESP32 → Raspberry Pi |
-| LCD/API | HTTP | 8080 | LCD·노트북 → Raspberry Pi |
+| LCD/API | HTTP | 8000 | LCD·노트북 → Raspberry Pi |
 
 ## TCP 패킷 헤더
 
@@ -142,10 +142,10 @@ CRC32와 Pi reassembly failure는 별도 metric이다.
 | POST | `/api/state` | 화면 상태 또는 공간 이름 변경 |
 | GET | `/health` | 서버, 부저, 센서 연결 상태 |
 
-상태 변경 예시:
+상태 변경 예시 (`SAFENEST_DEMO_MODE=1` 로 기동했을 때만 열리는 데모 전용 경로):
 
 ```bash
-curl -s -X POST http://127.0.0.1:8080/api/state \
+curl -s -X POST http://127.0.0.1:8000/api/state \
   -H 'Content-Type: application/json' \
   -d '{"state":"emergency"}'
 ```

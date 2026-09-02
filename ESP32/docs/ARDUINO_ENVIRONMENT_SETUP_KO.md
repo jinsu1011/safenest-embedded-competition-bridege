@@ -90,7 +90,7 @@ Seeed 라이브러리가 Library Manager에서 검색되지 않으면 [Seeed mmW
 Git을 사용하는 방법:
 
 ```bash
-git clone https://github.com/jinsu1011/safenest-embedded-competition.git
+git clone https://github.com/jinsu1011/safenest-embedded-competition-bridege.git
 cd safenest-embedded-competition
 ```
 

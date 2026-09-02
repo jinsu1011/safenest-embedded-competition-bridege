@@ -2,6 +2,12 @@
 
 밀폐공간 작업자의 **호흡·움직임·자세**와 **공기질**을 동시에 감시해, 위험을 스스로 알릴 수 없는 상태가 되기 전에 경보하는 임베디드 안전 모니터링 시스템.
 
+![SafeNest 완제품](final-report/assets/hw_product_full.jpg)
+
+| 현장 LCD 패널 | 관제 웹 대시보드 |
+|---|---|
+| ![LCD 위험 상태](final-report/assets/ui_lcd_4_danger.jpg) | ![웹 대시보드](final-report/assets/ui_web.png) |
+
 ---
 
 ## 프로젝트 개요
@@ -10,15 +16,15 @@
 
 **접근.** SafeNest는 한 가지 신호에 의존하지 않는다. mmWave 레이더로 **호흡**을, 열화상으로 **자세**를, PIR로 **움직임**을, NDIR 센서로 **CO₂**를 각각 독립적으로 관측하고, 네 결과를 하나의 위험도로 융합한다.
 
-추론은 전부 Raspberry Pi 위에서 수행된다. **외부 인터넷 연결이나 클라우드 서버 없이** 센서 데이터 처리, AI 추론, 위험도 판단, 경보, 화면 표시가 현장에서 완결된다. 단, ESP32 센서 노드와 Raspberry Pi 사이는 현장 Wi-Fi 의 TCP/UDP 로 연결되므로 이 구간이 끊기면 해당 센서는 데이터 없음(`INDETERMINATE`) 으로 처리된다.
+추론은 전부 Raspberry Pi 위에서 수행된다. **센서 데이터 처리, AI 추론, 위험도 판단, 현장 경보(부저·TTS), 화면 표시는 클라우드 서버 없이 Pi 안에서 완결된다.** ESP32 센서 노드와 Raspberry Pi 사이는 현장 Wi-Fi 의 TCP/UDP 로 연결되므로 이 구간이 끊기면 해당 센서는 데이터 없음(`INDETERMINATE`) 으로 처리된다.
+
+네트워크를 사용하는 기능은 두 가지다 — **담당자 SMS 발송**(외부 SMS 제공자 API)과 **최초 설치 시 패키지·TTS 음성 모델 다운로드**. 이 둘을 제외하면 운영 중 인터넷 연결은 필요하지 않으며, 인터넷이 끊겨도 현장 감시와 경보는 계속 동작한다.
 
 **적용 환경.** 밀폐공간 단독·소수 작업, 상시 관제 인력이 없는 현장.
 
 ---
 
 ## 핵심 기능
-
-현재 코드에 실제로 구현되어 동작하는 것만 적는다.
 
 - **4채널 센서 수집** — mmWave 호흡/심박, MH-Z19B CO₂, PIR 움직임, 80×62 열화상 프레임
 - **이중 전송 경로** — 저속 스칼라는 TCP(`SNST` v1), 열화상 프레임은 청크 UDP(`SNTU` v1). 프레임 CRC32·형상·길이를 모두 검증하고 순서 무관 재조립
@@ -117,7 +123,7 @@ MI48xx    (열화상)   ┘                 │
 │   ├── Ondevice_AI/
 │   │   ├── inference/   ★ Thermal·CO₂ 활성 어댑터 (+ 비활성 M-N9)
 │   │   ├── models/      ★ model_manifest.json + 모델 아티팩트
-│   │   ├── risk/        risk_config.json
+│   │   ├── risk/        risk_config.json (구형 V4, 활성 엔진 미사용)
 │   │   └── tests/       활성 Thermal 모델 계약 테스트
 │   ├── Web/             ★ 관리자 포털 · 대시보드 · 게스트 화면
 │   │   └── vendor/      외부 라이브러리 로컬 포함 (Chart.js)
@@ -135,9 +141,9 @@ MI48xx    (열화상)   ┘                 │
 
 ---
 
-## Canonical Source
+## 실행되는 코드
 
-실제 동작하는 최종 코드는 다음이다. 저장소에 다른 버전은 남겨두지 않았다.
+런타임이 실제로 로드하는 진입점과 자산은 다음이다. 저장소에는 이 밖에 비활성 모델 아티팩트와 데모 모드 전용 대시보드 자산이 함께 보관되어 있으며, 어느 것도 기본 실행 경로에 로드되지 않는다.
 
 | 구성 | 경로 |
 |---|---|
@@ -152,7 +158,7 @@ MI48xx    (열화상)   ┘                 │
 
 ---
 
-## 핵심 코드 (심사 확인용 10선)
+## 핵심 코드
 
 | # | 파일 | 역할 |
 |---|---|---|
@@ -174,7 +180,7 @@ MI48xx    (열화상)   ┘                 │
 Raspberry Pi 5 / 64-bit OS / **Python 3.10 이상** 기준.
 
 ```bash
-git clone <repository-url> safenest
+git clone https://github.com/jinsu1011/safenest-embedded-competition-bridege.git safenest
 cd safenest
 ./run_safenest.sh --install
 ```
@@ -359,7 +365,7 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 4. **Caution 분리** — `WARNING` 은 가중합 점수 구간이 아니라 CO₂ 전용 주의 산식이 만든다. mmWave·PIR·Thermal 은 점수와 `DANGER`/`EMERGENCY` 에는 기여하지만 주의를 올리지 못한다. 밀폐 공간이 상시 1,500 ppm 근처에 머물러 종일 `WARNING` 을 만들던 절대 임계값(1,500 ppm)과 `danger_ppm` 2,500 ppm 은 제거했다.
 5. **재실 게이팅** — 빈방에서는 위험·긴급을 만들지 않는다. `DANGER`/`EMERGENCY` 는 `presence_detected == true` 를 요구하고, 사람이 없는 공간의 5,000 ppm 은 `WARNING` 으로만 게시한다. 사람이 확인된 공간의 5,000 ppm 은 즉시 긴급이다. 자세 판정도 같은 원칙을 따른다 — 모델은 사람 유무만 결정하고, 위험도에 들어가는 서기/앉기 vs 눕기는 bbox 오버레이가 정한다. 모델의 눕기 softmax 는 위험도 입력이 아니며, 오버레이가 실패하면 `PRESENCE_ONLY` + `HUMAN_NORMAL` 로 떨어진다.
 
-규칙 임계값(호흡수 정상범위, 무호흡 확정 시간, PIR 무움직임 시간, CO₂ 경고/위험 ppm)은 [`RaspberryPi/Ondevice_AI/risk/risk_config.json`](RaspberryPi/Ondevice_AI/risk/risk_config.json) 에 있다.
+규칙 임계값(호흡 정상범위 10–24 rpm, 무호흡 지속 판정, PIR 무움직임 유예 30초 · 위험 180초, CO₂ 상대 +500/−350 ppm 및 절대 비상 5,000 ppm)은 활성 엔진이 읽는 [`RaspberryPi/Runtime/risk/risk_formula_v1.json`](RaspberryPi/Runtime/risk/risk_formula_v1.json) 한 곳에 있다.
 
 ---
 

@@ -60,7 +60,7 @@ Preheat samples may still appear on the wire, in the logger, and on LCD `/health
 
 Missing event triple: decode succeeds (legacy); formal slope/model input is `FEATURE_UNAVAILABLE` / no canonical clock. Transport-only `co2_ppm` may still be logged.
 
-## `/health` (LCD `:8080`)
+## `/health` (LCD `:8000`)
 
 `SensorStore` no longer drops event identity. Snapshot keys include the event triple, `co2_sensor_model`, `co2_event_identity_class`, and `co2_preheat_complete`. `fresh` / `age_seconds` remain **transport** freshness.
 

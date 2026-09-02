@@ -92,7 +92,7 @@ class HILCriteriaTests(unittest.TestCase):
         last = copy.deepcopy(first)
         last["status"]["co2"]["state"]["values"]["ppm"] = 2600.0
         last["status"]["co2"]["risk_component"]["score"] = 1.0
-        last["status"]["risk"]["reasons"] = ["HIGH_CO2_DANGER"]
+        last["status"]["risk"]["reasons"] = ["CO2_IMMEDIATE_DANGER"]
         self.assertEqual(evaluate(SCENARIOS[4], [first, last])["outcome"], "PASS")
 
     def test_06_missing_mmwave_presence_is_inconclusive(self):

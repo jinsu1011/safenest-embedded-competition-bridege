@@ -22,7 +22,7 @@ ESP32 Thermal → UDP 5005 → Pi runtime → HTTP 8000 → Browser
 ```bash
 sudo apt update
 sudo apt install -y python3-venv python3-pip python3-dev build-essential
-git clone https://github.com/jinsu1011/safenest-embedded-competition.git
+git clone https://github.com/jinsu1011/safenest-embedded-competition-bridege.git
 cd safenest-embedded-competition
 ./run_safenest.sh --install
 ```

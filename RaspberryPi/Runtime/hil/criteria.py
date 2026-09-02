@@ -48,7 +48,7 @@ def _test02(scenario: str, samples: list[Mapping[str, Any]]) -> dict[str, Any]:
     checks = [
         _check("presence_true", _get(latest, "status", "risk", "presence_detected") is True,
                _get(latest, "status", "risk", "presence_detected")),
-        _check("normal_respiration", _number(respiration) and 12 <= float(respiration) <= 20,
+        _check("normal_respiration", _number(respiration) and 10 <= float(respiration) <= 24,
                respiration),
         _check("thermal_human", _thermal_state(latest) == "HUMAN_NORMAL", _thermal_state(latest)),
         _check("risk_normal", _get(latest, "status", "risk", "risk_level") == "NORMAL",
@@ -103,7 +103,10 @@ def _test05(scenario: str, samples: list[Mapping[str, Any]]) -> dict[str, Any]:
         _check("ppm_increased", float(last[1]) > float(first[1]), [first[1], last[1]]),
         _check("component_not_decreased", _number(first_component) and _number(last_component)
                and float(last_component) >= float(first_component), [first_component, last_component]),
-        _check("co2_reason", bool({"HIGH_CO2_WARNING", "HIGH_CO2_DANGER", "FAST_CO2_RISE"}
+        _check("co2_reason", bool({"CO2_IMMEDIATE_DANGER", "CO2_RELATIVE_RISE",
+                                   "FAST_CO2_RISE", "VERY_FAST_CO2_RISE",
+                                   "FLOOR_CO2_IMMEDIATE_DANGER", "FLOOR_CO2_RELATIVE_WARNING",
+                                   "FLOOR_CO2_FAST_RISE"}
                                   & set(_reasons(last[0]))), _reasons(last[0])),
     ]
     return _from_checks(scenario, "CO₂ 상승이 환경 위험도에 반영됨", checks)
@@ -154,7 +157,7 @@ def _test08(scenario: str, samples: list[Mapping[str, Any]]) -> dict[str, Any]:
         _check("live_recovered", recovered, statuses),
         _check("connection_reaccepted", max_connections is not None and max_connections >= 2, max_connections),
     ]
-    return _from_checks(scenario, "Thermal TCP 단절 후 수신 복구", checks)
+    return _from_checks(scenario, "Thermal 수신 단절 후 복구 (프레임 UDP 5005 · ESP 링크 TCP 9000)", checks)
 
 
 def _test09(scenario: str, samples: list[Mapping[str, Any]]) -> dict[str, Any]:

@@ -26,7 +26,7 @@
 </head>
 <body>
   <main class="display-frame">
-    <section class="lcd" id="lcd" data-state="normal-empty" aria-live="polite">
+    <section class="lcd" id="lcd" data-state="waiting" aria-live="polite">
       <header class="topbar">
         <div class="brand"><span class="brand-mark"></span>SafeNest</div>
         <div class="topbar-meta">
@@ -54,34 +54,32 @@
 
   <script>
     const scenarios = {
+      waiting: {
+        pill: "연결 대기", title: "대기", subtitle: "센서 데이터 수신 대기 중",
+        comment: "센서 연결을 확인하는 중입니다"
+      },
       "normal-empty": {
         pill: "정상 · 미재실", title: "정상", subtitle: "감지된 사람이 없습니다",
-        metrics: [["CO₂ 수치", "620 ppm"], ["공간 온도", "24.3℃"], ["움직임 감지", "감지 안 됨"]],
         comment: "정상 모니터링 중입니다"
       },
       "normal-occupied": {
         pill: "정상 · 재실", title: "안전", subtitle: "작업자의 움직임이 감지됩니다",
-        metrics: [["CO₂ 수치", "820 ppm"], ["인체 표면온도", "36.7℃"], ["움직임 감지", "감지됨"]],
         comment: "안전 상태를 계속 확인합니다"
       },
       warning: {
         pill: "환경 주의", title: "주의", subtitle: "CO₂ 농도가 높습니다",
-        metrics: [["CO₂ 수치", "1,500 ppm"], ["공간 온도", "26.1℃"], ["움직임 감지", "감지됨"]],
         comment: "환기 후 작업자 상태를 확인하세요"
       },
       danger: {
         pill: "작업자 위험", title: "위험", subtitle: "무움직임과 호흡 이상 감지",
-        metrics: [["CO₂ 수치", "980 ppm"], ["인체 표면온도", "37.2℃"], ["움직임 감지", "감지 안 됨"]],
         comment: "작업자의 상태를 즉시 확인하세요"
       },
       emergency: {
-        pill: "긴급 경보 작동 중", title: "긴급", subtitle: "고체온·호흡 이상·무움직임",
-        metrics: [["CO₂ 수치", "1,240 ppm"], ["인체 표면온도", "39.1℃"], ["움직임 감지", "감지 안 됨"]],
+        pill: "긴급 경보 작동 중", title: "긴급", subtitle: "호흡 이상·무움직임",
         comment: "즉시 현장을 확인하고 구조를 요청하세요"
       },
       offline: {
         pill: "시스템 점검 필요", title: "통신 오류", subtitle: "센서 데이터를 받을 수 없습니다",
-        metrics: [["CO₂ 수치", "수신 안 됨"], ["온도", "수신 안 됨"], ["움직임 감지", "확인 불가"]],
         comment: "장비 전원과 센서 통신 연결을 확인하세요"
       }
     };
@@ -533,7 +531,7 @@
       }
     }
 
-    render({ state: "normal-empty", room: "밀폐공간 A-01" });
+    render({ state: "waiting", room: "밀폐공간 A-01" });
     sync();
     setInterval(sync, 400);
   </script>
