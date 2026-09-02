@@ -100,7 +100,16 @@ class AIPipelineTests(unittest.TestCase):
 
     def test_active_proxy_model_contributes_bounded_risk_without_fall_state(self):
         thermal = FakeModel(
-            prediction("HUMAN_FALL_PROXY", [0.01, 0.04, 0.95], 0.95),
+            prediction(
+                "HUMAN_FALL_PROXY",
+                [0.05, 0.70, 0.25],
+                0.25,
+                overlay_applied=True,
+                posture_source="BBOX",
+                model_class_name="HUMAN_NORMAL",
+                bbox_height=10,
+                bbox_width=50,
+            ),
             model_selector="thermal_public_sdt_fp32_active",
             model_meta={
                 "safety_authority": False,
@@ -119,6 +128,10 @@ class AIPipelineTests(unittest.TestCase):
         self.assertEqual(result["score"], 0.4)
         self.assertEqual(result["metadata"]["risk_authority"], "LIMITED_POSTURE_PROXY")
         self.assertFalse(result["metadata"]["safety_authority"])
+        self.assertTrue(result["metadata"]["thermal_overlay_applied"])
+        self.assertEqual(result["metadata"]["thermal_posture_source"], "BBOX")
+        self.assertEqual(result["metadata"]["thermal_model_class_name"], "HUMAN_NORMAL")
+        self.assertEqual(result["metadata"]["thermal_bbox_width"], 50)
 
     def test_stale_sensor_does_not_call_model(self):
         thermal = FakeModel(prediction("HUMAN_NORMAL", [0.0, 1.0, 0.0]))

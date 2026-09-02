@@ -6,9 +6,10 @@ can actually prove today:
 
 * CO2 is the only continuously trustworthy live signal and is the primary
   enclosed-space hazard, so it carries a full share.
-* The active public-SDT FP32 selector is software-only. Its posture proxy enters
-  risk fusion with a bounded score, but cannot assert a real fall or emergency
-  until Raspberry Pi and real-fall validation establish that authority.
+* The active public-SDT FP32 thermal model decides person vs empty only.
+  Standing vs lying for risk is the bbox overlay on that presence bit.
+  ``HUMAN_FALL_PROXY`` scores a bounded 0.4 and cannot assert a real fall
+  or emergency.
 * mmWave M-N9 is ``DEVICE_VALIDATED: NO`` and emits an ``APNEA-proxy`` class, so
   it carries a reduced share. Unverified proxy cannot raise caution and never
   raises DANGER by itself.
@@ -16,7 +17,8 @@ can actually prove today:
   presence is unconfirmed - scoring it 0.0 would silently lower the total.
 * WARNING is not a band of R. It is a separate CO2-only caution formula: after
   the room baseline locks, a plus-only rise of 500 ppm from that first value,
-  or a slope of 50 ppm/min, publishes WARNING. Other sensors cannot do that.
+  or a canonical 150 s slope of 50 ppm/min, publishes WARNING. Neither trip
+  fires while the room is still localizing. Other sensors cannot raise caution.
 
 Three properties the legacy weighted sum lacked and this one has:
 
@@ -29,6 +31,9 @@ Three properties the legacy weighted sum lacked and this one has:
 3. ``decisiveness gating`` - a 3-class INT8 head whose top two probabilities are
    within ``minimum_top_two_margin`` is treated as no decision at all, instead
    of being scored as if it had decided.
+4. ``occupancy gate`` - DANGER/EMERGENCY require ``presence_detected is True``.
+   Vacant or unconfirmed rooms keep only NORMAL and CO2 WARNING. C-B6 occupancy
+   does not drive this gate. An empty-room 5000 ppm trip is demoted to WARNING.
 
 The output document is a superset of the legacy one, so ``backend.store``,
 ``backend.views`` and ``database.repository`` consume it unchanged.
@@ -50,6 +55,12 @@ CONFIG_PATH = Path(__file__).resolve().parent / "risk_formula_v1.json"
 SENSOR_ORDER = ("mmwave", "co2", "pir", "thermal")
 LEVEL_ORDER = ("NORMAL", "WARNING", "DANGER")
 CAUTION_FLOOR_LABELS = frozenset({"co2_relative_warning", "co2_fast_rise"})
+PERSON_DANGER_FLOOR_LABELS = frozenset({
+    "thermal_fall_confident",
+    "mmwave_apnea_hardware_verified",
+    "mmwave_apnea_proxy_sustained",
+    "co2_immediate_danger",
+})
 
 
 @dataclass(frozen=True)
@@ -130,6 +141,9 @@ class SafeNestRiskFormulaV1:
                 "slope_caution_ppm_per_min",
                 self._co2["slope_danger_ppm_per_min"],
             )
+        )
+        self.caution_requires_baseline_lock = bool(
+            self._caution.get("requires_baseline_lock", True)
         )
         caution_sensors = tuple(self._caution.get("sensors", ("co2",)))
         if caution_sensors != ("co2",):
@@ -222,13 +236,29 @@ class SafeNestRiskFormulaV1:
         for item in ordered.values():
             reasons.extend(item.reasons)
 
+        occupied = presence_detected is True
+        working_floors = list(floors)
+        working_emergencies = list(emergencies)
+        vacant_co2_extreme = False
+        if not occupied:
+            vacant_co2_extreme = "co2_immediate_danger" in working_floors
+            stripped = [
+                label for label in working_floors if label in PERSON_DANGER_FLOOR_LABELS
+            ]
+            working_floors = [
+                label for label in working_floors if label not in PERSON_DANGER_FLOOR_LABELS
+            ]
+            working_emergencies = []
+            if stripped:
+                reasons.append("VACANT_DANGER_SUPPRESSED")
+
         effective_weight = sum(self.weights[name] for name in available)
         evidence_sufficient = effective_weight >= self.minimum_effective_weight
 
         overall_floor = None
         caution_level = None
         caution_reasons: list[str] = []
-        for label in floors:
+        for label in working_floors:
             candidate = self._floors.get(label)
             if candidate == "WARNING":
                 caution_level = "WARNING"
@@ -238,8 +268,13 @@ class SafeNestRiskFormulaV1:
                 overall_floor = _max_level(overall_floor, candidate)
                 reasons.append(f"FLOOR_{label.upper()}")
 
-        emergency = bool(emergencies)
-        for label in emergencies:
+        if vacant_co2_extreme:
+            caution_level = "WARNING"
+            caution_reasons.append("co2_immediate_danger")
+            reasons.append("VACANT_CO2_EMERGENCY_DEMOTED")
+
+        emergency = bool(working_emergencies)
+        for label in working_emergencies:
             reasons.insert(0, f"EMERGENCY_{label.upper()}")
 
         if not available:
@@ -262,6 +297,9 @@ class SafeNestRiskFormulaV1:
             )
             score = round(min(100.0, max(0.0, score)), 4)
             score_level = self.classify(score)
+            if not occupied and score_level == "DANGER":
+                score_level = "NORMAL"
+                reasons.append("VACANT_SCORE_DANGER_SUPPRESSED")
             overall_level = _max_level(score_level, overall_floor)
             level = _max_level(overall_level, caution_level)
             if overall_floor and overall_floor == level and overall_floor != score_level:
@@ -311,7 +349,9 @@ class SafeNestRiskFormulaV1:
             level_source=level_source,
             effective_weight=round(effective_weight, 4),
             evidence_sufficient=evidence_sufficient,
-            escalation_floors=tuple(dict.fromkeys(floors)),
+            escalation_floors=tuple(dict.fromkeys(
+                [*working_floors, *(("co2_immediate_danger",) if vacant_co2_extreme else ())]
+            )),
             caution_formula_id=self.caution_formula_id,
             caution_active=caution_level == "WARNING",
             caution_reasons=tuple(dict.fromkeys(caution_reasons)),
@@ -572,7 +612,8 @@ class SafeNestRiskFormulaV1:
             if slope >= self.caution_slope_ppm_per_min:
                 score += float(self._co2["slope_danger_bonus"])
                 reasons.append("VERY_FAST_CO2_RISE")
-                floors.append("co2_fast_rise")
+                if self._slope_raises_caution(locked, slope_source):
+                    floors.append("co2_fast_rise")
             elif slope >= float(self._co2["slope_warning_ppm_per_min"]):
                 score += float(self._co2["slope_warning_bonus"])
                 reasons.append("FAST_CO2_RISE")
@@ -595,6 +636,17 @@ class SafeNestRiskFormulaV1:
                 **occupancy,
             },
         )
+
+    def _slope_raises_caution(self, locked: bool, slope_source: str) -> bool:
+        """WARNING from slope needs a locked room and the canonical 150 s slope.
+
+        The short RISK_LOCAL_ENDPOINT fallback is score-only. It is the 15 s
+        display-tick slope that produced field false cautions during warmup.
+        """
+
+        if self.caution_requires_baseline_lock and not locked:
+            return False
+        return slope_source != "RISK_LOCAL_ENDPOINT"
 
     @staticmethod
     def _canonical_slope(ai: Any) -> tuple[float | None, str]:

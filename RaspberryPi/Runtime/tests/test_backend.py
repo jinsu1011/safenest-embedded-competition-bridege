@@ -24,7 +24,8 @@ SENSOR_IDS = ("mmwave", "thermal", "co2", "pir")
 
 
 def documents(timestamp=100.0, risk_level="NORMAL", health="HEALTHY", emergency=False,
-              sensor_status="LIVE", device_health=None):
+              sensor_status="LIVE", device_health=None, presence_detected=True,
+              thermal_ai_state="HUMAN_NORMAL"):
     state = {
         "timestamp": timestamp,
         "revision": int(timestamp),
@@ -47,7 +48,7 @@ def documents(timestamp=100.0, risk_level="NORMAL", health="HEALTHY", emergency=
                 "sensor_id": name,
                 "timestamp": timestamp,
                 "available": True,
-                "state": "HUMAN_NORMAL" if name == "thermal" else "NORMAL",
+                "state": thermal_ai_state if name == "thermal" else "NORMAL",
                 "score": 0.0,
             }
             for name in SENSOR_IDS
@@ -60,6 +61,7 @@ def documents(timestamp=100.0, risk_level="NORMAL", health="HEALTHY", emergency=
         "system_health": health,
         "degraded_mode": health != "HEALTHY",
         "is_emergency": emergency,
+        "presence_detected": presence_detected,
         "components": {
             name: {"sensor_id": name, "available": True, "score": 0.0}
             for name in SENSOR_IDS
@@ -135,6 +137,20 @@ class RuntimeStoreTests(unittest.TestCase):
         self.assertEqual(
             legacy_state_document(normal, room="A-01")["state"],
             "normal-occupied",
+        )
+        empty = store.publish(*documents(timestamp=100.5, presence_detected=False))
+        self.assertEqual(
+            legacy_state_document(empty, room="A-01")["state"],
+            "normal-empty",
+        )
+        proxy = store.publish(*documents(
+            timestamp=100.6,
+            presence_detected=False,
+            thermal_ai_state="HUMAN_FALL_PROXY",
+        ))
+        self.assertEqual(
+            legacy_state_document(proxy, room="A-01")["state"],
+            "normal-empty",
         )
         danger = store.publish(*documents(timestamp=101.0, risk_level="DANGER", emergency=True))
         legacy = legacy_state_document(danger, room="A-01")

@@ -329,8 +329,8 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 
 **주장 범위를 명시한다.**
 
-- Thermal 모델은 공개 데이터(SDT)로 학습한 **자세 proxy** 이며, 실제 낙상 이벤트를 검증하지 않았다. 위험도에 제한된 가중치로만 기여하고 단독으로 비상을 선언하지 못한다.
-- CO₂ 모델의 의미는 **실내 재실 판정**이며 질식·유해가스 ground truth 가 아니다. 안전 판정은 모델이 아니라 규칙이 담당한다. 주의(`WARNING`)는 로컬라이징 기준값 대비 상대 상승(+500 ppm 진입 / +350 ppm 해제)과 CO₂ 기울기(50 ppm/min)로만 발생하고, 남아 있는 절대 ppm 트립은 비상 오버라이드 5,000 ppm 하나뿐이다.
+- Thermal 모델은 공개 데이터(SDT)로 학습했고 **위험도에서는 사람 유무만** 판정한다. 실제 낙상 이벤트를 검증하지 않았다. 위험도에 들어가는 자세(서기·앉기 vs 눕기)는 모델 softmax 가 아니라 bbox 종횡비 오버레이가 정하며, `HUMAN_FALL_PROXY` 는 제한된 가중치(0.4)의 자세 proxy 로서 단독으로 비상을 선언하지 못한다.
+- CO₂ 모델의 의미는 **실내 재실 판정**이며 질식·유해가스 ground truth 가 아니다. 안전 판정은 모델이 아니라 규칙이 담당한다. 빈방에서는 위험·긴급을 선언하지 않는다. 주의(`WARNING`)는 로컬라이징 기준값 대비 상대 상승(+500 ppm 진입 / +350 ppm 해제)과 CO₂ 기울기(50 ppm/min)로만 발생하고, 남아 있는 절대 ppm 트립은 비상 오버라이드 5,000 ppm 하나뿐이다.
 - mmWave B23 은 prototype integration freeze 단계로, 위험도 기여가 유보(`risk_contribution_deferred`)되어 있다.
 
 학습 데이터 출처와 이용 조건은 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) 5장 참고. 원본 데이터셋은 저장소에 포함하지 않는다.
@@ -339,22 +339,25 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 
 ## Risk Engine
 
-활성 엔진은 [`RaspberryPi/Runtime/risk/formula_v1.py`](RaspberryPi/Runtime/risk/formula_v1.py) (`SAFENEST_RISK_V1` v1.3.0), 설정은 [`risk/risk_formula_v1.json`](RaspberryPi/Runtime/risk/risk_formula_v1.json).
+활성 엔진은 [`RaspberryPi/Runtime/risk/formula_v1.py`](RaspberryPi/Runtime/risk/formula_v1.py) (`SAFENEST_RISK_V1` v1.3.3), 설정은 [`risk/risk_formula_v1.json`](RaspberryPi/Runtime/risk/risk_formula_v1.json).
 
 | 항목 | 값 |
 |---|---|
 | 가중치 | CO₂ 0.30 · Thermal 0.30 · mmWave 0.25 · PIR 0.15 |
 | 종합 위험도 임계값 | `DANGER` ≥ 65 (종합 산식은 `WARNING` 을 게시하지 않는다) |
+| 재실 게이트 | `DANGER`/`EMERGENCY` 는 `presence_detected == true` 일 때만 발생. 비재실이면 종합 위험도는 `NORMAL` |
 | 주의 산식 | `SAFENEST_CAUTION_CO2_V1` — CO₂ 단독. 기준값 대비 +500 ppm 진입 · +350 ppm 해제 · 기울기 50 ppm/min |
-| 비상 절대 트립 | CO₂ 5,000 ppm (유일한 절대 ppm 트립) |
+| 비상 절대 트립 | CO₂ 5,000 ppm (유일한 절대 ppm 트립). 재실이면 즉시 긴급, 비재실이면 `WARNING` 으로 강등 |
+| Thermal 자세 | 모델은 사람 유무만 판정. 서기/앉기 vs 눕기는 bbox 종횡비 오버레이 (`HUMAN_NORMAL` 0.0 / `HUMAN_FALL_PROXY` 0.4). 오버레이 실패 시 `PRESENCE_ONLY` + `HUMAN_NORMAL` |
 | 증거 게이트 | 사용 가능한 구성요소의 가중치 합이 0.5 미만이면 `INDETERMINATE` |
 
-단순 가중합이 갖지 못한 세 가지 성질을 갖는다.
+단순 가중합이 갖지 못한 다섯 가지 성질을 갖는다.
 
 1. **Escalation floor** — 심각한 신호 하나가 평온한 신호 셋에 희석되어 NORMAL 로 떨어지지 않는다.
 2. **Evidence sufficiency** — 근거가 부족하면 NORMAL 을 게시하지 않고 `INDETERMINATE` 를 게시한다. "센서가 죽어서 조용한 것"과 "실제로 안전한 것"을 구분한다.
 3. **Decisiveness gating** — 상위 두 확률의 차가 기준 미만인 분류 결과는 점수화하지 않고 "판단 없음"으로 처리한다.
 4. **Caution 분리** — `WARNING` 은 가중합 점수 구간이 아니라 CO₂ 전용 주의 산식이 만든다. mmWave·PIR·Thermal 은 점수와 `DANGER`/`EMERGENCY` 에는 기여하지만 주의를 올리지 못한다. 밀폐 공간이 상시 1,500 ppm 근처에 머물러 종일 `WARNING` 을 만들던 절대 임계값(1,500 ppm)과 `danger_ppm` 2,500 ppm 은 제거했다.
+5. **재실 게이팅** — 빈방에서는 위험·긴급을 만들지 않는다. `DANGER`/`EMERGENCY` 는 `presence_detected == true` 를 요구하고, 사람이 없는 공간의 5,000 ppm 은 `WARNING` 으로만 게시한다. 사람이 확인된 공간의 5,000 ppm 은 즉시 긴급이다. 자세 판정도 같은 원칙을 따른다 — 모델은 사람 유무만 결정하고, 위험도에 들어가는 서기/앉기 vs 눕기는 bbox 오버레이가 정한다. 모델의 눕기 softmax 는 위험도 입력이 아니며, 오버레이가 실패하면 `PRESENCE_ONLY` + `HUMAN_NORMAL` 로 떨어진다.
 
 규칙 임계값(호흡수 정상범위, 무호흡 확정 시간, PIR 무움직임 시간, CO₂ 경고/위험 ppm)은 [`RaspberryPi/Ondevice_AI/risk/risk_config.json`](RaspberryPi/Ondevice_AI/risk/risk_config.json) 에 있다.
 
@@ -362,14 +365,14 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 
 ## Validation
 
-**검증 환경:** macOS / Python 3.12 / 격리 venv (fastapi, uvicorn, numpy, scipy, ai-edge-litert, torch 2.13.0, qrcode). 실제 Raspberry Pi 하드웨어와 ESP32 빌드 환경은 사용하지 않았다.
+**검증 환경:** Raspberry Pi 5 (aarch64) / Debian 13 / Python 3.13.5 / 런타임 venv (fastapi 0.141.1, uvicorn, numpy 1.26.4, scipy, ai-edge-litert, torch 2.13.0+cpu, qrcode). 아래 소프트웨어 검증은 실제 배포 대상 Raspberry Pi 에서 실행했다. ESP32 빌드 환경은 사용하지 않았고, 센서 실측 결과는 별도 evidence 문서를 따른다.
 
 | 항목 | 결과 | 비고 |
 |---|---|---|
 | Python 구문 검사 (전체 추적 `.py`) | **PASS** | 오류 0 |
 | Shell 구문 검사 (`bash -n`) | **PASS** | `run_safenest.sh`, `run_pi.sh`, 검증 런처 |
-| Runtime 테스트 (`RaspberryPi/Runtime/tests`) | **405 passed · 22 failed · 1 skipped** | Risk 1.3.0 / CO₂ 주의 산식 테스트 포함. 실패 22건은 아래 Known Limitations 참조 |
-| On-device AI 테스트 (`RaspberryPi/Ondevice_AI/tests`) | **18 passed · 2 skipped** | 활성 Thermal 모델 SHA/selector 계약 |
+| Runtime 테스트 (`RaspberryPi/Runtime/tests`) | **417 passed · 21 failed · 1 skipped** | Risk 1.3.3 / 재실 게이팅 / CO₂ 주의 산식 / TTS 우선순위 테스트 포함. 실패 21건은 아래 Known Limitations 참조 |
+| On-device AI 테스트 (`RaspberryPi/Ondevice_AI/tests`) | **25 passed · 2 skipped** | 활성 Thermal 모델 SHA/selector 계약 + bbox 종횡비 자세 오버레이 |
 | 모델 SHA256 계약 (preflight) | **PASS** | manifest 등재 10개 아티팩트 전부 일치 |
 | 제출본 무결성 (`verify_bundle.py`) | **PASS** | 필수 파일 누락 0, 금지 산출물 0 |
 | Web 정적 참조 정합성 | **PASS** | `/admin` HTML → JS(58개 DOM id) → API/WS 전 경로 연결 확인 |
@@ -384,7 +387,8 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 | Secret 스캔 | **PASS** | 토큰·키·자격증명 값 없음. `*.example` 템플릿만 추적 |
 | 추적된 DB/캐시/빌드 산출물 | **PASS** | 없음 |
 | **ESP32 펌웨어 빌드** | **NOT RUN** | Arduino 빌드 환경 없음 |
-| **Raspberry Pi 실기기 실행** | **NOT VERIFIED — Raspberry Pi hardware environment** | 본 정리 작업에서 실기기를 사용하지 않음 |
+| **Raspberry Pi 소프트웨어 검증** | **PASS — 실기기에서 실행** | 위 표의 테스트·preflight·부팅·HTTP/WS 검증을 배포 대상 Raspberry Pi 5 에서 직접 실행 |
+| **Raspberry Pi 라이브 센서 구동** | **NOT VERIFIED** | 본 정리 작업에서 센서를 연결한 라이브 구동은 수행하지 않음 |
 | **ESP32 ↔ Pi 라이브 E2E** | **NOT VERIFIED** | 실제 센서 연결 미수행 |
 | **실제 낙상 이벤트 검증** | **NOT VERIFIED** | — |
 
@@ -400,8 +404,9 @@ python3 RaspberryPi/Runtime/deployment/verify_bundle.py
 
 ## Known Limitations
 
-- **웹 대시보드에 런타임 상태(O4) 표시 미구현** — 백엔드는 `runtime_status`(센서 가용성과 AI 가용성을 분리한 판정)를 `/api/status`·`/api/sensors`·`/api/state` 로 이미 게시하고 **LCD 화면은 이를 소비**한다. 반면 웹 대시보드(`Web/app.js`·`app_final.js`)는 이 필드를 읽지 않고, 요구되는 DOM 요소(`runtimeBadge`, `thermalSensor`, `thermalAiStatus`, `co2Ai`, `pirAi`)도 없다. 해당 UI 는 과거 대시보드 세대에 구현되었으나 이후 웹 화면을 새로 작성해 교체하는 과정에서 유실되었고, 백엔드·LCD·검사 계약만 남았다. `--offline-preflight` 의 관련 검사 3건과 UI 테스트 9건이 이 때문에 실패한다. 이 검사는 **오프라인 검사 전용**이라 Raspberry Pi 기동 경로(`pi_start_document`)에는 포함되지 않아 실행을 막지 않는다.
+- **웹 대시보드에 런타임 상태(O4) 표시 미구현** — 백엔드는 `runtime_status`(센서 가용성과 AI 가용성을 분리한 판정)를 `/api/status`·`/api/sensors`·`/api/state` 로 이미 게시하고 **LCD 화면은 이를 소비**한다. 반면 웹 대시보드(`Web/app.js`·`app_final.js`)는 이 필드를 읽지 않고, 요구되는 DOM 요소(`runtimeBadge`, `thermalSensor`, `thermalAiStatus`, `co2Ai`, `pirAi`)도 없다. 해당 UI 는 과거 대시보드 세대에 구현되었으나 이후 웹 화면을 새로 작성해 교체하는 과정에서 유실되었고, 백엔드·LCD·검사 계약만 남았다. `--offline-preflight` 의 관련 검사 2건과 UI 테스트 8건(대시보드 정적 검사 1건 포함)이 이 때문에 실패한다. 이 검사는 **오프라인 검사 전용**이라 Raspberry Pi 기동 경로(`pi_start_document`)에는 포함되지 않아 실행을 막지 않는다.
 - **stage9 스모크 도구 테스트 실패** — 현장 수집 판정 도구(`hil/stage9_*`)의 테스트 6건이 실패 상태다. 평가 도구 자체의 문제이며 런타임 판단 경로와 무관하다.
+- **LCD legacy state 매핑 테스트 실패** — `test_legacy_lcd_state_mapping` 1건이 `runtime_status` 를 기대해 실패한다. 팀 운영 저장소 동일 리비전에서도 같은 실패가 재현되는 상류 기존 이슈이며, 위 O4 미구현과 같은 원인이다.
 - **preflight 모델 해시 검사 개수 불일치** — `test_hil_criteria` 가 6개를 기대하지만 manifest 에 10개 항목이 있어 실패한다. 실제 해시 검증은 10개 모두 통과한다.
 - **Thermal 모델의 낙상 판정은 proxy** — 공개 데이터 기반 자세 분류이며, 실제 낙상 이벤트와 MI48xx 하드웨어 도메인에서 검증되지 않았다. 단독 비상 선언 권한이 없다.
 - **mmWave B23 위험도 기여 유보** — prototype freeze 단계로 위험도 산출에 정식 반영되지 않는다.

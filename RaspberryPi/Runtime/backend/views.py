@@ -128,13 +128,7 @@ def legacy_state_document(
     elif level == "WARNING":
         display_state = "warning"
     elif level == "NORMAL":
-        thermal_ai = _mapping(_mapping(status.get("thermal")).get("ai"))
-        human = thermal_ai.get("state") in {
-            "HUMAN_NORMAL",
-            "HUMAN_FALL_PROXY",
-            "HUMAN_FALL",
-        }
-        display_state = "normal-occupied" if human else "normal-empty"
+        display_state = "normal-occupied" if bool(risk.get("presence_detected")) else "normal-empty"
     else:
         display_state = "offline"
     return {

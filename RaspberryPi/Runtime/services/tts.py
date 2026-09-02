@@ -474,6 +474,22 @@ def effective_risk_level(publication: Mapping[str, Any]) -> str | None:
     return level if level in {"NORMAL", "WARNING", "DANGER", "INDETERMINATE"} else None
 
 
+_CO2_CAUTION_LABELS = frozenset(
+    {
+        "co2_fast_rise",
+        "co2_relative_warning",
+        "co2_immediate_danger",
+    }
+)
+_CO2_WARNING_REASON_TOKENS = (
+    "CO2_",
+    "HIGH_CO2",
+    "FAST_CO2",
+    "VERY_FAST_CO2",
+    "RELATIVE_RISE",
+)
+
+
 def message_for_publication(publication: Mapping[str, Any], level: str) -> str:
     """Map existing reason codes to Korean speech without making new decisions."""
 
@@ -504,14 +520,29 @@ def message_for_publication(publication: Mapping[str, Any], level: str) -> str:
             return "이산화탄소 농도가 위험 수준입니다. 즉시 환기하고 현장을 확인해 주세요."
         return "위험 상황이 감지되었습니다. 즉시 현장 상태를 확인해 주세요."
 
-    if _contains(reasons, "ABNORMAL_RESPIRATION", "APNEA_PROXY"):
-        return "주의가 필요합니다. 호흡 이상 징후가 감지되었습니다. 주변 상태를 확인해 주세요."
-    if _contains(reasons, "CO2_", "HIGH_CO2", "FAST_CO2_RISE"):
-        return "주의가 필요합니다. 이산화탄소 농도 이상이 감지되었습니다. 환기 상태를 확인해 주세요."
-    if _contains(reasons, "LONG_NO_MOTION", "NO_MOTION_DETECTED"):
-        return "주의가 필요합니다. 장시간 움직임이 감지되지 않았습니다. 주변 상태를 확인해 주세요."
-    if _contains(reasons, "THERMAL_FALL"):
-        return "주의가 필요합니다. 열화상 이상 징후가 감지되었습니다. 주변 상태를 확인해 주세요."
+    if level == "WARNING":
+        if _co2_caution_from_risk(risk, reasons):
+            return (
+                "주의가 필요합니다. 이산화탄소 농도 이상이 감지되었습니다. "
+                "환기 상태를 확인해 주세요."
+            )
+        if _contains(reasons, "ABNORMAL_RESPIRATION", "APNEA_PROXY"):
+            return (
+                "주의가 필요합니다. 호흡 이상 징후가 감지되었습니다. "
+                "주변 상태를 확인해 주세요."
+            )
+        if _contains(reasons, "LONG_NO_MOTION", "NO_MOTION_DETECTED"):
+            return (
+                "주의가 필요합니다. 장시간 움직임이 감지되지 않았습니다. "
+                "주변 상태를 확인해 주세요."
+            )
+        if _contains(reasons, "THERMAL_FALL"):
+            return (
+                "주의가 필요합니다. 열화상 이상 징후가 감지되었습니다. "
+                "주변 상태를 확인해 주세요."
+            )
+        return "주의가 필요합니다. 위험 징후가 감지되었습니다. 주변 상태를 확인해 주세요."
+
     return "주의가 필요합니다. 위험 징후가 감지되었습니다. 주변 상태를 확인해 주세요."
 
 
@@ -582,6 +613,32 @@ def _piper_available() -> bool:
 
 def _contains(reasons: set[str], *tokens: str) -> bool:
     return any(token in reason for token in tokens for reason in reasons)
+
+
+def _string_labels(value: object) -> tuple[str, ...]:
+    if isinstance(value, str):
+        return (value,)
+    if isinstance(value, (list, tuple, set)):
+        return tuple(str(item) for item in value if isinstance(item, str))
+    return ()
+
+
+def _is_co2_caution_label(label: str) -> bool:
+    stripped = label.strip()
+    lower = stripped.lower()
+    if lower.startswith("floor_"):
+        lower = lower[len("floor_") :]
+    if lower in _CO2_CAUTION_LABELS:
+        return True
+    return stripped.upper().startswith("FLOOR_CO2_")
+
+
+def _co2_caution_from_risk(risk: Mapping[str, Any], reasons: set[str]) -> bool:
+    for key in ("caution_reasons", "escalation_floors"):
+        for item in _string_labels(risk.get(key)):
+            if _is_co2_caution_label(item):
+                return True
+    return _contains(reasons, *_CO2_WARNING_REASON_TOKENS)
 
 
 def _mapping(value: object) -> Mapping[str, Any]:

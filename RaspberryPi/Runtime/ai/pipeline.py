@@ -154,6 +154,18 @@ class OnDeviceAIPipeline:
                     "risk_contribution": model_meta.get("risk_contribution"),
                     "runtime_role": model_meta.get("runtime_role"),
                     "safety_semantic": model_meta.get("safety_semantic"),
+                    "thermal_overlay_applied": bool(
+                        getattr(prediction, "overlay_applied", False)
+                    ),
+                    "thermal_posture_source": str(
+                        getattr(prediction, "posture_source", "MODEL")
+                    ),
+                    "thermal_model_class_name": str(
+                        getattr(prediction, "model_class_name", "")
+                        or prediction.class_name
+                    ),
+                    "thermal_bbox_height": getattr(prediction, "bbox_height", None),
+                    "thermal_bbox_width": getattr(prediction, "bbox_width", None),
                 }
             )
             return self._prediction_result(

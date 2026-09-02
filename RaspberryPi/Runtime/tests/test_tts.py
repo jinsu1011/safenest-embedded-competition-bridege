@@ -8,8 +8,6 @@ import unittest
 from unittest import mock
 import wave
 
-from backend.runtime import SafeNestRuntime
-from backend.store import RuntimeStore
 from services.tts import (
     AsyncRiskTTS,
     SpeechInterrupted,
@@ -20,7 +18,6 @@ from services.tts import (
     effective_risk_level,
     message_for_publication,
 )
-from storage.sensor_logger import SensorStorageConfig
 
 
 def publication(
@@ -28,6 +25,7 @@ def publication(
     *,
     reasons: tuple[str, ...] = (),
     floors: tuple[str, ...] = (),
+    caution_reasons: tuple[str, ...] = (),
     emergency_active: bool = False,
 ) -> dict[str, object]:
     return {
@@ -35,6 +33,7 @@ def publication(
             "risk_level": level,
             "reasons": reasons,
             "escalation_floors": floors,
+            "caution_reasons": caution_reasons,
         },
         "emergency": {"active": emergency_active},
     }
@@ -243,6 +242,59 @@ class RiskAwareTTSTests(unittest.TestCase):
         self.assertIn("이산화탄소", message_for_publication(co2, "DANGER"))
         self.assertIn("호흡 이상", message_for_publication(respiration, "WARNING"))
 
+    def test_warning_co2_fast_rise_beats_abnormal_respiration(self) -> None:
+        event = publication(
+            "WARNING",
+            reasons=(
+                "FLOOR_CO2_FAST_RISE",
+                "VERY_FAST_CO2_RISE",
+                "ABNORMAL_RESPIRATION_RPM_SUSTAINED",
+            ),
+            floors=("co2_fast_rise",),
+            caution_reasons=("co2_fast_rise",),
+        )
+        text = message_for_publication(event, "WARNING")
+        self.assertIn("이산화탄소", text)
+        self.assertNotIn("호흡 이상 징후", text)
+
+    def test_warning_co2_relative_beats_abnormal_respiration(self) -> None:
+        event = publication(
+            "WARNING",
+            reasons=("CO2_RELATIVE_RISE", "ABNORMAL_RESPIRATION_RPM"),
+            floors=("co2_relative_warning",),
+            caution_reasons=("co2_relative_warning",),
+        )
+        text = message_for_publication(event, "WARNING")
+        self.assertIn("이산화탄소", text)
+        self.assertNotIn("호흡 이상 징후", text)
+
+    def test_warning_without_co2_floor_still_speaks_respiration(self) -> None:
+        text = message_for_publication(
+            publication("WARNING", reasons=("ABNORMAL_RESPIRATION",)),
+            "WARNING",
+        )
+        self.assertIn("호흡 이상 징후", text)
+        self.assertNotIn("이산화탄소", text)
+
+    def test_normal_abnormal_respiration_does_not_speak(self) -> None:
+        self.assertFalse(
+            self.tts.handle_publication(
+                publication("NORMAL", reasons=("ABNORMAL_RESPIRATION_RPM",))
+            )
+        )
+        self.assertEqual(self.backend.started, [])
+
+    def test_danger_hardware_apnea_keeps_severe_respiration_message(self) -> None:
+        event = publication(
+            "DANGER",
+            reasons=("MMWAVE_APNEA_HARDWARE_VERIFIED",),
+            floors=("mmwave_apnea_hardware_verified",),
+            emergency_active=True,
+        )
+        text = message_for_publication(event, "DANGER")
+        self.assertIn("심각한 호흡 이상", text)
+        self.assertNotIn("호흡 이상 징후", text)
+
 
 class KoreanPiperBackendTests(unittest.TestCase):
     def test_auto_prefers_installed_piper_model(self) -> None:
@@ -388,7 +440,18 @@ class ExplodingStartTTS(ExplodingTTS):
 
 
 class RuntimeTTSIsolationTests(unittest.TestCase):
+    @staticmethod
+    def _runtime_imports():
+        try:
+            from backend.runtime import SafeNestRuntime
+            from backend.store import RuntimeStore
+            from storage.sensor_logger import SensorStorageConfig
+        except ImportError as error:
+            raise unittest.SkipTest(f"runtime imports unavailable: {error}") from error
+        return SafeNestRuntime, RuntimeStore, SensorStorageConfig
+
     def test_tts_failure_does_not_prevent_publication(self) -> None:
+        SafeNestRuntime, RuntimeStore, SensorStorageConfig = self._runtime_imports()
         with tempfile.TemporaryDirectory() as temporary:
             store = RuntimeStore()
             runtime = SafeNestRuntime(
@@ -410,6 +473,7 @@ class RuntimeTTSIsolationTests(unittest.TestCase):
         )
 
     def test_tts_start_failure_does_not_prevent_runtime_start(self) -> None:
+        SafeNestRuntime, RuntimeStore, SensorStorageConfig = self._runtime_imports()
         with tempfile.TemporaryDirectory() as temporary:
             store = RuntimeStore()
             runtime = SafeNestRuntime(
