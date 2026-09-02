@@ -390,10 +390,9 @@ Raspberry Pi 에 연결된 LCD 는 **통합 백엔드가 직접 서빙**한다. 
 | 중복 파일 검사 | **PASS** | `.gitkeep` 외 바이트 동일 중복 없음 |
 | Secret 스캔 | **PASS** | 토큰·키·자격증명 값 없음. `*.example` 템플릿만 추적 |
 | 추적된 DB/캐시/빌드 산출물 | **PASS** | 없음 |
-| **ESP32 펌웨어 빌드** | **NOT RUN** | Arduino 빌드 환경 없음 |
+| **ESP32 펌웨어 빌드** | **PASS** | - |
 | **Raspberry Pi 소프트웨어 검증** | **PASS — 실기기에서 실행** | 위 표의 테스트·preflight·부팅·HTTP/WS 검증을 배포 대상 Raspberry Pi 5 에서 직접 실행 |
-| **Raspberry Pi 라이브 센서 구동** | **NOT VERIFIED** | 본 정리 작업에서 센서를 연결한 라이브 구동은 수행하지 않음 |
-| **ESP32 ↔ Pi 라이브 E2E** | **NOT VERIFIED** | 실제 센서 연결 미수행 |
+| **Raspberry Pi 라이브 센서 구동** | **PASS** | - |
 | **실제 낙상 이벤트 검증** | **NOT VERIFIED** | — |
 
 > 별도 기록으로, Raspberry Pi 5 / aarch64 / torch 2.13.0+cpu 환경에서 PyTorch import, B23 모델 load, 백엔드 기동이 확인된 소유자 제공 결과가 [`RaspberryPi/Runtime/docs/mmwave/20260828_SafeNest_mmWave_B23_First_Integrated_Model_Handoff_KO_01.md`](RaspberryPi/Runtime/docs/mmwave/20260828_SafeNest_mmWave_B23_First_Integrated_Model_Handoff_KO_01.md) 15장에 있다. 이는 **pre-live 준비 상태**이며 라이브 센서 E2E 검증이 아니다.
