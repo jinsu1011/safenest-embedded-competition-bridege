@@ -415,7 +415,6 @@ python3 RaspberryPi/Runtime/deployment/verify_bundle.py
 - **mmWave B23 위험도 기여 유보** — mmWave 센서의 관찰 범위가 최대 1.5m인 점을 감안하여 prototype freeze 단계로 위험도 산출에 정식 반영되지 않는다.
 - **119 신고는 시뮬레이션** — 실제 긴급 서비스와 연결되지 않으며, 데모 모드에서만 열린다.
 - **관리자 계정 미설정 시 `/admin` 사용 불가** — 저장소에 기본 계정이 없으므로 `SAFENEST_ADMIN_ID` / `SAFENEST_ADMIN_PASSWORD` 를 설정해야 관리자 화면을 쓸 수 있다. 의도된 fail-closed 동작이다.
-- **TTS 음성 모델 미포함** — `ko_KR-kss-medium` 은 CC BY-NC-SA 4.0 이므로 저장소에 포함하지 않고 설치 시 내려받는다.
 
 ---
 
