@@ -66,12 +66,14 @@ TCP는 패킷 경계를 보존하지 않으므로 Raspberry Pi는 `recv_exact()`
 
 ### CO₂ 계측기 (SCD4x와 MH-Z19B)
 
-팀 저장소에는 두 개의 v2 계열 스케치가 있습니다. **ppm 단위가 같다고 drop-in 호환이 아닙니다.** Pi는 계속 `co2_ppm`과 event identity로 150 s slope를 재구성하며, ESP32는 slope/점유 모델을 돌리지 않습니다. C-B6 threshold 0.43과 모델 아티팩트는 이 프로토콜 변경으로 건드리지 않습니다.
+**이 저장소가 포함하는 sender 는 MH-Z19B 하나뿐입니다** (`ESP32/Arduino/esp32_sensor_node/`). 아래 표의 SCD4x 열은 같은 프로토콜을 쓰던 이전 팀 변형으로, 제출본에 포함하지 않았습니다. 대조해 두는 이유는 event identity 의미가 서로 다르고, 이어지는 규칙이 그 차이를 전제하기 때문입니다.
 
-| 스케치 | CO₂ 센서 | 버스 | 이벤트 정체성 |
+**ppm 단위가 같다고 drop-in 호환이 아닙니다.** Pi는 계속 `co2_ppm`과 event identity로 150 s slope를 재구성하며, ESP32는 slope/점유 모델을 돌리지 않습니다. C-B6 threshold 0.43과 모델 아티팩트는 이 프로토콜 변경으로 건드리지 않습니다.
+
+| CO₂ 센서 | 제출본 포함 | 버스 | 이벤트 정체성 |
 |---|---|---|---|
-| `ESP32/Arduino/esp32_sensor_node_260828_v2` | Sensirion SCD40/SCD4x | I²C `0x62`, SDA=21 SCL=22 | SCD4x `getDataReadyStatus` 후 성공한 `readMeasurement`만 새 이벤트. `co2_ppm==0`은 이벤트 아님 |
-| `ESP32/Arduino/esp32_sensor_node_mhz19b_v2` | Winsen MH-Z19B | UART1 9600 8N1, ESP32 RX=32 / TX=33 (**MR60 UART2 16/17과 공유 금지**) | **INFERRED_UART_SAMPLE**. manufacturer data-ready 없음. checksum-valid `0x86`를 선언된 UART poll 주기(기본 5 s)당 최대 1회 수락한 뒤에만 `co2_measurement_event_id` 증가. 이 주기는 물리 NDIR 변환 주기가 아님 |
+| Winsen MH-Z19B | **예 — 정본 sender** | UART1 9600 8N1, ESP32 RX=32 / TX=33 (**MR60 UART2 16/17과 공유 금지**) | **INFERRED_UART_SAMPLE**. manufacturer data-ready 없음. checksum-valid `0x86`를 선언된 UART poll 주기(기본 5 s)당 최대 1회 수락한 뒤에만 `co2_measurement_event_id` 증가. 이 주기는 물리 NDIR 변환 주기가 아님 |
+| Sensirion SCD40/SCD4x | 아니오 — 이전 변형 | I²C `0x62`, SDA=21 SCL=22 | SCD4x `getDataReadyStatus` 후 성공한 `readMeasurement`만 새 이벤트. `co2_ppm==0`은 이벤트 아님 |
 
 MH-Z19B sender는 다음 필드를 추가로 보냅니다.
 

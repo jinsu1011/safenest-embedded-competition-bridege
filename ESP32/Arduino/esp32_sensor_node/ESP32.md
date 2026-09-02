@@ -2,11 +2,11 @@
 
 ## 범위
 
-이 스케치는 `ESP32/Arduino/esp32_sensor_node_260828_v2/`를 **제자리에서 덮어쓰지 않고** 복사한 뒤, CO₂ 계측만 Sensirion SCD40/SCD4x I²C에서 Winsen MH-Z19B UART로 바꾼 형제 스케치입니다.
+이 스케치는 SCD40/SCD4x I²C 를 쓰던 v2 스케치를 **제자리에서 덮어쓰지 않고** 복사한 뒤, CO₂ 계측만 Winsen MH-Z19B UART 로 바꾼 것에서 출발했습니다. 아래 변경 이력의 폴더명은 각 버전 당시의 이름이며, 현재 정본 위치는 다음과 같습니다.
 
-- 폴더: `ESP32/Arduino/esp32_sensor_node_mhz19b_v2/`
-- 펌웨어: `safenest-esp32-sensor-node/1.7.2-mhz19b.1`
-- SCD40 v2 스케치(`esp32_sensor_node_260828_v2`)는 참조로 유지합니다.
+- 폴더: `ESP32/Arduino/esp32_sensor_node/`
+- 펌웨어: `safenest-esp32-sensor-node/1.7.10-mhz19b.1` (`esp32_sensor_node.ino` 의 `NODE_FIRMWARE_VERSION`)
+- 출발점이던 SCD40 v2 스케치는 이 제출 저장소에 포함하지 않았습니다.
 
 모델 재학습, threshold 0.43, C-B6 scaler/TFLite, ESP32 쪽 slope/점유 모델은 **범위 밖**입니다. Pi `RaspberryPi/Runtime/ai/co2_canonical_runtime.py`가 이미 ENDPOINT_H150 / 150 s slope를 재구성합니다.
 
